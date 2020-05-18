@@ -1,0 +1,135 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        preview {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //Navigation
+    api "androidx.navigation:navigation-fragment-ktx:$rootProject.navigation_version"
+    api "androidx.navigation:navigation-ui-ktx:$rootProject.navigation_version"
+
+    // liveData
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycle_version"
+
+    // viewModel
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle_version"
+    api "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle_version"
+    api "androidx.fragment:fragment-ktx:$rootProject.fragment_version"
+
+    // room
+    api "androidx.room:room-runtime:$rootProject.room_version"
+    api "androidx.room:room-ktx:$rootProject.room_version"
+    kapt "androidx.room:room-compiler:$rootProject.room_version"
+    androidTestImplementation "androidx.room:room-testing:$rootProject.room_version"
+
+    // paging
+    api "androidx.paging:paging-runtime:$paging_version"
+
+    //work
+    api "androidx.work:work-runtime-ktx:$rootProject.work_version"
+    api "com.google.code.gson:gson:$rootProject.gson_version"
+
+    //Multidex
+    api "com.android.support:multidex:$rootProject.multidex_version"
+
+    //RxLifecycle
+    api "com.trello:rxlifecycle-kotlin:$rootProject.rxLifecycle_version"
+    api "com.trello:rxlifecycle-components:$rootProject.rxLifecycle_version"
+
+    //Retrofit
+    api "com.squareup.okhttp3:okhttp:$rootProject.okhttp_version"
+    api "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
+    api "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp_version"
+    api "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_version"
+    api "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofit_version"
+
+    // RxKotlin and RxAndroid
+    api "io.reactivex:rxkotlin:$rootProject.rxkotlin_version"
+    api "io.reactivex:rxandroid:$rootProject.rxandroid_version"
+
+    //Glide
+    api "com.github.bumptech.glide:glide:$rootProject.glide_version"
+    api "jp.wasabeef:glide-transformations:$rootProject.trasn_version"
+
+    //Fastjson
+    api "com.alibaba:fastjson:$rootProject.fastjson_version"
+
+    //Anko
+    api "org.jetbrains.anko:anko-common:$rootProject.anko_version"
+
+    //StateView
+    api "com.github.nukc.stateview:library:$rootProject.stateview_version"
+    api "com.github.anzewei:parallaxbacklayout:$rootProject.parallaxbacklayout_version"
+
+    //Kotlin RxBus
+    api "com.eightbitlab:rxbus:$rootProject.rxbus_version"
+
+    //AutoSize
+    api "me.jessyan:autosize:$rootProject.autosize_version"
+
+    //Klog
+    api "com.github.zhaokaiqiang.klog:library:$rootProject.klog_version"
+
+    //Animation
+    api "com.wang.avi:library:$rootProject.avi_version"
+
+    //Permission
+    api "pub.devrel:easypermissions:$rootProject.easypermission_version"
+
+}
