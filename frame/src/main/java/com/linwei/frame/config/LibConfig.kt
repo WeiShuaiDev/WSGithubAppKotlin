@@ -6,7 +6,7 @@ import java.io.BufferedReader
 import java.io.FileReader
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/11/7
  * @Description:Library配置
  */

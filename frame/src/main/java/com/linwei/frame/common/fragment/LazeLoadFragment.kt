@@ -5,7 +5,7 @@ import android.view.View
 import com.trello.rxlifecycle.components.support.RxFragment
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description: LazeLoadFragment延时加载
  */

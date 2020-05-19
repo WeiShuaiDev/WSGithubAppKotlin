@@ -3,7 +3,7 @@ package com.linwei.frame.common
 import android.os.Handler
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description: Handler基类
  */

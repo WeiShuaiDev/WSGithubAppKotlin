@@ -1,0 +1,75 @@
+
+package com.linwei.frame.utils
+
+import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.Build
+import android.os.LocaleList
+import androidx.annotation.RequiresApi
+import java.util.*
+
+/**
+ * @Author: weiyun
+ * @Time: 2020/5/19
+ * @Description:修改语言配置
+ */
+object AppLanguageUtils {
+    /**
+     * 系统语言类型
+     */
+    private val mLanguageTypes: MutableMap<String, Locale> =
+        mutableMapOf(
+            "zh" to Locale.SIMPLIFIED_CHINESE,
+            "en" to Locale.ENGLISH
+        )
+
+    /**
+     * 增加系统语言类型
+     */
+    fun addLanguageType(language: String, local: Locale) {
+        mLanguageTypes[language] = local
+    }
+
+    fun setLanguage(context: Context, language: String) {
+        val resources: Resources = context.applicationContext.resources
+        val config: Configuration = resources.configuration
+
+        val locale: Locale? = getLocaleByLanguage(language)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(locale)
+        } else {
+            config.locale = locale
+        }
+        resources.updateConfiguration(config, resources.displayMetrics)
+    }
+
+
+    fun attachBaseContext(context: Context, language: String): Context {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            return updateResources(context, getLocaleByLanguage(language))
+        }
+        return context
+    }
+
+    /**
+     * 根据language key获取Locale
+     */
+    private fun getLocaleByLanguage(language: String?): Locale? {
+        if (UIUtils.isNotNullOrEmpty(language)) {
+            if (mLanguageTypes.containsKey(language)) {
+                return mLanguageTypes[language]
+            }
+        }
+        return Locale.getDefault()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun updateResources(context: Context, locale: Locale?): Context {
+        val resources: Resources = context.resources
+        val config: Configuration = resources.configuration
+        config.setLocale(locale)
+        config.setLocales(LocaleList(locale))
+        return context.createConfigurationContext(config)
+    }
+}

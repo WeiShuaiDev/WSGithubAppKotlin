@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.linwei.frame.R
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description: ViewHolder管理
  */

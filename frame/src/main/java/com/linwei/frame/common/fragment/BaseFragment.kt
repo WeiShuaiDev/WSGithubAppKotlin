@@ -19,7 +19,7 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description: BaseFragment基类
  */

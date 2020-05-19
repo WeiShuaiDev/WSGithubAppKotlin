@@ -13,7 +13,7 @@ import com.linwei.frame.listener.OnTopRightClickListener
 import com.linwei.frame.utils.UIUtils
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description: BaseFragmentWithTopAndStatus基类
  */

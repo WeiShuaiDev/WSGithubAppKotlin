@@ -8,7 +8,7 @@ import com.linwei.frame.config.LibConfig
 import com.linwei.frame.utils.AppLanguageUtils
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description: BaseApplication基类
  */
@@ -18,7 +18,7 @@ abstract class BaseApp() : MultiDexApplication() {
         lateinit var mInstance: BaseApp
     }
 
-    override fun attachBaseContext(context: Context?) {
+    override fun attachBaseContext(context: Context) {
         initLibConfig(context)
         super.attachBaseContext(AppLanguageUtils.attachBaseContext(context, LibConfig.LANGUAGE))
         MultiDex.install(this)

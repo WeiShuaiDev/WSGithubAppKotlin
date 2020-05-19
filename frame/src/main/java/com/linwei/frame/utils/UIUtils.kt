@@ -1,46 +1,58 @@
 package com.linwei.frame.utils
+
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import java.util.*
+
 /**
- * @Author: weiyun
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description:UI工具类
  */
 object UIUtils {
-
     /**
      * DP-PX
      */
     fun dp2px(context: Context, dpValue: Float): Int {
-        val scale = context.resources.displayMetrics.density
+        val scale: Float = context.resources.displayMetrics.density
         return (dpValue * scale + 0.5f).toInt()
     }
 
     /**
-     * SP->PX
+     * PX-DP
+     */
+    fun px2dp(context: Context, pxValue: Float): Int {
+        val scale: Float = context.resources.displayMetrics.density
+        return (pxValue / scale + 0.5f).toInt()
+    }
+
+    /**
+     * SP-PX
      */
     fun sp2px(context: Context, spValue: Float): Int {
-        val fontScale = context.resources.displayMetrics.scaledDensity
-        return (spValue * fontScale + 0.5f).toInt()
+        val scale: Float = context.resources.displayMetrics.scaledDensity
+        return (spValue * scale + 0.5f).toInt()
     }
 
     /**
-     * 收起软键盘
+     * PX-SP
      */
-    fun hideInput(view: View) {
-        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    fun px2sp(context: Context, pxValue: Float): Int {
+        val scale: Float = context.resources.displayMetrics.scaledDensity
+        return (pxValue / scale + 0.5f).toInt()
     }
 
     /**
-     * 显示软键盘
+     * 判断字符串：Null\null\""
      */
-    fun showInput(view: View) {
-        view.isFocusable = true
-        view.isFocusableInTouchMode = true
-        view.requestFocus()
-        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(view, 0)
+    fun isNotNullOrEmpty(value: String?): Boolean {
+        if (!value.isNullOrEmpty()) {
+            if (value.toUpperCase(Locale.getDefault()) == "NULL") {
+                return true
+            }
+        }
+        return false
     }
+
 }

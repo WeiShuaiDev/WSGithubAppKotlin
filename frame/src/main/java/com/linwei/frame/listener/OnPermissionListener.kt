@@ -1,7 +1,7 @@
 package com.linwei.frame.listener
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description: 权限申请回调
  */

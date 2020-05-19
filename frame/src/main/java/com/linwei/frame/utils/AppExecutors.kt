@@ -6,7 +6,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 /**
- * @Author: weiyun
+ * @Author: WS
  * @Time: 2019/10/17
  * @Description:线程池类
  */

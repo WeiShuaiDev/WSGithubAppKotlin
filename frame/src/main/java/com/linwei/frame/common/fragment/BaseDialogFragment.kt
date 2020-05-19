@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.linwei.frame.R
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description: BaseDialogFragment基类
  */

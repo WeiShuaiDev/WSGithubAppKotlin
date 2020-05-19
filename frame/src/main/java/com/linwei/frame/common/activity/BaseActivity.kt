@@ -31,7 +31,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog
 import java.util.*
 
 /**
- * @Author: ws
+ * @Author: WS
  * @Time: 2019/10/14
  * @Description: Activity基类
  */
@@ -44,7 +44,7 @@ abstract class BaseActivity : RxAppCompatActivity() {
     protected var mToast: ToastUtils? = null
     lateinit var mPermissionListener: OnPermissionListener
 
-    override fun attachBaseContext(newBase: Context?) {
+    override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(AppLanguageUtils.attachBaseContext(newBase, LibConfig.LANGUAGE))
     }
 
@@ -123,13 +123,17 @@ abstract class BaseActivity : RxAppCompatActivity() {
                 statusBarHeight = UIUtils.dp2px(this, 25f)
             }
 
-            val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight)
+            val params =
+                LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight)
             mStatusFillView.setBackgroundResource(getStatusColor())
             mStatusFillView.layoutParams = params
             linearLayout.addView(mStatusFillView)
         }
 
-        val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        val params = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         view.layoutParams = params
         linearLayout.addView(view)
 
@@ -330,7 +334,11 @@ abstract class BaseActivity : RxAppCompatActivity() {
      */
     fun checkRuntimePermission(permissions: Array<String>): Boolean {
         for (permission in permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 return false
             }
         }
@@ -340,11 +348,18 @@ abstract class BaseActivity : RxAppCompatActivity() {
     /**
      * 申请运行时权限
      */
-    fun requestRuntimePermission(permissions: Array<String>, permissionListener: OnPermissionListener) {
+    fun requestRuntimePermission(
+        permissions: Array<String>,
+        permissionListener: OnPermissionListener
+    ) {
         this.mPermissionListener = permissionListener
         val permissionList = ArrayList<String>()
         for (permission in permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 permissionList.add(permission)
             }
         }
@@ -356,7 +371,11 @@ abstract class BaseActivity : RxAppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             1 -> if (grantResults.isNotEmpty()) {
