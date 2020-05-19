@@ -132,4 +132,10 @@ dependencies {
     //Permission
     api "pub.devrel:easypermissions:$rootProject.easypermission_version"
 
+    // stream
+    api "com.annimon:stream:$rootProject.streamVersion"
+
+    //QMUI
+    api "com.qmuiteam:qmui:$rootProject.qmuiVersion"
+
 }

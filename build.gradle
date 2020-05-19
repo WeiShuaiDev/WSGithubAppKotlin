@@ -19,6 +19,8 @@ buildscript {
     ext.easypermission_version='3.0.0'
     ext.rxbus_version = '1.0.2'
     ext.autosize_version = '1.2.1'
+    ext.streamVersion='1.1.4'
+    ext.qmuiVersion = '1.1.10'
 
     ext.navigation_version = '2.2.2'
     ext.lifecycle_version = '2.2.0-alpha01'
@@ -27,6 +29,7 @@ buildscript {
     ext.paging_version = '2.1.2'
     ext.work_version = '2.3.4'
     ext.gson_version = '2.8.2'
+
 
     repositories {
         google()

@@ -1,11 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="MatchAndMatch">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="MatchAndWrap">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="WrapAndMatch">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="WrapAndWrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--线条样式-->
+    <style name="HorizontalLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/colorGlobalLine</item>
+    </style>
+
+    <style name="VerticalLine">
+        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/colorGlobalLine</item>
+    </style>
+
+    <!--Text样式配置-->
+    <style name="WrapAndWrap.GlobalTextGrayColor">
+        <item name="android:textColor">@color/colorGlobalTextGray</item>
+    </style>
+
+    <style name="MatchAndWrap.GlobalTextGrayColor">
+        <item name="android:textColor">@color/colorGlobalTextGray</item>
+    </style>
+
+    <style name="tv_12_style" parent="@style/WrapAndWrap.GlobalTextGrayColor">
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+s
+    <style name="tv_14_style" parent="@style/WrapAndWrap.GlobalTextGrayColor">
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="tv_16_style" parent="@style/WrapAndWrap.GlobalTextGrayColor">
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="tv_18_style" parent="@style/WrapAndWrap.GlobalTextGrayColor">
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="tv_26_style" parent="@style/WrapAndWrap.GlobalTextGrayColor">
+        <item name="android:textSize">@dimen/sp_26</item>
+    </style>
+
+    <!--Dialog样式配置-->
+    <style name="dialog_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="top_dialog_animation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/push_top_in</item>
+        <item name="android:windowExitAnimation">@anim/push_top_out</item>
+    </style>
+
+    <!--导航样式-->
+    <style name="top_tv_title_style" parent="@style/MatchAndMatch">
+        <item name="android:textColor">@color/colorGlobalWhite</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="top_ib_back_style">
+        <item name="android:layout_width">@dimen/dp_40</item>
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:contentDescription">@string/back</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="top_tv_right_style" parent="@style/WrapAndMatch">
+        <item name="android:textColor">@color/colorGlobalWhite</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">@dimen/dp_15</item>
+    </style>
+
+    <style name="top_ib_right_style">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_width">@dimen/dp_50</item>
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">@dimen/dp_15</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
 </resources>
