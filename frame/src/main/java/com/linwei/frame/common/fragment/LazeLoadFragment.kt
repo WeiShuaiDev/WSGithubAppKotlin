@@ -2,6 +2,7 @@ package com.linwei.frame.common.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.trello.rxlifecycle.components.support.RxFragment
 
 /**
@@ -9,7 +10,7 @@ import com.trello.rxlifecycle.components.support.RxFragment
  * @Time: 2019/10/14
  * @Description: LazeLoadFragment延时加载
  */
-open class LazeLoadFragment : RxFragment() {
+open class LazeLoadFragment : Fragment() {
 
     companion object {
         val TAG = LazeLoadFragment::class.java.simpleName

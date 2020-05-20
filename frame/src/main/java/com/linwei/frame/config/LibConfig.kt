@@ -13,25 +13,11 @@ import java.io.FileReader
 object LibConfig {
     var DEBUG: Boolean = false
     var APPLICATION_ID: String? = null  //包名
-    var LANGUAGE = "vi" //语言
-    var APP_VERSION: String? = null //APP的版本号
+    var LANGUAGE = "zh" //语言
     var VERSION: String? = null //版本号
-    var CHANNEL: String? = null //来源渠道
     var TIMESTAMP: String? = null //时间戳
     var APP_NAME: String? = null //应用名
     var BASE_URL: String? = null //域名
-    var CASH_UNIT: String? = null //金额单位
-    var ADJUST_APP_TOKEN: String? = null
-    var ADJUST_APP_SECRETID: Int = 0
-    var ADJUST_APP_INFO1: Int = 0
-    var ADJUST_APP_INFO2: Int = 0
-    var ADJUST_APP_INFO3: Int = 0
-    var ADJUST_APP_INFO4: Int = 0
-    var ADJUST_ENVIRONMENT: String? = null
-    var ADJUST_APP_TRACKER: String? = null
-    var ADJUST_GAID: String? = null
-    var BUGLY_APP_ID: String? = null
-    var UPLOAD_CALL_SMS: Boolean = false
 
     /**
      * 初始化第三方库
@@ -67,6 +53,4 @@ object LibConfig {
         }
         return null
     }
-
-
 }

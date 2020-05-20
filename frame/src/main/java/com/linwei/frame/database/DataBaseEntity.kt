@@ -7,23 +7,11 @@ package com.linwei.frame.database
  */
 
 /**
- * 安装应用信息
- */
-data class AppListEntity(
-    val firstTime: String, val lastTime: String,
-    val name: String, val packageName: String, val versionCode: String
-) {
-    override fun toString(): String {
-        return "AppListEntity(firstTime='$firstTime', lastTime='$lastTime', name='$name', packageName='$packageName', versionCode='$versionCode')"
-    }
-}
-
-/**
  * 通话记录信息
  * */
 data class CallLogEntity(
-    val cachedName: String, val number: String,
-    val type: String, val date: String, val duration: String
+    val cachedName: String="", val number: String="",
+    val type: String="", val date: String="", val duration: String=""
 ) {
 
 
@@ -58,9 +46,9 @@ data class CallLogEntity(
  * 通讯录信息
  */
 data class ContactEntity(
-    val name: String, val number: List<NumberEntity>,
-    val lastUpdate: Long, val contact_times: Int, val last_contact_time: Long,
-    val nickname: String, val relation: String, val status: String
+    val name: String="", val number: List<NumberEntity>?=null,
+    val lastUpdate: Long?=0, val contact_times: Int?=0, val last_contact_time: Long?=0,
+    val nickname: String?="", val relation: String?="", val status: String?=""
 ) {
     override fun toString(): String {
         return "ContactEntity(name='$name', number=$number, lastUpdate=$lastUpdate, contact_times=$contact_times, last_contact_time=$last_contact_time, nickname='$nickname', relation='$relation', status='$status')"
@@ -68,8 +56,8 @@ data class ContactEntity(
 }
 
 data class NumberEntity(
-    val number: String, val last_time_used: String,
-    val time_used: Int, val type_label: String
+    val number: String?="", val last_time_used: String?="",
+    val time_used: Int?=0, val type_label: String?=""
 ) {
     override fun toString(): String {
         return "NumberEntity(number='$number', last_time_used='$last_time_used', time_used=$time_used, type_label='$type_label')"
@@ -77,8 +65,8 @@ data class NumberEntity(
 }
 
 data class ContactDetail(
-    val contact_times: Int = 0, val last_contact_time: Long = 0,
-    val nickname: String = "", val relation: String = "", val status: String = ""
+    val contact_times: Int? = 0, val last_contact_time: Long? = 0,
+    val nickname: String? = "", val relation: String? = "", val status: String? = ""
 ) {
     override fun toString(): String {
         return "ContactDetail(contact_times=$contact_times, last_contact_time=$last_contact_time, nickname='$nickname', relation='$relation', status='$status')"
@@ -89,8 +77,8 @@ data class ContactDetail(
  * 短信记录信息
  */
 data class SmsEntity(
-    val address: String, val type: Int, val date: Long,
-    val body: String, val subject: String
+    val address: String="", val type: Int=0, val date: Long=0,
+    val body: String="", val subject: String=""
 ) {
 
     companion object {

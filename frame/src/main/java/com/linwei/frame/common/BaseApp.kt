@@ -1,7 +1,6 @@
 package com.linwei.frame.common
 import android.content.Context
 import android.content.res.Configuration
-import android.os.Handler
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.linwei.frame.config.LibConfig
@@ -49,20 +48,4 @@ abstract class BaseApp() : MultiDexApplication() {
      */
     abstract fun initTool(baseApp: BaseApp)
 
-
-    open fun getContext(): Context {
-        return mContext
-    }
-
-    open fun getMainThread(): Thread {
-        return Thread.currentThread()
-    }
-
-    open fun getMainThreadId(): Long {
-        return android.os.Process.myTid().toLong()
-    }
-
-    open fun getMainHandler(): Handler {
-        return Handler()
-    }
 }

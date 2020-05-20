@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -88,10 +88,6 @@ dependencies {
     //Multidex
     api "com.android.support:multidex:$rootProject.multidex_version"
 
-    //RxLifecycle
-    api "com.trello:rxlifecycle-kotlin:$rootProject.rxLifecycle_version"
-    api "com.trello:rxlifecycle-components:$rootProject.rxLifecycle_version"
-
     //Retrofit
     api "com.squareup.okhttp3:okhttp:$rootProject.okhttp_version"
     api "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
@@ -132,8 +128,6 @@ dependencies {
     //Permission
     api "pub.devrel:easypermissions:$rootProject.easypermission_version"
 
-    // stream
-    api "com.annimon:stream:$rootProject.streamVersion"
 
     //QMUI
     api "com.qmuiteam:qmui:$rootProject.qmuiVersion"

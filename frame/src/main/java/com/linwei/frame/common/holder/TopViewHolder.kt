@@ -10,9 +10,9 @@ import com.linwei.frame.R
  * @Time: 2019/10/14
  * @Description: ViewHolder管理
  */
-class TopViewHolder(view: View?) {
+class TopViewHolder(view: View) {
     private var mMapViews: MutableMap<Int, View> = mutableMapOf()
-    private var mItemView: View = view!!
+    private var mItemView: View = view
     var mIvBack: ImageButton
     var mTvTitle: TextView
     var mRightTitle: TextView

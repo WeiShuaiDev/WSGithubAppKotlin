@@ -19,7 +19,7 @@ import com.linwei.frame.utils.UIUtils
  */
 abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
     lateinit var mTopViewHolder: TopViewHolder
-    var mTopBarView: ViewGroup? = null
+    lateinit var mTopBarView: ViewGroup
 
     private var mOnTopLeftListener: OnTopLeftClickListener? = null//左边监听
     private var mOnTopRightListener: OnTopRightClickListener? = null //右边监听
@@ -71,7 +71,8 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
      * 解决状态栏
      */
     private fun addStatusView(view: View?): ViewGroup {
-        val linearLayout = View.inflate(mActivity, R.layout.base_content_layout, null) as LinearLayout
+        val linearLayout =
+            View.inflate(mActivity, R.layout.base_content_layout, null) as LinearLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val mStatusFillView = View(mActivity)
@@ -80,7 +81,8 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
             val statusBarHeight = UIUtils.dp2px(mActivity, 25f)
             //}
 
-            val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight)
+            val params =
+                LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight)
             mStatusFillView.setBackgroundResource(getStatusColor())
             mStatusFillView.layoutParams = params
             linearLayout.addView(mStatusFillView)
@@ -88,7 +90,10 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
 
         if (view != null) {
             val params =
-                ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
             view.layoutParams = params
             linearLayout.addView(view)
         }
@@ -96,7 +101,6 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
         dealImmersive()
         return linearLayout
     }
-
 
 
     open fun getTopBarId(): Int = -1

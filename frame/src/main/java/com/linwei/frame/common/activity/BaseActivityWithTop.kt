@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.linwei.frame.common.holder.TopViewHolder
+import com.linwei.frame.ext.hideSoftKeyboard
 import com.linwei.frame.ext.setVisible
 import com.linwei.frame.listener.OnTopLeftClickListener
 import com.linwei.frame.listener.OnTopRightClickListener
@@ -50,7 +51,7 @@ abstract class BaseActivityWithTop : BaseActivity() {
                 mITopLeftListener?.onTopClickListener()
             } else {
                 //关闭页面前收起软键盘
-                UIUtils.hideInput(window.decorView)
+                window.decorView.hideSoftKeyboard()
                 finish()
             }
         }

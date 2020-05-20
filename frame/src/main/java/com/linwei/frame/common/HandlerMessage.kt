@@ -36,6 +36,9 @@ class HandlerMessage private constructor() {
         }
     }
 
+    /**
+     *获取主线程ID
+     */
     private fun getMainThreadId(): Long {
         return BaseApp.mContext.applicationContext.mainLooper.thread.id
     }
@@ -52,6 +55,9 @@ class HandlerMessage private constructor() {
         handler?.postDelayed(task, delayMillis.toLong())
     }
 
+    /**
+     * 移除所有任务
+     */
     fun removeTask() {
         handler?.apply {
             for (task in mTaskList) {

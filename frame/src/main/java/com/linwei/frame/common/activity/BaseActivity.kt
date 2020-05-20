@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.github.anzewei.parallaxbacklayout.ParallaxHelper
@@ -21,7 +23,6 @@ import com.linwei.frame.config.LibConfig
 import com.linwei.frame.listener.OnPermissionListener
 import com.linwei.frame.utils.AndroidBug5497Workaround
 import com.linwei.frame.utils.AppLanguageUtils
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import com.linwei.frame.utils.ToastUtils
 import com.linwei.frame.utils.UIUtils
 import com.linwei.frame.utils.statusbar.Eyes
@@ -35,7 +36,7 @@ import java.util.*
  * @Time: 2019/10/14
  * @Description: Activity基类
  */
-abstract class BaseActivity : RxAppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
     private var currentActivity: Activity? = null// 对所有activity进行管理
     private var activities: MutableList<Activity> = mutableListOf()
     protected lateinit var mContext: Context
