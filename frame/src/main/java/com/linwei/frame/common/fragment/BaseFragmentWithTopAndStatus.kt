@@ -11,6 +11,7 @@ import com.linwei.frame.ext.setVisible
 import com.linwei.frame.listener.OnTopLeftClickListener
 import com.linwei.frame.listener.OnTopRightClickListener
 import com.linwei.frame.utils.UIUtils
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper
 
 /**
  * @Author: WS
@@ -76,10 +77,10 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val mStatusFillView = View(mActivity)
-            //var statusBarHeight = QMUIStatusBarHelper.getStatusbarHeight(mActivity)
-            //if (statusBarHeight <= 0) {
-            val statusBarHeight = UIUtils.dp2px(mActivity, 25f)
-            //}
+            var statusBarHeight = QMUIStatusBarHelper.getStatusbarHeight(mActivity)
+            if (statusBarHeight <= 0) {
+             statusBarHeight = UIUtils.dp2px(mActivity, 25f)
+            }
 
             val params =
                 LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight)

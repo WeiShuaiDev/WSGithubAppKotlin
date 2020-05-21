@@ -3,7 +3,6 @@ package com.linwei.frame.common.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.trello.rxlifecycle.components.support.RxFragment
 
 /**
  * @Author: WS
@@ -38,15 +37,14 @@ open class LazeLoadFragment : Fragment() {
             //如果是第一次进入并且可见
             onFragmentFirstVisible()//回调当前fragment首次可见
             isFirstEnter = false//第一次进入的标识改为false
+            return
         }
         if (isVisibleToUser) {
             //如果不是第一次进入，可见的时候
             isFragmentVisible = true
             onFragmentVisibleChange(isFragmentVisible)//回调当前fragment可见
             return
-        }
-
-        if (isFragmentVisible) {
+        }else if(isFragmentVisible) {
             //如果当前fragment不可见且标识为true
             isFragmentVisible = false//更改标识
             onFragmentVisibleChange(isFragmentVisible)//回调当前fragment不可见

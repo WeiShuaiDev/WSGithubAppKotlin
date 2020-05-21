@@ -9,7 +9,6 @@
             android:id="@+id/mWebView"
             style="@style/MatchAndMatch"/>
 
-
     <ProgressBar
             android:id="@+id/mProgressBar"
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"

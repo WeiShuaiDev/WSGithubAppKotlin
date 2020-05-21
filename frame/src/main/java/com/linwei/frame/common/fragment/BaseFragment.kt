@@ -31,7 +31,11 @@ abstract class BaseFragment : LazeLoadFragment() {
     private var mTipDialog: QMUITipDialog? = null
     private var mToast: ToastUtils? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         if (mRootView == null) {
             val topViewGroup = getTopViewGroup()
             if (provideContentViewId() > 0) {
