@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_web_view.*
  * @Time: 2019/10/14
  * @Description: webActivity基类
  */
+@Suppress("DEPRECATION")
 abstract class BaseWebActivity : BaseActivityWithTop() {
 
     override fun provideContentViewId(): Int = R.layout.activity_web_view
@@ -84,7 +85,7 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
     /**
      * WebView设置
      */
-    @SuppressLint("NewApi")
+    @SuppressLint("NewApi", "SetJavaScriptEnabled")
     private fun initWebSetting() {
         mSettings = mWebView.settings
 
@@ -228,7 +229,6 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
             if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                 handler?.cancel();
                 dialog.dismiss();
-                true
             }
             false
         }
