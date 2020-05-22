@@ -1,7 +1,7 @@
 package com.linwei.frame.database
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2020/5/20
  * @Description: 数据库枚举类型
  */

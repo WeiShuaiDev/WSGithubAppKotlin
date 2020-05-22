@@ -17,7 +17,7 @@ import androidx.annotation.StringRes
 import java.lang.ref.WeakReference
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time:  2019/10/18
  * @Description: Toast工具类
  */

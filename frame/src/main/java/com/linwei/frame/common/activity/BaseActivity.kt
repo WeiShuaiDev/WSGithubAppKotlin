@@ -32,7 +32,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog
 import java.util.*
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description: Activity基类
  */

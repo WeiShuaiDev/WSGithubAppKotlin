@@ -9,7 +9,7 @@ import com.linwei.frame.common.fragment.BaseFragment
 import com.linwei.frame.listener.OnTopLeftClickListener
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description: BaseFragmentWithTop基类
  */

@@ -6,7 +6,7 @@ import android.content.Context
 import android.database.Cursor
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2020/5/20
  * @Description: 获取设备数据库
  */

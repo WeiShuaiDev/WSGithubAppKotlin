@@ -10,7 +10,7 @@ import android.provider.CallLog
 import android.provider.ContactsContract
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2020/5/20
  * @Description:提供数据库查询功能
  */

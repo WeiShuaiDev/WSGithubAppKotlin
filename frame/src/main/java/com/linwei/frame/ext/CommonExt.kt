@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import com.linwei.frame.utils.UIUtils
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description: 扩展函数
  */

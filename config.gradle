@@ -42,21 +42,21 @@ ext {
 
     dependencies = [
             /**
-             * ---------------------------------------------Android X-----------------------------------------
+             * ---------------------------------------------Android X-------------------------------
              */
             "appcompat"                 : "androidx.appcompat:appcompat:${version["androidXSdkVersion"]}",
             "constraintlayout"          : "androidx.constraintlayout:constraintlayout:${version["androidXSdkVersion"]}",
 
 
             /**
-             * ---------------------------------------------Kotlin------------------------------------------
+             * ---------------------------------------------Kotlin----------------------------------
              */
             "kotlin-stdlib-jdk7"        : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${version["kotlinVersion"]}",
             "core-ktx"                  : "androidx.core:core-ktx:1.2.0",
             "anko-common"               : "org.jetbrains.anko:anko-common:${version["ankoVersion"]}",
 
             /**
-             * ----------------------------------------------JetPack-----------------------------------------------
+             * ----------------------------------------------JetPack--------------------------------
              */
             //Navigation
             "navigation-fragment-ktx"   : "androidx.navigation:navigation-fragment-ktx:${version["navigationVersion"]}",
@@ -78,7 +78,7 @@ ext {
             "work-runtime-ktx"          : "androidx.work:work-runtime-ktx:${version["workVersion"]}",
 
             /**
-             * ---------------------------------------------Http----------------------------------------------------
+             * ---------------------------------------------Http------------------------------------
              */
             //OkHttp
             "okhttp"                    : "com.squareup.okhttp3:okhttp:${version["okhttpVersion"]}",
@@ -95,7 +95,7 @@ ext {
 
 
             /**
-             * ---------------------------------------------Rx1----------------------------------------------------
+             * ---------------------------------------------Rx1-------------------------------------
              */
             // RxKotlin and RxAndroid
             "rxkotlin"                  : "io.reactivex:rxkotlin:1.0.0",
@@ -105,7 +105,7 @@ ext {
             "rxpermissions"             : "com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar",
 
             /**
-             * ---------------------------------------------Rx2----------------------------------------------------
+             * ---------------------------------------------Rx2-------------------------------------
              */
             "rxkotlin2"                 : "io.reactivex:rxkotlin:1.0.0",
             "rxandroid2"                : "io.reactivex.rxjava2:rxandroid:2.1.1",
@@ -114,7 +114,7 @@ ext {
 
 
             /**
-             * ---------------------------------------------Tools----------------------------------------------------
+             * ---------------------------------------------Tools-----------------------------------
              */
             "dagger2"                   : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
             "dagger2-android"           : "com.google.dagger:dagger-android:${version["dagger2SdkVersion"]}",
@@ -130,7 +130,7 @@ ext {
             "easypermissions"           : "pub.devrel:easypermissions:${version["easypermissionVersion"]}",
 
             /**
-             * ---------------------------------------------View-----------------------------------------
+             * ---------------------------------------------View------------------------------------
              */
             //StateView
             "stateview"                 : "com.github.nukc.stateview:library:${version["stateviewVersion"]}",
@@ -141,7 +141,7 @@ ext {
             "qmui"                      : "com.qmuiteam:qmui:${version["qmuiVersion"]}",
 
             /**
-             * ---------------------------------------------Test-----------------------------------------
+             * ---------------------------------------------Test------------------------------------
              */
             "junit"                     : "junit:junit:4.12",
             "test-junit"                : 'androidx.test.ext:junit:1.1.1',

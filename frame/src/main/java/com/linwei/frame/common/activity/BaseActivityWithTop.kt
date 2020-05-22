@@ -13,7 +13,7 @@ import com.linwei.frame.utils.UIUtils
 import kotlinx.android.synthetic.main.include_top_view.view.*
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description: BaseActivityWithTop基类
  */

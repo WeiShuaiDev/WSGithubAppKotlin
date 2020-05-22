@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi
 import java.util.*
 
 /**
- * @Author: weiyun
+ * @Author: WeiShuai
  * @Time: 2020/5/19
  * @Description:修改语言配置
  */

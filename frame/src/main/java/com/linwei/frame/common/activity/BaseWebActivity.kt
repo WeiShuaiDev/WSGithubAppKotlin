@@ -16,7 +16,7 @@ import java.io.UnsupportedEncodingException
 import kotlinx.android.synthetic.main.activity_web_view.*
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description: webActivity基类
  */

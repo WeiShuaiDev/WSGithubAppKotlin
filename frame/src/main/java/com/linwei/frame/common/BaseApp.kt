@@ -7,7 +7,7 @@ import com.linwei.frame.config.LibConfig
 import com.linwei.frame.utils.AppLanguageUtils
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description: BaseApplication基类
  */

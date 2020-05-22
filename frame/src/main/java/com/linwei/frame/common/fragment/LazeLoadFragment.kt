@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description: LazeLoadFragment延时加载
  */

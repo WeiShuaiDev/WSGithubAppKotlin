@@ -14,7 +14,7 @@ import com.linwei.frame.utils.UIUtils
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description: BaseFragmentWithTopAndStatus基类
  */

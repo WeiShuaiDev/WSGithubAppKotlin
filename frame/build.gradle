@@ -98,6 +98,19 @@ dependencies {
     api rootProject.ext.dependencies["rxkotlin"]
     api rootProject.ext.dependencies["rxandroid"]
 
+    //Dagger
+    api rootProject.ext.dependencies["dagger2"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+
+    api(rootProject.ext.dependencies["rxcache2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'dagger'
+        exclude module: 'api'
+    }
+    implementation(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
+        exclude module: 'gson'
+    }
+
     //Glide
     api rootProject.ext.dependencies["glide"]
     api rootProject.ext.dependencies["glide-transformations"]
@@ -117,7 +130,6 @@ dependencies {
     //Kotlin RxBus
     api rootProject.ext.dependencies["rxbus"]
 
-
     //Klog
     api rootProject.ext.dependencies["klog"]
 
@@ -126,7 +138,6 @@ dependencies {
 
     //Permission
     api rootProject.ext.dependencies["easypermissions"]
-
 
     //QMUI
     api rootProject.ext.dependencies["qmui"]

@@ -6,7 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import java.util.*
 
 /**
- * @Author: WS
+ * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description:UI工具类
  */
