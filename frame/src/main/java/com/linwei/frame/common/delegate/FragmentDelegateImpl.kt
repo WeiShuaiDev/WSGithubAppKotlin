@@ -3,6 +3,10 @@ package com.linwei.frame.common.delegate
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.linwei.frame.common.fragment.IFragment
+import com.linwei.frame.utils.EventBusManager
 
 /**
  * ---------------------------------------------------------------------
@@ -10,17 +14,30 @@ import android.view.View
  * @Time: 2020/5/22
  * @Contact: linwei9605@gmail.com
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: FragmentDelegateImpl类提供Fragment生命周期,允许在生命周期
- *              过程提前处理一些逻辑
+ * @Description: FragmentDelegateImpl类实现FragmentDelegate,并重写所有方法,
+ *              允许在生命周期过程处理一些逻辑。
  *-----------------------------------------------------------------------
  */
-class FragmentDelegateImpl : FragmentDelegate {
+class FragmentDelegateImpl(var mFragmentManager: FragmentManager?, var mFragment: Fragment?) :
+    FragmentDelegate {
+    private lateinit var mContext: Context
+    private var mIFragment: IFragment? = null
+
+    init {
+        if (mFragment is IFragment) {
+            mIFragment = mFragment as IFragment
+        }
+    }
+
+
     override fun onAttach(context: Context) {
-        TODO("Not yet implemented")
+        this.mContext = context
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
+        if (mIFragment?.useEventBus() == true) {
+            EventBusManager.getInstance().register(mFragment)
+        }
     }
 
     override fun onCreateView(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +73,12 @@ class FragmentDelegateImpl : FragmentDelegate {
     }
 
     override fun onDestroy() {
-        TODO("Not yet implemented")
+        if (mIFragment?.useEventBus() == true) {
+            EventBusManager.getInstance().unRegister(mFragment)
+        }
+        mIFragment = null
+        mFragment = null
+        mFragmentManager = null
     }
 
     override fun onDetach() {

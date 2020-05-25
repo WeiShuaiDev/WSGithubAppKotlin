@@ -89,24 +89,5 @@ fun TextView.setTextSizeSpan(text: String, textSize: Float, startIndex: Int, end
     movementMethod = LinkMovementMethod.getInstance()
 }
 
-/**
- * 收起软键盘
- */
-fun View.hideSoftKeyboard() {
-    val imm: InputMethodManager =
-        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.hideSoftInputFromWindow(windowToken, 0)
-}
 
-/**
- * 显示软键盘
- */
-fun View.showSoftKeyboard() {
-    isFocusable = true
-    isFocusableInTouchMode = true
-    requestFocus()
-    val imm: InputMethodManager =
-        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.showSoftInput(this, 0)
-}
 

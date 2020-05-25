@@ -40,5 +40,4 @@ interface FragmentDelegate {
 
     fun onDetach()
 
-
 }

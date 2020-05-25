@@ -32,11 +32,15 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog
 import java.util.*
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2019/10/14
- * @Description: Activity基类
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description:Activity基类
+ *-----------------------------------------------------------------------
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), IActivity {
     private var currentActivity: Activity? = null// 对所有activity进行管理
     private var activities: MutableList<Activity> = mutableListOf()
     protected lateinit var mContext: Context
@@ -53,11 +57,6 @@ abstract class BaseActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mContext = this
-        //初始化的时候将其添加到集合中
-        synchronized(activities) {
-            activities.add(this)
-        }
-
         val withTopContentView = withTopContentView()
         val contentView: View
         if (withTopContentView != null) {
@@ -306,17 +305,27 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        HandlerMessage.instance.removeTask()
+    }
 
-        //销毁的时候从集合中移除
+
+    override fun addStackSingleActivity(activity: Activity?) {
+        //初始化的时候将其添加到集合中
         synchronized(activities) {
-            activities.remove(this)
-            HandlerMessage.instance.removeTask()
+            if (activity != null) {
+                activities.add(activity)
+            }
         }
     }
 
-    /**
-     * 退出应用的方法
-     */
+    override fun removeStackSingleActivity(activity: Activity?) {
+        //销毁的时候从集合中移除
+        synchronized(activities) {
+            activities.remove(activity)
+
+        }
+    }
+
     fun exitApp() {
         val iterator = activities.listIterator()
 

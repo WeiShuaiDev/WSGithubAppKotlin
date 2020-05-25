@@ -50,7 +50,7 @@ class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
     }
 
     private fun fetchActivityDelegate(activity: Activity): ActivityDelegate {
-        return ActivityDelegateImpl()
+        return ActivityDelegateImpl(activity)
     }
 
 }

@@ -2,8 +2,9 @@ package com.linwei.frame.common.delegate
 
 import android.app.Application
 import android.content.Context
+import com.linwei.frame.common.App
 import com.linwei.frame.common.lifecyclecallback.AppLifecycle
-import dagger.internal.DaggerCollections
+import com.linwei.frame.di.component.AppComponent
 
 /**
  * ---------------------------------------------------------------------
@@ -14,8 +15,8 @@ import dagger.internal.DaggerCollections
  * @Description:
  *-----------------------------------------------------------------------
  */
-class AppDelegate : AppLifecycle {
-    override fun attachBaseContext(context: Context) {
+class AppDelegate : AppLifecycle, App {
+    override fun attachBaseContext  (context: Context) {
         TODO("Not yet implemented")
     }
 
@@ -23,6 +24,10 @@ class AppDelegate : AppLifecycle {
     }
 
     override fun onTerminate(application: Application) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAppComponent(): AppComponent {
         TODO("Not yet implemented")
     }
 }

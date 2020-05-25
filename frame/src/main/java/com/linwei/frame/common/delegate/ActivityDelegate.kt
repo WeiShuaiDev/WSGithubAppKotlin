@@ -1,5 +1,4 @@
 package com.linwei.frame.common.delegate
-
 import android.os.Bundle
 
 /**

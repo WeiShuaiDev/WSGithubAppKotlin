@@ -102,6 +102,7 @@ dependencies {
     api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
 
+    //RxCache2
     api(rootProject.ext.dependencies["rxcache2"]) {
         exclude module: 'rxjava'
         exclude module: 'dagger'
@@ -141,5 +142,12 @@ dependencies {
 
     //QMUI
     api rootProject.ext.dependencies["qmui"]
+
+
+    //Event Bus
+    compileOnly rootProject.ext.dependencies["eventbus"]
+    compileOnly rootProject.ext.dependencies["otto"]
+    compileOnly rootProject.ext.dependencies["rxbus"]
+
 
 }
