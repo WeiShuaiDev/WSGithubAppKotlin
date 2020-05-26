@@ -3,7 +3,7 @@ package com.linwei.frame.common.delegate
 import android.app.Activity
 import android.os.Bundle
 import com.linwei.frame.common.activity.IActivity
-import com.linwei.frame.utils.EventBusManager
+import com.linwei.frame.manager.EventBusManager
 
 /**
  * ---------------------------------------------------------------------

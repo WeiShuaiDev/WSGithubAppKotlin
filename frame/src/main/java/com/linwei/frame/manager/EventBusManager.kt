@@ -1,4 +1,4 @@
-package com.linwei.frame.utils
+package com.linwei.frame.manager
 
 import com.linwei.frame.config.PlatformConfig
 import org.greenrobot.eventbus.EventBus
@@ -21,7 +21,8 @@ class EventBusManager {
 
         @JvmStatic
         fun getInstance(): EventBusManager {
-            return INSTANCE ?: EventBusManager().apply {
+            return INSTANCE
+                ?: EventBusManager().apply {
                 INSTANCE = this
             }
         }
@@ -30,7 +31,7 @@ class EventBusManager {
     /**
      * {@link  subscriber}注册到事件总线
      */
-    fun register(subscriber: Any?) {
+     fun register(subscriber: Any?) {
         if (PlatformConfig.isExitsEventBusDependencies()) {
             EventBus.getDefault().register(subscriber)
         }

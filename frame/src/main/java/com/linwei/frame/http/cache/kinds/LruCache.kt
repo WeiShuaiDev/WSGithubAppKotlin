@@ -1,4 +1,6 @@
-package com.linwei.frame.http.cache
+package com.linwei.frame.http.cache.kinds
+
+import com.linwei.frame.http.cache.Cache
 
 /**
  * ---------------------------------------------------------------------
@@ -6,7 +8,9 @@ package com.linwei.frame.http.cache
  * @Time: 2019/10/14
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 内存缓存
+ * @Description: 内存缓存模块，{@link LruCache<K,V>}实现了{@link Cache<K,V>}接口,
+ *              K:表示存储Key,内存存储中必须唯一
+ *              V:代表存储Value,存储内容数据
  *-----------------------------------------------------------------------
  */
 class LruCache<K, V>(size: Int, var mMaxSize: Int = size, var mInitialMaxSize: Int = size) :

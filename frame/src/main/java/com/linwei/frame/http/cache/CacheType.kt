@@ -20,10 +20,12 @@ interface CacheType {
         const val ACTIVITY_CACHE_TYPE_ID: Int = 3
         const val FRAGMENT_CACHE_TYPE_ID: Int = 4
 
-
     }
 
     /**
+     * cacheTypeId:ACTIVITY_CACHE_TYPE_ID
+     * maxSize:80
+     * multiplierSize:0.0008f
      * Activity内存容器
      */
     val activityCacheType: CacheType
@@ -38,6 +40,9 @@ interface CacheType {
 
 
     /**
+     * cacheTypeId:FRAGMENT_CACHE_TYPE_ID
+     * maxSize:80
+     * multiplierSize:0.0008f
      * Fragment内存容器
      */
     val fragmentCacheType: CacheType
@@ -52,6 +57,9 @@ interface CacheType {
 
 
     /**
+     * cacheTypeId:EXTRAS_TYPE_ID
+     * maxSize:500
+     * multiplierSize:0.005f
      * Extras内存容器
      */
     val extrasCacheType: CacheType
@@ -66,7 +74,10 @@ interface CacheType {
 
 
     /**
-     * Cache Service内存容器
+     * cacheTypeId:CACHE_SERVICE_CACHE_TYPE_ID
+     * maxSize:150
+     * multiplierSize:0.002f
+     * Cache Service模块内存容器
      */
     val cacheServiceCacheType: CacheType
         get() = object : CacheType {
@@ -79,7 +90,10 @@ interface CacheType {
         }
 
     /**
-     * Retrofit Service内存容器
+     * cacheTypeId:RETROFIT_SERVICE_CACHE_TYPE_ID
+     * maxSize:150
+     * multiplierSize:0.002f
+     * Retrofit Service模块内存容器
      */
     val retrofitServiceCacheType: CacheType
         get() = object : CacheType {

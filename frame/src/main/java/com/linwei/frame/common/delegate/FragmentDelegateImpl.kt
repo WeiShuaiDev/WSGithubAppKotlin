@@ -6,7 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.linwei.frame.common.fragment.IFragment
-import com.linwei.frame.utils.EventBusManager
+import com.linwei.frame.manager.EventBusManager
 
 /**
  * ---------------------------------------------------------------------
