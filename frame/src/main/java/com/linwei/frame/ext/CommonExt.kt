@@ -1,13 +1,11 @@
 package com.linwei.frame.ext
 
-import android.content.Context
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.linwei.frame.utils.UIUtils
@@ -18,24 +16,24 @@ import com.linwei.frame.utils.UIUtils
  * @Description: 扩展函数
  */
 
-/*
-    扩展点击事件
+/**
+ * 扩展点击事件
  */
 fun View.onClick(listener: View.OnClickListener): View {
     setOnClickListener(listener)
     return this
 }
 
-/*
-    扩展点击事件，参数为方法
+/**
+ * 扩展点击事件，参数为方法
  */
 fun View.onClick(method: () -> Unit): View {
     setOnClickListener { method() }
     return this
 }
 
-/*
-    扩展视图可见性
+/**
+ * 扩展视图可见性
  */
 fun View.setVisible(visible: Boolean) {
     this.visibility = if (visible) View.VISIBLE else View.GONE
@@ -43,7 +41,6 @@ fun View.setVisible(visible: Boolean) {
 
 /**
  * 获取url对应的域名
- *
  */
 fun String.getDomain(): String {
     var j = 0
@@ -64,7 +61,7 @@ fun String.getDomain(): String {
 
 
 /**
- *  设置字体颜色
+ * 设置字体颜色
  */
 fun TextView.setTextColorSpan(text: String, textColor: Int, startIndex: Int, endIndex: Int) {
     val span = SpannableString(text)

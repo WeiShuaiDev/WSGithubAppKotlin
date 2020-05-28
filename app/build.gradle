@@ -37,6 +37,7 @@ android {
             buildConfigField "boolean", "USE_CANARY", "true"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
 
         release {
@@ -46,6 +47,7 @@ android {
             shrinkResources false
             zipAlignEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
