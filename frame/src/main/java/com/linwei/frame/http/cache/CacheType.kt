@@ -9,7 +9,8 @@ import com.linwei.frame.ext.getCalculateCacheSize
  * @Time: 2020/5/25
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: Cache内存接口，提供一些常用内存操作
+ * @Description: Cache类型配置容器信息，分别提供了1、Activity模块内存容器 2、Fragment模块内存容器
+ * 3、 Extras模块内存容器  4、Cache Service模块内存容器 5、Retrofit Service模块内存容器
  *-----------------------------------------------------------------------
  */
 interface CacheType {
@@ -26,7 +27,7 @@ interface CacheType {
      * cacheTypeId:ACTIVITY_CACHE_TYPE_ID
      * maxSize:80
      * multiplierSize:0.0008f
-     * Activity内存容器
+     * Activity模块内存容器
      */
     val activityCacheType: CacheType
         get() = object : CacheType {
@@ -43,7 +44,7 @@ interface CacheType {
      * cacheTypeId:FRAGMENT_CACHE_TYPE_ID
      * maxSize:80
      * multiplierSize:0.0008f
-     * Fragment内存容器
+     * Fragment模块内存容器
      */
     val fragmentCacheType: CacheType
         get() = object : CacheType {
@@ -60,7 +61,7 @@ interface CacheType {
      * cacheTypeId:EXTRAS_TYPE_ID
      * maxSize:500
      * multiplierSize:0.005f
-     * Extras内存容器
+     * Extras模块内存容器
      */
     val extrasCacheType: CacheType
         get() = object : CacheType {

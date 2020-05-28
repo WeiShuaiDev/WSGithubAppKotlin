@@ -58,7 +58,7 @@ object BitmapUtils {
     }
 
     /**
-     * {@code bitmap}类型图片转换为 {@code Drawable}
+     * {@code bitmap}类型图片转换为 {@code Drawable} 类型
      * 创建一个空的 {@link BitmapDrawable}对象，并设置 {@code bitmap}中密度 density
      * @param bitmap Bitmap图片
      */

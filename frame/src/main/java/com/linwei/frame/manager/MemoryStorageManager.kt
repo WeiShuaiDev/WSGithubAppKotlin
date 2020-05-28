@@ -10,14 +10,14 @@ package com.linwei.frame.manager
  *               存储类型:byte、short、int、long、double、float、String、JSONObject、JSONArray、Array[]、Serializable、Bitmap、Drawable
  *-----------------------------------------------------------------------
  */
-class StorageManager {
+class MemoryStorageManager {
 
     companion object {
-        private var INSTANCE: StorageManager? = null
+        private var INSTANCE: MemoryStorageManager? = null
 
         @JvmStatic
-        fun getInstance(): StorageManager {
-            return INSTANCE ?: StorageManager().apply {
+        fun getInstance(): MemoryStorageManager {
+            return INSTANCE ?: MemoryStorageManager().apply {
                 INSTANCE = this
             }
         }
