@@ -8,9 +8,9 @@ import com.linwei.frame.http.cache.Cache
  * @Time: 2020/5/26
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 内存缓存模块，{@link LruCache<K,V>} 实现了 {@link Cache<K,V>} 接口, {@link LruCache<K,V>} 会根据内存最大存储大小，
- *               对内存数据进行优化删除。{@code mMaxSize}指定内存大小, {@code getItemSize()} 指定每个 {@code item} 所占用的size,
- *               默认为1,这个 size 的单位必须和构造函数所传入的@{mMaxSize}一致
+ * @Description: 内存缓存模块，{@link LruCache<K,V>} 实现了 {@link Cache<K,V>} 接口, {@link LruCache<K,V>} 核心方法 {@link #trimToSize(size)}
+ *               最近最少使用缓存数据进行优化删除。存储缓存 {@link @put()} 出现超过 {@link mMaxSize}最大缓存大小,程序进行旧缓存数据删除，来满足新文件存储。
+ *               同时更新最新存储信息。 {@code getItemSize()} 指定每个 {@code item} 所占用的size,默认为1,这个 size 的单位必须和构造函数所传入的@{mMaxSize}一致。
  *              K:表示存储Key,内存存储中必须唯一
  *              V:代表存储Value,存储内容数据
  *-----------------------------------------------------------------------
@@ -49,7 +49,7 @@ class LruCache<K, V>(size: Int, var mMaxSize: Int = size, var mInitialMaxSize: I
     /**
      * 当缓存中已占用的总 size 大于所能允许的最大 size ,会使用  {@link #trimToSize(int)} 开始清除满足条件的条目
      */
-    fun evict() {
+    private fun evict() {
         trimToSize(mMaxSize)
     }
 
@@ -104,27 +104,23 @@ class LruCache<K, V>(size: Int, var mMaxSize: Int = size, var mInitialMaxSize: I
      * 将 {@code key} 和 {@code value} 以条目的形式加入缓存,如果这个 {@code key} 在缓存中已经有对应的 {@code value}
      * 则此 {@code value} 被新的 {@code value} 替换并返回,如果为 {@code null} 说明是一个新条目
      * <p>
-     * 如果 {@link #getItemSize} 增加到内存中返回的 size 大于或等于缓存所能允许的最大 size, 则不能向缓存中添加此条目
-     * 此时会回调 {@link #onItemEvicted(Object, Object)} 通知此方法当前被驱逐的条目
+     * 如果 {@link #getItemSize(value)} 增加到内存中返回的 size 大于或等于缓存所能允许的最大 maxsize, 则启动优化缓存数据
+     * 此时会回调 {@link #onItemEvicted(Object, Object)} 通知此方法当前被驱逐的条目。
      *
      * @param key   通过这个 {@code key} 添加条目
      * @param value 需要添加的 {@code value}
      * @return 如果这个 {@code key} 在容器中已经储存有 {@code value}, 则返回之前的 {@code value} 否则返回 {@code null}
      */
     override fun put(key: K, value: V): V? {
-        val itemSize: Int = getItemSize(value) + mCurrentSize
-        if (itemSize >= mMaxSize) {
-            onItemEvicted(key, value)
-            return null
+        mCurrentSize += getItemSize(value)
+        if (mCurrentSize >= mMaxSize) {
+            evict()
         }
-        val reuslt: V? = mCacheMap.put(key, value)
-        if (value != null) {
-            mCurrentSize += getItemSize(value)
+
+        val result: V? = mCacheMap.put(key, value)
+        if (result != null) {
+            mCurrentSize -= getItemSize(result)
         }
-        if (reuslt != null) {
-            mCurrentSize -= getItemSize(reuslt)
-        }
-        evict()
         return value
 
     }

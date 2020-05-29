@@ -10,9 +10,8 @@ import java.util.*
  * @Time: 2020/5/26
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 内存缓存模块，{@link LruCache<K,V>} 实现了 {@link Cache<K,V>} 接口, {@link LruCache<K,V>} 会根据内存最大存储大小，
- *               对内存数据进行优化删除。{@code mMaxSize}指定内存大小, {@code getItemSize()} 指定每个 {@code item} 所占用的size,
- *               默认为1,这个 size 的单位必须和构造函数所传入的@{mMaxSize}一致
+ * @Description: 内存缓存模块，{@link MapCache<K,V>} 实现了 {@link Cache<K,V>} 接口, 缓存数据使用使用 {@code SoftReference}软引用包裹数据源，
+ *               在内存不足出现报警，GC会进行数据回收，同时解决存储数据多线程问题。
  *              K:表示存储Key,内存存储中必须唯一
  *              V:代表存储Value,存储内容数据
  *-----------------------------------------------------------------------

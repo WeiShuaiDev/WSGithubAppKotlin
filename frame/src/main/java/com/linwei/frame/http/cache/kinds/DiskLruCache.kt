@@ -13,14 +13,17 @@ import java.util.concurrent.atomic.AtomicLong
  * @Time: 2019/10/14
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 内存缓存模块，{@link LruCache<K,V>} 实现了 {@link Cache<K,V>} 接口, {@link LruCache<K,V>} 会根据内存最大存储大小，
- *               对内存数据进行优化删除。{@code mMaxSize}指定内存大小, {@code getItemSize()} 指定每个 {@code item} 所占用的size,
- *               默认为1,这个 size 的单位必须和构造函数所传入的@{mMaxSize}一致
- *              K:表示存储Key,内存存储中必须唯一
- *              V:代表存储Value,存储内容数据
+ * @Description: 磁盘缓存模块，{@code DiskLruCache} 实现了 {@code Cache<K,V>} 接口, {@code DiskLruCache} 核心方法 {@link #removeNext()}
+ *               根据缓存目录 {@link cacheDir} 下每个缓存文件修改时间点 {@code lastModified()} 进行存储优化，当存储缓存 {@link @put()} 出现超过 {@link countLimit}
+ *               最大缓存文件数、{@link sizeLimit} 最大缓存大小，程序进行旧缓存数据删除，来满足新文件存储。同时更新最新存储信息。
  *-----------------------------------------------------------------------
  */
-class DiskLruCache(private val cacheDir: File, val sizeLimit: Long, val countLimit: Int) :
+
+class DiskLruCache(
+    private val cacheDir: File,
+    private val sizeLimit: Long,
+    private val countLimit: Int
+) :
     Cache<File, Long>, AppExecutors() {
 
     /**
@@ -119,9 +122,10 @@ class DiskLruCache(private val cacheDir: File, val sizeLimit: Long, val countLim
         if (mLastUsageDates.containsKey(key)) {
             lastModified = mLastUsageDates[key]
             mLastUsageDates.remove(key)
+            //删除文件
+            key.delete()
         }
 
-        removeFile(key.name)
         return lastModified
     }
 
@@ -152,9 +156,10 @@ class DiskLruCache(private val cacheDir: File, val sizeLimit: Long, val countLim
 
     /**
      * 根据 {@code key} 名称，创建缓存文件,并把存储文件存储到 {@link mLastUsageDates} 数据结构
+     * @param key 文件名
      */
-    private fun newFile(key: String): File {
-        val file = File(cacheDir, key.hashCode().toString())
+    fun get(key: String): File {
+        val file: File = newFile(key)
         val currentTime: Long = System.currentTimeMillis()
         file.setLastModified(currentTime)
         mLastUsageDates[file] = currentTime
@@ -162,12 +167,23 @@ class DiskLruCache(private val cacheDir: File, val sizeLimit: Long, val countLim
     }
 
     /**
+     * 根据 {@code key} 名称，创建缓存文件
+     * @param key 缓存文件名
+     */
+    fun newFile(key: String): File {
+        return File(cacheDir, key.hashCode().toString())
+    }
+
+    /**
      * 根据 {@code key}文件名，删除 {@link cacheDir}文件目录下缓存文件
-     * @param key
+     * @param key 缓存文件名
      */
     private fun removeFile(key: String): Boolean {
-        val file: File = newFile(key)
-        return file.delete()
+        val file: File = get(key)
+        if (file.exists()) {
+            return file.delete()
+        }
+        return false
     }
 
 

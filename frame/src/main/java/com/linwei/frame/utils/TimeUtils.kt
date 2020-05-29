@@ -19,7 +19,7 @@ object TimeUtils {
      * @param strInfo 字符串数据源
      * @return 有效期时间字符串数据包
      */
-    fun newStringWithDateInfo(second: Int = 0, strInfo: String): String? {
+    fun newStringWithDateInfo(second: Int = 0, strInfo: String): String {
         return createDateInfo(second) + strInfo
     }
 
@@ -30,7 +30,7 @@ object TimeUtils {
      * @param dataArray 字节数组数据源
      * @return 生成有效期时间字节数组数据包
      */
-    fun newStringWithDateInfo(second: Int = 0, dataArray: ByteArray): ByteArray? {
+    fun newStringWithDateInfo(second: Int = 0, dataArray: ByteArray): ByteArray {
         val tempArray: ByteArray = createDateInfo(second).toByteArray()
 
         val dateArray = ByteArray(dataArray.size + tempArray.size)
@@ -96,7 +96,7 @@ object TimeUtils {
      *  判断 {@code byteArray} 字节数组类型数据包是否过期，通过保存时间 {@code saveTime} ，有效期 {@code deleteAfter}
      *  跟当前时间进行比较，确定数据有效性。
      * @param byteArray 字节数组类型数据包
-     * @return true:有效数据包 false: 无效数据包
+     * @return true:无效数据包 false: 有效数据包
      */
     fun isDue(byteArray: ByteArray?): Boolean {
         val dateArray: Array<String>? = getDateInfoFromDate(byteArray)
