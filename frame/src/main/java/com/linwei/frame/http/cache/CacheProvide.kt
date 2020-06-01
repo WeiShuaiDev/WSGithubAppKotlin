@@ -61,5 +61,4 @@ interface CacheProvide {
 
     fun getAsDrawable(key: String): Drawable?
 
-
 }

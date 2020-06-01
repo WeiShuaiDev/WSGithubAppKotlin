@@ -122,7 +122,6 @@ class LruCache<K, V>(size: Int, var mMaxSize: Int = size, var mInitialMaxSize: I
             mCurrentSize -= getItemSize(result)
         }
         return value
-
     }
 
     /**

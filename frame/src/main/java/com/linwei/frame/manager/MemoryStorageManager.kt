@@ -1,12 +1,17 @@
 package com.linwei.frame.manager
 
+import android.animation.ValueAnimator
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import com.google.gson.JsonObject
 import com.linwei.frame.http.cache.CacheProvide
 import com.linwei.frame.http.cache.kinds.MapCache
+import com.linwei.frame.utils.BitmapUtils
+import com.linwei.frame.utils.TimeUtils
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.IOException
 import java.io.Serializable
 
 /**
@@ -17,15 +22,13 @@ import java.io.Serializable
  * @Follow https://github.com/WeiShuaiDev
  * @Description: 面向对象6大原则，符合接口隔离原则，不同存储方式，暴露基本操作，都需要实现 {@link CacheProvide} 接口，
  *               这样提高代码扩展性。
- *               存储方式{@link LruCache}、{@link MapCache} 内存存储，根据不同业务需求，选择不同存储方式。
+ *               存储方式{@link MapCache} 内存存储，根据不同业务需求，选择不同存储方式。
  *               存储类型:String、JSONObject、JSONArray、Array[]、Serializable、Bitmap、Drawable
  *-----------------------------------------------------------------------
  */
-class MemoryStorageManager(
+class MemoryStorageManager() : CacheProvide {
 
-) : CacheProvide {
-
-    private val mMapCache: MapCache<String, String> = MapCache()
+    private val mMapCache: MapCache = MapCache()
 
     companion object {
         private var INSTANCE: MemoryStorageManager? = null
@@ -38,89 +41,224 @@ class MemoryStorageManager(
         }
     }
 
+    /**
+     * 保存字符串 {@code value} 数据到 {@code key} 文件中
+     * @param key 文件名
+     * @param value 字符串数据
+     */
     override fun put(key: String, value: String) {
         mMapCache.put(key, value)
     }
 
+    /**
+     * 保存字符串 {@code value} 数据到 {@code key} 文件中，有效期时间 {@code saveTime}
+     * @param key 文件名
+     * @param value 字符串数据
+     * @param saveTime 有效期
+     */
     override fun put(key: String, value: String, saveTime: Int) {
-        TODO("Not yet implemented")
+        put(key, TimeUtils.newStringWithDateInfo(saveTime, value))
     }
 
+    /**
+     * 保存Json对象 {@code value} 数据到 {@code key} 文件中，
+     * @param key 文件名
+     * @param value JsonObject对象
+     */
     override fun put(key: String, value: JsonObject) {
-        TODO("Not yet implemented")
+        put(key, value.toString())
     }
 
+    /**
+     * 保存Json对象 {@code value} 数据到 {@code key} 文件中，有效期时间 {@code saveTime}
+     * @param key 文件名
+     * @param value JsonObject对象
+     * @param saveTime 有效期
+     */
     override fun put(key: String, value: JSONObject, saveTime: Int) {
-        TODO("Not yet implemented")
+        put(key, TimeUtils.newStringWithDateInfo(saveTime, value.toString()))
     }
 
+    /**
+     * 保存Json数组 {@code value} 数据到 {@code key} 文件中，
+     * @param key 文件名
+     * @param value JSONArray
+     */
     override fun put(key: String, value: JSONArray) {
-        TODO("Not yet implemented")
+        put(key, value.toString())
     }
 
+    /**
+     * 保存Json数组 {@code value} 数据到 {@code key} 文件中，有效期时间 {@code saveTime}
+     * @param key 文件名
+     * @param value JSONArray
+     * @param saveTime 有效期
+     */
     override fun put(key: String, value: JSONArray, saveTime: Int) {
-        TODO("Not yet implemented")
+        put(key, TimeUtils.newStringWithDateInfo(saveTime, value.toString()))
     }
 
+    /**
+     * 保存字节数组 {@code value} 数据到 {@code key} 文件中
+     * @param key 文件名
+     * @param value ByteArray
+     * @param saveTime 有效期
+     */
     override fun put(key: String, value: ByteArray) {
-        TODO("Not yet implemented")
+        put(key, value.toString())
     }
 
+    /**
+     * 保存字节数组 {@code value} 数据到 {@code key} 文件中，有效期时间 {@code saveTime}
+     * @param key 文件名
+     * @param value ByteArray
+     * @param saveTime 有效期
+     */
     override fun put(key: String, value: ByteArray, saveTime: Int) {
-        TODO("Not yet implemented")
+        put(key, TimeUtils.newStringWithDateInfo(saveTime, value).toString())
     }
 
+    /**
+     * 保存序列化 {@code value} 数据到 {@code key} 文件中
+     * @param key 文件名
+     * @param value Serializable
+     * @param saveTime 有效期
+     */
     override fun put(key: String, value: Serializable) {
-        TODO("Not yet implemented")
+        put(key, value.toString())
     }
 
+    /**
+     * 保存序列化 {@code value} 数据到 {@code key} 文件中，有效期时间 {@code saveTime}
+     * @param key 文件名
+     * @param value Serializable
+     * @param saveTime 有效期
+     */
     override fun put(key: String, value: Serializable, saveTime: Int) {
-        TODO("Not yet implemented")
+        put(key, TimeUtils.newStringWithDateInfo(saveTime, value.toString()))
     }
 
+    /**
+     * 保存Bitmap {@code value} 数据到 {@code key} 文件中
+     * @param key 文件名
+     * @param value Bitmap
+     */
     override fun put(key: String, value: Bitmap) {
-        TODO("Not yet implemented")
+        put(key, BitmapUtils.bitmap2Bytes(value))
     }
 
+    /**
+     * 保存Bitmap {@code value} 数据到 {@code key} 文件中，有效期时间 {@code saveTime}
+     * @param key 文件名
+     * @param value Bitmap
+     * @param saveTime 有效期
+     */
     override fun put(key: String, value: Bitmap, saveTime: Int) {
-        TODO("Not yet implemented")
+        put(
+            key,
+            TimeUtils.newStringWithDateInfo(saveTime, BitmapUtils.bitmap2Bytes(value))
+        )
     }
 
+    /**
+     * 保存Drawable {@code value} 数据到 {@code key} 文件中
+     * @param key 文件名
+     * @param value Bitmap
+     */
     override fun put(key: String, value: Drawable) {
-        TODO("Not yet implemented")
+        val drawable2Bitmap: Bitmap? = BitmapUtils.drawable2Bitmap(value)
+        if (drawable2Bitmap != null) {
+            put(key, drawable2Bitmap)
+        }
     }
 
+    /**
+     * 保存Drawable {@code value} 数据到 {@code key} 文件中，有效期时间 {@code saveTime}
+     * @param key 文件名
+     * @param value Drawable
+     * @param saveTime 有效期
+     */
     override fun put(key: String, value: Drawable, saveTime: Int) {
-        TODO("Not yet implemented")
+        val drawable2Bitmap: Bitmap? = BitmapUtils.drawable2Bitmap(value)
+        if (drawable2Bitmap != null) {
+            put(key, drawable2Bitmap, saveTime)
+        }
     }
 
+
+    /**
+     * 获取 {@code key} 文件中字符串缓存数据
+     * @param key 文件名
+     */
     override fun getAsString(key: String): String? {
-        TODO("Not yet implemented")
+        return mMapCache.get(key)
     }
 
+    /**
+     * 获取 {@code key} 文件中 JSONObject 缓存数据
+     * @param key 文件名
+     */
     override fun getAsJSONObject(key: String): JSONObject? {
-        TODO("Not yet implemented")
+        val value: String? = mMapCache.get(key)
+        try {
+            if (value != null) {
+                return JSONObject(value)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        }
+        return null
     }
 
+    /**
+     * 获取 {@code key} 文件中 JSONArray 缓存数据
+     * @param key 文件名
+     */
     override fun getAsJSONArray(key: String): JSONArray? {
-        TODO("Not yet implemented")
+        val value: String? = mMapCache.get(key)
+        try {
+            if (value != null) {
+                return JSONArray(value)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        }
+        return null
     }
 
+    /**
+     * 获取 {@code key} 文件中 ByteArray 缓存数据
+     * @param key 文件名
+     */
     override fun getAsBinary(key: String): ByteArray? {
-        TODO("Not yet implemented")
+        return mMapCache.get(key)?.toByteArray()
     }
 
+    /**
+     * 获取 {@code key} 文件中 Serializable 缓存数据
+     * @param key 文件名
+     */
     override fun getAsObject(key: String): Any? {
-        TODO("Not yet implemented")
+        return mMapCache.get(key)
     }
 
+    /**
+     * 获取 {@code key} 文件中 Bitmap 缓存数据
+     * @param key 文件名
+     */
     override fun getAsBitmap(key: String): Bitmap? {
-        TODO("Not yet implemented")
+        val byteArray: ByteArray? = getAsBinary(key)
+        return BitmapUtils.bytes2Bitmap(byteArray)
     }
-
+    
+    /**
+     * 获取 {@code key} 文件中 Drawable 缓存数据
+     * @param key 文件名
+     */
     override fun getAsDrawable(key: String): Drawable? {
-        TODO("Not yet implemented")
+        val byteArray: ByteArray? = getAsBinary(key)
+        return BitmapUtils.bitmap2Drawable(BitmapUtils.bytes2Bitmap(byteArray))
     }
-
-
 }

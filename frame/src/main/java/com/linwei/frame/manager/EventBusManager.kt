@@ -1,5 +1,4 @@
 package com.linwei.frame.manager
-
 import com.linwei.frame.config.PlatformConfig
 import org.greenrobot.eventbus.EventBus
 
@@ -23,27 +22,84 @@ class EventBusManager {
         fun getInstance(): EventBusManager {
             return INSTANCE
                 ?: EventBusManager().apply {
-                INSTANCE = this
-            }
+                    INSTANCE = this
+                }
         }
     }
 
     /**
-     * {@link  subscriber}注册到事件总线
+     * 判断 {@link DEPENDENCY_EVENTBUS} 在 dependencies{} 中依赖EventBus远程库
+     * {@link subscriber} 绑定事件总线
+     * @param subscriber
      */
-     fun register(subscriber: Any?) {
-        if (PlatformConfig.isExitsEventBusDependencies()) {
+    fun register(subscriber: Any?) {
+        if (PlatformConfig.DEPENDENCY_EVENTBUS) {
             EventBus.getDefault().register(subscriber)
         }
     }
 
     /**
-     * 事件总线移除{@link  subscriber}注册
+     * 判断 {@link DEPENDENCY_EVENTBUS} 在 dependencies{} 中依赖EventBus远程库
+     * {@link subscriber} 解除绑定
+     * @param subscriber
      */
     fun unRegister(subscriber: Any?) {
-        if (PlatformConfig.isExitsEventBusDependencies()) {
+        if (PlatformConfig.DEPENDENCY_EVENTBUS) {
             EventBus.getDefault().unregister(subscriber)
         }
     }
 
+    /**
+     * 判断 {@link DEPENDENCY_EVENTBUS} 在 dependencies{} 中依赖EventBus远程库
+     * 发送 {@code event} 事件
+     * @param evnet 事件
+     */
+    fun post(event: Any?) {
+        if (PlatformConfig.DEPENDENCY_EVENTBUS) {
+            EventBus.getDefault().post(event)
+        }
+    }
+
+    /**
+     * 判断 {@link DEPENDENCY_EVENTBUS} 在 dependencies{} 中依赖EventBus远程库
+     * 发送 {@code event} 黏性事件
+     * @param evnet 事件
+     */
+    fun postSticky(event: Any?) {
+        if (PlatformConfig.DEPENDENCY_EVENTBUS) {
+            EventBus.getDefault().postSticky(event)
+        }
+    }
+
+    /**
+     * 判断 {@link DEPENDENCY_EVENTBUS} 在 dependencies{} 中依赖EventBus远程库
+     * 注销 {@code event} 黏性事件
+     * @param evnet 事件
+     */
+    fun removeStickyEvent(event: Any?) {
+        if (PlatformConfig.DEPENDENCY_EVENTBUS) {
+            EventBus.getDefault().removeStickyEvent(event)
+        }
+    }
+
+    /**
+     * 判断 {@link DEPENDENCY_EVENTBUS} 在 dependencies{} 中依赖EventBus远程库
+     * 注销 {@code eventType} 黏性事件
+     *  @param eventType 事件类型
+     */
+    fun removeStickyEvent(eventType: Class<Any>) {
+        if (PlatformConfig.DEPENDENCY_EVENTBUS) {
+            EventBus.getDefault().removeStickyEvent(eventType)
+        }
+    }
+
+    /**
+     * 判断 {@link DEPENDENCY_EVENTBUS} 在 dependencies{} 中依赖EventBus远程库
+     * 清除订阅者和事件的缓存
+     */
+    fun clear() {
+        if (PlatformConfig.DEPENDENCY_EVENTBUS) {
+            EventBus.clearCaches()
+        }
+    }
 }

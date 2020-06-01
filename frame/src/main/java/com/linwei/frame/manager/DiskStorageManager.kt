@@ -322,11 +322,14 @@ class DiskStorageManager(
     override fun getAsJSONObject(key: String): JSONObject? {
         val json: String? = getAsString(key)
         try {
-            return JSONObject(json)
+            if (json != null) {
+                return JSONObject(json)
+            }
         } catch (e: IOException) {
             e.printStackTrace()
             return null
         }
+        return null
     }
 
     /**
@@ -336,11 +339,14 @@ class DiskStorageManager(
     override fun getAsJSONArray(key: String): JSONArray? {
         val json: String? = getAsString(key)
         try {
-            return JSONArray(json)
+            if (json != null) {
+                return JSONArray(json)
+            }
         } catch (e: IOException) {
             e.printStackTrace()
             return null
         }
+        return null
     }
 
     /**

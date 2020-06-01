@@ -89,7 +89,7 @@ class DiskLruCache(
      * @param key 缓存文件
      * @param value 缓存文件修改时间
      */
-    override fun put(key: File, value: Long): Long? {
+    override fun put(key: File,value:Long): Long? {
         var curCacheCount: Int = mCacheCount.get()
         while (curCacheCount + 1 > countLimit) {
             val freedSize: Long = removeNext()

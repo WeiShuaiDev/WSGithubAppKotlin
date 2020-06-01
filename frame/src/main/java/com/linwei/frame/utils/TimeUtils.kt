@@ -88,7 +88,7 @@ object TimeUtils {
     /**
      *  判断 {@code strInfo} 字符串数据包是否过期
      * @param strInfo 字符串类型数据包
-     * @return true:有效数据包 false: 无效数据包
+     * @return true:无效数据包  false:有效数据包
      */
     fun isDue(strInfo: String?): Boolean = isDue(strInfo?.toByteArray())
 
@@ -119,8 +119,9 @@ object TimeUtils {
      * 是否以 {@code '-'} 区别有效期数据，{@code mSeparator} 分隔内容数据角标必须大于14，因为 {@code byteArray}
      * 字节数组角标0-14，存储数据有效期。字节数组角标>14,保存内容数据。
      * @param byteArray 字节数组
+     * @return true:格式正确 false:格式错误
      */
-    private fun hasDateInfo(byteArray: ByteArray?): Boolean {
+    fun hasDateInfo(byteArray: ByteArray?): Boolean {
         return byteArray != null && byteArray.size > 15 && byteArray[13].toChar() == '-'
                 && ArrayUtils.indexOf(byteArray, mSeparator) > 14
     }

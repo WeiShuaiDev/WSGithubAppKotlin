@@ -15,7 +15,8 @@ import java.lang.Exception
 object PlatformConfig {
 
 
-    fun isExitsEventBusDependencies(): Boolean = findClassByClassName("org.greenrobot.eventbus.EventBus")
+    val DEPENDENCY_EVENTBUS: Boolean =
+        this.findClassByClassName("org.greenrobot.eventbus.EventBus")
 
 
     private fun findClassByClassName(className: String): Boolean {
