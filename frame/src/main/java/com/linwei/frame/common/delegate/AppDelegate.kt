@@ -3,7 +3,7 @@ package com.linwei.frame.common.delegate
 import android.app.Application
 import android.content.Context
 import com.linwei.frame.common.App
-import com.linwei.frame.common.lifecyclecallback.AppLifecycle
+import com.linwei.frame.common.lifecycle.AppLifecycles
 import com.linwei.frame.di.component.AppComponent
 
 /**
@@ -15,7 +15,7 @@ import com.linwei.frame.di.component.AppComponent
  * @Description:
  *-----------------------------------------------------------------------
  */
-class AppDelegate : AppLifecycle, App {
+class AppDelegate : AppLifecycles, App {
     override fun attachBaseContext  (context: Context) {
         TODO("Not yet implemented")
     }

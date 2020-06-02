@@ -18,14 +18,14 @@ interface IFragment {
      * 提供在 {@link Activity} 生命周期内的缓存容器,
      * 可向此 {@link Activity} 存取一些必要的数据
      */
-    fun provideCache(): Cache<String, Object>
+    fun provideCache(): Cache<String, Any>
 
     /**
      * 提供给 {@link IFragment}实现类，进行{@link AppComponent}依赖
      * AppComponent主要提供一些单例工具
      *@param appComponent
      */
-    fun setupFragmentComponent(appComponent: AppComponent)
+    fun setupFragmentComponent(appComponent: AppComponent?)
 
 
     /**

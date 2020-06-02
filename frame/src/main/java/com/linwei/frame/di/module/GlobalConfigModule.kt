@@ -13,5 +13,8 @@ import dagger.Module
  */
 @Module
 class GlobalConfigModule {
+    class Builder {
+
+    }
 
 }

@@ -19,14 +19,14 @@ interface IActivity {
      * 提供在 {@link Activity} 生命周期内的缓存容器,
      * 可向此 {@link Activity} 存取一些必要的数据
      */
-    fun provideCache(): Cache<String, Object>
+    fun provideCache(): Cache<String, Any>
 
     /**
      * 提供给 {@link IActivity}实现类，进行{@code appComponent}依赖
      * AppComponent主要提供一些单例工具
      *@param appComponent
      */
-    fun setupActivityComponent(appComponent: AppComponent)
+    fun setupActivityComponent(appComponent: AppComponent?)
 
     /**
      * 当前Activity对象增加到内存栈，方便管理

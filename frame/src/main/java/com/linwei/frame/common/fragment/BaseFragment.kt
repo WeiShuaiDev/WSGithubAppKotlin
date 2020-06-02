@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.github.nukc.stateview.StateView
 import com.linwei.frame.R
-import com.linwei.frame.common.HandlerMessage
+import com.linwei.frame.manager.HandlerManager
 import com.linwei.frame.utils.AndroidBug5497Workaround
 import com.linwei.frame.utils.ToastUtils
 import com.linwei.frame.utils.UIUtils
@@ -239,17 +239,17 @@ abstract class BaseFragment : LazeLoadFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        synchronized(HandlerMessage.instance) {
-            HandlerMessage.instance.removeTask()
+        synchronized(HandlerManager.instance) {
+            HandlerManager.instance.removeTask()
         }
     }
 
     fun postTaskSafely(task: Runnable) {
-        HandlerMessage.instance.postTaskSafely(task)
+        HandlerManager.instance.postTaskSafely(task)
     }
 
     fun postTaskDelay(task: Runnable, delayMillis: Int) {
-        HandlerMessage.instance.postTaskDelay(task, delayMillis)
+        HandlerManager.instance.postTaskDelay(task, delayMillis)
     }
 
 }

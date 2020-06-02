@@ -1,4 +1,4 @@
-package com.linwei.frame.common.lifecyclecallback
+package com.linwei.frame.common.lifecycle
 
 import android.app.Application
 import android.content.Context
@@ -12,7 +12,7 @@ import android.content.Context
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface AppLifecycle {
+interface AppLifecycles {
 
     fun attachBaseContext(context: Context)
 

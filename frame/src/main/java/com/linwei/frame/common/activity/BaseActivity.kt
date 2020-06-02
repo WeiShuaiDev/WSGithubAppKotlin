@@ -18,7 +18,7 @@ import com.github.anzewei.parallaxbacklayout.widget.ParallaxBackLayout.EDGE_MODE
 import com.github.anzewei.parallaxbacklayout.widget.ParallaxBackLayout.LAYOUT_COVER
 import com.github.nukc.stateview.StateView
 import com.linwei.frame.R
-import com.linwei.frame.common.HandlerMessage
+import com.linwei.frame.manager.HandlerManager
 import com.linwei.frame.config.LibConfig
 import com.linwei.frame.listener.OnPermissionListener
 import com.linwei.frame.utils.AndroidBug5497Workaround
@@ -305,7 +305,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
     override fun onDestroy() {
         super.onDestroy()
-        HandlerMessage.instance.removeTask()
+        HandlerManager.instance.removeTask()
     }
 
 
@@ -407,10 +407,10 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     }
 
     fun postTaskSafely(task: Runnable) {
-        HandlerMessage.instance.postTaskSafely(task)
+        HandlerManager.instance.postTaskSafely(task)
     }
 
     fun postTaskDelay(task: Runnable, delayMillis: Int) {
-        HandlerMessage.instance.postTaskDelay(task, delayMillis)
+        HandlerManager.instance.postTaskDelay(task, delayMillis)
     }
 }

@@ -1,4 +1,4 @@
-package com.linwei.frame.common.lifecyclecallback
+package com.linwei.frame.common.lifecycle
 
 import android.app.Activity
 import android.app.Application

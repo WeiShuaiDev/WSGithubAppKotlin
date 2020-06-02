@@ -6,9 +6,13 @@ import java.io.BufferedReader
 import java.io.FileReader
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2019/11/7
- * @Description:Library配置
+ * @Time: 2020/6/2
+ * @Contact linwei9605@gmail.com
+ * @Follow https://github.com/WeiShuaiDev
+ * @Description: 数据配置中心，主要初始化配置，第三方库初始化
+ *-----------------------------------------------------------------------
  */
 object LibConfig {
     var DEBUG: Boolean = false

@@ -1,9 +1,11 @@
 package com.linwei.frame.common
+
 import android.content.Context
 import android.content.res.Configuration
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.linwei.frame.config.LibConfig
+import com.linwei.frame.di.component.AppComponent
 import com.linwei.frame.utils.AppLanguageUtils
 
 /**
@@ -11,7 +13,7 @@ import com.linwei.frame.utils.AppLanguageUtils
  * @Time: 2019/10/14
  * @Description: BaseApplication基类
  */
-abstract class BaseApp() : MultiDexApplication() {
+abstract class BaseApp() : MultiDexApplication(), App {
     companion object {
         lateinit var mContext: Context
         lateinit var mInstance: BaseApp

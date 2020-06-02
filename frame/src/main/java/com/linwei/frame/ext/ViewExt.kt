@@ -1,19 +1,25 @@
 package com.linwei.frame.ext
 
+import android.content.Context
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.linwei.frame.utils.UIUtils
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2019/10/14
- * @Description: 扩展函数
+ * @Time: 2020/6/2
+ * @Contact linwei9605@gmail.com
+ * @Follow https://github.com/WeiShuaiDev
+ * @Description: 提供 View 扩展方法
+ *-----------------------------------------------------------------------
  */
 
 /**
@@ -46,7 +52,7 @@ fun String.getDomain(): String {
     var j = 0
     var startIndex = 0
     var endIndex = this.length - 1
-    for (i in 0 until this.length) {
+    for (i in this.indices) {
         if (this[i] == '/') {
             j++
             if (j == 2)
@@ -84,6 +90,27 @@ fun TextView.setTextSizeSpan(text: String, textSize: Float, startIndex: Int, end
     )
     setText(span)
     movementMethod = LinkMovementMethod.getInstance()
+}
+
+/**
+ * 收起软键盘
+ */
+fun View.hideSoftKeyboard() {
+    val imm: InputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
+}
+
+/**
+ * 显示软键盘
+ */
+fun View.showSoftKeyboard() {
+    isFocusable = true
+    isFocusableInTouchMode = true
+    requestFocus()
+    val imm: InputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(this, 0)
 }
 
 

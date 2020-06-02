@@ -15,6 +15,9 @@ import android.view.View
  *-----------------------------------------------------------------------
  */
 interface FragmentDelegate {
+    companion object {
+        const val FRAGMENT_DELEGATE: String = "FRAGMENT_DELEGATE"
+    }
 
     fun onAttach(context: Context)
 

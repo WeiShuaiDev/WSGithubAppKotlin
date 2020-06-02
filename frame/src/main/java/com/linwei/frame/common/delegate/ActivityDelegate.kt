@@ -1,4 +1,5 @@
 package com.linwei.frame.common.delegate
+
 import android.os.Bundle
 
 /**
@@ -12,6 +13,9 @@ import android.os.Bundle
  *-----------------------------------------------------------------------
  */
 interface ActivityDelegate {
+    companion object {
+        const val ACTIVITY_DELEGATE: String = "ACTIVITY_DELEGATE"
+    }
 
     fun onCreate(savedInstanceState: Bundle)
 

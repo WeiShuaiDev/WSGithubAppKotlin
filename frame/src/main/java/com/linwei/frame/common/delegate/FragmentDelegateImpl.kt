@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.linwei.frame.common.fragment.IFragment
+import com.linwei.frame.ext.obtainAppComponent
 import com.linwei.frame.manager.EventBusManager
 
 /**
@@ -18,7 +19,10 @@ import com.linwei.frame.manager.EventBusManager
  *              允许在生命周期过程处理一些逻辑。
  *-----------------------------------------------------------------------
  */
-class FragmentDelegateImpl(var mFragmentManager: FragmentManager?, var mFragment: Fragment?) :
+class FragmentDelegateImpl(
+    private var mFragmentManager: FragmentManager?,
+    private var mFragment: Fragment?
+) :
     FragmentDelegate {
     private lateinit var mContext: Context
     private var mIFragment: IFragment? = null
@@ -27,6 +31,8 @@ class FragmentDelegateImpl(var mFragmentManager: FragmentManager?, var mFragment
         if (mFragment is IFragment) {
             mIFragment = mFragment as IFragment
         }
+
+        mIFragment?.setupFragmentComponent(mFragment?.context?.obtainAppComponent())
     }
 
 

@@ -1,20 +1,25 @@
-package com.linwei.frame.common
+package com.linwei.frame.manager
 
 import android.os.Handler
+import com.linwei.frame.common.BaseApp
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2019/10/14
- * @Description: Handler基类
+ * @Time: 2020/6/2
+ * @Contact linwei9605@gmail.com
+ * @Follow https://github.com/WeiShuaiDev
+ * @Description: 数据配置中心，主要初始化配置，第三方库初始化
+ *-----------------------------------------------------------------------
  */
-class HandlerMessage private constructor() {
+class HandlerManager private constructor() {
 
     var handler: Handler? = null
 
     private var mTaskList: MutableList<Runnable?> = mutableListOf()
 
     companion object {
-        val instance by lazy { HandlerMessage() }
+        val instance: HandlerManager by lazy { HandlerManager() }
     }
 
     /**

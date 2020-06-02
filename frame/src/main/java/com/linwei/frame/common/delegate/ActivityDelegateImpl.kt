@@ -1,8 +1,10 @@
 package com.linwei.frame.common.delegate
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import com.linwei.frame.common.activity.IActivity
+import com.linwei.frame.ext.obtainAppComponent
 import com.linwei.frame.manager.EventBusManager
 
 /**
@@ -33,6 +35,8 @@ class ActivityDelegateImpl(
         if (mIActivity?.useEventBus() == true) {
             EventBusManager.getInstance().register(mActivity)
         }
+
+        mIActivity?.setupActivityComponent(mActivity?.obtainAppComponent())
 
     }
 
