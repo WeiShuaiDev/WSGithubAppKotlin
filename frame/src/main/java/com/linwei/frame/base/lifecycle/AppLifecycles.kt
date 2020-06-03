@@ -1,4 +1,4 @@
-package com.linwei.frame.common.lifecycle
+package com.linwei.frame.base.lifecycle
 
 import android.app.Application
 import android.content.Context

@@ -1,11 +1,11 @@
-package com.linwei.frame.common.delegate
+package com.linwei.frame.base.delegate
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.linwei.frame.common.fragment.IFragment
+import com.linwei.frame.base.fragment.IFragment
 import com.linwei.frame.ext.obtainAppComponent
 import com.linwei.frame.manager.EventBusManager
 

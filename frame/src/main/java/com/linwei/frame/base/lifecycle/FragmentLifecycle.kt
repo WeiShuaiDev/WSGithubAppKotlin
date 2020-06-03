@@ -1,13 +1,13 @@
-package com.linwei.frame.common.lifecycle
+package com.linwei.frame.base.lifecycle
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.linwei.frame.common.delegate.FragmentDelegate
-import com.linwei.frame.common.delegate.FragmentDelegateImpl
-import com.linwei.frame.common.fragment.IFragment
+import com.linwei.frame.base.delegate.FragmentDelegate
+import com.linwei.frame.base.delegate.FragmentDelegateImpl
+import com.linwei.frame.base.fragment.IFragment
 import com.linwei.frame.http.cache.Cache
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -113,12 +113,10 @@ class FragmentLifecycle @Inject constructor() : FragmentManager.FragmentLifecycl
      * @param fragment [Fragment]
      */
     private fun fetchFragmentDelegate(fragment: Fragment): FragmentDelegate? {
-        if (fragment is IFragment) {
-            val delegate: Any? =
-                getCacheFromFragment(fragment as IFragment).get(FragmentDelegate.FRAGMENT_DELEGATE)
-            if (delegate != null)
-                return delegate as FragmentDelegate
-        }
+        val delegate: Any? =
+            getCacheFromFragment(fragment)?.get(FragmentDelegate.FRAGMENT_DELEGATE)
+        if (delegate != null)
+            return delegate as FragmentDelegate
         return null
     }
 
@@ -133,22 +131,24 @@ class FragmentLifecycle @Inject constructor() : FragmentManager.FragmentLifecycl
         fragment: Fragment
     ): FragmentDelegate? {
         var delegate: FragmentDelegate? = fetchFragmentDelegate(fragment)
-        if (fragment is IFragment) {
-            if (delegate == null) {
-                delegate = FragmentDelegateImpl(fragmentManager, fragment)
-                getCacheFromFragment(fragment as IFragment).put(
-                    FragmentDelegate.FRAGMENT_DELEGATE,
-                    delegate
-                )
-            }
+        if (delegate == null) {
+            delegate = FragmentDelegateImpl(fragmentManager, fragment)
+            getCacheFromFragment(fragment)?.put(
+                FragmentDelegate.FRAGMENT_DELEGATE,
+                delegate
+            )
         }
         return delegate
     }
 
     /**
      * 获取 [IFragment.provideCache] 中缓存对象 `Cache<String,Any>`
-     * @param ifragment [IFragment]
+     * @param fragment [Fragment]
      */
-    private fun getCacheFromFragment(ifragment: IFragment): Cache<String, Any> =
-        ifragment.provideCache()
+    private fun getCacheFromFragment(fragment: Fragment): Cache<String, Any>? {
+        if (fragment is IFragment) {
+            (fragment as IFragment).provideCache()
+        }
+        return null
+    }
 }

@@ -59,7 +59,6 @@ dependencies {
     implementation rootProject.ext.dependencies["constraintlayout"]
 
     //Navigation
-
     api rootProject.ext.dependencies["navigation-fragment-ktx"]
     api rootProject.ext.dependencies["navigation-ui-ktx"]
 
@@ -100,7 +99,7 @@ dependencies {
 
     //Dagger
     api rootProject.ext.dependencies["dagger2"]
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    kapt rootProject.ext.dependencies["dagger2-compiler"]
 
     //RxCache2
     api(rootProject.ext.dependencies["rxcache2"]) {

@@ -1,4 +1,4 @@
-package com.linwei.frame.common.fragment
+package com.linwei.frame.base.fragment
 
 import com.linwei.frame.di.component.AppComponent
 import com.linwei.frame.http.cache.Cache

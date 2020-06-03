@@ -1,4 +1,4 @@
-package com.linwei.frame.common.fragment
+package com.linwei.frame.base.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

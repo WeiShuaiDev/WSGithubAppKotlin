@@ -3,9 +3,9 @@ package com.mimefin.baselib.common.fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.linwei.frame.common.holder.TopViewHolder
+import com.linwei.frame.base.holder.TopViewHolder
 import com.linwei.frame.ext.setVisible
-import com.linwei.frame.common.fragment.BaseFragment
+import com.linwei.frame.base.fragment.BaseFragment
 import com.linwei.frame.listener.OnTopLeftClickListener
 
 /**

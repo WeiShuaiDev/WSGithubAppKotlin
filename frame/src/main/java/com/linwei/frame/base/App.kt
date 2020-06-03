@@ -1,4 +1,4 @@
-package com.linwei.frame.common
+package com.linwei.frame.base
 
 import com.linwei.frame.di.component.AppComponent
 

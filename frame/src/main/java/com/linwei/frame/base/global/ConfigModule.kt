@@ -1,9 +1,9 @@
-package com.linwei.frame.common
+package com.linwei.frame.base.global
 
 import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import androidx.fragment.app.FragmentManager
-import com.linwei.frame.common.lifecycle.AppLifecycles
+import com.linwei.frame.base.lifecycle.AppLifecycles
 import com.linwei.frame.di.module.GlobalConfigModule
 
 /**
@@ -16,6 +16,11 @@ import com.linwei.frame.di.module.GlobalConfigModule
  *-----------------------------------------------------------------------
  */
 interface ConfigModule {
+
+    companion object {
+        const val CONFIG_MODULE: String = "CONFIG_MODULE"
+    }
+
     /**
      * 使用 [GlobalConfigModule.Builder] 给框架配置一些配置参数
      *

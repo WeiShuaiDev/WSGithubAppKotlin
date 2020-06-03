@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.linwei.frame.R
-import com.linwei.frame.common.App
+import com.linwei.frame.base.App
 import com.linwei.frame.di.component.AppComponent
 
 /**

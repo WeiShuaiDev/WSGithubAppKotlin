@@ -1,10 +1,12 @@
-package com.linwei.frame.common.delegate
+package com.linwei.frame.base.delegate
 
 import android.app.Application
 import android.content.Context
-import com.linwei.frame.common.App
-import com.linwei.frame.common.lifecycle.AppLifecycles
+import com.linwei.frame.base.App
+import com.linwei.frame.base.lifecycle.AppLifecycles
 import com.linwei.frame.di.component.AppComponent
+import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * ---------------------------------------------------------------------
@@ -16,7 +18,12 @@ import com.linwei.frame.di.component.AppComponent
  *-----------------------------------------------------------------------
  */
 class AppDelegate : AppLifecycles, App {
-    override fun attachBaseContext  (context: Context) {
+
+    @Inject
+    @Named("ActivityLifecycle")
+    lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
+
+    override fun attachBaseContext(context: Context) {
         TODO("Not yet implemented")
     }
 

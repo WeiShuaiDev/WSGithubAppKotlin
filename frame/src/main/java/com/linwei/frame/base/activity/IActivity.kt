@@ -1,4 +1,4 @@
-package com.linwei.frame.common.activity
+package com.linwei.frame.base.activity
 
 import android.app.Activity
 import com.linwei.frame.di.component.AppComponent
@@ -50,4 +50,8 @@ interface IActivity {
     fun useEventBus(): Boolean = false
 
 
+    /**
+     * 是否使用Fragment，默认 [useFragment] 是false,
+     */
+    fun useFragment(): Boolean = false
 }

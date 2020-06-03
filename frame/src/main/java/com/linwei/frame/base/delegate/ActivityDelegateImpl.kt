@@ -1,9 +1,8 @@
-package com.linwei.frame.common.delegate
+package com.linwei.frame.base.delegate
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import com.linwei.frame.common.activity.IActivity
+import com.linwei.frame.base.activity.IActivity
 import com.linwei.frame.ext.obtainAppComponent
 import com.linwei.frame.manager.EventBusManager
 

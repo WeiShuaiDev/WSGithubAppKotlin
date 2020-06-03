@@ -1,4 +1,4 @@
-package com.linwei.frame.common.fragment
+package com.linwei.frame.base.fragment
 
 import android.os.Build
 import android.text.TextUtils
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.linwei.frame.R
-import com.linwei.frame.common.holder.TopViewHolder
+import com.linwei.frame.base.holder.TopViewHolder
 import com.linwei.frame.ext.setVisible
 import com.linwei.frame.listener.OnTopLeftClickListener
 import com.linwei.frame.listener.OnTopRightClickListener

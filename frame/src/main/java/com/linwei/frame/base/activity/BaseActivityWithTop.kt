@@ -1,15 +1,14 @@
-package com.linwei.frame.common.activity
+package com.linwei.frame.base.activity
 
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.linwei.frame.common.holder.TopViewHolder
+import com.linwei.frame.base.holder.TopViewHolder
 import com.linwei.frame.ext.hideSoftKeyboard
 import com.linwei.frame.ext.setVisible
 import com.linwei.frame.listener.OnTopLeftClickListener
 import com.linwei.frame.listener.OnTopRightClickListener
-import com.linwei.frame.utils.UIUtils
 import kotlinx.android.synthetic.main.include_top_view.view.*
 
 /**

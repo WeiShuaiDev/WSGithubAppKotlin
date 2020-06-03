@@ -1,7 +1,7 @@
 package com.linwei.frame.di.component
 
-import com.linwei.frame.common.BaseApp
-import com.linwei.frame.common.delegate.AppDelegate
+import com.linwei.frame.base.BaseApp
+import com.linwei.frame.base.delegate.AppDelegate
 import com.linwei.frame.di.module.AppModule
 import com.linwei.frame.di.module.ClientModule
 import com.linwei.frame.di.module.GlobalConfigModule

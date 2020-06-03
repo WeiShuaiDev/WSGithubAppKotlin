@@ -1,11 +1,10 @@
-package com.linwei.frame.common
+package com.linwei.frame.base
 
 import android.content.Context
 import android.content.res.Configuration
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.linwei.frame.config.LibConfig
-import com.linwei.frame.di.component.AppComponent
 import com.linwei.frame.utils.AppLanguageUtils
 
 /**

@@ -1,7 +1,7 @@
 package com.linwei.frame.manager
 
 import android.os.Handler
-import com.linwei.frame.common.BaseApp
+import com.linwei.frame.base.BaseApp
 
 /**
  * ---------------------------------------------------------------------

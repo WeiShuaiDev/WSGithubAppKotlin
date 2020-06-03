@@ -1,4 +1,4 @@
-package com.linwei.frame.common.activity
+package com.linwei.frame.base.activity
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog

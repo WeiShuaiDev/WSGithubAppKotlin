@@ -1,7 +1,7 @@
 package com.linwei.frame.config
 
 import android.text.TextUtils
-import com.linwei.frame.common.BaseApp
+import com.linwei.frame.base.BaseApp
 import java.io.BufferedReader
 import java.io.FileReader
 
