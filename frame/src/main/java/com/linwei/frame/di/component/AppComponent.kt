@@ -1,5 +1,6 @@
 package com.linwei.frame.di.component
 
+import android.app.Application
 import com.linwei.frame.base.BaseApp
 import com.linwei.frame.base.delegate.AppDelegate
 import com.linwei.frame.di.module.AppModule
@@ -27,9 +28,9 @@ interface AppComponent {
     @Component.Builder
     interface Builder {
 
-        fun application(app: BaseApp): Builder
+        fun application(application: Application): Builder
 
-        fun globalConfigModule(globalConfigModule: GlobalConfigModule): Builder
+        // fun globalConfigModule(globalConfigModule: GlobalConfigModule): Builder
 
         fun build(): AppComponent
     }

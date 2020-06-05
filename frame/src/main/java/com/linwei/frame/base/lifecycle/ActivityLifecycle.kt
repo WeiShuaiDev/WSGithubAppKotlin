@@ -28,7 +28,7 @@ import javax.inject.Singleton
 class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCallbacks {
 
     @Inject
-    lateinit var mBaseApp: BaseApp
+    lateinit var mApplication: Application
 
     @Inject
     lateinit var mExtras: Cache<String, Any>
@@ -52,7 +52,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
     }
 
     /**
-     * 通过 [IActivity.useFragment] 状态绑定 [Fragment] 生命周期，绑定 [mFragmentLifecycle] 生命周期回调，是架构默认自定义回调。
+     * 通过 [IActivity.useFragment] 状态绑定 [Fragment] 生命周期，绑定 [mFragmentLifecycle] 生命周期回调，是框架默认自定义回调。
      * [mFragmentLifecycles] 生命周期回调,是开发者扩展自定义回调，该回调通过 [mExtras] 缓存中获取 [ConfigModule.injectFragmentLifecycle],
      * [ConfigModule] 配置信息是通过解析 AndroidManifest.xml清单文件获得。
      * @param activity [Activity]
@@ -75,7 +75,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
                         configModuleLists.forEach { configModuleItem ->
                             if (configModuleItem is ConfigModule) {
                                 configModuleItem.injectFragmentLifecycle(
-                                    mBaseApp,
+                                    mApplication,
                                     mFragmentLifecycles.value
                                 )
                             }

@@ -13,5 +13,5 @@ import com.linwei.frame.di.component.AppComponent
  */
 interface App {
 
-    fun getAppComponent(): AppComponent
+    fun getAppComponent(): AppComponent?
 }
