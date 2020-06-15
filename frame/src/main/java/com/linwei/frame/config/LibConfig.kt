@@ -1,7 +1,7 @@
 package com.linwei.frame.config
 
 import android.text.TextUtils
-import com.linwei.frame.base.BaseApp
+import com.linwei.frame.base.BaseApplication
 import java.io.BufferedReader
 import java.io.FileReader
 
@@ -26,7 +26,7 @@ object LibConfig {
     /**
      * 初始化第三方库
      */
-    fun initLib(context: BaseApp) {
+    fun initLib(context: BaseApplication) {
 
     }
 

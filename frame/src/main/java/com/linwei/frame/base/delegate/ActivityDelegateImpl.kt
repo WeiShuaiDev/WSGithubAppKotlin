@@ -40,23 +40,18 @@ class ActivityDelegateImpl(
     }
 
     override fun onStart() {
-        TODO("Not yet implemented")
     }
 
     override fun onResume() {
-        TODO("Not yet implemented")
     }
 
     override fun onPause() {
-        TODO("Not yet implemented")
     }
 
     override fun onStop() {
-        TODO("Not yet implemented")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        TODO("Not yet implemented")
     }
 
     override fun onDestroy() {

@@ -47,35 +47,27 @@ class FragmentDelegateImpl(
     }
 
     override fun onCreateView(view: View, savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
     }
 
     override fun onActivityCreate(savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
     }
 
     override fun onStart() {
-        TODO("Not yet implemented")
     }
 
     override fun onResume() {
-        TODO("Not yet implemented")
     }
 
     override fun onPause() {
-        TODO("Not yet implemented")
     }
 
     override fun onStop() {
-        TODO("Not yet implemented")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        TODO("Not yet implemented")
     }
 
     override fun onDestroyView() {
-        TODO("Not yet implemented")
     }
 
     override fun onDestroy() {
@@ -88,7 +80,5 @@ class FragmentDelegateImpl(
     }
 
     override fun onDetach() {
-        TODO("Not yet implemented")
     }
-
 }

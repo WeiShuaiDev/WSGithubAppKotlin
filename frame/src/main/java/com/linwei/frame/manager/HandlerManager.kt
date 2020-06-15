@@ -1,7 +1,7 @@
 package com.linwei.frame.manager
 
 import android.os.Handler
-import com.linwei.frame.base.BaseApp
+import com.linwei.frame.base.BaseApplication
 
 /**
  * ---------------------------------------------------------------------
@@ -45,7 +45,7 @@ class HandlerManager private constructor() {
      *获取主线程ID
      */
     private fun getMainThreadId(): Long {
-        return BaseApp.mContext.applicationContext.mainLooper.thread.id
+        return BaseApplication.mContext.applicationContext.mainLooper.thread.id
     }
 
     /**

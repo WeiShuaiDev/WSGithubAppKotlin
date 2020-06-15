@@ -1,7 +1,6 @@
 package com.linwei.frame.di.component
 
 import android.app.Application
-import com.linwei.frame.base.BaseApp
 import com.linwei.frame.base.delegate.AppDelegate
 import com.linwei.frame.di.module.AppModule
 import com.linwei.frame.di.module.ClientModule
@@ -22,17 +21,15 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class, ClientModule::class, GlobalConfigModule::class])
 interface AppComponent {
 
-
     fun inject(appDelegate: AppDelegate)
 
     @Component.Builder
     interface Builder {
 
-        fun application(application: Application): Builder
+//        fun application(application: Application): Builder
 
-        // fun globalConfigModule(globalConfigModule: GlobalConfigModule): Builder
+        fun globalConfigModule(globalConfigModule: GlobalConfigModule): Builder
 
         fun build(): AppComponent
     }
-
 }

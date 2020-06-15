@@ -78,6 +78,6 @@ interface Cache<K, V> {
          * @param type 框架中需要缓存的模块类型
          * @return [Cache]
          */
-        fun <K, V> build(type: CacheType?): Cache<K, V>
+        fun <K, V> build(type: CacheType): Cache<K, V>
     }
 }

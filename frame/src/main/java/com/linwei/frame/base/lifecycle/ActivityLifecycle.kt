@@ -5,7 +5,6 @@ import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.linwei.frame.base.BaseApp
 import com.linwei.frame.base.global.ConfigModule
 import com.linwei.frame.base.activity.IActivity
 import com.linwei.frame.base.delegate.ActivityDelegate
@@ -27,8 +26,8 @@ import javax.inject.Singleton
 @Singleton
 class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCallbacks {
 
-    @Inject
-    lateinit var mApplication: Application
+//    @Inject
+//    lateinit var mApplication: Application
 
     @Inject
     lateinit var mExtras: Cache<String, Any>
@@ -75,7 +74,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
                         configModuleLists.forEach { configModuleItem ->
                             if (configModuleItem is ConfigModule) {
                                 configModuleItem.injectFragmentLifecycle(
-                                    mApplication,
+                                    activity,
                                     mFragmentLifecycles.value
                                 )
                             }
@@ -120,21 +119,6 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
         getCacheFromActivity(activity)?.clear()
     }
 
-
-    /**
-     * 根据 [ActivityDelegate.ACTIVITY_DELEGATE] 标识，在 `Cache<String,Any>` 内存缓存中，获取 [ActivityDelegate] 对象。
-     * 注意 `Kotlin` 中NULL对象，是无法强制转换，否则触发异常
-     * @param activity [Activity]
-     * @return delegate [ActivityDelegate]
-     */
-    private fun fetchActivityDelegate(activity: Activity): ActivityDelegate? {
-        val delegate: Any? =
-            getCacheFromActivity(activity)?.get(ActivityDelegate.ACTIVITY_DELEGATE)
-        if (delegate != null)
-            return delegate as ActivityDelegate
-        return null
-    }
-
     /**
      * 调用 [fetchActivityDelegate] 方法，根据 [ActivityDelegate.ACTIVITY_DELEGATE] 标识，获取 `Cache<String,Any>` 内存缓存数据。
      * 如果对象未创建，或者已经被jvm GC,则重新创建 [ActivityDelegateImpl] 对象，成功创建并缓存到内存中，缓存标识 [ActivityDelegate.ACTIVITY_DELEGATE]
@@ -153,6 +137,20 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
             )
         }
         return delegate
+    }
+
+    /**
+     * 根据 [ActivityDelegate.ACTIVITY_DELEGATE] 标识，在 `Cache<String,Any>` 内存缓存中，获取 [ActivityDelegate] 对象。
+     * 注意 `Kotlin` 中NULL对象，是无法强制转换，否则触发异常
+     * @param activity [Activity]
+     * @return delegate [ActivityDelegate]
+     */
+    private fun fetchActivityDelegate(activity: Activity): ActivityDelegate? {
+        val delegate: Any? =
+            getCacheFromActivity(activity)?.get(ActivityDelegate.ACTIVITY_DELEGATE)
+        if (delegate != null)
+            return delegate as ActivityDelegate
+        return null
     }
 
     /**

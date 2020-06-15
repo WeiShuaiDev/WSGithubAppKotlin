@@ -21,90 +21,90 @@ interface CacheType {
         const val ACTIVITY_CACHE_TYPE_ID: Int = 3
         const val FRAGMENT_CACHE_TYPE_ID: Int = 4
 
+        /**
+         * cacheTypeId:ACTIVITY_CACHE_TYPE_ID
+         * maxSize:80
+         * multiplierSize:0.0008f
+         * Activity模块内存容器
+         */
+        val activityCacheType: CacheType
+            get() = object : CacheType {
+
+                override fun getCacheTypeId(): Int = ACTIVITY_CACHE_TYPE_ID
+
+                override fun calculateCacheSize(context: Context): Int {
+                    return context.getCalculateCacheSize(80, 0.0008f)
+                }
+            }
+
+
+        /**
+         * cacheTypeId:FRAGMENT_CACHE_TYPE_ID
+         * maxSize:80
+         * multiplierSize:0.0008f
+         * Fragment模块内存容器
+         */
+        val fragmentCacheType: CacheType
+            get() = object : CacheType {
+
+                override fun getCacheTypeId(): Int = FRAGMENT_CACHE_TYPE_ID
+
+                override fun calculateCacheSize(context: Context): Int {
+                    return context.getCalculateCacheSize(80, 0.0008f)
+                }
+            }
+
+
+        /**
+         * cacheTypeId:EXTRAS_TYPE_ID
+         * maxSize:500
+         * multiplierSize:0.005f
+         * Extras模块内存容器
+         */
+        val extrasCacheType: CacheType
+            get() = object : CacheType {
+
+                override fun getCacheTypeId(): Int = EXTRAS_TYPE_ID
+
+                override fun calculateCacheSize(context: Context): Int {
+                    return context.getCalculateCacheSize(500, 0.005f)
+                }
+            }
+
+
+        /**
+         * cacheTypeId:CACHE_SERVICE_CACHE_TYPE_ID
+         * maxSize:150
+         * multiplierSize:0.002f
+         * Cache Service模块内存容器
+         */
+        val cacheServiceCacheType: CacheType
+            get() = object : CacheType {
+
+                override fun getCacheTypeId(): Int = CACHE_SERVICE_CACHE_TYPE_ID
+
+                override fun calculateCacheSize(context: Context): Int {
+                    return context.getCalculateCacheSize(150, 0.002f)
+                }
+            }
+
+        /**
+         * cacheTypeId:RETROFIT_SERVICE_CACHE_TYPE_ID
+         * maxSize:150
+         * multiplierSize:0.002f
+         * Retrofit Service模块内存容器
+         */
+        val retrofitServiceCacheType: CacheType
+            get() = object : CacheType {
+
+                override fun getCacheTypeId(): Int = RETROFIT_SERVICE_CACHE_TYPE_ID
+
+                override fun calculateCacheSize(context: Context): Int {
+                    return context.getCalculateCacheSize(150, 0.002f)
+                }
+            }
+
     }
-
-    /**
-     * cacheTypeId:ACTIVITY_CACHE_TYPE_ID
-     * maxSize:80
-     * multiplierSize:0.0008f
-     * Activity模块内存容器
-     */
-    val activityCacheType: CacheType
-        get() = object : CacheType {
-
-            override fun getCacheTypeId(): Int = ACTIVITY_CACHE_TYPE_ID
-
-            override fun calculateCacheSize(context: Context): Int {
-                return context.getCalculateCacheSize(80, 0.0008f)
-            }
-        }
-
-
-    /**
-     * cacheTypeId:FRAGMENT_CACHE_TYPE_ID
-     * maxSize:80
-     * multiplierSize:0.0008f
-     * Fragment模块内存容器
-     */
-    val fragmentCacheType: CacheType
-        get() = object : CacheType {
-
-            override fun getCacheTypeId(): Int = FRAGMENT_CACHE_TYPE_ID
-
-            override fun calculateCacheSize(context: Context): Int {
-                return context.getCalculateCacheSize(80, 0.0008f)
-            }
-        }
-
-
-    /**
-     * cacheTypeId:EXTRAS_TYPE_ID
-     * maxSize:500
-     * multiplierSize:0.005f
-     * Extras模块内存容器
-     */
-    val extrasCacheType: CacheType
-        get() = object : CacheType {
-
-            override fun getCacheTypeId(): Int = EXTRAS_TYPE_ID
-
-            override fun calculateCacheSize(context: Context): Int {
-                return context.getCalculateCacheSize(500, 0.005f)
-            }
-        }
-
-
-    /**
-     * cacheTypeId:CACHE_SERVICE_CACHE_TYPE_ID
-     * maxSize:150
-     * multiplierSize:0.002f
-     * Cache Service模块内存容器
-     */
-    val cacheServiceCacheType: CacheType
-        get() = object : CacheType {
-
-            override fun getCacheTypeId(): Int = CACHE_SERVICE_CACHE_TYPE_ID
-
-            override fun calculateCacheSize(context: Context): Int {
-                return context.getCalculateCacheSize(150, 0.002f)
-            }
-        }
-
-    /**
-     * cacheTypeId:RETROFIT_SERVICE_CACHE_TYPE_ID
-     * maxSize:150
-     * multiplierSize:0.002f
-     * Retrofit Service模块内存容器
-     */
-    val retrofitServiceCacheType: CacheType
-        get() = object : CacheType {
-
-            override fun getCacheTypeId(): Int = RETROFIT_SERVICE_CACHE_TYPE_ID
-
-            override fun calculateCacheSize(context: Context): Int {
-                return context.getCalculateCacheSize(150, 0.002f)
-            }
-        }
 
     /**
      * 获取对应模块缓存类型标识

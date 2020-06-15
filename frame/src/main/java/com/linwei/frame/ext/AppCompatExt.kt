@@ -24,7 +24,7 @@ import com.linwei.frame.di.component.AppComponent
 /**
  *
  */
-fun Context.obtainAppComponent(): AppComponent {
+fun Context.obtainAppComponent(): AppComponent? {
     return (applicationContext as App).getAppComponent()
 }
 

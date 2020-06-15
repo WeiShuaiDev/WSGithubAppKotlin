@@ -108,19 +108,6 @@ class FragmentLifecycle @Inject constructor() : FragmentManager.FragmentLifecycl
     }
 
     /**
-     * 根据 [FragmentDelegate.FRAGMENT_DELEGATE] 标识，在 `Cache<String,Any>` 内存缓存中，获取 [FragmentDelegate] 对象。
-     * 注意 `Kotlin` 中NULL对象，是无法强制转换，否则触发异常
-     * @param fragment [Fragment]
-     */
-    private fun fetchFragmentDelegate(fragment: Fragment): FragmentDelegate? {
-        val delegate: Any? =
-            getCacheFromFragment(fragment)?.get(FragmentDelegate.FRAGMENT_DELEGATE)
-        if (delegate != null)
-            return delegate as FragmentDelegate
-        return null
-    }
-
-    /**
      * 调用 [fetchFragmentDelegate] 方法，根据 [FragmentDelegate.FRAGMENT_DELEGATE] 标识，获取 `Cache<String,Any>` 内存缓存数据。
      * 如果对象未创建，或者已经被jvm GC,则重新创建 [FragmentDelegateImpl] 对象，成功创建并缓存到内存中，缓存标识 [FragmentDelegate.FRAGMENT_DELEGATE]
      * @param fragmentManager [FragmentManager]
@@ -139,6 +126,19 @@ class FragmentLifecycle @Inject constructor() : FragmentManager.FragmentLifecycl
             )
         }
         return delegate
+    }
+
+    /**
+     * 根据 [FragmentDelegate.FRAGMENT_DELEGATE] 标识，在 `Cache<String,Any>` 内存缓存中，获取 [FragmentDelegate] 对象。
+     * 注意 `Kotlin` 中NULL对象，是无法强制转换，否则触发异常
+     * @param fragment [Fragment]
+     */
+    private fun fetchFragmentDelegate(fragment: Fragment): FragmentDelegate? {
+        val delegate: Any? =
+            getCacheFromFragment(fragment)?.get(FragmentDelegate.FRAGMENT_DELEGATE)
+        if (delegate != null)
+            return delegate as FragmentDelegate
+        return null
     }
 
     /**

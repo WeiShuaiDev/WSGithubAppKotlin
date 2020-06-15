@@ -7,8 +7,9 @@ import com.linwei.frame.base.global.ConfigModule
 import com.linwei.frame.base.global.ManifestParser
 import com.linwei.frame.base.lifecycle.AppLifecycles
 import com.linwei.frame.di.component.AppComponent
+//import com.linwei.frame.di.component.DaggerAppComponent
+import com.linwei.frame.di.module.GlobalConfigModule
 import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * ---------------------------------------------------------------------
@@ -25,7 +26,6 @@ class AppDelegate constructor(
 ) : AppLifecycles, App {
 
     @Inject
-    @Named("ActivityLifecycle")
     lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
 
     lateinit var mApplication: Application
@@ -61,9 +61,31 @@ class AppDelegate constructor(
 
     override fun onCreate(application: Application) {
         this.mApplication = application
+//        val mAppComponent = DaggerAppComponent
+//            .builder()
+//            .application(mApplication) //提供application
+//            .globalConfigModule(getGlobalConfigModule(mApplication, mConfigModuleLists)) //全局配置
+//            .build()
+//        mAppComponent.inject(this)
+
         mAppLifecycles.forEach {
             it.onCreate(application)
         }
+    }
+
+    /**
+     * 通过解析 AndroidManifest.xml 中 'meta-data' 的ConfigModule数据，通过回调 [ConfigModule.applyOptions] 方法，
+     * 获取最新配置信息 [GlobalConfigModule] ,如果解析ConfigModule数据为空，则返回默认配置信息 [GlobalConfigModule]
+     */
+    private fun getGlobalConfigModule(
+        app: Application,
+        configModuleLists: MutableList<ConfigModule>?
+    ): GlobalConfigModule {
+        val builder: GlobalConfigModule.Builder = GlobalConfigModule.builder()
+        configModuleLists?.forEach {
+            it.applyOptions(app, builder)
+        }
+        return builder.build()
     }
 
     override fun onTerminate(application: Application) {
