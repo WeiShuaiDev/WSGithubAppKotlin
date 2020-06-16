@@ -22,18 +22,29 @@ import javax.inject.Singleton
  *-----------------------------------------------------------------------
  */
 
-@Module(includes = [AppBindsModule::class])
-class AppModule {
+@Module(includes = [AppModule.Bindings::class])
+object AppModule {
 
     @Singleton
     @Provides
-    fun provideFragmentLifecycles(): List<FragmentManager.FragmentLifecycleCallbacks> {
-        return mutableListOf()
+    fun provideFragmentLifecycleLists(): List<FragmentLifecycle> {
+        return listOf()
     }
 
     @Singleton
     @Provides
     fun provideExtras(cacheFactory: Cache.Factory): Cache<String, Any> {
         return cacheFactory.build(CacheType.extrasCacheType)
+    }
+
+    @Module
+    interface Bindings {
+        @Singleton
+        @Binds
+        fun bindActivityLifecycle(activityLifecycle: ActivityLifecycle): Application.ActivityLifecycleCallbacks
+
+        @Singleton
+        @Binds
+        fun bindFragmentLifecycle(fragmentLifecycle: FragmentLifecycle): FragmentManager.FragmentLifecycleCallbacks
     }
 }

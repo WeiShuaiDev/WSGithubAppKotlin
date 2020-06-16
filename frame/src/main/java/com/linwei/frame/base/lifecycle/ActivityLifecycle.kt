@@ -11,6 +11,7 @@ import com.linwei.frame.base.delegate.ActivityDelegate
 import com.linwei.frame.base.delegate.ActivityDelegateImpl
 import com.linwei.frame.http.cache.Cache
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -26,17 +27,17 @@ import javax.inject.Singleton
 @Singleton
 class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCallbacks {
 
-//    @Inject
-//    lateinit var mApplication: Application
+    @Inject
+    lateinit var mApplication: Application
 
     @Inject
     lateinit var mExtras: Cache<String, Any>
 
     @Inject
-    lateinit var mFragmentLifecycle: Lazy<FragmentManager.FragmentLifecycleCallbacks>
+    lateinit var mFragmentLifecycle: FragmentManager.FragmentLifecycleCallbacks
 
     @Inject
-    lateinit var mFragmentLifecycles: Lazy<List<FragmentManager.FragmentLifecycleCallbacks>>
+    lateinit var mFragmentLifecycleLists: List<FragmentLifecycle>
 
     private var mActivityDelegate: ActivityDelegate? = null
 
@@ -62,8 +63,13 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
             activity.run {
                 //默认 FragmentLifecycleCallbacks 注入
                 supportFragmentManager.registerFragmentLifecycleCallbacks(
-                    mFragmentLifecycle.value,
+                    mFragmentLifecycle,
                     true
+                )
+                System.out.println(
+                    "mExtras.get(ConfigModule.CONFIG_MODULE)" + mExtras.get(
+                        ConfigModule.CONFIG_MODULE
+                    )
                 )
                 val configModule: Any? =
                     if (mExtras.containsKey(ConfigModule.CONFIG_MODULE))
@@ -75,7 +81,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
                             if (configModuleItem is ConfigModule) {
                                 configModuleItem.injectFragmentLifecycle(
                                     activity,
-                                    mFragmentLifecycles.value
+                                    mFragmentLifecycleLists
                                 )
                             }
                         }
@@ -84,7 +90,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
                 }
 
                 // 开发者扩展 FragmentLifecycleCallbacks 注入
-                mFragmentLifecycles.value.forEach { lifecycle ->
+                mFragmentLifecycleLists.forEach { lifecycle ->
                     supportFragmentManager.registerFragmentLifecycleCallbacks(
                         lifecycle,
                         true

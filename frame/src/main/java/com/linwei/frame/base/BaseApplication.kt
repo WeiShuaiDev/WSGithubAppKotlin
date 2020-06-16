@@ -14,8 +14,8 @@ import com.linwei.frame.utils.AppLanguageUtils
  * @Time: 2019/10/14
  * @Description: BaseApplication基类
  */
-abstract class BaseApplication() : MultiDexApplication(), App {
-    private val mAppDelegate: AppDelegate = AppDelegate(applicationContext)
+class BaseApplication() : MultiDexApplication(), App {
+    private lateinit var mAppDelegate: AppDelegate
 
     companion object {
         lateinit var mContext: Context
@@ -23,10 +23,9 @@ abstract class BaseApplication() : MultiDexApplication(), App {
     }
 
     override fun attachBaseContext(context: Context) {
-        initLibConfig(context)
         super.attachBaseContext(AppLanguageUtils.attachBaseContext(context, LibConfig.LANGUAGE))
         MultiDex.install(this)
-
+        mAppDelegate = AppDelegate(context)
         mAppDelegate.attachBaseContext(context)
     }
 
@@ -36,7 +35,6 @@ abstract class BaseApplication() : MultiDexApplication(), App {
         mContext = this
         AppLanguageUtils.setLanguage(this, LibConfig.LANGUAGE)
         LibConfig.initLib(this)
-        initTool(this);
 
         mAppDelegate.onCreate(this)
     }
@@ -46,24 +44,12 @@ abstract class BaseApplication() : MultiDexApplication(), App {
         mAppDelegate.onTerminate(this)
     }
 
-
     override fun getAppComponent(): AppComponent? = mAppDelegate.getAppComponent()
-
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         AppLanguageUtils.setLanguage(this, LibConfig.LANGUAGE)
     }
 
-
-    /**
-     * 初始化库
-     */
-    abstract fun initLibConfig(context: Context?)
-
-    /**
-     * 初始化工具
-     */
-    abstract fun initTool(baseApp: BaseApplication)
 
 }

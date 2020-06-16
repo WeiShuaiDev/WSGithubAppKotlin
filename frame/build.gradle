@@ -148,5 +148,4 @@ dependencies {
     compileOnly rootProject.ext.dependencies["otto"]
     compileOnly rootProject.ext.dependencies["rxbus"]
 
-
 }

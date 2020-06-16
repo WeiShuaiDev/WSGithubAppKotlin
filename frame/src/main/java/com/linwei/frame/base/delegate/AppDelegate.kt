@@ -7,6 +7,7 @@ import com.linwei.frame.base.global.ConfigModule
 import com.linwei.frame.base.global.ManifestParser
 import com.linwei.frame.base.lifecycle.AppLifecycles
 import com.linwei.frame.di.component.AppComponent
+import com.linwei.frame.di.component.DaggerAppComponent
 //import com.linwei.frame.di.component.DaggerAppComponent
 import com.linwei.frame.di.module.GlobalConfigModule
 import javax.inject.Inject
@@ -61,12 +62,12 @@ class AppDelegate constructor(
 
     override fun onCreate(application: Application) {
         this.mApplication = application
-//        val mAppComponent = DaggerAppComponent
-//            .builder()
-//            .application(mApplication) //提供application
-//            .globalConfigModule(getGlobalConfigModule(mApplication, mConfigModuleLists)) //全局配置
-//            .build()
-//        mAppComponent.inject(this)
+        val mAppComponent = DaggerAppComponent
+            .builder()
+            .application(mApplication) //提供application
+            .globalConfigModule(getGlobalConfigModule(mApplication, mConfigModuleLists)) //全局配置
+            .build()
+        mAppComponent.inject(this)
 
         mAppLifecycles.forEach {
             it.onCreate(application)

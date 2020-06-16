@@ -5,6 +5,7 @@ import com.linwei.frame.base.delegate.AppDelegate
 import com.linwei.frame.di.module.AppModule
 import com.linwei.frame.di.module.ClientModule
 import com.linwei.frame.di.module.GlobalConfigModule
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
@@ -25,8 +26,8 @@ interface AppComponent {
 
     @Component.Builder
     interface Builder {
-
-//        fun application(application: Application): Builder
+        @BindsInstance
+        fun application(application: Application): Builder
 
         fun globalConfigModule(globalConfigModule: GlobalConfigModule): Builder
 
