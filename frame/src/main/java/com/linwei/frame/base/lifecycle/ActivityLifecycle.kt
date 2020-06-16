@@ -9,6 +9,7 @@ import com.linwei.frame.base.global.ConfigModule
 import com.linwei.frame.base.activity.IActivity
 import com.linwei.frame.base.delegate.ActivityDelegate
 import com.linwei.frame.base.delegate.ActivityDelegateImpl
+import com.linwei.frame.base.global.CacheConstant
 import com.linwei.frame.http.cache.Cache
 import javax.inject.Inject
 import javax.inject.Named
@@ -66,14 +67,9 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
                     mFragmentLifecycle,
                     true
                 )
-                System.out.println(
-                    "mExtras.get(ConfigModule.CONFIG_MODULE)" + mExtras.get(
-                        ConfigModule.CONFIG_MODULE
-                    )
-                )
                 val configModule: Any? =
-                    if (mExtras.containsKey(ConfigModule.CONFIG_MODULE))
-                        mExtras.get(ConfigModule.CONFIG_MODULE) else null
+                    if (mExtras.containsKey(CacheConstant.CACHE_CONFIG_MODULE))
+                        mExtras.get(CacheConstant.CACHE_CONFIG_MODULE) else null
                 configModule?.let { module ->
                     if (module is MutableList<*>) {
                         val configModuleLists: MutableList<*> = module
@@ -86,7 +82,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
                             }
                         }
                     }
-                    mExtras.remove(ConfigModule.CONFIG_MODULE)
+                    mExtras.remove(CacheConstant.CACHE_CONFIG_MODULE)
                 }
 
                 // 开发者扩展 FragmentLifecycleCallbacks 注入

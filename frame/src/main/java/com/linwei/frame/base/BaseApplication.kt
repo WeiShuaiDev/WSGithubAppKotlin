@@ -1,41 +1,40 @@
 package com.linwei.frame.base
 
+import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
-import androidx.multidex.MultiDex
-import androidx.multidex.MultiDexApplication
 import com.linwei.frame.base.delegate.AppDelegate
 import com.linwei.frame.config.LibConfig
 import com.linwei.frame.di.component.AppComponent
 import com.linwei.frame.utils.AppLanguageUtils
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2019/10/14
- * @Description: BaseApplication基类
+ * @Time: 2020/6/16
+ * @Contact linwei9605@gmail.com
+ * @Follow https://github.com/WeiShuaiDev
+ * @Description: [BaseApplication] 回调 `Application` 代理类 [AppDelegate],并在 `Application` 生命周期
+ * 方法注入国际化处理。
+ *----------------------------------------------------------------------
  */
-class BaseApplication() : MultiDexApplication(), App {
+class BaseApplication() : Application(), App {
     private lateinit var mAppDelegate: AppDelegate
 
     companion object {
         lateinit var mContext: Context
-        lateinit var mInstance: BaseApplication
     }
 
     override fun attachBaseContext(context: Context) {
         super.attachBaseContext(AppLanguageUtils.attachBaseContext(context, LibConfig.LANGUAGE))
-        MultiDex.install(this)
         mAppDelegate = AppDelegate(context)
         mAppDelegate.attachBaseContext(context)
     }
 
     override fun onCreate() {
         super.onCreate()
-        mInstance = this
         mContext = this
         AppLanguageUtils.setLanguage(this, LibConfig.LANGUAGE)
-        LibConfig.initLib(this)
-
         mAppDelegate.onCreate(this)
     }
 
@@ -44,12 +43,10 @@ class BaseApplication() : MultiDexApplication(), App {
         mAppDelegate.onTerminate(this)
     }
 
-    override fun getAppComponent(): AppComponent? = mAppDelegate.getAppComponent()
+    override fun getAppComponent(): AppComponent = mAppDelegate.getAppComponent()
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         AppLanguageUtils.setLanguage(this, LibConfig.LANGUAGE)
     }
-
-
 }

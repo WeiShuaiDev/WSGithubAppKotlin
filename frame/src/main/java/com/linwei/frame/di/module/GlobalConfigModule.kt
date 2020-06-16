@@ -11,7 +11,6 @@ import com.linwei.frame.http.cache.kinds.LruCache
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
-
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai

@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_web_view.*
  * @Time: 2019/10/14
  * @Description: webActivity基类
  */
-@Suppress("DEPRECATION")
 abstract class BaseWebActivity : BaseActivityWithTop() {
 
     override fun provideContentViewId(): Int = R.layout.activity_web_view

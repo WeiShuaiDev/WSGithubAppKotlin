@@ -1,23 +1,12 @@
-package com.linwei.frame.di.module
-
-import dagger.Module
+package com.linwei.frame.http.model
 
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/5/22
+ * @Time: 2020/6/16
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: 网络请求状态实体类
  *-----------------------------------------------------------------------
  */
-@Module(includes = [ClientModule.Bindings::class])
-object ClientModule {
-
-
-    @Module
-    interface Bindings{
-
-    }
-
-}
+data class BaseResponse<out T>(val code: String, val message: String, val result: T?, val sign: String)

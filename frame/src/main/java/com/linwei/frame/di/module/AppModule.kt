@@ -9,7 +9,6 @@ import com.linwei.frame.http.cache.CacheType
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
 import javax.inject.Singleton
 
 /**

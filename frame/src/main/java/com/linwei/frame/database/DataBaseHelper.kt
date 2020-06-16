@@ -13,7 +13,6 @@ import android.database.Cursor
 class DataBaseHelper(val mContext: Context) {
     private val mResolver: ContentResolver = mContext.contentResolver
 
-
     companion object {
         private var INSTANCE: DataBaseHelper? = null
 
@@ -25,7 +24,6 @@ class DataBaseHelper(val mContext: Context) {
             }
         }
     }
-
 
     /**
      * 获取系统所有联系人信息

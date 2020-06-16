@@ -14,7 +14,6 @@ data class CallLogEntity(
     val type: String="", val date: String="", val duration: String=""
 ) {
 
-
     companion object {
         val callLogTypes: Array<String> = arrayOf(
             "UNKNOW_TYPE",

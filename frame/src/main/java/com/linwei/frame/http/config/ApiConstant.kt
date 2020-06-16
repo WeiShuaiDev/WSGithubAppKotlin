@@ -1,17 +1,18 @@
-package com.linwei.frame.base
-
-import com.linwei.frame.di.component.AppComponent
+package com.linwei.frame.http.config
 
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/5/25
+ * @Time: 2020/6/16
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface App {
+object ApiConstant {
+    //网络状态值
+    const val REQUEST_SUCCESS: String = "200"
+    const val REQUEST_FAILURE: String = "0"
 
-    fun getAppComponent(): AppComponent
+    const val BASE_URL: String = ""
 }

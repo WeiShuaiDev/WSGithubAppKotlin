@@ -23,13 +23,6 @@ object LibConfig {
     var APP_NAME: String? = null //应用名
     var BASE_URL: String? = null //域名
 
-    /**
-     * 初始化第三方库
-     */
-    fun initLib(context: BaseApplication) {
-
-    }
-
 
     /**
      * 获取进程号对应的进程名
