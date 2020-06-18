@@ -9,4 +9,6 @@ package com.linwei.frame.http.model
  * @Description: 网络请求状态实体类
  *-----------------------------------------------------------------------
  */
-data class BaseResponse<out T>(val code: String, val message: String, val result: T?, val sign: String)
+data class BaseResponse<out T>(
+    val code: String, val message: String, val result: T?
+)

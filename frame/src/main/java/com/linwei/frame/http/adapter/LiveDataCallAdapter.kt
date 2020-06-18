@@ -1,7 +1,7 @@
 package com.linwei.frame.http.adapter
 
 import androidx.lifecycle.LiveData
-import com.linwei.frame.http.config.ApiConstant.REQUEST_FAILURE
+import com.linwei.frame.http.config.ApiConstant
 import com.linwei.frame.http.model.BaseResponse
 import retrofit2.Call
 import retrofit2.CallAdapter
@@ -9,13 +9,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.reflect.Type
 import java.util.concurrent.atomic.AtomicBoolean
+
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2020/6/16
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: LiveData适配器
  *-----------------------------------------------------------------------
  */
 class LiveDataCallAdapter<T>(private val responseType: Type) : CallAdapter<LiveData<T>> {
@@ -31,7 +32,7 @@ class LiveDataCallAdapter<T>(private val responseType: Type) : CallAdapter<LiveD
                         }
 
                         override fun onFailure(call: Call<R>, t: Throwable) {
-                            val value = BaseResponse<R>(REQUEST_FAILURE, t.message ?: "", null, "") as T
+                            val value:T = BaseResponse<R>(ApiConstant.REQUEST_FAILURE, t.message ?: "", null) as T
                             postValue(value)
                         }
                     })

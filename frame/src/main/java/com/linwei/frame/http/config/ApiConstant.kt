@@ -6,7 +6,7 @@ package com.linwei.frame.http.config
  * @Time: 2020/6/16
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: 网络状态常量
  *-----------------------------------------------------------------------
  */
 object ApiConstant {

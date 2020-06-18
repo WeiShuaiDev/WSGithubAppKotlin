@@ -1,6 +1,8 @@
 package com.linwei.frame.http.callback
 
 import androidx.lifecycle.Observer
+import com.linwei.frame.R
+import com.linwei.frame.ext.string
 import com.linwei.frame.http.config.ApiConstant
 import com.linwei.frame.http.config.NetWorkStateCode
 import com.linwei.frame.http.model.BaseResponse
@@ -11,16 +13,16 @@ import com.linwei.frame.http.model.BaseResponse
  * @Time: 2020/6/16
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: Retrofit中请求接口返回数据 ListData<BaseResponse<Any>>
  *-----------------------------------------------------------------------
  */
 abstract class LiveDataCallBack<T, V> : Observer<T> {
     override fun onChanged(t: T) {
         if (t != null && t is BaseResponse<*>) {
-            val data = t as BaseResponse<*>
+            val data: BaseResponse<*> = t
             if (!NetWorkStateCode().isExistByCode(data.code)) {
                 if (ApiConstant.REQUEST_SUCCESS == data.code) {
-                    onSuccess(data.code, data.result as V, data.sign)
+                    onSuccess(data.code, data.result as V?)
                 } else {
                     onFailure(data.code, data.message)
                 }
@@ -28,19 +30,24 @@ abstract class LiveDataCallBack<T, V> : Observer<T> {
                 onFailure(data.code, data.message)
             }
         } else {
-            onFailure(ApiConstant.REQUEST_FAILURE, "")
+            onFailure(ApiConstant.REQUEST_FAILURE, R.string.unknown_error.string())
         }
     }
 
+
     /**
-     * 请求网络成功
+     * 接口请求成功，回调 [onSuccess] 方法
+     * @param code [String] 成功状态码
+     * @param data [V] 响应数据
      */
-    open fun onSuccess(code: String?, data: V?, sign: String?) {
+    open fun onSuccess(code: String?, data: V?) {
 
     }
 
     /**
-     * 请求网络失败
+     * 接口请求失败，回调 [onFailure] 方法
+     * @param code [String] 失败状态码
+     * @param message [String] 失败信息
      */
     open fun onFailure(code: String?, message: String?) {
 

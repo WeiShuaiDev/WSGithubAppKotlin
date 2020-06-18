@@ -13,7 +13,8 @@ import java.lang.reflect.Type
  * @Time: 2020/6/16
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: 根据每次请求接口定义，进行类型判断，如果 `LiveData<BaseResponse<*>>` 类型，则判断 LiveData 泛型
+ * 是不是BaseResponse,都满足条件后，交给 [LiveDataCallAdapter] 处理，否则不处理。
  *-----------------------------------------------------------------------
  */
 class LiveDataCallAdapterFactory : CallAdapter.Factory() {
@@ -23,9 +24,9 @@ class LiveDataCallAdapterFactory : CallAdapter.Factory() {
         retrofit: Retrofit?
     ): CallAdapter<*>? {
         if (getRawType(returnType) != LiveData::class.java) return null
-        //获取请求数据泛型类型
-        val observableType = getParameterUpperBound(0, returnType as ParameterizedType)
-        val rawType = getRawType(observableType)
+        //获取响应返回值泛型信息，并对类型进行判断
+        val observableType: Type = getParameterUpperBound(0, returnType as ParameterizedType)
+        val rawType: Class<*> = getRawType(observableType)
 
         if (rawType != BaseResponse::class.java) {
             throw IllegalArgumentException("type must be ApiResponse")
