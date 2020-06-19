@@ -40,9 +40,9 @@ class RetrofitFactory private constructor() {
         }
 
         const val TAG: String = "RetrofitFactory"
-        const val CONNECT_TIME_OUT: Long = 60
-        const val WRITE_TIME_OUT: Long = 60
-        const val READ_TIME_OUT: Long = 60
+        const val CONNECT_TIME_OUT: Long = 10
+        const val WRITE_TIME_OUT: Long = 10
+        const val READ_TIME_OUT: Long = 10
     }
 
     init {

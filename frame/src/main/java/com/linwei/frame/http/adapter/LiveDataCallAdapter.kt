@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @Time: 2020/6/16
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
- * @Description: LiveData适配器
+ * @Description: LiveData适配器，通过在Retrofit中注册[LiveDataCallAdapter]，来适配LiveData<BaseResponse<T>> 回调
  *-----------------------------------------------------------------------
  */
 class LiveDataCallAdapter<T>(private val responseType: Type) : CallAdapter<LiveData<T>> {
@@ -32,7 +32,11 @@ class LiveDataCallAdapter<T>(private val responseType: Type) : CallAdapter<LiveD
                         }
 
                         override fun onFailure(call: Call<R>, t: Throwable) {
-                            val value:T = BaseResponse<R>(ApiConstant.REQUEST_FAILURE, t.message ?: "", null) as T
+                            val value: T = BaseResponse<R>(
+                                ApiConstant.REQUEST_FAILURE,
+                                t.message ?: "",
+                                null
+                            ) as T
                             postValue(value)
                         }
                     })
