@@ -56,7 +56,7 @@ class LogInterceptor : Interceptor {
 
         Log.e(RetrofitFactory.TAG, "----------Request End:" + duration + "毫秒----------")
         return response.newBuilder()
-            .body(okhttp3.ResponseBody.create(mediaType, content))
+            .body(ResponseBody.create(mediaType, content))
             .build()
     }
 

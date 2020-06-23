@@ -120,7 +120,6 @@ class AppDelegate constructor(
         return builder.build()
     }
 
-
     override fun getAppComponent(): AppComponent {
         return mAppComponent
     }

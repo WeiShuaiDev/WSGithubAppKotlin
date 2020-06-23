@@ -2,13 +2,10 @@ package com.linwei.frame.di.module
 
 import android.app.Application
 import android.content.Context
-import androidx.annotation.NonNull
 import com.google.gson.Gson
 import com.linwei.frame.http.RetrofitFactory
 import com.linwei.frame.http.adapter.LiveDataCallAdapterFactory
 import com.linwei.frame.http.interceptor.CommonInterceptor
-import com.linwei.frame.http.interceptor.LogInterceptor
-import com.linwei.frame.http.interceptor.ResultStateInterceptor
 import com.linwei.frame.utils.FileUtils
 import com.squareup.otto.Produce
 import dagger.Module
@@ -32,20 +29,21 @@ import javax.inject.Singleton
  * @Time: 2020/5/22
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: 提供一些三方库客户端实例
  *-----------------------------------------------------------------------
  */
 @Module
 class ClientModule {
 
     /**
-     * 创建 OkHttpBuilder 对象，并配置拦截器 [CommonInterceptor] 通用拦截器,对请求发起链接超时配置
+     * 创建 `OkHttpBuilder` 对象，并配置拦截器 [CommonInterceptor] 通用拦截器,对请求发起链接超时配置
      * [connectTimeOut],流写入超时配置 [writeTimeOut],流读取超时配置 [readTimeOut],最后通过调用 [build] 方法创建 [OkHttpClient] 对象
      * @param application [Application]
      * @param builder [OkHttpClient.Builder]
      * @param configuration [OkHttpClientConfiguration] `OkHttp`扩展配置
      * @param interceptors [MutableList]  拦截器
      * @param executorService [ExecutorService] 连接池
+     * @return [OkHttpClient] 对象
      */
     @Singleton
     @Provides
@@ -57,10 +55,12 @@ class ClientModule {
         executorService: ExecutorService?
     ): OkHttpClient {
         return builder.also {
+
             it.connectTimeout(RetrofitFactory.CONNECT_TIME_OUT, TimeUnit.SECONDS)
             it.writeTimeout(RetrofitFactory.WRITE_TIME_OUT, TimeUnit.SECONDS)
             it.readTimeout(RetrofitFactory.READ_TIME_OUT, TimeUnit.SECONDS)
 
+            //通用拦截器，对请求头配置处理。
             it.addInterceptor(CommonInterceptor())
 
             interceptors.forEach { interceptor ->
@@ -77,7 +77,7 @@ class ClientModule {
     }
 
     /**
-     * 创建 Retrofit 对象，并进行域名，适配器配置
+     * 创建 `Retrofit` 对象，并进行域名，适配器配置
      * @param application [Application]
      * @param builder [Retrofit.Builder]
      * @param configuration [RetrofitConfiguration] `Retrofit`扩展配置
@@ -85,6 +85,7 @@ class ClientModule {
      * @param converterFactory [GsonConverterFactory] `Gson`转换适配器
      * @param client [OkHttpClient]
      * @param baseUrl [String] 域名
+     * @return [Retrofit] 对象
      */
     @Singleton
     @Provides
@@ -111,6 +112,14 @@ class ClientModule {
         }.build()
     }
 
+    /**
+     * 创建 `RxCache` 对象
+     * @param application [Application]
+     * @param configuration [RxCacheConfiguration] `RxCache`扩展配置
+     * @param cacheDirectory [File] 缓存文件
+     * @param gson [Gson]
+     * @return  [RxCache] 对象
+     */
     @Singleton
     @Produce
     fun provideRxCache(
@@ -126,14 +135,15 @@ class ClientModule {
     }
 
     /**
+     * 创建 `RxCache` 缓存文件
      * @param cacheDir [File] 缓存文件
+     * @return [File] 指定 [cacheDir] 路径,生成文件名 `RxCache` 文件
      */
     @Singleton
     @Produce
     @Named("RxCacheDirectory")
     fun provideRxCacheDirectory(cacheDir: File): File =
         File(FileUtils.makeDirs(cacheDir), "RxCache")
-
 
     @Singleton
     @Provides
@@ -142,7 +152,6 @@ class ClientModule {
     @Singleton
     @Provides
     fun provideOkHttpClientBuilder(): OkHttpClient.Builder = OkHttpClient().newBuilder()
-
 
     @Singleton
     @Provides

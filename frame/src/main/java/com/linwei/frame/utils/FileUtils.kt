@@ -1,5 +1,8 @@
 package com.linwei.frame.utils
 
+import android.app.Application
+import android.content.Context
+import android.os.Environment
 import java.io.File
 
 /**
@@ -20,5 +23,19 @@ object FileUtils {
     fun makeDirs(file: File): File {
         if (!file.exists()) file.mkdirs()
         return file
+    }
+
+    fun getCacheFile(context: Context): File {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            val file: File = context.externalCacheDir ?: File(getCacheFilePath(context))
+            return makeDirs(file)
+        } else {
+            return context.cacheDir
+        }
+    }
+
+    fun getCacheFilePath(context: Context): String {
+        val dataDirectory: File = Environment.getDataDirectory()
+        return dataDirectory.path + context.packageName
     }
 }
