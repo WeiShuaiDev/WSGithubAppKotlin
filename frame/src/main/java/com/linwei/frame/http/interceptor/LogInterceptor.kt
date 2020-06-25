@@ -35,9 +35,8 @@ class LogInterceptor : Interceptor {
 
         if (requestBody != null) {
             try {
-                if (requestBody !is MultipartBody) {
-                    body = URLDecoder.decode(bodyToString(requestBody))
-                }
+                @Suppress("DEPRECATION")
+                if (requestBody !is MultipartBody) body = URLDecoder.decode(bodyToString(requestBody))
             } catch (e: Exception) {
                 e.printStackTrace()
             }

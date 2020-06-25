@@ -39,8 +39,10 @@ object AppLanguageUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             config.setLocale(locale)
         } else {
+            @Suppress("DEPRECATION")
             config.locale = locale
         }
+        @Suppress("DEPRECATION")
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 

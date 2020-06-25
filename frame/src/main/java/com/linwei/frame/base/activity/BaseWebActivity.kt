@@ -84,7 +84,6 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
     /**
      * WebView设置
      */
-    @SuppressLint("NewApi", "SetJavaScriptEnabled")
     private fun initWebSetting() {
         mSettings = mWebView.settings
 
@@ -100,6 +99,7 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
 
         mSettings.allowFileAccess = true
         mSettings.domStorageEnabled = true
+        @Suppress("DEPRECATION")
         mSettings.saveFormData = true
 
         mSettings.useWideViewPort = true
@@ -112,6 +112,7 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
         // 是否允许通过file url加载的Javascript读取全部资源(包括文件,http,https)，默认值 false
         mSettings.allowUniversalAccessFromFileURLs = true
         // 支持缩放
+        @Suppress("DEPRECATION")
         mSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
     }
 
@@ -179,6 +180,7 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
                 val nextHttp: String = url.getDomain()
                 if (localHttp == nextHttp || mIsFirstLoad) {
                     mIsFirstLoad = false
+                    @Suppress("DEPRECATION")
                     return super.shouldOverrideUrlLoading(view, url)
                 }
                 mUrl = url

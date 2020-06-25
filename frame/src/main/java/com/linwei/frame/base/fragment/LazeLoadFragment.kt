@@ -26,6 +26,7 @@ open class LazeLoadFragment : Fragment() {
     //总结：setUserVisibleHint()除了Fragment的可见状态发生变化时会被回调外，在new Fragment()时也会被回调
     //如果我们需要在 Fragment 可见与不可见时干点事，用这个的话就会有多余的回调了，那么就需要重新封装一个
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        @Suppress("DEPRECATION")
         super.setUserVisibleHint(isVisibleToUser)
         //setUserVisibleHint()有可能在fragment的生命周期外被调用
         if (rootView == null) {
@@ -58,6 +59,7 @@ open class LazeLoadFragment : Fragment() {
         //保证onFragmentVisibleChange()的回调发生在rootView创建完成之后，以便支持ui操作
         if (rootView == null) {
             rootView = view
+            @Suppress("DEPRECATION")
             if (userVisibleHint) {
                 if (isFirstEnter) {
                     onFragmentFirstVisible()

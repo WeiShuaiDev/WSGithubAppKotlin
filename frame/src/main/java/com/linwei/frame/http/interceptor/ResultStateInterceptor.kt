@@ -37,7 +37,7 @@ class ResultStateInterceptor : Interceptor {
         }
 
         return response.newBuilder()
-            .body(okhttp3.ResponseBody.create(mediaType, content))
+            .body(okhttp3.ResponseBody.create(mediaType, content?:""))
             .build()
     }
 

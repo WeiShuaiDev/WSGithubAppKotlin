@@ -168,7 +168,7 @@ object DataBaseProvide {
         if (cursor == null) return 0
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            val index: Int =
+            @Suppress("DEPRECATION") val index: Int =
                 cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TIMES_USED)
             if (index > -1) {
                 return cursor.getInt(index)
@@ -189,7 +189,7 @@ object DataBaseProvide {
         if (cursor == null) return 0
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            val index: Int =
+            @Suppress("DEPRECATION") val index: Int =
                 cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LAST_TIME_USED)
             if (index > -1) {
                 return cursor.getLong(index)
@@ -308,7 +308,6 @@ object DataBaseProvide {
     /**
      * 查询联系人详情信息
      */
-
     private fun queryContactDetail(resolver: ContentResolver, contactId: Long): ContactDetail? {
         var contactDetail: ContactDetail? = null
 
@@ -322,11 +321,11 @@ object DataBaseProvide {
             ) ?: return contactDetail
 
         if (cursor.moveToNext()) {
-            val contactTimes: Int =
+            @Suppress("DEPRECATION") val contactTimes: Int =
                 cursor.getInt(cursor.getColumnIndex(ContactsContract.Data.TIMES_CONTACTED))
             val status: String =
                 cursor.getString(cursor.getColumnIndex(ContactsContract.Data.CONTACT_STATUS))
-            val lastContact: Long =
+            @Suppress("DEPRECATION") val lastContact: Long =
                 cursor.getLong(cursor.getColumnIndex(ContactsContract.Data.LAST_TIME_CONTACTED))
 
             var columnIndex: Int = cursor.getColumnIndex("nickname")

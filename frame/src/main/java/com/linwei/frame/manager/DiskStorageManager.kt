@@ -291,7 +291,7 @@ class DiskStorageManager(
         try {
             br = BufferedReader(FileReader(file))
             var readString = ""
-            var currentLine = ""
+            var currentLine: String
             while (br.readLine().also { currentLine = it } != null) readString += currentLine
             return if (!TimeUtils.isDue(readString)) {
                 TimeUtils.clearDateInfo(readString)

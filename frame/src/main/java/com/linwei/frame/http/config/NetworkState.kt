@@ -75,8 +75,9 @@ class NetWorkStateCode {
     fun isNetworkAvailable(context: Context): Boolean {
         val connectivity = context
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connectivity.activeNetworkInfo
+        @Suppress("DEPRECATION") val networkInfo = connectivity.activeNetworkInfo
         if (networkInfo != null) {
+            @Suppress("DEPRECATION")
             return networkInfo.isAvailable
         }
         return false

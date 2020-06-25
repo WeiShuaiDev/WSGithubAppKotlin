@@ -28,7 +28,7 @@ class LruCache<K, V>(size: Int, var mMaxSize: Int = size, var mInitialMaxSize: I
      * @param item 每个 {@code item} 所占用的 size
      * @return 单个 item 的 {@code size}
      */
-    protected fun getItemSize(item: V): Int {
+    protected fun getItemSize(): Int {
         return 1
     }
 
@@ -62,7 +62,7 @@ class LruCache<K, V>(size: Int, var mMaxSize: Int = size, var mInitialMaxSize: I
         var last: MutableMap.MutableEntry<K, V>
         while (mCurrentSize > size) {
             last = mCacheMap.entries.iterator().next()
-            mCurrentSize -= getItemSize(last.value)
+            mCurrentSize -= getItemSize()
             mCacheMap.remove(last.key)
             onItemEvicted(last.key, last.value)
         }
@@ -112,14 +112,14 @@ class LruCache<K, V>(size: Int, var mMaxSize: Int = size, var mInitialMaxSize: I
      * @return 如果这个 {@code key} 在容器中已经储存有 {@code value}, 则返回之前的 {@code value} 否则返回 {@code null}
      */
     override fun put(key: K, value: V): V? {
-        mCurrentSize += getItemSize(value)
+        mCurrentSize += getItemSize()
         if (mCurrentSize >= mMaxSize) {
             evict()
         }
 
         val result: V? = mCacheMap.put(key, value)
         if (result != null) {
-            mCurrentSize -= getItemSize(result)
+            mCurrentSize -= getItemSize()
         }
         return value
     }
@@ -134,7 +134,7 @@ class LruCache<K, V>(size: Int, var mMaxSize: Int = size, var mInitialMaxSize: I
     override fun remove(key: K): V? {
         val value: V? = mCacheMap.remove(key)
         if (value != null) {
-            mCurrentSize -= getItemSize(value)
+            mCurrentSize -= getItemSize()
         }
         return value
     }

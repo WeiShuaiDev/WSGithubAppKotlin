@@ -44,7 +44,7 @@ object BitmapUtils {
     fun drawable2Bitmap(drawable: Drawable?): Bitmap? {
         if (drawable == null) return null
         //根据透明度，创建Bitmap Config配置信息
-        val config: Bitmap.Config =
+        @Suppress("DEPRECATION") val config: Bitmap.Config =
             if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
         //根据配置信息，drawable长度，高度，创建Bitmap对象
         val bitmap: Bitmap =
@@ -62,10 +62,9 @@ object BitmapUtils {
      * 创建一个空的 {@link BitmapDrawable}对象，并设置 {@code bitmap}中密度 density
      * @param bitmap Bitmap图片
      */
-    @SuppressWarnings("deprecation")
     fun bitmap2Drawable(bitmap: Bitmap?): Drawable? {
         if (bitmap == null) return null
-        val bitmapDrawable = BitmapDrawable(bitmap)
+        @Suppress("DEPRECATION") val bitmapDrawable = BitmapDrawable(bitmap)
         bitmapDrawable.setTargetDensity(bitmap.density)
         return bitmapDrawable
     }

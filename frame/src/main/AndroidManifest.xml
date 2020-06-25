@@ -50,13 +50,11 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
 
-    <!--读取系统设置-->
-    <uses-permission android:name="android.permission.READ_SETTINGS"/>
-
     <uses-permission android:name="android.permission.RECORD_VIDEO"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.camera"
+        tools:ignore="DuplicateUsesFeature" />
+    <uses-feature android:name="android.hardware.camera.autofocus"
+        tools:ignore="DuplicateUsesFeature" />
 
 </manifest>
