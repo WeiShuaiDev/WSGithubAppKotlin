@@ -27,7 +27,7 @@ class ActivityDelegateImpl(
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         //当前对象保存在内存栈
         mIActivity?.addStackSingleActivity(mActivity)
         //当前对象注册到事件总线

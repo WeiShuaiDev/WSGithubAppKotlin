@@ -12,7 +12,6 @@ import com.linwei.frame.base.delegate.ActivityDelegateImpl
 import com.linwei.frame.base.global.CacheConstant
 import com.linwei.frame.http.cache.Cache
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -45,7 +44,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
     }
 
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         mActivityDelegate = saveActivityDelegate(activity)
         mActivityDelegate?.onCreate(savedInstanceState)
         //FragmentLifecycle 生命周期注册到 ActivityLifecycle 中

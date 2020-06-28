@@ -17,7 +17,7 @@ interface ActivityDelegate {
         const val ACTIVITY_DELEGATE: String = "ACTIVITY_DELEGATE"
     }
 
-    fun onCreate(savedInstanceState: Bundle)
+    fun onCreate(savedInstanceState: Bundle?)
 
     fun onStart()
 

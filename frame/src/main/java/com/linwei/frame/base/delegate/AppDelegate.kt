@@ -6,10 +6,12 @@ import com.linwei.frame.base.App
 import com.linwei.frame.base.global.CacheConstant
 import com.linwei.frame.base.global.ConfigModule
 import com.linwei.frame.base.global.ManifestParser
+import com.linwei.frame.base.lifecycle.ActivityLifecycle
 import com.linwei.frame.base.lifecycle.AppLifecycles
 import com.linwei.frame.di.component.AppComponent
 import com.linwei.frame.di.component.DaggerAppComponent
 import com.linwei.frame.di.module.GlobalConfigModule
+import java.lang.Exception
 import javax.inject.Inject
 
 /**
