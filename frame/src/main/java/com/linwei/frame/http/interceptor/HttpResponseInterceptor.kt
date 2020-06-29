@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.linwei.frame.ext.isEmptyParameter
 import com.linwei.frame.ext.showLongSafe
+import com.linwei.frame.http.GlobalHttpHandler
 import com.linwei.frame.http.config.NetWorkStateCode
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.Request
 import okhttp3.Response
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -16,11 +18,15 @@ import okhttp3.Response
  * @Time: 2020/6/16
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
- * @Description:  [ResultStateInterceptor] 拦截器，主要用于配置 `Retrofit` 网络请求内核 `OKHttp` 配置。
+ * @Description:  [HttpResponseInterceptor] 拦截器，主要用于配置 `Retrofit` 网络请求内核 `OKHttp` 配置。
  * 该拦截器主要处理每次响应报文，根据不同的状态码，状态信息，通过  [ToastUtils] 提示用户。
  *-----------------------------------------------------------------------
  */
-class ResultStateInterceptor : Interceptor {
+class HttpResponseInterceptor : Interceptor {
+
+    @Inject
+    private lateinit var mGlobalHttpHandler: GlobalHttpHandler
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
         val response: Response = chain.proceed(request)
@@ -36,8 +42,11 @@ class ResultStateInterceptor : Interceptor {
             }
         }
 
+        //提供给开发者扩展网路请求后配置
+        mGlobalHttpHandler.onHttpResultResponse(content, chain, response)
+
         return response.newBuilder()
-            .body(okhttp3.ResponseBody.create(mediaType, content?:""))
+            .body(okhttp3.ResponseBody.create(mediaType, content ?: ""))
             .build()
     }
 

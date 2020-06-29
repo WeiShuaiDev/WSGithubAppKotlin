@@ -18,11 +18,13 @@ import java.lang.reflect.Type
  *-----------------------------------------------------------------------
  */
 class LiveDataCallAdapterFactory : CallAdapter.Factory() {
+
     override fun get(
-        returnType: Type?,
-        annotations: Array<out Annotation>?,
-        retrofit: Retrofit?
-    ): CallAdapter<*>? {
+        returnType: Type,
+        annotations: Array<Annotation>,
+        retrofit: Retrofit
+    ): CallAdapter<*, *>? {
+
         if (getRawType(returnType) != LiveData::class.java) return null
         //获取响应返回值泛型信息，并对类型进行判断
         val observableType: Type = getParameterUpperBound(0, returnType as ParameterizedType)
@@ -35,6 +37,7 @@ class LiveDataCallAdapterFactory : CallAdapter.Factory() {
         if (observableType !is ParameterizedType) {
             throw IllegalArgumentException("resource must be parameterized")
         }
-        return LiveDataCallAdapter<Any>(observableType)
+        return LiveDataCallAdapter<Any, Any>(observableType)
     }
+
 }

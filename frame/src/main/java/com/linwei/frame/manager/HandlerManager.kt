@@ -19,7 +19,15 @@ class HandlerManager private constructor() {
     private var mTaskList: MutableList<Runnable?> = mutableListOf()
 
     companion object {
-        val instance: HandlerManager by lazy { HandlerManager() }
+        private var INSTANCE: HandlerManager? = null
+
+        @JvmStatic
+        fun getInstance(): HandlerManager {
+            return INSTANCE
+                ?: HandlerManager().apply {
+                    INSTANCE = this
+                }
+        }
     }
 
     /**

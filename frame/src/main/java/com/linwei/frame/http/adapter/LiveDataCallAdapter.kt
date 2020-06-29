@@ -1,7 +1,7 @@
 package com.linwei.frame.http.adapter
 
 import androidx.lifecycle.LiveData
-import com.linwei.frame.http.config.ApiConstant
+import com.linwei.frame.http.config.ApiStateConstant
 import com.linwei.frame.http.model.BaseResponse
 import retrofit2.Call
 import retrofit2.CallAdapter
@@ -19,21 +19,26 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @Description: LiveData适配器，通过在Retrofit中注册[LiveDataCallAdapter]，来适配LiveData<BaseResponse<T>> 回调
  *-----------------------------------------------------------------------
  */
-class LiveDataCallAdapter<T>(private val responseType: Type) : CallAdapter<LiveData<T>> {
-    override fun <R : Any?> adapt(call: Call<R>?): LiveData<T> {
+class LiveDataCallAdapter<R, T>(private val responseType: Type) : CallAdapter<R, LiveData<T>> {
+
+
+    override fun responseType() = responseType
+
+    override fun adapt(call: Call<R>): LiveData<T> {
         return object : LiveData<T>() {
             private val started = AtomicBoolean(false)
             override fun onActive() {
                 super.onActive()
                 if (started.compareAndSet(false, true)) {//确保执行一次
-                    call?.enqueue(object : Callback<R> {
+                    call.enqueue(object : Callback<R> {
                         override fun onResponse(call: Call<R>?, response: Response<R>?) {
                             postValue(response?.body() as T)
+
                         }
 
                         override fun onFailure(call: Call<R>, t: Throwable) {
                             val value: T = BaseResponse<R>(
-                                ApiConstant.REQUEST_FAILURE,
+                                ApiStateConstant.REQUEST_FAILURE,
                                 t.message ?: "",
                                 null
                             ) as T
@@ -44,6 +49,4 @@ class LiveDataCallAdapter<T>(private val responseType: Type) : CallAdapter<LiveD
             }
         }
     }
-
-    override fun responseType() = responseType
 }

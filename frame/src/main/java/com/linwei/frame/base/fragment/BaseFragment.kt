@@ -239,17 +239,17 @@ abstract class BaseFragment : LazeLoadFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        synchronized(HandlerManager.instance) {
-            HandlerManager.instance.removeTask()
+        synchronized(HandlerManager.getInstance()) {
+            HandlerManager.getInstance().removeTask()
         }
     }
 
     fun postTaskSafely(task: Runnable) {
-        HandlerManager.instance.postTaskSafely(task)
+        HandlerManager.getInstance().postTaskSafely(task)
     }
 
     fun postTaskDelay(task: Runnable, delayMillis: Int) {
-        HandlerManager.instance.postTaskDelay(task, delayMillis)
+        HandlerManager.getInstance().postTaskDelay(task, delayMillis)
     }
 
 }

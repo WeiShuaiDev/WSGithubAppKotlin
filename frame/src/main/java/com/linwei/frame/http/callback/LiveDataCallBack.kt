@@ -3,7 +3,7 @@ package com.linwei.frame.http.callback
 import androidx.lifecycle.Observer
 import com.linwei.frame.R
 import com.linwei.frame.ext.string
-import com.linwei.frame.http.config.ApiConstant
+import com.linwei.frame.http.config.ApiStateConstant
 import com.linwei.frame.http.config.NetWorkStateCode
 import com.linwei.frame.http.model.BaseResponse
 
@@ -21,7 +21,7 @@ abstract class LiveDataCallBack<T, V> : Observer<T> {
         if (t != null && t is BaseResponse<*>) {
             val data: BaseResponse<*> = t
             if (!NetWorkStateCode().isExistByCode(data.code)) {
-                if (ApiConstant.REQUEST_SUCCESS == data.code) {
+                if (ApiStateConstant.REQUEST_SUCCESS == data.code) {
                     onSuccess(data.code, data.result as V?)
                 } else {
                     onFailure(data.code, data.message)
@@ -30,7 +30,7 @@ abstract class LiveDataCallBack<T, V> : Observer<T> {
                 onFailure(data.code, data.message)
             }
         } else {
-            onFailure(ApiConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
         }
     }
 

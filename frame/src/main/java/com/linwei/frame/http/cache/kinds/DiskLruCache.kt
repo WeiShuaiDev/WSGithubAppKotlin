@@ -205,7 +205,7 @@ class DiskLruCache(
                 } else {
                     if (lastValueUsage < oldestUsage) {
                         oldestUsage = lastValueUsage
-                            mostLongUsedFile = key
+                        mostLongUsedFile = key
                     }
                 }
             }

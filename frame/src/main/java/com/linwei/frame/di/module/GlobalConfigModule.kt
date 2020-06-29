@@ -1,7 +1,13 @@
 package com.linwei.frame.di.module
 
 import android.app.Application
+import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonObject
 import com.linwei.frame.http.GlobalHttpHandler
+import com.linwei.frame.http.adapter.LiveDataCallAdapterFactory
 import com.linwei.frame.http.cache.Cache
 import com.linwei.frame.http.cache.CacheType
 import com.linwei.frame.http.cache.CacheType.Companion.ACTIVITY_CACHE_TYPE_ID
@@ -10,13 +16,20 @@ import com.linwei.frame.http.cache.CacheType.Companion.EXTRAS_TYPE_ID
 import com.linwei.frame.http.cache.CacheType.Companion.FRAGMENT_CACHE_TYPE_ID
 import com.linwei.frame.http.cache.CacheType.Companion.RETROFIT_SERVICE_CACHE_TYPE_ID
 import com.linwei.frame.http.cache.kinds.LruCache
+import com.linwei.frame.http.model.BaseResponse
 import com.linwei.frame.utils.FileUtils
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.internal.Util
+import retrofit2.Retrofit
 import java.io.File
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.SynchronousQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 /**
@@ -79,13 +92,39 @@ class GlobalConfigModule(val mBuilder: Builder) {
     @Singleton
     @Provides
     fun provideGsonConfiguration(): AppModule.GsonConfiguration? {
-        return mBuilder.gsonConfiguration
+        return mBuilder.gsonConfiguration?:object:AppModule.GsonConfiguration{
+            override fun configGson(context: Context, builder: GsonBuilder) {
+                builder.registerTypeHierarchyAdapter(
+                    BaseResponse::class.java,
+                    JsonDeserializer { json, typeOfT, _ ->
+                        try {
+                            val jsonObject: JsonObject = json.asJsonObject
+                            if (jsonObject.has("data")) {
+                                if ("" == jsonObject.get("data").asString) {
+                                    return@JsonDeserializer BaseResponse(
+                                        jsonObject.get("code").asString,
+                                        jsonObject.get("error").asString,
+                                        null
+                                    )
+                                }
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                        Gson().fromJson<BaseResponse<*>>(json, typeOfT)
+                    })
+            }
+        }
     }
 
     @Singleton
     @Provides
-    fun provideRetrofitConfiguration(): ClientModule.RetrofitConfiguration? {
-        return mBuilder.retrofitConfiguration
+    fun provideRetrofitConfiguration(adapterFactory: LiveDataCallAdapterFactory): ClientModule.RetrofitConfiguration? {
+        return mBuilder.retrofitConfiguration?:object:ClientModule.RetrofitConfiguration{
+            override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
+                builder.addCallAdapterFactory(adapterFactory)
+            }
+        }
     }
 
     @Singleton
@@ -106,10 +145,15 @@ class GlobalConfigModule(val mBuilder: Builder) {
         return mBuilder.globalHttpHandler ?: GlobalHttpHandler.Emtry
     }
 
+
     @Singleton
     @Provides
     fun provideExecutorService(): ExecutorService? {
-        return mBuilder.executorService
+        return mBuilder.executorService ?: ThreadPoolExecutor(
+            5, Int.MAX_VALUE, 60,
+            TimeUnit.MINUTES, SynchronousQueue(),
+            Util.threadFactory("frame Executor", false)
+        )
     }
 
     class Builder {

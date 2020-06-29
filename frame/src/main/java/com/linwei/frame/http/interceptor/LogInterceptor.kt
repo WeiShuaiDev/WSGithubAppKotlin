@@ -1,12 +1,14 @@
 package com.linwei.frame.http.interceptor
 
 import android.util.Log
-import com.linwei.frame.http.RetrofitFactory
+import com.linwei.frame.http.GlobalHttpHandler
+import com.linwei.frame.http.config.HttpConstant
 import com.socks.library.KLog
 import okhttp3.*
 import okio.Buffer
 import java.io.IOException
 import java.net.URLDecoder
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -36,7 +38,8 @@ class LogInterceptor : Interceptor {
         if (requestBody != null) {
             try {
                 @Suppress("DEPRECATION")
-                if (requestBody !is MultipartBody) body = URLDecoder.decode(bodyToString(requestBody))
+                if (requestBody !is MultipartBody) body =
+                    URLDecoder.decode(bodyToString(requestBody))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -45,15 +48,16 @@ class LogInterceptor : Interceptor {
         //请求数据
         val requestFormat = "| Request: method：[%s] url：[%s] params：[%s]"
         KLog.e(
-            RetrofitFactory.TAG,
+            HttpConstant.HTTP_LOG_TAG,
             String.format(requestFormat, request.method(), request.url(), body)
         )
 
         //响应数据
         val responseFormat = "|response:[%s]"
-        KLog.e(RetrofitFactory.TAG, String.format(responseFormat, content))
+        KLog.e(HttpConstant.HTTP_LOG_TAG, String.format(responseFormat, content))
 
-        Log.e(RetrofitFactory.TAG, "----------Request End:" + duration + "毫秒----------")
+        Log.e(HttpConstant.HTTP_LOG_TAG, "----------Request End:" + duration + "毫秒----------")
+
         return response.newBuilder()
             .body(ResponseBody.create(mediaType, content))
             .build()

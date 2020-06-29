@@ -9,8 +9,7 @@ import com.linwei.frame.base.lifecycle.ActivityLifecycle
 import com.linwei.frame.base.lifecycle.FragmentLifecycle
 import com.linwei.frame.http.cache.Cache
 import com.linwei.frame.http.cache.CacheType
-import com.linwei.frame.manager.DiskStorageManager
-import com.linwei.frame.manager.MemoryStorageManager
+import com.linwei.frame.manager.*
 import com.linwei.frame.utils.FileUtils
 import com.squareup.otto.Produce
 import dagger.Binds
@@ -33,6 +32,13 @@ import javax.inject.Singleton
 @Module(includes = [AppModule.Bindings::class])
 object AppModule {
 
+    /**
+     * 通过 [GsonBuilder] 创建,并初始化配置，创建 [Gson] 对象,同时提供给开发者扩展配置接口 [configuration],
+     * 在 [GlobalConfigModule] 的 `Module` 进行依赖注入。
+     * @param application [Application]
+     * @param configuration [GsonConfiguration] 扩张配置接口
+     * @return [Gson] 初始化配置后 `Gson` 对象
+     */
     @Singleton
     @Provides
     fun provideGson(application: Application, configuration: GsonConfiguration?): Gson {
@@ -41,12 +47,22 @@ object AppModule {
         return builder.create()
     }
 
+    /**
+     * 创建一个数据空的 `List<FragmentLifecycle>` 集合，并成功返回。用于存储 `AndroidManifest.xml` 中配置的 [ConfigModule] 数据
+     * @param [List] 一个 `FragmentLifecycle`类型 List 数据结构
+     */
     @Singleton
     @Provides
     fun provideFragmentLifecycleLists(): List<FragmentLifecycle> {
         return listOf()
     }
 
+    /**
+     * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
+     * `Cache<String,Any>` 存储范围:全局共有数据存储。
+     * @param cacheFactory [Cache.Factory] 存储参数类型
+     * @return 返回 `Cache` 对象
+     */
     @Singleton
     @Provides
     fun provideExtras(cacheFactory: Cache.Factory): Cache<String, Any> {
@@ -54,7 +70,7 @@ object AppModule {
     }
 
     /**
-     * 创建 `DiskStorageManager` 对象,用户数据磁盘存储
+     * 创建 `DiskStorageManager` 单例对象,用于数据磁盘存储(根据数据存储时间，进行gc优化)。
      * @param cacheDirectory [File] 缓存文件
      * @return 指定 [DiskStorageManager] 缓存目录，同时创建单例 `DiskStorageManager` 对象。
      */
@@ -65,13 +81,39 @@ object AppModule {
     }
 
     /**
-     * 创建 `MemoryStorageManager` 单例对象,用于数据内存存储。
+     * 创建 `MemoryStorageManager` 单例对象,用于数据内存存储(不根据内存存储，进行gc优化)。
      * @return 返回`MemoryStorageManager` 对象
      */
     @Singleton
     @Provides
     fun provideMemoryStorageManager(): MemoryStorageManager {
         return MemoryStorageManager.getInstance()
+    }
+
+    /**
+     * 创建 `EventBusManager` 单例对象,用于事件处理。
+     * @return 返回 `EventBusManager` 对象
+     */
+    @Singleton
+    @Provides
+    fun provideEventBusManager(): EventBusManager {
+        return EventBusManager.getInstance()
+    }
+
+    /**
+     * 创建 `HandlerManager` 单例对象,用于线程处理。
+     * @return 返回 `HandlerManager` 对象
+     */
+    fun provideHandlerManager(): HandlerManager {
+        return HandlerManager.getInstance()
+    }
+
+    /**
+     * 创建 `RepositoryManager` 单例对象,用于网络请求。
+     * @return 返回 `RepositoryManager` 对象
+     */
+    fun provideRepositoryManager(): RepositoryManager {
+        return RepositoryManager()
     }
 
     /**
@@ -92,10 +134,20 @@ object AppModule {
 
     @Module
     interface Bindings {
+        /**
+         * 框架全局 `Activity` 生命周期回调配置
+         * @param activityLifecycle [ActivityLifecycle]
+         * @return [Application.ActivityLifecycleCallbacks]
+         */
         @Singleton
         @Binds
         fun bindActivityLifecycle(activityLifecycle: ActivityLifecycle): Application.ActivityLifecycleCallbacks
 
+        /**
+         * 框架全局 `Fragment` 生命周期回调配置
+         * @param fragmentLifecycle [FragmentLifecycle]
+         * @return [FragmentManager.FragmentLifecycleCallbacks]
+         */
         @Singleton
         @Binds
         fun bindFragmentLifecycle(fragmentLifecycle: FragmentLifecycle): FragmentManager.FragmentLifecycleCallbacks

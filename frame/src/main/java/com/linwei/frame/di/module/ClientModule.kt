@@ -3,9 +3,12 @@ package com.linwei.frame.di.module
 import android.app.Application
 import android.content.Context
 import com.google.gson.Gson
-import com.linwei.frame.http.RetrofitFactory
+import com.linwei.frame.http.GlobalHttpHandler
 import com.linwei.frame.http.adapter.LiveDataCallAdapterFactory
-import com.linwei.frame.http.interceptor.CommonInterceptor
+import com.linwei.frame.http.config.HttpConstant
+import com.linwei.frame.http.interceptor.HttpRequestInterceptor
+import com.linwei.frame.http.interceptor.HttpResponseInterceptor
+import com.linwei.frame.http.interceptor.LogInterceptor
 import com.linwei.frame.utils.FileUtils
 import com.squareup.otto.Produce
 import dagger.Module
@@ -16,6 +19,7 @@ import okhttp3.Dispatcher
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.ExecutorService
@@ -36,7 +40,7 @@ import javax.inject.Singleton
 class ClientModule {
 
     /**
-     * 创建 `OkHttpBuilder` 对象，并配置拦截器 [CommonInterceptor] 通用拦截器,对请求发起链接超时配置
+     * 创建 `OkHttpBuilder` 对象，并配置拦截器 [HttpRequestInterceptor] 通用拦截器,对请求发起链接超时配置
      * [connectTimeOut],流写入超时配置 [writeTimeOut],流读取超时配置 [readTimeOut],最后通过调用 [build] 方法创建 [OkHttpClient] 对象
      * @param application [Application]
      * @param builder [OkHttpClient.Builder]
@@ -56,12 +60,14 @@ class ClientModule {
     ): OkHttpClient {
         return builder.also {
 
-            it.connectTimeout(RetrofitFactory.CONNECT_TIME_OUT, TimeUnit.SECONDS)
-            it.writeTimeout(RetrofitFactory.WRITE_TIME_OUT, TimeUnit.SECONDS)
-            it.readTimeout(RetrofitFactory.READ_TIME_OUT, TimeUnit.SECONDS)
+            it.connectTimeout(HttpConstant.CONNECT_TIME_OUT, TimeUnit.SECONDS)
+            it.writeTimeout(HttpConstant.WRITE_TIME_OUT, TimeUnit.SECONDS)
+            it.readTimeout(HttpConstant.READ_TIME_OUT, TimeUnit.SECONDS)
 
             //通用拦截器，对请求头配置处理。
-            it.addInterceptor(CommonInterceptor())
+            it.addInterceptor(HttpRequestInterceptor())
+            it.addInterceptor(HttpResponseInterceptor())
+            it.addInterceptor(LogInterceptor())
 
             interceptors.forEach { interceptor ->
                 it.addInterceptor(interceptor)
@@ -93,16 +99,13 @@ class ClientModule {
         application: Application,
         builder: Retrofit.Builder,
         configuration: RetrofitConfiguration?,
-        adapterFactory: LiveDataCallAdapterFactory?,
         converterFactory: GsonConverterFactory?,
         client: OkHttpClient,
-        baseUrl: String?
+        baseUrl: String
     ): Retrofit {
         return builder.also {
             it.baseUrl(baseUrl)
             it.client(client)
-            if (adapterFactory != null)
-                it.addCallAdapterFactory(adapterFactory)
 
             if (converterFactory != null)
                 it.addConverterFactory(converterFactory)
@@ -135,7 +138,7 @@ class ClientModule {
     }
 
     /**
-     * 创建 `RxCache` 缓存文件
+     * 创建 `RxCache` 名称缓存文件
      * @param cacheDir [File] 缓存文件
      * @return [File] 指定 [cacheDir] 路径,生成文件名 `RxCache` 文件
      */
@@ -145,19 +148,42 @@ class ClientModule {
     fun provideRxCacheDirectory(cacheDir: File): File =
         File(FileUtils.makeDirs(cacheDir), "RxCache")
 
+    /**
+     * 创建 [Retrofit.Builder] 对象
+     * @return [Retrofit.Builder]
+     */
     @Singleton
     @Provides
     fun provideRetrofitBuilder(): Retrofit.Builder = Retrofit.Builder()
 
+    /**
+     * 创建 [OkHttpClient.Builder] 对象，用于 `Retrofit` 初始化创建,配置底层 `OkHttp`
+     * @return [OkHttpClient.Builder]
+     */
     @Singleton
     @Provides
     fun provideOkHttpClientBuilder(): OkHttpClient.Builder = OkHttpClient().newBuilder()
 
+    /**
+     * 创建 [LiveDataCallAdapterFactory] 对象，用于 `Retrofit` 初始化创建,配置回调适配器
+     * @return [LiveDataCallAdapterFactory]
+     */
     @Singleton
     @Provides
     fun provideLiveDataCallAdapterFactory(): LiveDataCallAdapterFactory =
         LiveDataCallAdapterFactory()
 
+
+    @Singleton
+    @Provides
+    fun provideRxJava2CallAdapterFactory(): RxJava2CallAdapterFactory =
+        RxJava2CallAdapterFactory.create()
+
+    /**
+     * 根据注入 [gson] 参数，创建 [GsonConverterFactory] 对象，用于 `Retrofit` 初始化创建,配置数据转换方式
+     * @param gson [Gson]
+     * @return [GsonConverterFactory]
+     */
     @Singleton
     @Provides
     fun provideGSonConverterFactory(gson: Gson): GsonConverterFactory =

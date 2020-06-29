@@ -304,8 +304,8 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
-        HandlerManager.instance.removeTask()
+        super.onDestroy()  //removeTask
+        HandlerManager.getInstance().removeTask()
     }
 
 
@@ -407,10 +407,10 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     }
 
     fun postTaskSafely(task: Runnable) {
-        HandlerManager.instance.postTaskSafely(task)
+        HandlerManager.getInstance().postTaskSafely(task)
     }
 
     fun postTaskDelay(task: Runnable, delayMillis: Int) {
-        HandlerManager.instance.postTaskDelay(task, delayMillis)
+        HandlerManager.getInstance().postTaskDelay(task, delayMillis)
     }
 }
