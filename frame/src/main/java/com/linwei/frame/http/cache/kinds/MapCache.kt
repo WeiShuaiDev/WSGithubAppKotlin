@@ -55,9 +55,9 @@ class MapCache : Cache<String, String> {
      * 不存在，返回空，并根据 {@code key},保存新值{@code value}
      */
     override fun put(key: String, value: String): String? {
-        for ((key:String, value:SoftReference<String>) in mMapCache) {
-            if (TimeUtils.isDue(value.get())) {
-                mMapCache.remove(key)
+        for ((k:String, v:SoftReference<String>) in mMapCache) {
+            if (TimeUtils.isDue(v.get())) {
+                mMapCache.remove(k)
             }
         }
 

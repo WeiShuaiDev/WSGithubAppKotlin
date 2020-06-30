@@ -15,8 +15,8 @@ ext {
             kotlinVersion            : "1.3.72",
             ankoVersion              : "0.10.8",
             multidexVersion          : "1.0.3",
-            retrofitVersion          : "2.7.2",
-            okhttpVersion            : "3.9.0",
+            retrofitVersion          : "2.9.0",
+            okhttpVersion            : "4.7.2",
             glideVersion             : "4.11.0",
             glide_trasnVersion       : "4.0.1",
             fastjsonVersion          : "1.2.62",
@@ -89,6 +89,7 @@ ext {
             "retrofit-converter-gson"   : "com.squareup.retrofit2:converter-gson:${version["retrofitVersion"]}",
             "retrofit-adapter-rxjava"   : "com.squareup.retrofit2:adapter-rxjava:${version["retrofitVersion"]}",
             "retrofit-adapter-rxjava2"  : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitVersion"]}",
+            "retrofit-adapter-rxjava3"  : "com.squareup.retrofit2:adapter-rxjava3:${version["retrofitVersion"]}",
             //Glide
             "glide"                     : "com.github.bumptech.glide:glide:${version["glideVersion"]}",
             "glide-transformations"     : "jp.wasabeef:glide-transformations:${version["glide_trasnVersion"]}",
@@ -97,9 +98,9 @@ ext {
             /**
              * ---------------------------------------------Rx1-------------------------------------
              */
-            // RxKotlin and RxAndroid
             "rxkotlin"                  : "io.reactivex:rxkotlin:1.0.0",
             "rxandroid"                 : "io.reactivex:rxandroid:1.2.1",
+            "rxjava"                    : "io.reactivex:rxjava:1.3.8",
             "rxcache"                   : "com.github.VictorAlbertos.RxCache:runtime:1.7.0-1.x",
             "rxcache-jolyglot-gson"     : "com.github.VictorAlbertos.Jolyglot:gson:0.0.4",
             "rxpermissions"             : "com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar",
@@ -107,11 +108,18 @@ ext {
             /**
              * ---------------------------------------------Rx2-------------------------------------
              */
-            "rxkotlin2"                 : "io.reactivex:rxkotlin:1.0.0",
+            "rxkotlin2"                 : "io.reactivex.rxjava2:rxkotlin:2.4.0",
             "rxandroid2"                : "io.reactivex.rxjava2:rxandroid:2.1.1",
+            "rxjava2"                   : "io.reactivex.rxjava2:rxjava:2.2.19",
             "rxcache2"                  : "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x",
             "rxpermissions2"            : "com.github.tbruyelle:rxpermissions:0.10.2",
 
+            /**
+             * ---------------------------------------------Rx3-------------------------------------
+             */
+            "rxkotlin3"                 : "io.reactivex.rxjava3:rxkotlin:3.0.0",
+            "rxandroid3"                : "io.reactivex.rxjava3:rxandroid:3.0.0",
+            "rxjava3"                   : "io.reactivex.rxjava3:rxjava:3.0.4",
 
             /**
              * ---------------------------------------------Tools-----------------------------------

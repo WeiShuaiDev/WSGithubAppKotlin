@@ -5,6 +5,7 @@ import com.linwei.frame.http.GlobalHttpHandler
 import com.linwei.frame.http.config.HttpConstant
 import com.socks.library.KLog
 import okhttp3.*
+import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
 import java.io.IOException
 import java.net.URLDecoder
@@ -28,10 +29,10 @@ class LogInterceptor : Interceptor {
         val endTime: Long = System.currentTimeMillis()
 
         val duration: Long = endTime - startTime
-        val mediaType: MediaType? = response.body()?.contentType()
-        val content: String? = response.body()?.string()
+        val mediaType: MediaType? = response.body?.contentType()
+        val content: String? = response.body?.string()
 
-        val requestBody: RequestBody? = request.body()
+        val requestBody: RequestBody? = request.body
 
         var body = ""
 
@@ -49,17 +50,17 @@ class LogInterceptor : Interceptor {
         val requestFormat = "| Request: method：[%s] url：[%s] params：[%s]"
         KLog.e(
             HttpConstant.HTTP_LOG_TAG,
-            String.format(requestFormat, request.method(), request.url(), body)
+            String.format(requestFormat, request.method, request.url, body)
         )
 
         //响应数据
         val responseFormat = "|response:[%s]"
-        KLog.e(HttpConstant.HTTP_LOG_TAG, String.format(responseFormat, content))
+        KLog.e(HttpConstant.HTTP_LOG_TAG, String.format(responseFormat, content?:""))
 
         Log.e(HttpConstant.HTTP_LOG_TAG, "----------Request End:" + duration + "毫秒----------")
 
         return response.newBuilder()
-            .body(ResponseBody.create(mediaType, content))
+            .body((content?:"").toResponseBody(mediaType))
             .build()
     }
 

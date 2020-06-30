@@ -44,6 +44,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    configurations.all{
+        resolutionStrategy{
+            force 'com.android.support:support-v4:27.1.1'
+        }
+    }
+
 }
 
 repositories {
@@ -94,8 +100,8 @@ dependencies {
     api rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
 
     // RxKotlin and RxAndroid
-    api rootProject.ext.dependencies["rxkotlin"]
-    api rootProject.ext.dependencies["rxandroid"]
+    api rootProject.ext.dependencies["rxkotlin2"]
+    api rootProject.ext.dependencies["rxandroid2"]
 
     //Dagger
     api rootProject.ext.dependencies["dagger2"]
@@ -141,7 +147,6 @@ dependencies {
 
     //QMUI
     api rootProject.ext.dependencies["qmui"]
-
 
     //Event Bus
     compileOnly rootProject.ext.dependencies["eventbus"]

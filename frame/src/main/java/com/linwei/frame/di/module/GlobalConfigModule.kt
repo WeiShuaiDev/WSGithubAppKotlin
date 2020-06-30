@@ -21,15 +21,12 @@ import com.linwei.frame.utils.FileUtils
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.internal.Util
+import okhttp3.internal.threadFactory
 import retrofit2.Retrofit
 import java.io.File
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.SynchronousQueue
-import java.util.concurrent.ThreadPoolExecutor
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.*
 import javax.inject.Singleton
 
 /**
@@ -149,10 +146,11 @@ class GlobalConfigModule(val mBuilder: Builder) {
     @Singleton
     @Provides
     fun provideExecutorService(): ExecutorService? {
+        Executors.newCachedThreadPool()
         return mBuilder.executorService ?: ThreadPoolExecutor(
             5, Int.MAX_VALUE, 60,
             TimeUnit.MINUTES, SynchronousQueue(),
-            Util.threadFactory("frame Executor", false)
+            threadFactory("frame Executor", false)
         )
     }
 
@@ -173,7 +171,7 @@ class GlobalConfigModule(val mBuilder: Builder) {
             if (url.isNullOrEmpty()) {
                 throw NullPointerException("BaseUrl can not be empty")
             }
-            this.baseUrl = HttpUrl.parse(url)
+            this.baseUrl = url.toHttpUrlOrNull()
         }
 
         fun cacheFactory(cacheFactory: Cache.Factory?): Builder {

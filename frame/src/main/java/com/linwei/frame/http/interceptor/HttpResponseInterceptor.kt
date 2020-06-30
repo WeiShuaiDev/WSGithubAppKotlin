@@ -10,6 +10,7 @@ import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.Request
 import okhttp3.Response
+import okhttp3.ResponseBody.Companion.toResponseBody
 import javax.inject.Inject
 
 /**
@@ -25,13 +26,13 @@ import javax.inject.Inject
 class HttpResponseInterceptor : Interceptor {
 
     @Inject
-    private lateinit var mGlobalHttpHandler: GlobalHttpHandler
+    lateinit var mGlobalHttpHandler: GlobalHttpHandler
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
         val response: Response = chain.proceed(request)
-        val content: String? = response.body()?.string()
-        val mediaType: MediaType? = response.body()?.contentType()
+        val content: String? = response.body?.string()
+        val mediaType: MediaType? = response.body?.contentType()
 
         val result: JSONObject = JSON.parseObject(content)
         if (result.isNotEmpty() && result.containsKey("code") && result.containsKey("message")) {
@@ -46,7 +47,7 @@ class HttpResponseInterceptor : Interceptor {
         mGlobalHttpHandler.onHttpResultResponse(content, chain, response)
 
         return response.newBuilder()
-            .body(okhttp3.ResponseBody.create(mediaType, content ?: ""))
+            .body((content ?: "").toResponseBody(mediaType))
             .build()
     }
 

@@ -19,7 +19,7 @@ import javax.inject.Inject
 class HttpRequestInterceptor : Interceptor {
 
     @Inject
-    private lateinit var mGlobalHttpHandler: GlobalHttpHandler
+    lateinit var mGlobalHttpHandler: GlobalHttpHandler
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
