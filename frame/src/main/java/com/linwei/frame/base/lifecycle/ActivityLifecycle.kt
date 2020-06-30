@@ -12,6 +12,7 @@ import com.linwei.frame.base.delegate.ActivityDelegateImpl
 import com.linwei.frame.base.global.CacheConstant
 import com.linwei.frame.http.cache.Cache
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -31,6 +32,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
     lateinit var mApplication: Application
 
     @Inject
+    @field:Named("ExtrasCache")
     lateinit var mExtras: Cache<String, Any>
 
     @Inject

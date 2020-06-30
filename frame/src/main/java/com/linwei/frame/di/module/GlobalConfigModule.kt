@@ -25,6 +25,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Interceptor
 import okhttp3.internal.threadFactory
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.io.File
 import java.util.concurrent.*
 import javax.inject.Singleton

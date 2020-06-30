@@ -13,7 +13,8 @@ import com.linwei.frame.http.model.BaseResponse
  * @Time: 2020/6/16
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
- * @Description: Retrofit中请求接口返回数据 ListData<BaseResponse<Any>>
+ * @Description: Retrofit+LiveData 中根据设置不同适配器 [LiveDataCallAdapter]，请求接口返回数据 `ListData<BaseResponse<Any>>`,
+ *              通过使用 `LiveDataCallBack` 回调接口，处理网络请求。
  *-----------------------------------------------------------------------
  */
 abstract class LiveDataCallBack<T, V> : Observer<T> {

@@ -65,8 +65,63 @@ object AppModule {
      */
     @Singleton
     @Provides
-    fun provideExtras(cacheFactory: Cache.Factory): Cache<String, Any> {
+    @Named("ExtrasCache")
+    fun provideExtrasCache(cacheFactory: Cache.Factory): Cache<String, Any> {
         return cacheFactory.build(CacheType.extrasCacheType)
+    }
+
+    /**
+     * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
+     * `Cache<String,Any>` 存储范围:`Activity`数据存储。
+     * @param cacheFactory [Cache.Factory] 存储参数类型
+     * @return 返回 `Cache` 对象
+     */
+    @Singleton
+    @Provides
+    @Named("ActivityCache")
+    fun provideActivityCache(cacheFactory: Cache.Factory): Cache<String, Any> {
+        return cacheFactory.build(CacheType.activityCacheType)
+    }
+
+
+    /**
+     * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
+     * `Cache<String,Any>` 存储范围:`Fragment`数据存储。
+     * @param cacheFactory [Cache.Factory] 存储参数类型
+     * @return 返回 `Cache` 对象
+     */
+    @Singleton
+    @Provides
+    @Named("FragmentCache")
+    fun provideFragmentCache(cacheFactory: Cache.Factory): Cache<String, Any> {
+        return cacheFactory.build(CacheType.fragmentCacheType)
+    }
+
+
+    /**
+     * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
+     * `Cache<String,Any>` 存储范围:`CacheService`数据存储。
+     * @param cacheFactory [Cache.Factory] 存储参数类型
+     * @return 返回 `Cache` 对象
+     */
+    @Singleton
+    @Provides
+    @Named("CacheServiceCache")
+    fun provideCacheServiceCache(cacheFactory: Cache.Factory): Cache<String, Any> {
+        return cacheFactory.build(CacheType.cacheServiceCacheType)
+    }
+
+    /**
+     * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
+     * `Cache<String,Any>` 存储范围:`RetrofitService`数据存储。
+     * @param cacheFactory [Cache.Factory] 存储参数类型
+     * @return 返回 `Cache` 对象
+     */
+    @Singleton
+    @Provides
+    @Named("RetrofitServiceCache")
+    fun provideRetrofitServiceCache(cacheFactory: Cache.Factory): Cache<String, Any> {
+        return cacheFactory.build(CacheType.retrofitServiceCacheType)
     }
 
     /**
