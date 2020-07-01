@@ -1,4 +1,4 @@
-package com.weiyun.cashloan.data.network.callback
+package com.linwei.frame.http.callback
 
 import com.linwei.frame.R
 import com.linwei.frame.ext.string

@@ -1,6 +1,5 @@
 package com.linwei.frame.http
 
-import androidx.annotation.Nullable
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

@@ -2,6 +2,7 @@ package com.linwei.frame.di.module
 
 import android.app.Application
 import android.content.Context
+import android.util.LruCache
 import androidx.fragment.app.FragmentManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -18,6 +19,7 @@ import dagger.Provides
 import java.io.File
 import javax.inject.Named
 import javax.inject.Singleton
+import kotlin.collections.mutableListOf as mutableListOf1
 
 /**
  * ---------------------------------------------------------------------
@@ -65,63 +67,8 @@ object AppModule {
      */
     @Singleton
     @Provides
-    @Named("ExtrasCache")
     fun provideExtrasCache(cacheFactory: Cache.Factory): Cache<String, Any> {
         return cacheFactory.build(CacheType.extrasCacheType)
-    }
-
-    /**
-     * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
-     * `Cache<String,Any>` 存储范围:`Activity`数据存储。
-     * @param cacheFactory [Cache.Factory] 存储参数类型
-     * @return 返回 `Cache` 对象
-     */
-    @Singleton
-    @Provides
-    @Named("ActivityCache")
-    fun provideActivityCache(cacheFactory: Cache.Factory): Cache<String, Any> {
-        return cacheFactory.build(CacheType.activityCacheType)
-    }
-
-
-    /**
-     * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
-     * `Cache<String,Any>` 存储范围:`Fragment`数据存储。
-     * @param cacheFactory [Cache.Factory] 存储参数类型
-     * @return 返回 `Cache` 对象
-     */
-    @Singleton
-    @Provides
-    @Named("FragmentCache")
-    fun provideFragmentCache(cacheFactory: Cache.Factory): Cache<String, Any> {
-        return cacheFactory.build(CacheType.fragmentCacheType)
-    }
-
-
-    /**
-     * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
-     * `Cache<String,Any>` 存储范围:`CacheService`数据存储。
-     * @param cacheFactory [Cache.Factory] 存储参数类型
-     * @return 返回 `Cache` 对象
-     */
-    @Singleton
-    @Provides
-    @Named("CacheServiceCache")
-    fun provideCacheServiceCache(cacheFactory: Cache.Factory): Cache<String, Any> {
-        return cacheFactory.build(CacheType.cacheServiceCacheType)
-    }
-
-    /**
-     * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
-     * `Cache<String,Any>` 存储范围:`RetrofitService`数据存储。
-     * @param cacheFactory [Cache.Factory] 存储参数类型
-     * @return 返回 `Cache` 对象
-     */
-    @Singleton
-    @Provides
-    @Named("RetrofitServiceCache")
-    fun provideRetrofitServiceCache(cacheFactory: Cache.Factory): Cache<String, Any> {
-        return cacheFactory.build(CacheType.retrofitServiceCacheType)
     }
 
     /**
@@ -159,6 +106,8 @@ object AppModule {
      * 创建 `HandlerManager` 单例对象,用于线程处理。
      * @return 返回 `HandlerManager` 对象
      */
+    @Singleton
+    @Provides
     fun provideHandlerManager(): HandlerManager {
         return HandlerManager.getInstance()
     }
@@ -167,6 +116,8 @@ object AppModule {
      * 创建 `RepositoryManager` 单例对象,用于网络请求。
      * @return 返回 `RepositoryManager` 对象
      */
+    @Singleton
+    @Provides
     fun provideRepositoryManager(): RepositoryManager {
         return RepositoryManager()
     }
@@ -177,7 +128,7 @@ object AppModule {
      * @return [File] 指定 [cacheDir] 路径,生成文件名 `DiskCache` 文件
      */
     @Singleton
-    @Produce
+    @Provides
     @Named("DiskCacheDirectory")
     fun provideDiskCacheDirectory(cacheDir: File): File =
         File(FileUtils.makeDirs(cacheDir), "DiskCache")

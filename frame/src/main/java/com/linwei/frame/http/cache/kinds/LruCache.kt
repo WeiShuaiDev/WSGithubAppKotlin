@@ -1,6 +1,7 @@
 package com.linwei.frame.http.cache.kinds
 
 import com.linwei.frame.http.cache.Cache
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -15,7 +16,10 @@ import com.linwei.frame.http.cache.Cache
  *              V:代表存储Value,存储内容数据
  *-----------------------------------------------------------------------
  */
-class LruCache<K, V>(size: Int, var mMaxSize: Int = size, var mInitialMaxSize: Int = size) :
+class LruCache<K, V> @Inject constructor(
+    size: Int, var mMaxSize: Int = size,
+    var mInitialMaxSize: Int = size
+) :
     Cache<K, V> {
     private var mCurrentSize: Int = 0
     private val mCacheMap: LinkedHashMap<K, V> = linkedMapOf()

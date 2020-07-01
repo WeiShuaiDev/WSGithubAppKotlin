@@ -12,7 +12,6 @@ import com.linwei.frame.base.delegate.ActivityDelegateImpl
 import com.linwei.frame.base.global.CacheConstant
 import com.linwei.frame.http.cache.Cache
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -32,8 +31,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
     lateinit var mApplication: Application
 
     @Inject
-    @field:Named("ExtrasCache")
-    lateinit var mExtras: Cache<String, Any>
+    lateinit var mExtrasCache: Cache<String, Any>
 
     @Inject
     lateinit var mFragmentLifecycle: FragmentManager.FragmentLifecycleCallbacks
@@ -69,8 +67,8 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
                     true
                 )
                 val configModule: Any? =
-                    if (mExtras.containsKey(CacheConstant.CACHE_CONFIG_MODULE))
-                        mExtras.get(CacheConstant.CACHE_CONFIG_MODULE) else null
+                    if (mExtrasCache.containsKey(CacheConstant.CACHE_CONFIG_MODULE))
+                        mExtrasCache.get(CacheConstant.CACHE_CONFIG_MODULE) else null
                 configModule?.let { module ->
                     if (module is MutableList<*>) {
                         val configModuleLists: MutableList<*> = module
@@ -83,7 +81,7 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
                             }
                         }
                     }
-                    mExtras.remove(CacheConstant.CACHE_CONFIG_MODULE)
+                    mExtrasCache.remove(CacheConstant.CACHE_CONFIG_MODULE)
                 }
 
                 // 开发者扩展 FragmentLifecycleCallbacks 注入

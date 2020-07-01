@@ -124,7 +124,7 @@ class ClientModule {
      * @return  [RxCache] 对象
      */
     @Singleton
-    @Produce
+    @Provides
     fun provideRxCache(
         application: Application, configuration: RxCacheConfiguration?,
         @Named("RxCacheDirectory") cacheDirectory: File, gson: Gson
@@ -143,7 +143,7 @@ class ClientModule {
      * @return [File] 指定 [cacheDir] 路径,生成文件名 `RxCache` 文件
      */
     @Singleton
-    @Produce
+    @Provides
     @Named("RxCacheDirectory")
     fun provideRxCacheDirectory(cacheDir: File): File =
         File(FileUtils.makeDirs(cacheDir), "RxCache")
@@ -204,6 +204,21 @@ class ClientModule {
     }
 
     /**
+     * [Retrofit] 配置,开发者通过实现 [RetrofitServiceDelegate] 接口中方法，对获取 `Retrofit Servcie` 进行扩展
+     */
+    interface RetrofitServiceDelegate {
+        /**
+         * 获取 [serviceClass] 接口对象
+         * @param retrofit [Retrofit]
+         * @param serviceClass [Class]
+         */
+        fun <T> createRetrofitService(
+            retrofit: Retrofit,
+            serviceClass: Class<T>
+        ): T
+    }
+
+    /**
      * [OkHttpClient] 配置,开发者通过实现 [OkhttpConfiguration] 接口中方法，在调用 [OkHttpClient.Builder] 对象进行配置，
      *  这样框架内部通过回调，获取配置后对象。
      */
@@ -229,4 +244,5 @@ class ClientModule {
          */
         fun configRxCache(context: Context, builder: RxCache.Builder): RxCache
     }
+
 }

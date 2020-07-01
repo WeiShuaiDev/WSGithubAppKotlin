@@ -17,6 +17,7 @@ import com.linwei.frame.http.cache.CacheType.Companion.FRAGMENT_CACHE_TYPE_ID
 import com.linwei.frame.http.cache.CacheType.Companion.RETROFIT_SERVICE_CACHE_TYPE_ID
 import com.linwei.frame.http.cache.kinds.LruCache
 import com.linwei.frame.http.model.BaseResponse
+import com.linwei.frame.manager.RepositoryManager
 import com.linwei.frame.utils.FileUtils
 import dagger.Module
 import dagger.Provides
@@ -90,7 +91,7 @@ class GlobalConfigModule(val mBuilder: Builder) {
     @Singleton
     @Provides
     fun provideGsonConfiguration(): AppModule.GsonConfiguration? {
-        return mBuilder.gsonConfiguration?:object:AppModule.GsonConfiguration{
+        return mBuilder.gsonConfiguration ?: object : AppModule.GsonConfiguration {
             override fun configGson(context: Context, builder: GsonBuilder) {
                 builder.registerTypeHierarchyAdapter(
                     BaseResponse::class.java,
@@ -118,11 +119,17 @@ class GlobalConfigModule(val mBuilder: Builder) {
     @Singleton
     @Provides
     fun provideRetrofitConfiguration(adapterFactory: LiveDataCallAdapterFactory): ClientModule.RetrofitConfiguration? {
-        return mBuilder.retrofitConfiguration?:object:ClientModule.RetrofitConfiguration{
+        return mBuilder.retrofitConfiguration ?: object : ClientModule.RetrofitConfiguration {
             override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
                 builder.addCallAdapterFactory(adapterFactory)
             }
         }
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofitServiceDelegate(): ClientModule.RetrofitServiceDelegate? {
+        return mBuilder.retrofitServiceDelegate
     }
 
     @Singleton
@@ -163,6 +170,7 @@ class GlobalConfigModule(val mBuilder: Builder) {
 
         var gsonConfiguration: AppModule.GsonConfiguration? = null
         var retrofitConfiguration: ClientModule.RetrofitConfiguration? = null
+        var retrofitServiceDelegate: ClientModule.RetrofitServiceDelegate? = null
         var okHttpClientConfiguration: ClientModule.OkHttpClientConfiguration? = null
         var rxCacheConfiguration: ClientModule.RxCacheConfiguration? = null
         var globalHttpHandler: GlobalHttpHandler? = null
@@ -196,6 +204,11 @@ class GlobalConfigModule(val mBuilder: Builder) {
 
         fun retrofitConfiguration(retrofitConfiguration: ClientModule.RetrofitConfiguration?): Builder {
             this.retrofitConfiguration = retrofitConfiguration
+            return this
+        }
+
+        fun retrofitServiceDelegate(retrofitServiceDelegate: ClientModule.RetrofitServiceDelegate?): Builder {
+            this.retrofitServiceDelegate = retrofitServiceDelegate
             return this
         }
 
