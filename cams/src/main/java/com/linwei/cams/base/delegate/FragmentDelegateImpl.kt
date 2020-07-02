@@ -32,7 +32,7 @@ class FragmentDelegateImpl(
             mIFragment = mFragment as IFragment
         }
 
-        mIFragment?.setupFragmentComponent(mFragment?.context?.obtainAppComponent())
+        mIFragment?.setupFragmentComponent(obtainAppComponent())
     }
 
 

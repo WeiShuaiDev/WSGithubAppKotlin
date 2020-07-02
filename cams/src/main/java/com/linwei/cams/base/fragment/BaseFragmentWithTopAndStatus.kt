@@ -11,7 +11,6 @@ import com.linwei.cams.ext.setVisible
 import com.linwei.cams.listener.OnTopLeftClickListener
 import com.linwei.cams.listener.OnTopRightClickListener
 import com.linwei.cams.utils.UIUtils
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper
 
 /**
  * @Author: WeiShuai
@@ -77,9 +76,9 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val mStatusFillView = View(mActivity)
-            var statusBarHeight = QMUIStatusBarHelper.getStatusbarHeight(mActivity)
+            var statusBarHeight: Int = getStatusbarHeight()
             if (statusBarHeight <= 0) {
-             statusBarHeight = UIUtils.dp2px(mActivity, 25f)
+                statusBarHeight = UIUtils.dp2px(mActivity, 25f)
             }
 
             val params =
@@ -101,6 +100,10 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
 
         dealImmersive()
         return linearLayout
+    }
+
+    fun getStatusbarHeight(): Int {
+        return 0
     }
 
 

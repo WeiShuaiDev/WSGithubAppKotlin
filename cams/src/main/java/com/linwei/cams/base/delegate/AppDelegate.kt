@@ -43,6 +43,7 @@ class AppDelegate constructor(
     private val mConfigModuleLists: MutableList<ConfigModule> = mManifestParser.fetchConfigModule()
 
     private lateinit var mApplication: Application
+
     private lateinit var mAppComponent: AppComponent
 
     init {
@@ -122,5 +123,9 @@ class AppDelegate constructor(
 
     override fun getAppComponent(): AppComponent {
         return mAppComponent
+    }
+
+    override fun getApplication(): Application {
+        return mApplication
     }
 }

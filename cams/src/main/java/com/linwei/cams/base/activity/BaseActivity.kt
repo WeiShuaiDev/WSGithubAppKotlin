@@ -26,9 +26,6 @@ import com.linwei.cams.utils.AppLanguageUtils
 import com.linwei.cams.utils.ToastUtils
 import com.linwei.cams.utils.UIUtils
 import com.linwei.cams.utils.statusbar.Eyes
-import com.qmuiteam.qmui.util.QMUIDeviceHelper
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog
 import java.util.*
 
 /**
@@ -37,7 +34,7 @@ import java.util.*
  * @Time: 2019/10/14
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:Activity基类
+ * @Description: [Activity] 基类
  *-----------------------------------------------------------------------
  */
 abstract class BaseActivity : AppCompatActivity(), IActivity {
@@ -45,14 +42,12 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     private var activities: MutableList<Activity> = mutableListOf()
     protected lateinit var mContext: Context
     lateinit var mStateView: StateView
-    private var mTipDialog: QMUITipDialog? = null
     protected var mToast: ToastUtils? = null
     lateinit var mPermissionListener: OnPermissionListener
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(AppLanguageUtils.attachBaseContext(newBase, LibConfig.LANGUAGE))
     }
-
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +58,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             contentView = if (useImmersive()) {
                 addStatusView(withTopContentView)
             } else {
-                dealImmersive()  //隐藏状态栏
                 withTopContentView
             }
         } else {
@@ -71,10 +65,8 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             contentView = if (useImmersive()) {
                 addStatusView(view!!)
             } else {
-                dealImmersive()
                 view!!
             }
-
         }
 
         setContentView(contentView)
@@ -118,7 +110,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val mStatusFillView = View(this)
-            var statusBarHeight = QMUIStatusBarHelper.getStatusbarHeight(this)
+            var statusBarHeight = getStatusbarHeight()
             if (statusBarHeight <= 0) {
                 statusBarHeight = UIUtils.dp2px(this, 25f)
             }
@@ -137,50 +129,11 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         view.layoutParams = params
         linearLayout.addView(view)
 
-        dealImmersive()
         return linearLayout
     }
 
-    /**
-     * 处理沉浸式
-     */
-    private fun dealImmersive() {
-        if (!(QMUIDeviceHelper.isMeizu() || QMUIDeviceHelper.isMIUI()) && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            //如果不是小米或不是魅族，并且是5.0以下
-            Eyes.translucentStatusBar(this)
-        } else {
-            QMUIStatusBarHelper.translucent(this)
-        }
-
-        if (useBlackStatusText()) {
-            QMUIStatusBarHelper.setStatusBarLightMode(this)
-        } else {
-            QMUIStatusBarHelper.setStatusBarDarkMode(this)
-        }
-
-        if (useResizeFix()) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                //如果大于4.4，则添加处理因沉浸式导致的ajustResize失效的问题
-                AndroidBug5497Workaround.assistActivity(findViewById<View>(android.R.id.content))
-            }
-        }
-    }
-
-    /**
-     * 是否沉浸式
-     */
-    fun hasTranslucentStatusBar(topView: View) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            return
-        }
-        val params = topView.layoutParams
-        var statusBarHeight = QMUIStatusBarHelper.getStatusbarHeight(this)
-        if (statusBarHeight <= 0) {
-            statusBarHeight = UIUtils.dp2px(this, 25f)
-        }
-        params.height = statusBarHeight
-        topView.layoutParams = params
-        topView.setBackgroundResource(getStatusColor())
+    private fun getStatusbarHeight(): Int {
+        return 0
     }
 
     /**
@@ -253,30 +206,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         return -1
     }
 
-    fun showLoadingDialog(tipId: Int) {
-        showTipDialog(QMUITipDialog.Builder.ICON_TYPE_LOADING, getString(tipId))
-    }
-
-    /**
-     * 显示提示弹窗
-     */
-    protected fun showTipDialog(iconType: Int, tipWord: String) {
-        if (isFinishing) {
-            return
-        }
-        if (mTipDialog != null && mTipDialog?.isShowing!!) {
-            mTipDialog?.dismiss()
-        }
-
-        mTipDialog = QMUITipDialog.Builder(this)
-            .setTipWord(tipWord)
-            .setIconType(iconType)
-            .create()
-
-        mTipDialog?.setCancelable(false)
-        mTipDialog?.show()
-    }
-
     /**
      * 显示Toast
      */
@@ -285,12 +214,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             .setBgResource(R.drawable.shape_toast_background)
             .setMessageColor(R.color.colorGlobalBlack)
             .build()
-    }
-
-    protected fun dismissTipDialog() {
-        if (!isFinishing && mTipDialog != null && mTipDialog!!.isShowing) {
-            mTipDialog?.dismiss()
-        }
     }
 
     override fun onResume() {

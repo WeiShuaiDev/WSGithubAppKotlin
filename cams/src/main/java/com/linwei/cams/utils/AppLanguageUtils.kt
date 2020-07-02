@@ -1,6 +1,6 @@
-
 package com.linwei.cams.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -10,9 +10,13 @@ import androidx.annotation.RequiresApi
 import java.util.*
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/5/19
- * @Description:修改语言配置
+ * @Time: 2019/5/19
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description: 国际化处理
+ *-----------------------------------------------------------------------
  */
 object AppLanguageUtils {
     /**

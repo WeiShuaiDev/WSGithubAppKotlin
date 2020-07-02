@@ -10,6 +10,7 @@ import com.linwei.cams.R
 import com.linwei.cams.base.BaseApplication
 import com.linwei.cams.utils.ToastUtils
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import android.util.Base64
 import com.linwei.cams.base.App
@@ -28,37 +29,55 @@ import java.util.*
  * @Description: 提供 AppCompat 扩展方法
  *-----------------------------------------------------------------------
  */
+val ctx: Context = BaseApplication.mContext
 
 /**
- *短时间Toast
+ * 获取 [AppComponent]
+ */
+fun obtainAppComponent(): AppComponent {
+    return (ctx as App).getAppComponent()
+}
+
+/**
+ * 获取 [Application]
+ */
+fun obtainApplication(): Application {
+    return (ctx as App).getApplication()
+}
+
+/**
+ *短时间 [Toast]
  */
 fun Any.showShort(vararg args: String) {
     toastBuild().showShort(this.string(), args)
 }
 
 /**
- * 长时间Toast
+ * 长时间 [Toast]
  */
 fun Any.showLong(vararg args: String) {
     toastBuild().showLong(this.string(), args)
 }
 
 /**
- * 安全模式短时间Toast
+ * 安全模式短时间 [Toast]
  */
 fun Any.showShortSafe(vararg args: String) {
     toastBuild().showShortSafe(this.string(), args)
 }
 
 /**
- * 安全模式长时间Toast
+ * 安全模式长时间 [Toast]
  */
 fun Any.showLongSafe(vararg args: String) {
     toastBuild().showLongSafe(this.string(), args)
 }
 
-val ctx: Context = BaseApplication.mContext
-
+/**
+ * [ResId] 转换为字符串 [String]
+ * @param [ResId]
+ * @return [String]
+ */
 fun Any.string(): String {
     return if (this is Int) {
         ctx.resources.getString(this)
@@ -67,6 +86,11 @@ fun Any.string(): String {
     }
 }
 
+/**
+ * [ResId] 转换为字符串 [String]
+ * @param [ResId] 字符串Id, [args] 字符串格式化参数
+ * @return [String]
+ */
 fun Any.string(vararg args: String): String {
     return if (this is Int) {
         ctx.resources.getString(this, *args)
@@ -200,10 +224,6 @@ fun getTime(date: Long): String {
     } else (hour + minute).toString() + ":" + second
 }
 
-
-fun Context.obtainAppComponent(): AppComponent {
-    return (applicationContext as App).getAppComponent()
-}
 
 /**
  * 获取运算后内存大小

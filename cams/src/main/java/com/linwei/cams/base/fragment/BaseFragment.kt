@@ -14,9 +14,6 @@ import com.linwei.cams.utils.AndroidBug5497Workaround
 import com.linwei.cams.utils.ToastUtils
 import com.linwei.cams.utils.UIUtils
 import com.linwei.cams.utils.statusbar.Eyes
-import com.qmuiteam.qmui.util.QMUIDeviceHelper
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog
 
 /**
  * @Author: WeiShuai
@@ -28,7 +25,6 @@ abstract class BaseFragment : LazeLoadFragment() {
     lateinit var mStateView: StateView  //用于显示加载中、网络异常，空布局、内容布局
     protected lateinit var mActivity: Activity
     protected lateinit var mContext: Context
-    private var mTipDialog: QMUITipDialog? = null
     private var mToast: ToastUtils? = null
 
     override fun onCreateView(
@@ -147,30 +143,6 @@ abstract class BaseFragment : LazeLoadFragment() {
     //加载数据
     open fun loadData() {}
 
-    /**
-     * 处理沉浸式
-     */
-    protected fun dealImmersive() {
-        if (!(QMUIDeviceHelper.isMeizu() || QMUIDeviceHelper.isMIUI()) && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            //如果不是小米或不是魅族，并且是5.0以下
-            Eyes.translucentStatusBar(mActivity)
-        } else {
-            QMUIStatusBarHelper.translucent(mActivity)
-        }
-
-        if (useBlackStatusText()) {
-            QMUIStatusBarHelper.setStatusBarLightMode(mActivity)
-        } else {
-            QMUIStatusBarHelper.setStatusBarDarkMode(mActivity)
-        }
-
-        if (useResizeFix()) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                //如果大于4.4，则添加处理因沉浸式导致的ajustResize失效的问题
-                AndroidBug5497Workaround.assistActivity(mActivity.findViewById<View>(android.R.id.content))
-            }
-        }
-    }
 
     /**
      * 设置状态栏高度
@@ -180,13 +152,18 @@ abstract class BaseFragment : LazeLoadFragment() {
             return
         }
         val params = topView.layoutParams
-        var statusBarHeight = QMUIStatusBarHelper.getStatusbarHeight(mActivity)
+        var statusBarHeight: Int = getStatusbarHeight()
         if (statusBarHeight <= 0) {
             statusBarHeight = UIUtils.dp2px(mActivity, 25f)
         }
         params.height = statusBarHeight
         topView.layoutParams = params
     }
+
+    fun getStatusbarHeight(): Int {
+        return 0
+    }
+
 
     open fun useBlackStatusText(): Boolean = false
 
@@ -196,32 +173,6 @@ abstract class BaseFragment : LazeLoadFragment() {
     open fun useResizeFix(): Boolean = true
 
     /**
-     * 显示加载框
-     */
-    fun showLoadingDialog(tipId: Int) {
-        showTipDialog(QMUITipDialog.Builder.ICON_TYPE_LOADING, getString(tipId))
-    }
-
-    /**
-     * 显示提示弹窗
-     */
-    private fun showTipDialog(iconType: Int, tipWord: String) {
-        if (mActivity.isFinishing) {
-            return
-        }
-        if (mTipDialog != null && mTipDialog?.isShowing!!) {
-            mTipDialog?.dismiss()
-        }
-        mTipDialog = QMUITipDialog.Builder(mActivity)
-            .setTipWord(tipWord)
-            .setIconType(iconType)
-            .create()
-
-        mTipDialog?.setCancelable(true)
-        mTipDialog?.show()
-    }
-
-    /**
      * 显示Toast
      */
     private fun initToastBuilder() {
@@ -229,12 +180,6 @@ abstract class BaseFragment : LazeLoadFragment() {
             .setBgResource(R.drawable.shape_toast_background)
             .setMessageColor(R.color.colorGlobalBlack)
             .build()
-    }
-
-    protected fun dismissTipDialog() {
-        if (!mActivity.isFinishing && mTipDialog != null && mTipDialog!!.isShowing) {
-            mTipDialog?.dismiss()
-        }
     }
 
     override fun onDestroy() {

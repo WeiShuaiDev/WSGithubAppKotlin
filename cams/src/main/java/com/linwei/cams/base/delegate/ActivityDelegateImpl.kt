@@ -35,7 +35,7 @@ class ActivityDelegateImpl(
             EventBusManager.getInstance().register(mActivity)
         }
 
-        mIActivity?.setupActivityComponent(mActivity?.obtainAppComponent())
+        mIActivity?.setupActivityComponent(obtainAppComponent())
 
     }
 

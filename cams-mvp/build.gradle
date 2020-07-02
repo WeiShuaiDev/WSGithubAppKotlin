@@ -46,6 +46,17 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    api(rootProject.ext.dependencies["rxlifecycle3"]) {
+        exclude module: 'rxjava'
+        exclude module: 'jsr305'
+    }
+    api(rootProject.ext.dependencies["rxlifecycle3-kotlin"]) {
+        exclude module: 'annotation'
+        exclude module: 'rxjava'
+        exclude module: 'rxandroid'
+        exclude module: 'rxlifecycle'
+    }
+
     implementation project(path: ':cams')
 
 }

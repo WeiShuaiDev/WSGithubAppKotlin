@@ -1,5 +1,6 @@
 package com.linwei.cams.base
 
+import android.app.Application
 import com.linwei.cams.di.component.AppComponent
 
 /**
@@ -14,4 +15,6 @@ import com.linwei.cams.di.component.AppComponent
 interface App {
 
     fun getAppComponent(): AppComponent
+
+    fun getApplication(): Application
 }

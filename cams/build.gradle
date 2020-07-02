@@ -145,9 +145,6 @@ dependencies {
     //Permission
     api rootProject.ext.dependencies["easypermissions"]
 
-    //QMUI
-    api rootProject.ext.dependencies["qmui"]
-
     //Event Bus
     compileOnly rootProject.ext.dependencies["eventbus"]
     compileOnly rootProject.ext.dependencies["otto"]

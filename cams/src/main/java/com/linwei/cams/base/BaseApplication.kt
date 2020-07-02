@@ -45,6 +45,8 @@ class BaseApplication() : Application(), App {
 
     override fun getAppComponent(): AppComponent = mAppDelegate.getAppComponent()
 
+    override fun getApplication(): Application =mAppDelegate.getApplication()
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         AppLanguageUtils.setLanguage(this, LibConfig.LANGUAGE)

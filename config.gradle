@@ -26,9 +26,11 @@ ext {
             aviVersion               : "2.1.3",
             easypermissionVersion    : "3.0.0",
             rxbusVersion             : "1.0.2",
-            qmuiVersion              : "1.1.10",
             espressoSdkVersion       : "3.2.0",
             canarySdkVersion         : "2.2",
+            rxlifecycleSdkVersion    : "1.0",
+            rxlifecycle2SdkVersion   : "2.2.2",
+            rxlifecycle3SdkVersion   : "4.0.0",
             ottoVersion              : "1.3.8",
             eventbusVersion          : "3.2.0",
             navigationVersion        : "2.2.2",
@@ -100,6 +102,8 @@ ext {
              */
             "rxkotlin"                  : "io.reactivex:rxkotlin:1.0.0",
             "rxandroid"                 : "io.reactivex:rxandroid:1.2.1",
+            "rxlifecycle"               : "com.trello:rxlifecycle:${version["rxlifecycleSdkVersion"]}",
+            "rxlifecycle-kotlin"       : "com.trello.rxlifecycle2:rxlifecycle-kotlin:${version["rxlifecycleSdkVersion"]}",
             "rxjava"                    : "io.reactivex:rxjava:1.3.8",
             "rxcache"                   : "com.github.VictorAlbertos.RxCache:runtime:1.7.0-1.x",
             "rxcache-jolyglot-gson"     : "com.github.VictorAlbertos.Jolyglot:gson:0.0.4",
@@ -110,6 +114,9 @@ ext {
              */
             "rxkotlin2"                 : "io.reactivex.rxjava2:rxkotlin:2.4.0",
             "rxandroid2"                : "io.reactivex.rxjava2:rxandroid:2.1.1",
+            "rxlifecycle2"              : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycle2SdkVersion"]}",
+            "rxlifecycle2-kotlin"      : "com.trello.rxlifecycle2:rxlifecycle-kotlin:${version["rxlifecycle2SdkVersion"]}",
+            "rxlifecycle2-components"   : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
             "rxjava2"                   : "io.reactivex.rxjava2:rxjava:2.2.19",
             "rxcache2"                  : "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x",
             "rxpermissions2"            : "com.github.tbruyelle:rxpermissions:0.10.2",
@@ -119,7 +126,11 @@ ext {
              */
             "rxkotlin3"                 : "io.reactivex.rxjava3:rxkotlin:3.0.0",
             "rxandroid3"                : "io.reactivex.rxjava3:rxandroid:3.0.0",
+            "rxlifecycle3"              : "com.trello.rxlifecycle4:rxlifecycle:${version["rxlifecycle3SdkVersion"]}",
+            "rxlifecycle3-kotlin"      : "com.trello.rxlifecycle4:rxlifecycle-kotlin:${version["rxlifecycle3SdkVersion"]}",
+            "rxlifecycle3-components"   : "com.trello.rxlifecycle4:rxlifecycle-components:${version["rxlifecycle3SdkVersion"]}",
             "rxjava3"                   : "io.reactivex.rxjava3:rxjava:3.0.4",
+
 
             /**
              * ---------------------------------------------Tools-----------------------------------
@@ -145,8 +156,6 @@ ext {
             "parallaxbacklayout"        : "com.github.anzewei:parallaxbacklayout:${version["parallaxbacklayoutVersion"]}",
             //Animation
             "avi"                       : "com.wang.avi:library:${version["aviVersion"]}",
-            //QMUI
-            "qmui"                      : "com.qmuiteam:qmui:${version["qmuiVersion"]}",
 
             /**
              * ---------------------------------------------Test------------------------------------
