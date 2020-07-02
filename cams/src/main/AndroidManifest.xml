@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.linwei.cams">
+
+    <!--写入SD卡-->
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!--读取SD卡-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--允许挂载和反挂载文件系统可移动存储-->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions"/>
+    <!--系统对话框-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!--相机-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!--相机聚焦-->
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission
+        android:name="android.permission.CHANGE_CONFIGURATION"
+        tools:ignore="ProtectedPermissions"/>
+    <!--读取手机状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!--访问手机网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--使用音频-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!--访问网络-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--读取联系人信息-->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <!--访问wifi状态-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!--读取系统设置-->
+    <uses-permission android:name="android.permission.READ_SETTINGS"/>
+
+    <!--读取日志-->
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions"/>
+    <!--操作系统设置-->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions"/>
+    <!--打电话-->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+
+    <uses-permission android:name="android.permission.RECORD_VIDEO"/>
+
+    <uses-feature android:name="android.hardware.camera"
+        tools:ignore="DuplicateUsesFeature" />
+    <uses-feature android:name="android.hardware.camera.autofocus"
+        tools:ignore="DuplicateUsesFeature" />
+
+</manifest>

@@ -1,3 +1,4 @@
 rootProject.name='WSGithubAppKotlin'
 include ':app'
-include ':frame'
+include ':cams'
+include ':cams-mvp'

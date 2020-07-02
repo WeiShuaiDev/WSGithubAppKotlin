@@ -88,7 +88,7 @@ def buildTime() {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(path: ':frame')
+    implementation project(path: ':cams-mvp')
 
     //test
     implementation 'androidx.appcompat:appcompat:1.1.0'
