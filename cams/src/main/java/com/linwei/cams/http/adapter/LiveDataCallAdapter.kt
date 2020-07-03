@@ -27,6 +27,7 @@ class LiveDataCallAdapter<R, T>(private val responseType: Type) : CallAdapter<R,
     override fun adapt(call: Call<R>): LiveData<T> {
         return object : LiveData<T>() {
             private val started = AtomicBoolean(false)
+            @Suppress("UNCHECKED_CAST")
             override fun onActive() {
                 super.onActive()
                 if (started.compareAndSet(false, true)) {//确保执行一次

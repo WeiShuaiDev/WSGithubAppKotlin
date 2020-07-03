@@ -18,7 +18,7 @@ import com.linwei.cams.utils.AppLanguageUtils
  * 方法注入国际化处理。
  *----------------------------------------------------------------------
  */
-class BaseApplication() : Application(), App {
+class BaseApplication : Application(), App {
     private lateinit var mAppDelegate: AppDelegate
 
     companion object {
@@ -45,7 +45,7 @@ class BaseApplication() : Application(), App {
 
     override fun getAppComponent(): AppComponent = mAppDelegate.getAppComponent()
 
-    override fun getApplication(): Application =mAppDelegate.getApplication()
+    override fun getApplication(): Application = mAppDelegate.getApplication()
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)

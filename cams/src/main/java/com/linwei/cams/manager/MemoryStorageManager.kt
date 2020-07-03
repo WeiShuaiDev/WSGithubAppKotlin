@@ -11,6 +11,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.io.Serializable
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -24,7 +25,7 @@ import java.io.Serializable
  *               存储类型:String、JSONObject、JSONArray、Array[]、Serializable、Bitmap、Drawable
  *-----------------------------------------------------------------------
  */
-class MemoryStorageManager() : CacheProvide {
+class MemoryStorageManager private constructor() : CacheProvide {
 
     private val mMapCache: MapCache = MapCache()
 
@@ -250,7 +251,7 @@ class MemoryStorageManager() : CacheProvide {
         val byteArray: ByteArray? = getAsBinary(key)
         return BitmapUtils.bytes2Bitmap(byteArray)
     }
-    
+
     /**
      * 获取 {@code key} 文件中 Drawable 缓存数据
      * @param key 文件名

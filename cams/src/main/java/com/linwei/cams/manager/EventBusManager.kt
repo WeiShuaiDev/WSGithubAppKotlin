@@ -1,6 +1,7 @@
 package com.linwei.cams.manager
 import com.linwei.cams.config.PlatformConfig
 import org.greenrobot.eventbus.EventBus
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -13,7 +14,7 @@ import org.greenrobot.eventbus.EventBus
  *               不使用就不要引入进来，减少包体积。
  *-----------------------------------------------------------------------
  */
-class EventBusManager {
+class EventBusManager private constructor() {
 
     companion object {
         private var INSTANCE: EventBusManager? = null

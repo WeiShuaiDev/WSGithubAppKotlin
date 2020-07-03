@@ -5,11 +5,15 @@ import android.widget.*
 import com.linwei.cams.R
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2019/10/14
+ * @Time: 2020/7/3
+ * @Contact linwei9605@gmail.com
+ * @Follow https://github.com/WeiShuaiDev
  * @Description: ViewHolder管理
+ *-----------------------------------------------------------------------
  */
-class ItemViewHolder(val itemView: View) {
+open class ItemViewHolder(val itemView: View) {
     private var mMapViews: MutableMap<Int, View> = mutableMapOf()
 
     /**
@@ -70,7 +74,7 @@ class ItemViewHolder(val itemView: View) {
      * 获取控件
      */
     @Suppress("UNCHECKED_CAST")
-    private fun <T : View> findViewById(viewId: Int): T {
+    protected fun <T : View> findViewById(viewId: Int): T {
         var view: View? = mMapViews[viewId]
         if (view == null) {
             view = itemView.findViewById(viewId)

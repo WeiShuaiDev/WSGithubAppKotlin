@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class RepositoryManager {
+class RepositoryManager private constructor() {
 
     @Inject
     lateinit var mRetrofit: Retrofit
@@ -35,6 +35,18 @@ class RepositoryManager {
 
     @Inject
     lateinit var mRetrofitServiceDelegate: ClientModule.RetrofitServiceDelegate
+
+    companion object {
+        private var INSTANCE: RepositoryManager? = null
+
+        @JvmStatic
+        fun getInstance(): RepositoryManager {
+            return INSTANCE
+                ?: RepositoryManager().apply {
+                    INSTANCE = this
+                }
+        }
+    }
 
     /**
      * `RetrofitService` 对象缓存存储

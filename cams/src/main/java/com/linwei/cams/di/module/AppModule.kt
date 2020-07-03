@@ -116,7 +116,17 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepositoryManager(): RepositoryManager {
-        return RepositoryManager()
+        return RepositoryManager.getInstance()
+    }
+
+    /**
+     * 创建 `PermissionManager` 单例对象,用于权限处理。
+     * @return 返回 `PermissionManager` 对象
+     */
+    @Singleton
+    @Provides
+    fun providePermissionManager(): PermissionManager {
+        return PermissionManager.getInstance()
     }
 
     /**

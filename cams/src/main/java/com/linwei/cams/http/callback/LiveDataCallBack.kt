@@ -18,6 +18,7 @@ import com.linwei.cams.http.model.BaseResponse
  *-----------------------------------------------------------------------
  */
 abstract class LiveDataCallBack<T, V> : Observer<T> {
+    @Suppress("UNCHECKED_CAST")
     override fun onChanged(t: T) {
         if (t != null && t is BaseResponse<*>) {
             val data: BaseResponse<*> = t

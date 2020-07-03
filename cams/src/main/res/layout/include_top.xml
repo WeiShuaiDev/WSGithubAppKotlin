@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/MatchAndWrap"
-        android:background="@android:color/transparent"
-        android:id="@+id/mTopRoot">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mTopRoot"
+    style="@style/MatchAndWrap"
+    android:background="@android:color/transparent"
+    tools:ignore="MissingConstraints" >
 
-    <View android:layout_width="match_parent"
-          android:layout_height="@dimen/dp_25"
-          android:id="@+id/mStateViewRoot"
-          tools:ignore="MissingConstraints"/>
-
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/mToolBar"
-            style="@style/MatchAndWrap"
-            app:titleTextColor="@color/colorGlobalWhite"
-            app:navigationIcon="@mipmap/ic_black_back"
-            app:layout_constraintTop_toBottomOf="@id/mStateViewRoot"
-            android:background="?attr/selectableItemBackground"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            tools:ignore="MissingConstraints"/>
+    <View
+        android:id="@+id/mStateViewRoot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_25"/>
 
     <ProgressBar
-            android:id="@+id/mProgressBar"
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:indeterminate="false"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/mToolBar"
-            android:max="100" tools:ignore="MissingConstraints"/>
+        android:id="@+id/mProgressBar"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/colorGlobalGray"
+        android:max="100"
+        app:layout_constraintTop_toBottomOf="@id/mStateViewRoot"
+        android:progressDrawable="@drawable/progress_horizontal_loading"/>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mToolBar"
+        style="@style/MatchAndWrap"
+        android:background="?attr/selectableItemBackground"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        app:layout_constraintTop_toBottomOf="@id/mProgressBar"
+        app:navigationIcon="@mipmap/ic_black_back"
+        app:titleTextColor="@color/colorGlobalWhite" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

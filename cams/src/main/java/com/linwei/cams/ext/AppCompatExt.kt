@@ -12,6 +12,8 @@ import com.linwei.cams.utils.ToastUtils
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.util.Base64
 import com.linwei.cams.base.App
 import com.linwei.cams.di.component.AppComponent
@@ -71,6 +73,14 @@ fun Any.showShortSafe(vararg args: String) {
  */
 fun Any.showLongSafe(vararg args: String) {
     toastBuild().showLongSafe(this.string(), args)
+}
+
+fun Int.color(): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        ctx.resources.getColor(this, null)
+    } else {
+        ctx.resources.getColor(this)
+    }
 }
 
 /**

@@ -5,21 +5,21 @@ import javax.inject.Inject
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/5/25
+ * @Time: 2020/7/3
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
  * @Description:
  *-----------------------------------------------------------------------
  */
-class FileManager  private constructor() {
+class PermissionManager  private constructor(){
 
     companion object {
-        private var INSTANCE: FileManager? = null
+        private var INSTANCE: PermissionManager? = null
 
         @JvmStatic
-        fun getInstance(): FileManager {
+        fun getInstance(): PermissionManager {
             return INSTANCE
-                ?: FileManager().apply {
+                ?: PermissionManager().apply {
                     INSTANCE = this
                 }
         }

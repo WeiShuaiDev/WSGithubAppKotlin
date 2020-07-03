@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.linwei.cams.R
 import com.linwei.cams.base.holder.TopViewHolder
-import com.linwei.cams.ext.setVisible
 import com.linwei.cams.listener.OnTopLeftClickListener
 import com.linwei.cams.listener.OnTopRightClickListener
 import com.linwei.cams.utils.UIUtils
@@ -40,29 +39,28 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
 
             //设置导航栏左边监听
             mOnTopLeftListener = getTopLeftListener()
-            mTopViewHolder.mIvBack.setOnClickListener {
-                if (mOnTopLeftListener != null) {
-                    mOnTopLeftListener?.onTopClickListener()
-                } else {
-                    //关闭页面前收起软键盘
-                    mActivity.finish()
-                }
-            }
+//            mTopViewHolder.mBtnBack.setOnClickListener {
+//                if (mOnTopLeftListener != null) {
+//                    mOnTopLeftListener?.onTopClickListener()
+//                } else {
+//                    //关闭页面前收起软键盘
+//                    mActivity.finish()
+//                }
+//            }
 
             //设置导航栏右边监听
             mOnTopRightListener = getTopRightListener()
-            mTopViewHolder.mIbChoose.setOnClickListener {
-                if (mOnTopRightListener != null) {
-                    mOnTopRightListener?.onTopRightClickListener()
-                }
-            }
+//            mTopViewHolder.mBtnRefresh.setOnClickListener {
+//                if (mOnTopRightListener != null) {
+//                    mOnTopRightListener?.onTopRightClickListener()
+//                }
+//            }
 
             updateTopBarIsVisible()
         }
         return if (useImmersive()) {
             addStatusView(mTopBarView)
         } else {
-            dealImmersive()
             mTopBarView
         }
     }
@@ -98,14 +96,8 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
             linearLayout.addView(view)
         }
 
-        dealImmersive()
         return linearLayout
     }
-
-    fun getStatusbarHeight(): Int {
-        return 0
-    }
-
 
     open fun getTopBarId(): Int = -1
 
@@ -171,7 +163,7 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
      * 设置右边图片id
      */
     fun setTopBarRightImage(resId: Int) {
-        mTopViewHolder.mIbChoose.setImageResource(resId)
+//        mTopViewHolder.mBtnRefresh.setImageResource(resId)
     }
 
 
@@ -194,7 +186,7 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
         if (TextUtils.isEmpty(text)) {
             title = ""
         }
-        mTopViewHolder.mRightTitle.text = title
+//        mTopViewHolder.mRightTitle.text = title
     }
 
     /**
@@ -207,11 +199,11 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
      */
     private fun updateTopBarIsVisible() {
         mTopViewHolder.apply {
-            mIbChoose.setVisible(setTopBarRightImageVisible())
-            mIvBack.setVisible(setTopBarBackVisible())
-            mLine.setVisible(setTopBarLineVisible())
-            mRightTitle.setVisible(setTopBarRightTextVisible())
-            mTvTitle.setVisible(getTopBarTitleVisible())
+//            mIbChoose.setVisible(setTopBarRightImageVisible())
+//            mIvBack.setVisible(setTopBarBackVisible())
+//            mLine.setVisible(setTopBarLineVisible())
+//            mRightTitle.setVisible(setTopBarRightTextVisible())
+//            mTvTitle.setVisible(getTopBarTitleVisible())
         }
     }
 

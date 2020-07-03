@@ -6,6 +6,7 @@ import com.linwei.cams.di.module.AppModule
 import com.linwei.cams.di.module.ClientModule
 import com.linwei.cams.di.module.GlobalConfigModule
 import com.linwei.cams.http.cache.Cache
+import com.linwei.cams.manager.*
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -39,9 +40,45 @@ interface AppComponent {
      */
     fun cacheFactory(): Cache.Factory
 
+    /**
+     * 用于数据磁盘存储
+     * @return [DiskStorageManager]
+     */
+    fun diskStorageManager(): DiskStorageManager
 
     /**
-     * 注入 [AppDelegate]
+     * 用于数据内存存储
+     * @return [MemoryStorageManager]
+     */
+    fun memoryStorageManager(): MemoryStorageManager
+
+    /**
+     * 用于事件处理
+     * @return [EventBusManager]
+     */
+    fun eventBusManager(): EventBusManager
+
+    /**
+     * 用于线程处理
+     * @return [HandlerManager]
+     */
+    fun handlerManager(): HandlerManager
+
+    /**
+     * 用于网络请求
+     * @return [RepositoryManager]
+     */
+    fun repositoryManager(): RepositoryManager
+
+    /**
+     * 用于权限处理
+     * @return [PermissionManager]
+     */
+    fun permissionManager(): PermissionManager
+
+    /**
+     * 注入
+     * @param [AppDelegate]
      */
     fun inject(appDelegate: AppDelegate)
 

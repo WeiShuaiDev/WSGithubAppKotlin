@@ -64,6 +64,9 @@ dependencies {
     implementation rootProject.ext.dependencies["core-ktx"]
     implementation rootProject.ext.dependencies["constraintlayout"]
 
+    //Anko
+    api rootProject.ext.dependencies["anko-common"]
+
     //Navigation
     api rootProject.ext.dependencies["navigation-fragment-ktx"]
     api rootProject.ext.dependencies["navigation-ui-ktx"]
@@ -87,7 +90,6 @@ dependencies {
 
     //work
     api rootProject.ext.dependencies["work-runtime-ktx"]
-
 
     //Multidex
     api rootProject.ext.dependencies["multidex"]
@@ -126,15 +128,9 @@ dependencies {
     //Gson
     api rootProject.ext.dependencies["gson"]
 
-    //Anko
-    api rootProject.ext.dependencies["anko-common"]
-
     //StateView
     api rootProject.ext.dependencies["stateview"]
     api rootProject.ext.dependencies["parallaxbacklayout"]
-
-    //Kotlin RxBus
-    api rootProject.ext.dependencies["rxbus"]
 
     //Klog
     api rootProject.ext.dependencies["klog"]
@@ -145,7 +141,8 @@ dependencies {
     //Permission
     api rootProject.ext.dependencies["easypermissions"]
 
-    //Event Bus
+    //EventBus
+    compileOnly rootProject.ext.dependencies["rxbus"]
     compileOnly rootProject.ext.dependencies["eventbus"]
     compileOnly rootProject.ext.dependencies["otto"]
     compileOnly rootProject.ext.dependencies["rxbus"]

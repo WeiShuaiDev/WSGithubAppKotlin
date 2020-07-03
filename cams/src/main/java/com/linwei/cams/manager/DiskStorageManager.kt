@@ -3,6 +3,7 @@ package com.linwei.cams.manager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import androidx.room.Index
 import com.google.gson.JsonObject
 import com.linwei.cams.http.cache.CacheProvide
 import com.linwei.cams.http.cache.kinds.DiskLruCache
@@ -11,6 +12,7 @@ import com.linwei.cams.utils.TimeUtils
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -24,7 +26,7 @@ import java.io.*
  *               存储类型:String、JSONObject、JSONArray、Array[]、Serializable、Bitmap、Drawable
  *-----------------------------------------------------------------------
  */
-class DiskStorageManager(
+class DiskStorageManager private constructor (
     cacheDir: File,
     max_size: Long,
     max_count: Int

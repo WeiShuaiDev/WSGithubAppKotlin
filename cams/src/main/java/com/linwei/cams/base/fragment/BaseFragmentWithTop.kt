@@ -3,9 +3,8 @@ package com.mimefin.baselib.common.fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.linwei.cams.base.holder.TopViewHolder
-import com.linwei.cams.ext.setVisible
 import com.linwei.cams.base.fragment.BaseFragment
+import com.linwei.cams.base.holder.TopViewHolder
 import com.linwei.cams.listener.OnTopLeftClickListener
 
 /**
@@ -40,14 +39,14 @@ abstract class BaseFragmentWithTop : BaseFragment() {
         //获取头部相关监听
         mITopLeftListener = getTopLeftListener()
 
-        mTopViewHolder.mIvBack.setOnClickListener {
-            if (mITopLeftListener != null) {
-                mITopLeftListener?.onTopClickListener()
-            } else {
-                //关闭页面前收起软键盘
-                mActivity.finish()
-            }
-        }
+//        mTopViewHolder.mBtnBack.setOnClickListener {
+//            if (mITopLeftListener != null) {
+//                mITopLeftListener?.onTopClickListener()
+//            } else {
+//                //关闭页面前收起软键盘
+//                mActivity.finish()
+//            }
+//        }
     }
 
     abstract fun getTopBarId(): Int
@@ -67,7 +66,7 @@ abstract class BaseFragmentWithTop : BaseFragment() {
      * @param visible
      */
     fun setTopBarBackVisible(visible: Boolean) {
-        mTopViewHolder.mIvBack.setVisible(visible)
+//        mTopViewHolder.mIvBack.setVisible(visible)
     }
 
     /**

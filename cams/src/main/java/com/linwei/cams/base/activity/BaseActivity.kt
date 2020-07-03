@@ -21,11 +21,9 @@ import com.linwei.cams.R
 import com.linwei.cams.manager.HandlerManager
 import com.linwei.cams.config.LibConfig
 import com.linwei.cams.listener.OnPermissionListener
-import com.linwei.cams.utils.AndroidBug5497Workaround
 import com.linwei.cams.utils.AppLanguageUtils
 import com.linwei.cams.utils.ToastUtils
 import com.linwei.cams.utils.UIUtils
-import com.linwei.cams.utils.statusbar.Eyes
 import java.util.*
 
 /**
@@ -40,9 +38,11 @@ import java.util.*
 abstract class BaseActivity : AppCompatActivity(), IActivity {
     private var currentActivity: Activity? = null// 对所有activity进行管理
     private var activities: MutableList<Activity> = mutableListOf()
+
     protected lateinit var mContext: Context
+    private var mToast: ToastUtils? = null
+
     lateinit var mStateView: StateView
-    protected var mToast: ToastUtils? = null
     lateinit var mPermissionListener: OnPermissionListener
 
     override fun attachBaseContext(newBase: Context) {
@@ -52,18 +52,19 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mContext = this
-        val withTopContentView = withTopContentView()
+
+        val withTopContentView: View? = withTopContentView()
         val contentView: View
         if (withTopContentView != null) {
             contentView = if (useImmersive()) {
-                addStatusView(withTopContentView)
+                markStatusView(withTopContentView)
             } else {
                 withTopContentView
             }
         } else {
-            val view = View.inflate(this, provideContentViewId(), null)
+            val view: View? = View.inflate(this, provideContentViewId(), null)
             contentView = if (useImmersive()) {
-                addStatusView(view!!)
+                markStatusView(view!!)
             } else {
                 view!!
             }
@@ -79,12 +80,13 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         }
 
         if (enableSlideClose()) {
-            val layout = ParallaxHelper.getParallaxBackLayout(this, true)
-            layout.setEdgeMode(EDGE_MODE_DEFAULT)//边缘滑动
-            layout.edgeFlag = getEdgeDirection()
-            layout.setLayoutType(getSlideLayoutType(), null)
+            val parallaxBackLayout: ParallaxBackLayout =
+                ParallaxHelper.getParallaxBackLayout(this, true)
+            parallaxBackLayout.setEdgeMode(EDGE_MODE_DEFAULT)//边缘滑动
+            parallaxBackLayout.edgeFlag = getEdgeDirection()
+            parallaxBackLayout.setLayoutType(getSlideLayoutType(), null)
 
-            layout.setSlideCallback(object : ParallaxBackLayout.ParallaxSlideCallback {
+            parallaxBackLayout.setSlideCallback(object : ParallaxBackLayout.ParallaxSlideCallback {
                 override fun onStateChanged(state: Int) {
 
                 }
@@ -94,6 +96,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
                 }
             })
         }
+
         initToastBuilder()
         initLayoutView()
         initLayoutData()
@@ -101,16 +104,18 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     }
 
     /**
-     * 是否使用沉浸式，默认是
+     * 对 [view] 增加状态栏功能,并成功返回增加了沉浸式状态栏 [View] 控件
+     * [getStatusColor] 方法定义状态栏颜色。[getStatusBarHeight] 方法定义状态栏高度
+     * @param view [View]
+     * @return [View] 返回已经增加沉浸式状态栏 [View]
      */
-    open fun useImmersive() = false
-
-    private fun addStatusView(view: View): View {
-        val linearLayout = View.inflate(this, R.layout.base_content_layout, null) as LinearLayout
+    private fun markStatusView(view: View): View {
+        val linearLayout: LinearLayout =
+            View.inflate(this, R.layout.base_content_layout, null) as LinearLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val mStatusFillView = View(this)
-            var statusBarHeight = getStatusbarHeight()
+            var statusBarHeight: Int = getStatusBarHeight()
             if (statusBarHeight <= 0) {
                 statusBarHeight = UIUtils.dp2px(this, 25f)
             }
@@ -132,25 +137,71 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         return linearLayout
     }
 
-    private fun getStatusbarHeight(): Int {
+
+    /**
+     * 修改 [view] 状态栏高度 [getStatusBarHeight],状态栏背景颜色 [getStatusColor] 功能
+     * [getStatusColor] 方法定义状态栏颜色。[getStatusBarHeight] 方法定义状态栏高度
+     * @param view [View]
+     */
+    fun hasTranslucentStatusBar(topView: View) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return
+        }
+        val params: ViewGroup.LayoutParams = topView.layoutParams
+        var statusBarHeight: Int = getStatusBarHeight()
+        if (statusBarHeight <= 0) {
+            statusBarHeight = UIUtils.dp2px(this, 25f)
+        }
+        params.height = statusBarHeight
+        topView.layoutParams = params
+        topView.setBackgroundResource(getStatusColor())
+    }
+
+    /**
+     * 是否使用沉浸式效果
+     * @return [Boolean] `false`:不使用; `true`:使用
+     */
+    open fun useImmersive(): Boolean = false
+
+    /**
+     * 沉浸式状态栏颜色
+     * @return　[Int]
+     */
+    open fun getStatusColor(): Int = R.color.colorPrimary
+
+    /**
+     * 是否使用沉浸式黑体文字
+     * @return [Boolean] `false`:不使用; `true`:使用
+     */
+    open fun useBlackStatusText(): Boolean = false
+
+    /**
+     * 计算设备沉浸式效果状态栏高度
+     * @return [Int] 高度
+     */
+    private fun getStatusBarHeight(): Int {
         return 0
     }
 
     /**
-     * 是否使用修复resize，默认true
+     * 获取状态页面绑定顶层 [View]
+     * @return [View]
      */
-    open fun useResizeFix(): Boolean = true
-
-    open fun getStatusColor(): Int = R.color.colorPrimary
-
-    open fun useBlackStatusText(): Boolean = false
-
     open fun getStateViewRoot(): View? {
         return null
     }
 
+    /**
+     * 是否使用状态页面
+     * @return [Boolean] `false`:不使用; `true`:使用
+     */
     open fun hasStateView(): Boolean = false
 
+
+    /**
+     * 界面内容布局 [View]
+     * @return [View]
+     */
     open fun withTopContentView(): View? = null
 
     /**
@@ -161,8 +212,8 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     ): View? = null
 
     /**
-     * 默认开启滑动关闭
-     * @return
+     * 是否使用手势滑动
+     * @return [Boolean] `false`:不使用; `true`:使用
      */
     open fun enableSlideClose(): Boolean {
         return false
@@ -170,7 +221,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
     /**
      * 默认为左滑，子类可重写返回对应的方向
-     * @return
+     * @return [Int]
      */
     open fun getEdgeDirection(): Int {
         return EDGE_LEFT
@@ -178,7 +229,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
     /**
      * 默认为覆盖滑动关闭效果，子类可重写
-     * @return
+     * @return [Int]
      */
     open fun getSlideLayoutType(): Int {
         return LAYOUT_COVER
@@ -200,14 +251,15 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     abstract fun initLayoutListener();
 
     /**
-     * 得到当前界面的布局文件
+     * 界面内容布局 `ResId`
+     * @return [Int] 布局文件Id
      */
     open fun provideContentViewId(): Int {
         return -1
     }
 
     /**
-     * 显示Toast
+     * 初始化 [Toast] 配置
      */
     private fun initToastBuilder() {
         mToast = ToastUtils.Builder(mContext)
@@ -227,11 +279,22 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     }
 
     override fun onDestroy() {
-        super.onDestroy()  //removeTask
+        super.onDestroy()
         HandlerManager.getInstance().removeTask()
     }
 
+    fun postTaskSafely(task: Runnable) {
+        HandlerManager.getInstance().postTaskSafely(task)
+    }
 
+    fun postTaskDelay(task: Runnable, delayMillis: Int) {
+        HandlerManager.getInstance().postTaskDelay(task, delayMillis)
+    }
+
+    /**
+     * 增加 [Activity] 任务栈中 [activity] 实例
+     * @param activity [Activity]
+     */
     override fun addStackSingleActivity(activity: Activity?) {
         //初始化的时候将其添加到集合中
         synchronized(activities) {
@@ -241,32 +304,44 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         }
     }
 
+    /**
+     * 销毁 [Activity] 任务栈中 [activity] 实例
+     * @param activity [Activity]
+     */
     override fun removeStackSingleActivity(activity: Activity?) {
         //销毁的时候从集合中移除
         synchronized(activities) {
             activities.remove(activity)
-
         }
     }
 
+    /**
+     * 清除 [Activity] 任务栈中所有数据
+     */
     fun exitApp() {
-        val iterator = activities.listIterator()
+        val iterator: MutableListIterator<Activity> = activities.listIterator()
 
         while (iterator.hasNext()) {
-            val next = iterator.next()
+            val next: Activity = iterator.next()
             next.finish()
         }
     }
 
+    /**
+     * Activity任务栈，返回顶层 [Activity]
+     * @return [Activity] 顶层 `Activity`
+     */
     fun getCurrentActivity(): Activity? {
         return currentActivity
     }
 
     /**
-     *验证权限
+     * 校验 [permissions] 敏感权限是否全部申请通过
+     * @param permissions [Array] 校验权限数据
+     * @return [Boolean] true:校验通过;false:校验失败
      */
     fun checkRuntimePermission(permissions: Array<String>): Boolean {
-        for (permission in permissions) {
+        for (permission:String in permissions) {
             if (ContextCompat.checkSelfPermission(
                     this,
                     permission
@@ -279,7 +354,9 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     }
 
     /**
-     * 申请运行时权限
+     * 请求 [permissions] 所有敏感权限，请求结构通过 [permissionListener] 回调
+     * @param permissions [Array] 校验权限数据
+     * @param permissionListener [OnPermissionListener] 校验结果回调
      */
     fun requestRuntimePermission(
         permissions: Array<String>,
@@ -287,7 +364,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     ) {
         this.mPermissionListener = permissionListener
         val permissionList = ArrayList<String>()
-        for (permission in permissions) {
+        for (permission:String in permissions) {
             if (ContextCompat.checkSelfPermission(
                     this,
                     permission
@@ -313,9 +390,9 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         when (requestCode) {
             1 -> if (grantResults.isNotEmpty()) {
                 val deniedPermissions = ArrayList<String>()
-                for (i in grantResults.indices) {
-                    val grantResult = grantResults[i]
-                    val permission = permissions[i]
+                for (i: Int in grantResults.indices) {
+                    val grantResult: Int = grantResults[i]
+                    val permission: String = permissions[i]
                     if (grantResult != PackageManager.PERMISSION_GRANTED) {
                         deniedPermissions.add(permission)
                     }
@@ -329,11 +406,4 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         }
     }
 
-    fun postTaskSafely(task: Runnable) {
-        HandlerManager.getInstance().postTaskSafely(task)
-    }
-
-    fun postTaskDelay(task: Runnable, delayMillis: Int) {
-        HandlerManager.getInstance().postTaskDelay(task, delayMillis)
-    }
 }

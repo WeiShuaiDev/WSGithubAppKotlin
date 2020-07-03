@@ -10,10 +10,8 @@ import android.view.ViewGroup
 import com.github.nukc.stateview.StateView
 import com.linwei.cams.R
 import com.linwei.cams.manager.HandlerManager
-import com.linwei.cams.utils.AndroidBug5497Workaround
 import com.linwei.cams.utils.ToastUtils
 import com.linwei.cams.utils.UIUtils
-import com.linwei.cams.utils.statusbar.Eyes
 
 /**
  * @Author: WeiShuai

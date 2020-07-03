@@ -1,53 +1,69 @@
 package com.linwei.cams.base.activity
 
+import android.app.Activity
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
+import com.linwei.cams.R
 import com.linwei.cams.base.holder.TopViewHolder
 import com.linwei.cams.ext.hideSoftKeyboard
-import com.linwei.cams.ext.setVisible
 import com.linwei.cams.listener.OnTopLeftClickListener
 import com.linwei.cams.listener.OnTopRightClickListener
 import kotlinx.android.synthetic.main.include_top_view.view.*
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2019/10/14
- * @Description: BaseActivityWithTop基类
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description: [Activity] 基类
+ *-----------------------------------------------------------------------
  */
 abstract class BaseActivityWithTop : BaseActivity() {
 
-    lateinit var mTopBarView: ViewGroup
     lateinit var mTopViewHolder: TopViewHolder
 
-    private var mITopLeftListener: OnTopLeftClickListener? = null//头部左操作监听
-    private var mTopRightListener: OnTopRightClickListener? = null//头部右标题点击监听
-
     override fun withTopContentView(): View {
-        initTopBar()
-        val mainView = View.inflate(this, provideContentViewId(), null)
-        mTopBarView.mIncludeContent.addView(mainView)//添加内容区域的视图
-        return mTopBarView
+        val view: View = View.inflate(this, provideContentViewId(), null)
+        return addTopBarView(view)
     }
 
     /**
-     * 初始化TopBar
+     * `TopBar` 配置处理，同时返回控件
      */
-    private fun initTopBar() {
-        mTopBarView = View.inflate(this, getTopBarId(), null) as ViewGroup
-        mTopViewHolder = TopViewHolder(mTopBarView)
+    private fun addTopBarView(view: View): View {
+        val topBarView: View = View.inflate(this, getTopBarId(), null) as ViewGroup
+        mTopViewHolder = TopViewHolder(topBarView)
 
-        val titleId = getTitleId()
-        if (titleId != 0) {
-            setTopBarTitle(titleId)
+        initTopBarEvent()
+
+        mTopViewHolder.mIncludeContent.addView(view)//添加内容区域的视图
+
+        return topBarView
+    }
+
+    /**
+     * `TopBar` 增加事件处理,并通过 [OnTopLeftClickListener]、[OnTopRightClickListener]
+     * 接口回调
+     */
+    private fun initTopBarEvent() {
+        val topBarLeftListener: OnTopLeftClickListener? = getTopBarLeftListener()
+        mTopViewHolder.mTvLeftTitle.setOnClickListener {
+            if (topBarLeftListener != null) {
+                topBarLeftListener.onTopClickListener()
+            } else {
+                //关闭页面前收起软键盘
+                window.decorView.hideSoftKeyboard()
+                finish()
+            }
         }
 
-        //获取头部相关监听
-        mITopLeftListener = getTopLeftListener()
-        mTopViewHolder.mIvBack.setOnClickListener {
-            if (mITopLeftListener != null) {
-                mITopLeftListener?.onTopClickListener()
+        mTopViewHolder.mIbLeftImage.setOnClickListener {
+            if (topBarLeftListener != null) {
+                topBarLeftListener.onTopClickListener()
             } else {
                 //关闭页面前收起软键盘
                 window.decorView.hideSoftKeyboard()
@@ -56,38 +72,37 @@ abstract class BaseActivityWithTop : BaseActivity() {
         }
 
         // 获取头部右标题点击监听
-        mTopRightListener = getTopRightListener()
-        mTopViewHolder.mRightTitle.setOnClickListener {
-            if (mTopRightListener != null) {
-                mTopRightListener?.onTopRightClickListener()
-            }
+        val topBarRightListener: OnTopRightClickListener? = getTopBarRightListener()
+        mTopViewHolder.mIbRightImage.setOnClickListener {
+            topBarRightListener?.onTopRightClickListener()
         }
-
-
+        mTopViewHolder.mTvRightTitle.setOnClickListener {
+            topBarRightListener?.onTopRightClickListener()
+        }
     }
 
+    /**
+     * 导航栏布局`ResId`
+     * @return [Int] 布局文件Id
+     */
     abstract fun getTopBarId(): Int
 
     abstract fun getTitleId(): Int
 
     /**
-     * 左侧返回按钮的点击事件
+     * 导航栏左侧点击事件
+     * @return [OnTopLeftClickListener]
      */
-    open fun getTopLeftListener(): OnTopLeftClickListener? {
-        return null
-    }
-
-    open fun getTopRightListener(): OnTopRightClickListener? {
+    open fun getTopBarLeftListener(): OnTopLeftClickListener? {
         return null
     }
 
     /**
-     * 设置返回键显示或隐藏
-     *
-     * @param visible
+     * 导航栏右侧点击事件
+     * @return [OnTopRightClickListener]
      */
-    fun setTopBarBackVisible(visible: Boolean) {
-        mTopViewHolder.mIvBack.setVisible(visible)
+    open fun getTopBarRightListener(): OnTopRightClickListener? {
+        return null
     }
 
     /**
@@ -120,38 +135,35 @@ abstract class BaseActivityWithTop : BaseActivity() {
 
 
     /**
-     * 设置右标题
-     * @param resId 资源id
+     * 设置 `TopBar` 右边 [Textview] 文本信息
+     * @param resId [Int] 显示文本信息，默认显示`刷新`
      */
-    fun setTopBarRightTitle(resId: Int) {
-        if (resId > 0) {
-            setTopBarRightTitle(getString(resId))
-        }
+    fun setTopBarRightTitle(resId: Int = R.string.refresh) {
+        mTopViewHolder.setRightTitleForId(resId)
     }
 
     /**
-     * 设置右标题
-     * @param Stringw 文本
+     * 设置 `TopBar` 右边 [ImageButton] 图片
+     * @param resId [Int] 显示图片信息，默认显示`刷新图片箭头`
      */
-    fun setTopBarRightTitle(rightTitle: String?) {
-        var title = rightTitle
-        if (title!!.isEmpty()) {
-            title = ""
-        }
-        mTopViewHolder.mRightTitle.text = title
+    fun setTopBarRightImage(resId: Int = R.drawable.ic_refresh_black_24dp) {
+        mTopViewHolder.setRightImageForId(resId)
+    }
+
+
+    /**
+     * 设置 `TopBar` 左边 [Textview] 文本信息
+     * @param resId [Int] 显示文本信息，默认显示 `退出`
+     */
+    fun setTopBarLeftTitle(resId: Int = R.string.setting) {
+        mTopViewHolder.setLeftTitleForId(resId)
     }
 
     /**
-     * 获取右标题
+     * 设置 `TopBar` 左边 [ImageButton] 图片
+     * @param resId [Int] 显示图片信息，默认显示 `退出图片箭头`
      */
-    fun getTopBarRightTitle(): String {
-        return mTopViewHolder.mRightTitle.text.toString()
-    }
-
-    /**
-     * 设置右标题visible
-     */
-    fun setTopBarRightTitleVisible(visible: Boolean) {
-        mTopViewHolder.mRightTitle.setVisible(visible)
+    fun setTopBarLeftImage(resId: Int = R.drawable.ic_refresh_black_24dp) {
+        mTopViewHolder.setLeftImageForId(resId)
     }
 }
