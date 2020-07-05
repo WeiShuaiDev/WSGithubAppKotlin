@@ -20,11 +20,15 @@ import com.github.nukc.stateview.StateView
 import com.linwei.cams.R
 import com.linwei.cams.manager.HandlerManager
 import com.linwei.cams.config.LibConfig
+import com.linwei.cams.ext.obtainAppComponent
+import com.linwei.cams.http.cache.Cache
+import com.linwei.cams.http.cache.CacheType
 import com.linwei.cams.listener.OnPermissionListener
 import com.linwei.cams.utils.AppLanguageUtils
 import com.linwei.cams.utils.ToastUtils
 import com.linwei.cams.utils.UIUtils
 import java.util.*
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -44,6 +48,14 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
     lateinit var mStateView: StateView
     lateinit var mPermissionListener: OnPermissionListener
+
+    @Inject
+    lateinit var mCacheFactory: Cache.Factory
+
+
+    override fun provideCache(): Cache<String, Any> =
+        mCacheFactory.build(CacheType.activityCacheType)
+
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(AppLanguageUtils.attachBaseContext(newBase, LibConfig.LANGUAGE))

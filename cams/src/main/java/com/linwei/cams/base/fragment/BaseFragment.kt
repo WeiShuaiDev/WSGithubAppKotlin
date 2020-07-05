@@ -9,21 +9,30 @@ import android.view.View
 import android.view.ViewGroup
 import com.github.nukc.stateview.StateView
 import com.linwei.cams.R
+import com.linwei.cams.http.cache.Cache
+import com.linwei.cams.http.cache.CacheType
 import com.linwei.cams.manager.HandlerManager
 import com.linwei.cams.utils.ToastUtils
 import com.linwei.cams.utils.UIUtils
+import javax.inject.Inject
 
 /**
  * @Author: WeiShuai
  * @Time: 2019/10/14
  * @Description: BaseFragment基类
  */
-abstract class BaseFragment : LazeLoadFragment() {
+abstract class BaseFragment : LazeLoadFragment(), IFragment {
     private var mRootView: View? = null
     lateinit var mStateView: StateView  //用于显示加载中、网络异常，空布局、内容布局
     protected lateinit var mActivity: Activity
     protected lateinit var mContext: Context
     private var mToast: ToastUtils? = null
+
+    @Inject
+    lateinit var mCacheFactory: Cache.Factory
+
+    override fun provideCache(): Cache<String, Any> =
+        mCacheFactory.build(CacheType.fragmentCacheType)
 
     override fun onCreateView(
         inflater: LayoutInflater,
