@@ -3,6 +3,7 @@ package com.linwei.cams.base.activity
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
@@ -12,37 +13,41 @@ import android.view.View
 import android.webkit.*
 import com.linwei.cams.R
 import com.linwei.cams.ext.getDomain
+import com.linwei.cams.ext.jumpIntent
 import java.io.UnsupportedEncodingException
 import kotlinx.android.synthetic.main.activity_web_view.*
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2019/10/14
- * @Description: webActivity基类
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description: [WebView] 基类
+ *-----------------------------------------------------------------------
  */
-abstract class BaseWebActivity : BaseActivityWithTop() {
+abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
 
     override fun provideContentViewId(): Int = R.layout.activity_web_view
 
-    override fun getStateViewRoot(): View = mRootView
+    override fun fetchStateViewRoot(): View = mRootView
 
-    lateinit var mWbView: WebView
+    private lateinit var mWbView: WebView
     private lateinit var mSettings: WebSettings
 
-    protected var mUrl: String? = null
-    var mTitleStr: String? = null
-    var mJsFunction: String? = null
+    private var mUrl: String? = null
+    private var mTitleStr: String? = null
+    private var mJsFunction: String? = null
     private var mPostData: String? = null
 
     private var isError: Boolean = false
     private var mIsFirstLoad = false
-    private val NICK_NAME = "androidPhone"
 
     companion object {
-        const val URL = "url"
-        const val TITLE = "title"
-        const val POST_DATA = "data"
-        const val JSFunction = "js_function" // js方法
+        const val URL = "URL"
+        const val TITLE = "TITLE"
+        const val POST_DATA = "POST_DATA"
+        const val JSFunction = "JS_FUNCTION"
     }
 
     override fun initLayoutView() {
@@ -55,23 +60,24 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
         mTitleStr?.let {
             setTopBarTitle(mTitleStr!!)
         }
+
         initWebView()
         initWebSetting()
     }
 
     /**
-     * 初始化WebView
+     * 初始化 [WebView] ,自定义 `WebChromeClient`,`WebViewClient`,并绑定到 [WebView]
      */
     @SuppressLint("JavascriptInterface")
     private fun initWebView() {
-        mWebView.webChromeClient = getWebChromeClient()
-        mWebView.webViewClient = getWebViewClient()
+        mWebView.webChromeClient = fetchWebChromeClient()
+        mWebView.webViewClient = fetchWebViewClient()
 
-        if (getRelation() != null)
-            mWebView.addJavascriptInterface(getRelation(), getNickName())
+        if (useJsInterface())
+            mWebView.addJavascriptInterface(fetchJsInterfaceObject(), fetchJsInterfaceName())
 
         mWebView.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
-            if (useDefaultBackDeal() && event.action == KeyEvent.ACTION_DOWN) {
+            if (useDefaultGoBack() && event.action == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {  //表示按返回键
                     mWebView.goBack()   //后退
                     return@OnKeyListener true    //已处理
@@ -82,7 +88,7 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
     }
 
     /**
-     * WebView设置
+     *  初始化 [WebView]，配置 `settings`
      */
     private fun initWebSetting() {
         mSettings = mWebView.settings
@@ -119,28 +125,40 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
 
     /**
      * 是否使用默认处理返回的操作
-     *
-     * @return
+     * @return [Boolean] true:默认；false:不是默认
      */
-    fun useDefaultBackDeal(): Boolean {
-        return true
-    }
+    open fun useDefaultGoBack(): Boolean = true
 
-    fun getNickName(): String? {
-        return NICK_NAME
-    }
 
-    open fun getRelation(): Any? {
-        return null
-    }
+    /**
+     * 是否使用 `JavaScript` 交互
+     * @return [Boolean] true:默认；false:不是默认
+     */
+    open fun useJsInterface(): Boolean = false
+
+
+    /**
+     * 该方法暴露给开发者，自定义`JavaScript` 交互名称。
+     * @return [Any] `JavaScript` 交互名称
+     */
+    open fun fetchJsInterfaceName(): String? = ""
+
+    /**
+     * 该方法暴露给开发者，自定义`JavaScript` 交互接口，并返回接口对象。
+     * @return [Any] `JavaScript` 交互对象
+     */
+    open fun fetchJsInterfaceObject(): Any? = null
 
     /**
      * 获取WebChromeClient  子类可复写
-     *
-     * @return
+     * @return [WebChromeClient]
      */
-    open fun getWebChromeClient(): WebChromeClient {
+    open fun fetchWebChromeClient(): WebChromeClient {
         return object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                super.onProgressChanged(view, newProgress)
+                getTopBarLoadingView().progress = newProgress
+            }
 
             override fun onReceivedTitle(view: WebView, title: String) {
                 if (mTitleStr.isNullOrEmpty()) {
@@ -149,43 +167,76 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
                     mTitleStr = ""
                 }
             }
+
+            override fun onJsAlert(
+                view: WebView?,
+                url: String?,
+                message: String?,
+                result: JsResult?
+            ): Boolean {
+                if (showDialog(view, message, result)) return true
+                return super.onJsAlert(view, url, message, result)
+            }
+
+            override fun onJsConfirm(
+                view: WebView?,
+                url: String?,
+                message: String?,
+                result: JsResult?
+            ): Boolean {
+                if (showDialog(view, message, result)) return true
+                return super.onJsConfirm(view, url, message, result)
+            }
+
+            override fun onJsPrompt(
+                view: WebView?,
+                url: String?,
+                message: String?,
+                defaultValue: String?,
+                result: JsPromptResult?
+            ): Boolean {
+                if (showDialog(view, message, result)) return true
+                return super.onJsPrompt(view, url, message, defaultValue, result)
+            }
+
+            private fun showDialog(
+                view: WebView?,
+                message: String?,
+                result: JsResult?
+            ): Boolean {
+                if (view?.context == null)
+                    return true
+                AlertDialog.Builder(view.context)
+                    .setMessage(message)
+                    .setPositiveButton(
+                        R.string.confirm
+                    ) { _, _ -> result?.confirm() }
+                    .setNegativeButton(R.string.cancel) { _, _ -> result?.cancel() }
+                    .create()
+                    .show()
+                return false
+            }
         }
     }
 
     /**
-     * 获取WebViewClient  子类可复写
-     * @return
+     * 获取 [WebViewClient]
+     * @return [WebViewClient]
      */
-    fun getWebViewClient(): WebViewClient {
+    private fun fetchWebViewClient(): WebViewClient {
         return object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 if (TextUtils.isEmpty(url)) {
                     return true
                 }
-                try {
-                    if (url.startsWith("tel:")//电话
-                        || url.startsWith("sms:")//短信
-                        || url.startsWith("taobao:")
-                        || url.startsWith("alipays:")
-                    ) {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        startActivity(intent)
-                        return true
-                    }
-                } catch (e: Exception) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash)
-                    return true//没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
-                }
-                //https://suum.szsi.gov.cn/suum/goFoundPwd.do?method=goFoundPwd
-                val localHttp: String? = mUrl?.getDomain()
-                val nextHttp: String = url.getDomain()
-                if (localHttp == nextHttp || mIsFirstLoad) {
-                    mIsFirstLoad = false
-                    @Suppress("DEPRECATION")
-                    return super.shouldOverrideUrlLoading(view, url)
-                }
-                mUrl = url
-                mWbView.loadUrl(url)
-                return true
+
+                fetchOnInterceptUrlLoading()?.onLoading(view, url)
+
+                return super.shouldOverrideUrlLoading(view, url)
+            }
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
             }
 
             override fun onPageFinished(view: WebView, url: String) {
@@ -193,37 +244,48 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
 
                 if (isError) {
                     isError = false
-                    onLoadError()
+                    loadWebViewError()
                 } else {
                     if (!TextUtils.isEmpty(mJsFunction)) {
                         view.loadUrl(mJsFunction)
                     }
-                    onLoadPageFinished()
+                    loadWebViewFinished()
                 }
             }
 
-            override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
+            override fun onReceivedSslError(
+                view: WebView,
+                handler: SslErrorHandler,
+                error: SslError
+            ) {
                 super.onReceivedSslError(view, handler, error)
                 showSslErrorDialog(handler)
             }
 
-            override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
+            override fun onReceivedError(
+                view: WebView,
+                request: WebResourceRequest,
+                error: WebResourceError
+            ) {
                 super.onReceivedError(view, request, error)
                 isError = true
             }
+
         }
     }
 
+
     /**
-     * SSL证书提示框
+     * 显示SSL证书提示框
+     * @param handler
      */
-    private fun showSslErrorDialog(handler: SslErrorHandler?=null) {
+    private fun showSslErrorDialog(handler: SslErrorHandler? = null) {
         val builder = AlertDialog.Builder(mContext)
         builder.setMessage(R.string.error_ssl_tip)
         builder.setPositiveButton(R.string.continues) { _, _ ->
             handler?.proceed()
         }
-        builder.setNegativeButton(R.string.cancal) { _, _ ->
+        builder.setNegativeButton(R.string.cancel) { _, _ ->
             handler?.cancel()
         }
         builder.setOnKeyListener { dialog, keyCode, event ->
@@ -236,9 +298,11 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
         builder.create().show()
     }
 
-    open fun isPostMethod(): Boolean {
-        return false
-    }
+    /**
+     * [WebView] 是否设置提交报文
+     * @return [Boolean] true:是；false:否
+     */
+    open fun isPostMethod(): Boolean = true
 
     override fun initLayoutData() {
         mStateView.showLoading()
@@ -257,16 +321,56 @@ abstract class BaseWebActivity : BaseActivityWithTop() {
         }
     }
 
-    fun onLoadPageFinished() {
+    override fun initLayoutListener() {
+        mStateView.setOnRetryClickListener { mWebView.reload() }
+    }
+
+    /**
+     * [WebView] 加载完成，通过 [mStateView] 显示加载完成内容。
+     */
+    private fun loadWebViewFinished() {
         mStateView.showContent()
     }
 
-    fun onLoadError() {
+    /**
+     * [WebView] 加载失败，通过 [mStateView] 显示重新加载。
+     */
+    private fun loadWebViewError() {
         mStateView.showRetry()
     }
 
-    override fun initLayoutListener() {
-        mStateView.setOnRetryClickListener { mWebView.reload() }
+
+    override fun onDownloadStart(
+        url: String?,
+        userAgent: String?,
+        contentDisposition: String?,
+        mimetype: String?,
+        contentLength: Long
+    ) {
+        if (!url.isNullOrEmpty()) {
+            jumpIntent(url)
+            this.finish()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mWebView?.let {
+            it.clearHistory()
+            it.clearCache(true)
+            it.loadUrl("about:blank")
+            it.freeMemory()
+            it.pauseTimers()
+        }
+    }
+
+    /**
+     * 设置 [WebView] 加载拦截接口
+     */
+    open fun fetchOnInterceptUrlLoading(): OnInterceptUrlLoading? = null
+
+    interface OnInterceptUrlLoading {
+        fun onLoading(view: WebView, url: String)
     }
 
 }

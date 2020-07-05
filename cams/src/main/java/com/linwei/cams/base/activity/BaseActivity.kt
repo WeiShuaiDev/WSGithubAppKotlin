@@ -54,16 +54,15 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         mContext = this
 
         val withTopContentView: View? = withTopContentView()
-        val contentView: View
-        if (withTopContentView != null) {
-            contentView = if (useImmersive()) {
+        val contentView: View = if (withTopContentView != null) {
+            if (useImmersive()) {
                 markStatusView(withTopContentView)
             } else {
                 withTopContentView
             }
         } else {
             val view: View? = View.inflate(this, provideContentViewId(), null)
-            contentView = if (useImmersive()) {
+            if (useImmersive()) {
                 markStatusView(view!!)
             } else {
                 view!!
@@ -73,7 +72,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         setContentView(contentView)
 
         if (hasStateView()) {
-            mStateView = getStateViewRoot()?.let { StateView.inject(it) }!!
+            mStateView = fetchStateViewRoot()?.let { StateView.inject(it) }!!
             mStateView.setLoadingResource(R.layout.page_loading)
             mStateView.setEmptyResource(R.layout.page_empty)
             mStateView.setRetryResource(R.layout.page_error)
@@ -83,8 +82,8 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             val parallaxBackLayout: ParallaxBackLayout =
                 ParallaxHelper.getParallaxBackLayout(this, true)
             parallaxBackLayout.setEdgeMode(EDGE_MODE_DEFAULT)//边缘滑动
-            parallaxBackLayout.edgeFlag = getEdgeDirection()
-            parallaxBackLayout.setLayoutType(getSlideLayoutType(), null)
+            parallaxBackLayout.edgeFlag = fetchEdgeDirection()
+            parallaxBackLayout.setLayoutType(fetchSlideLayoutType(), null)
 
             parallaxBackLayout.setSlideCallback(object : ParallaxBackLayout.ParallaxSlideCallback {
                 override fun onStateChanged(state: Int) {
@@ -105,7 +104,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
     /**
      * 对 [view] 增加状态栏功能,并成功返回增加了沉浸式状态栏 [View] 控件
-     * [getStatusColor] 方法定义状态栏颜色。[getStatusBarHeight] 方法定义状态栏高度
+     * [fetchStatusColor] 方法定义状态栏颜色。[fetchStatusBarHeight] 方法定义状态栏高度
      * @param view [View]
      * @return [View] 返回已经增加沉浸式状态栏 [View]
      */
@@ -115,14 +114,14 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val mStatusFillView = View(this)
-            var statusBarHeight: Int = getStatusBarHeight()
+            var statusBarHeight: Int = fetchStatusBarHeight()
             if (statusBarHeight <= 0) {
                 statusBarHeight = UIUtils.dp2px(this, 25f)
             }
 
             val params =
                 LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight)
-            mStatusFillView.setBackgroundResource(getStatusColor())
+            mStatusFillView.setBackgroundResource(fetchStatusColor())
             mStatusFillView.layoutParams = params
             linearLayout.addView(mStatusFillView)
         }
@@ -139,8 +138,8 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
 
     /**
-     * 修改 [view] 状态栏高度 [getStatusBarHeight],状态栏背景颜色 [getStatusColor] 功能
-     * [getStatusColor] 方法定义状态栏颜色。[getStatusBarHeight] 方法定义状态栏高度
+     * 修改 [View] 状态栏高度 [fetchStatusBarHeight],状态栏背景颜色 [fetchStatusColor] 功能
+     * [fetchStatusColor] 方法定义状态栏颜色。[fetchStatusBarHeight] 方法定义状态栏高度
      * @param view [View]
      */
     fun hasTranslucentStatusBar(topView: View) {
@@ -148,13 +147,13 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             return
         }
         val params: ViewGroup.LayoutParams = topView.layoutParams
-        var statusBarHeight: Int = getStatusBarHeight()
+        var statusBarHeight: Int = fetchStatusBarHeight()
         if (statusBarHeight <= 0) {
             statusBarHeight = UIUtils.dp2px(this, 25f)
         }
         params.height = statusBarHeight
         topView.layoutParams = params
-        topView.setBackgroundResource(getStatusColor())
+        topView.setBackgroundResource(fetchStatusColor())
     }
 
     /**
@@ -167,7 +166,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 沉浸式状态栏颜色
      * @return　[Int]
      */
-    open fun getStatusColor(): Int = R.color.colorPrimary
+    open fun fetchStatusColor(): Int = R.color.colorPrimary
 
     /**
      * 是否使用沉浸式黑体文字
@@ -179,7 +178,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 计算设备沉浸式效果状态栏高度
      * @return [Int] 高度
      */
-    private fun getStatusBarHeight(): Int {
+    private fun fetchStatusBarHeight(): Int {
         return 0
     }
 
@@ -187,7 +186,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 获取状态页面绑定顶层 [View]
      * @return [View]
      */
-    open fun getStateViewRoot(): View? {
+    open fun fetchStateViewRoot(): View? {
         return null
     }
 
@@ -223,7 +222,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 默认为左滑，子类可重写返回对应的方向
      * @return [Int]
      */
-    open fun getEdgeDirection(): Int {
+    open fun fetchEdgeDirection(): Int {
         return EDGE_LEFT
     }
 
@@ -231,7 +230,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 默认为覆盖滑动关闭效果，子类可重写
      * @return [Int]
      */
-    open fun getSlideLayoutType(): Int {
+    open fun fetchSlideLayoutType(): Int {
         return LAYOUT_COVER
     }
 
@@ -341,7 +340,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * @return [Boolean] true:校验通过;false:校验失败
      */
     fun checkRuntimePermission(permissions: Array<String>): Boolean {
-        for (permission:String in permissions) {
+        for (permission: String in permissions) {
             if (ContextCompat.checkSelfPermission(
                     this,
                     permission
@@ -364,7 +363,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     ) {
         this.mPermissionListener = permissionListener
         val permissionList = ArrayList<String>()
-        for (permission:String in permissions) {
+        for (permission: String in permissions) {
             if (ContextCompat.checkSelfPermission(
                     this,
                     permission

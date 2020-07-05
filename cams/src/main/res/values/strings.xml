@@ -11,5 +11,6 @@
     <string name="error_page_tip">网络出错啦</string>
     <string name="error_ssl_tip">当前验证失败，是否继续!!</string>
     <string name="continues">继续</string>
-    <string name="cancal">取消</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
 </resources>

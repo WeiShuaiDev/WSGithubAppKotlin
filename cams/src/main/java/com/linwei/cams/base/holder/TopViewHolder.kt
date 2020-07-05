@@ -18,19 +18,19 @@ import com.linwei.cams.ext.color
  * @Description: Toolbar ViewHolder 管理
  *-----------------------------------------------------------------------
  */
-class TopViewHolder(itemView: View) : ItemViewHolder(itemView) {
-    val mLayoutTopView: AppBarLayout = getView(R.id.mLayoutTopView) as AppBarLayout
+class  TopViewHolder(itemView: View) : ItemViewHolder(itemView) {
+    private val mLayoutTopView: AppBarLayout = getView(R.id.mLayoutTopView) as AppBarLayout
 
     val mPbLoading: ProgressBar = getView(R.id.mPbLoading) as ProgressBar
 
-     val mTvLeftTitle: TextView = getTextView(R.id.mTvLeftTitle)
-     val mIbLeftImage: ImageButton = getImageButton(R.id.mIbLeftImage)
+    val mTvLeftTitle: TextView = getTextView(R.id.mTvLeftTitle)
+    val mIbLeftImage: ImageButton = getImageButton(R.id.mIbLeftImage)
 
     val mTvTitle: TextView = getTextView(R.id.mTvTitle)
 
     val mIbRightImage: ImageButton = getImageButton(R.id.mIbRightImage)
     val mPbRefresh: ProgressBar = getView(R.id.mPbRefresh) as ProgressBar
-     val mTvRightTitle: TextView = getTextView(R.id.mTvRightTitle)
+    val mTvRightTitle: TextView = getTextView(R.id.mTvRightTitle)
 
     val mVLine: View = getView(R.id.mVLine)
     val mIncludeContent: FrameLayout = getView(R.id.mIncludeContent) as FrameLayout

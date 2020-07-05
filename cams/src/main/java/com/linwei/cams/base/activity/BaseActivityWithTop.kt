@@ -1,17 +1,17 @@
 package com.linwei.cams.base.activity
 
 import android.app.Activity
-import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.linwei.cams.R
 import com.linwei.cams.base.holder.TopViewHolder
 import com.linwei.cams.ext.hideSoftKeyboard
+import com.linwei.cams.ext.string
 import com.linwei.cams.listener.OnTopLeftClickListener
 import com.linwei.cams.listener.OnTopRightClickListener
-import kotlinx.android.synthetic.main.include_top_view.view.*
 
 /**
  * ---------------------------------------------------------------------
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.include_top_view.view.*
  * @Time: 2019/10/14
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: [Activity] 基类
+ * @Description: [Activity] 导航栏基类
  *-----------------------------------------------------------------------
  */
 abstract class BaseActivityWithTop : BaseActivity() {
@@ -37,10 +37,9 @@ abstract class BaseActivityWithTop : BaseActivity() {
     private fun addTopBarView(view: View): View {
         val topBarView: View = View.inflate(this, getTopBarId(), null) as ViewGroup
         mTopViewHolder = TopViewHolder(topBarView)
+        mTopViewHolder.mIncludeContent.addView(view)//添加内容区域的视图
 
         initTopBarEvent()
-
-        mTopViewHolder.mIncludeContent.addView(view)//添加内容区域的视图
 
         return topBarView
     }
@@ -50,7 +49,7 @@ abstract class BaseActivityWithTop : BaseActivity() {
      * 接口回调
      */
     private fun initTopBarEvent() {
-        val topBarLeftListener: OnTopLeftClickListener? = getTopBarLeftListener()
+        val topBarLeftListener: OnTopLeftClickListener? = fetchTopBarLeftListener()
         mTopViewHolder.mTvLeftTitle.setOnClickListener {
             if (topBarLeftListener != null) {
                 topBarLeftListener.onTopClickListener()
@@ -72,7 +71,7 @@ abstract class BaseActivityWithTop : BaseActivity() {
         }
 
         // 获取头部右标题点击监听
-        val topBarRightListener: OnTopRightClickListener? = getTopBarRightListener()
+        val topBarRightListener: OnTopRightClickListener? = fetchTopBarRightListener()
         mTopViewHolder.mIbRightImage.setOnClickListener {
             topBarRightListener?.onTopRightClickListener()
         }
@@ -87,13 +86,11 @@ abstract class BaseActivityWithTop : BaseActivity() {
      */
     abstract fun getTopBarId(): Int
 
-    abstract fun getTitleId(): Int
-
     /**
      * 导航栏左侧点击事件
      * @return [OnTopLeftClickListener]
      */
-    open fun getTopBarLeftListener(): OnTopLeftClickListener? {
+    open fun fetchTopBarLeftListener(): OnTopLeftClickListener? {
         return null
     }
 
@@ -101,33 +98,28 @@ abstract class BaseActivityWithTop : BaseActivity() {
      * 导航栏右侧点击事件
      * @return [OnTopRightClickListener]
      */
-    open fun getTopBarRightListener(): OnTopRightClickListener? {
+    open fun fetchTopBarRightListener(): OnTopRightClickListener? {
         return null
     }
 
     /**
-     * 设置标题文本
+     * 设置 `TopBar`  标题文本
      * @param resId 资源id
      */
     fun setTopBarTitle(resId: Int) {
         if (resId > 0) {
-            setTopBarTitle(getString(resId))
+            setTopBarTitle(resId.string())
         }
     }
 
     /**
-     * 设置标题文本
+     * 设置 `TopBar` 标题文本
      */
-    fun setTopBarTitle(titleTxt: String?) {
-        var title = titleTxt
-        if (TextUtils.isEmpty(title)) {
-            title = ""
-        }
+    fun setTopBarTitle(title:String){
         mTopViewHolder.mTvTitle.text = title
     }
-
     /**
-     * 获取标题文本
+     * 获取 `TopBar` 标题文本
      */
     fun getTopBarTvTitle(): TextView? {
         return mTopViewHolder.mTvTitle
@@ -166,4 +158,21 @@ abstract class BaseActivityWithTop : BaseActivity() {
     fun setTopBarLeftImage(resId: Int = R.drawable.ic_refresh_black_24dp) {
         mTopViewHolder.setLeftImageForId(resId)
     }
+
+    /**
+     *  获取 `TopBar` 加载控件
+     * @return [ProgressBar]
+     */
+    fun getTopBarLoadingView(): ProgressBar {
+       return mTopViewHolder.mPbLoading
+    }
+
+    /**
+     * 获取 `TopBar` 刷新控件
+     * @return [ProgressBar]
+     */
+    fun getTopBarRefreshView(): ProgressBar {
+        return mTopViewHolder.mPbRefresh
+    }
+
 }
