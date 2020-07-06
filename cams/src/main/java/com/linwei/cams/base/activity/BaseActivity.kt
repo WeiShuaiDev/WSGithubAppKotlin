@@ -84,7 +84,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         setContentView(contentView)
 
         if (hasStateView()) {
-            mStateView = fetchStateViewRoot()?.let { StateView.inject(it) }!!
+            mStateView = obtainStateViewRoot()?.let { StateView.inject(it) }!!
             mStateView.setLoadingResource(R.layout.page_loading)
             mStateView.setEmptyResource(R.layout.page_empty)
             mStateView.setRetryResource(R.layout.page_error)
@@ -198,7 +198,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 获取状态页面绑定顶层 [View]
      * @return [View]
      */
-    open fun fetchStateViewRoot(): View? {
+    open fun obtainStateViewRoot(): View? {
         return null
     }
 
@@ -265,9 +265,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 界面内容布局 `ResId`
      * @return [Int] 布局文件Id
      */
-    open fun provideContentViewId(): Int {
-        return -1
-    }
+    abstract fun provideContentViewId(): Int
 
     /**
      * 初始化 [Toast] 配置

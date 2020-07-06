@@ -18,7 +18,7 @@ import com.linwei.cams.di.module.GlobalConfigModule
 interface ConfigModule {
 
     companion object {
-        const val CONFIG_MODULE: String = "CONFIG_MODULE"
+        const val CONFIG_MODULE: String = "ConfigModule"
     }
 
     /**
@@ -40,7 +40,7 @@ interface ConfigModule {
      */
     fun injectAppLifecycle(
         context: Context,
-        lifecycles: List<AppLifecycles>
+        lifecycles: MutableList<AppLifecycles>
     )
 
     /**
@@ -51,7 +51,7 @@ interface ConfigModule {
      */
     fun injectActivityLifecycle(
         context: Context,
-        lifecycles: List<ActivityLifecycleCallbacks?>
+        lifecycles: MutableList<ActivityLifecycleCallbacks>
     )
 
     /**
@@ -62,7 +62,7 @@ interface ConfigModule {
      */
     fun injectFragmentLifecycle(
         context: Context,
-        lifecycles: List<FragmentManager.FragmentLifecycleCallbacks?>
+        lifecycles: MutableList<FragmentManager.FragmentLifecycleCallbacks?>
     )
 
 }

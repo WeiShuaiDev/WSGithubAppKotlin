@@ -52,8 +52,8 @@ object AppModule {
      */
     @Singleton
     @Provides
-    fun provideFragmentLifecycleLists(): List<FragmentLifecycle> {
-        return listOf()
+    fun provideFragmentLifecycleLists(): MutableList<FragmentLifecycle> {
+        return mutableListOf()
     }
 
     /**
