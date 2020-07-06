@@ -13,6 +13,7 @@ import io.reactivex.subjects.Subject
  * 无需再继承 {@link RxLifecycle} 提供的 Activity/Fragment
  *-----------------------------------------------------------------------
  */
-interface Lifecycleable<E> {
+interface RxLifecycle<E> {
+
     fun provideLifecycleSubject(): Subject<E>?
 }
