@@ -79,6 +79,7 @@ fun Int.color(): Int {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         ctx.resources.getColor(this, null)
     } else {
+        @Suppress("DEPRECATION")
         ctx.resources.getColor(this)
     }
 }

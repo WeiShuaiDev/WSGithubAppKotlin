@@ -62,7 +62,7 @@ interface ConfigModule {
      */
     fun injectFragmentLifecycle(
         context: Context,
-        lifecycles: MutableList<FragmentManager.FragmentLifecycleCallbacks?>
+        lifecycles: MutableList<FragmentManager.FragmentLifecycleCallbacks>
     )
 
 }

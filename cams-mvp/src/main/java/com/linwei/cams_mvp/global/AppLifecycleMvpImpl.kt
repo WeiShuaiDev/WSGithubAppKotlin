@@ -15,14 +15,11 @@ import com.linwei.cams.base.lifecycle.AppLifecycles
  */
 class AppLifecycleMvpImpl: AppLifecycles {
     override fun attachBaseContext(context: Context) {
-        TODO("Not yet implemented")
     }
 
     override fun onCreate(application: Application) {
-        TODO("Not yet implemented")
     }
 
     override fun onTerminate(application: Application) {
-        TODO("Not yet implemented")
     }
 }

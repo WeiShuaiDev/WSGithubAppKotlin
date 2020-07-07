@@ -30,7 +30,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
 
     override fun provideContentViewId(): Int = R.layout.activity_web_view
 
-    override fun fetchStateViewRoot(): View = mRootView
+    override fun obtainStateViewRoot(): View = mRootView
 
     private lateinit var mWbView: WebView
     private lateinit var mSettings: WebSettings
@@ -225,6 +225,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
      */
     private fun fetchWebViewClient(): WebViewClient {
         return object : WebViewClient() {
+            @Suppress("DEPRECATION")
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 if (TextUtils.isEmpty(url)) {
                     return true
@@ -359,6 +360,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
             it.clearHistory()
             it.clearCache(true)
             it.loadUrl("about:blank")
+            @Suppress("DEPRECATION")
             it.freeMemory()
             it.pauseTimers()
         }

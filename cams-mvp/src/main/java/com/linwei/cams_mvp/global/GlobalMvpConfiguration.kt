@@ -18,7 +18,7 @@ import com.linwei.cams.di.module.GlobalConfigModule
  */
 class GlobalMvpConfiguration : ConfigModule {
     override fun applyOptions(context: Context, builder: GlobalConfigModule.Builder) {
-        TODO("Not yet implemented")
+
     }
 
     override fun injectAppLifecycle(context: Context, lifecycles: MutableList<AppLifecycles>) {
@@ -34,9 +34,10 @@ class GlobalMvpConfiguration : ConfigModule {
 
     override fun injectFragmentLifecycle(
         context: Context,
-        lifecycles: MutableList<FragmentManager.FragmentLifecycleCallbacks?>
+        lifecycles: MutableList<FragmentManager.FragmentLifecycleCallbacks>
     ) {
         lifecycles.add(FragmentLifecycleMvpCallbacksImpl())
     }
+
 
 }

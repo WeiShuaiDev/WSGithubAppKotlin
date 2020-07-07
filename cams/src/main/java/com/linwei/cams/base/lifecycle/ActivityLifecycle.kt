@@ -36,8 +36,9 @@ class ActivityLifecycle @Inject constructor() : Application.ActivityLifecycleCal
     @Inject
     lateinit var mFragmentLifecycle: FragmentManager.FragmentLifecycleCallbacks
 
-    @Inject
-    lateinit var mFragmentLifecycleLists: List<FragmentLifecycle>
+    //Activity lifecycle 数据集
+    private val mFragmentLifecycleLists: MutableList<FragmentManager.FragmentLifecycleCallbacks> =
+        mutableListOf()
 
     private var mActivityDelegate: ActivityDelegate? = null
 

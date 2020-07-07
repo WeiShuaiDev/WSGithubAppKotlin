@@ -47,16 +47,6 @@ object AppModule {
     }
 
     /**
-     * 创建一个数据空的 `List<FragmentLifecycle>` 集合，并成功返回。用于存储 `AndroidManifest.xml` 中配置的 [ConfigModule] 数据
-     * @param [List] 一个 `FragmentLifecycle`类型 List 数据结构
-     */
-    @Singleton
-    @Provides
-    fun provideFragmentLifecycleLists(): MutableList<FragmentLifecycle> {
-        return mutableListOf()
-    }
-
-    /**
      * 创建 `LruCache` 单例对象,用于数据内存存储(根据内存存储，进行gc优化)。
      * `Cache<String,Any>` 存储范围:全局共有数据存储。
      * @param cacheFactory [Cache.Factory] 存储参数类型
