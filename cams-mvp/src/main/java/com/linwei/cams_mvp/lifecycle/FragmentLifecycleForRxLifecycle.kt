@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.trello.rxlifecycle4.android.FragmentEvent
+import io.reactivex.subjects.Subject
+import javax.inject.Singleton
 
 /**
  * ---------------------------------------------------------------------
@@ -15,6 +18,7 @@ import androidx.fragment.app.FragmentManager
  * @Description:
  *-----------------------------------------------------------------------
  */
+@Singleton
 class FragmentLifecycleForRxLifecycle :
     FragmentManager.FragmentLifecycleCallbacks() {
 
@@ -23,7 +27,7 @@ class FragmentLifecycleForRxLifecycle :
         fragment: Fragment,
         context: Context
     ) {
-        super.onFragmentAttached(fragmentManager, fragment, context)
+        obtainSubject(fragment)?.onNext(FragmentEvent.ATTACH)
     }
 
     override fun onFragmentCreated(
@@ -31,55 +35,54 @@ class FragmentLifecycleForRxLifecycle :
         fragment: Fragment,
         savedInstanceState: Bundle?
     ) {
-        super.onFragmentCreated(fragmentManager, fragment, savedInstanceState)
+        obtainSubject(fragment)?.onNext(FragmentEvent.CREATE)
     }
 
     override fun onFragmentViewCreated(
         fragmentManager: FragmentManager, fragment: Fragment, view: View,
         savedInstanceState: Bundle?
     ) {
-        super.onFragmentViewCreated(fragmentManager, fragment, view, savedInstanceState)
+        obtainSubject(fragment)?.onNext(FragmentEvent.CREATE_VIEW)
     }
 
-    override fun onFragmentActivityCreated(
-        fragmentManager: FragmentManager, fragment: Fragment, savedInstanceState: Bundle?
-    ) {
-        super.onFragmentActivityCreated(fragmentManager, fragment, savedInstanceState)
-    }
 
     override fun onFragmentStarted(fragmentManager: FragmentManager, fragment: Fragment) {
-        super.onFragmentStarted(fragmentManager, fragment)
+        obtainSubject(fragment)?.onNext(FragmentEvent.START)
     }
 
     override fun onFragmentResumed(fragmentManager: FragmentManager, fragment: Fragment) {
-        super.onFragmentResumed(fragmentManager, fragment)
+        obtainSubject(fragment)?.onNext(FragmentEvent.RESUME)
     }
 
     override fun onFragmentPaused(fragmentManager: FragmentManager, fragment: Fragment) {
-        super.onFragmentPaused(fragmentManager, fragment)
+        obtainSubject(fragment)?.onNext(FragmentEvent.PAUSE)
     }
 
     override fun onFragmentStopped(fragmentManager: FragmentManager, fragment: Fragment) {
-        super.onFragmentStopped(fragmentManager, fragment)
-    }
-
-    override fun onFragmentSaveInstanceState(
-        fragmentManager: FragmentManager,
-        fragment: Fragment,
-        outState: Bundle
-    ) {
-        super.onFragmentSaveInstanceState(fragmentManager, fragment, outState)
+        obtainSubject(fragment)?.onNext(FragmentEvent.STOP)
     }
 
     override fun onFragmentViewDestroyed(fragmentManager: FragmentManager, fragment: Fragment) {
-        super.onFragmentViewDestroyed(fragmentManager, fragment)
+        obtainSubject(fragment)?.onNext(FragmentEvent.DESTROY_VIEW)
     }
 
     override fun onFragmentDestroyed(fragmentManager: FragmentManager, fragment: Fragment) {
-        super.onFragmentDestroyed(fragmentManager, fragment)
+        obtainSubject(fragment)?.onNext(FragmentEvent.DESTROY)
     }
 
     override fun onFragmentDetached(fragmentManager: FragmentManager, fragment: Fragment) {
-        super.onFragmentDetached(fragmentManager, fragment)
+        obtainSubject(fragment)?.onNext(FragmentEvent.DETACH)
+    }
+
+    /**
+     * 父类 [BaseMvpFragment] 集成 [FragmentRxLifecycle],并重写 `provideLifecycleSubject` 方法
+     * @param fragment [Fragment]
+     * @return Subject<ActivityEvent>?
+     */
+    private fun obtainSubject(fragment: Fragment): Subject<FragmentEvent>? {
+        if (fragment is FragmentRxLifecycle) {
+            return fragment.provideLifecycleSubject()
+        }
+        return null
     }
 }

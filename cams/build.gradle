@@ -59,10 +59,10 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
-    implementation rootProject.ext.dependencies["appcompat"]
-    implementation rootProject.ext.dependencies["core-ktx"]
-    implementation rootProject.ext.dependencies["constraintlayout"]
+    api rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
+    api rootProject.ext.dependencies["appcompat"]
+    api rootProject.ext.dependencies["core-ktx"]
+    api rootProject.ext.dependencies["constraintlayout"]
 
     //Anko
     api rootProject.ext.dependencies["anko-common"]

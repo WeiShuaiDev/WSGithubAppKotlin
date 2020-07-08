@@ -17,7 +17,11 @@ import com.linwei.cams.di.module.GlobalConfigModule
  *-----------------------------------------------------------------------
  */
 class GlobalMvpConfiguration : ConfigModule {
+
+
     override fun applyOptions(context: Context, builder: GlobalConfigModule.Builder) {
+
+
 
     }
 

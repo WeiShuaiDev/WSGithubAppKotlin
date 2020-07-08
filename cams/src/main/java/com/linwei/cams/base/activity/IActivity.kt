@@ -25,20 +25,20 @@ interface IActivity {
     /**
      * 提供给 {@link IActivity}实现类，进行{@code appComponent}依赖
      * AppComponent主要提供一些单例工具
-     *@param appComponent
+     *@param appComponent [AppComponent]
      */
-    fun setupActivityComponent(appComponent: AppComponent?)
+    fun setUpActivityComponent(appComponent: AppComponent?)
 
     /**
      * 当前Activity对象增加到内存栈，方便管理
-     * @param activity
+     * @param activity [Activity]
      */
     fun addStackSingleActivity(activity: Activity?)
 
 
     /**
      * 删除内存栈中当前Activity对象
-     * @param activity
+     * @param activity [Activity]
      */
     fun removeStackSingleActivity(activity: Activity?)
 

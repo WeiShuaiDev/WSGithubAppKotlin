@@ -34,8 +34,8 @@ class ActivityDelegateImpl(
         if (mIActivity?.useEventBus() == true) {
             EventBusManager.getInstance().register(mActivity)
         }
-
-        mIActivity?.setupActivityComponent(obtainAppComponent())
+        //这里提供 AppComponent 对象给 BaseActivity 的子类, 用于 Dagger2 的依赖注入
+        mIActivity?.setUpActivityComponent(obtainAppComponent())
 
     }
 

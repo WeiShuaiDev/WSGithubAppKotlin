@@ -14,6 +14,7 @@ import com.linwei.cams.base.lifecycle.AppLifecycles
  *-----------------------------------------------------------------------
  */
 class AppLifecycleMvpImpl: AppLifecycles {
+
     override fun attachBaseContext(context: Context) {
     }
 
