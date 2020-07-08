@@ -1,10 +1,7 @@
 package com.linwei.cams.base.activity
-
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
 import android.text.TextUtils
@@ -12,7 +9,6 @@ import android.view.KeyEvent
 import android.view.View
 import android.webkit.*
 import com.linwei.cams.R
-import com.linwei.cams.ext.getDomain
 import com.linwei.cams.ext.jumpIntent
 import java.io.UnsupportedEncodingException
 import kotlinx.android.synthetic.main.activity_web_view.*
@@ -23,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_web_view.*
  * @Time: 2019/10/14
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: [WebView] 基类
+ * @Description: 增加导航栏基类 [BaseWebActivity]
  *-----------------------------------------------------------------------
  */
 abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
@@ -68,7 +64,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
     /**
      * 初始化 [WebView] ,自定义 `WebChromeClient`,`WebViewClient`,并绑定到 [WebView]
      */
-    @SuppressLint("JavascriptInterface")
+    @SuppressLint("JavascriptInterface", "AddJavascriptInterface")
     private fun initWebView() {
         mWebView.webChromeClient = fetchWebChromeClient()
         mWebView.webViewClient = fetchWebViewClient()
@@ -90,6 +86,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
     /**
      *  初始化 [WebView]，配置 `settings`
      */
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initWebSetting() {
         mSettings = mWebView.settings
 
@@ -127,33 +124,33 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
      * 是否使用默认处理返回的操作
      * @return [Boolean] true:默认；false:不是默认
      */
-    open fun useDefaultGoBack(): Boolean = true
+    protected open fun useDefaultGoBack(): Boolean = true
 
 
     /**
      * 是否使用 `JavaScript` 交互
      * @return [Boolean] true:默认；false:不是默认
      */
-    open fun useJsInterface(): Boolean = false
+    protected open fun useJsInterface(): Boolean = false
 
 
     /**
      * 该方法暴露给开发者，自定义`JavaScript` 交互名称。
      * @return [Any] `JavaScript` 交互名称
      */
-    open fun fetchJsInterfaceName(): String? = ""
+    protected open fun fetchJsInterfaceName(): String? = ""
 
     /**
      * 该方法暴露给开发者，自定义`JavaScript` 交互接口，并返回接口对象。
      * @return [Any] `JavaScript` 交互对象
      */
-    open fun fetchJsInterfaceObject(): Any? = null
+    protected open fun fetchJsInterfaceObject(): Any? = null
 
     /**
      * 获取WebChromeClient  子类可复写
      * @return [WebChromeClient]
      */
-    open fun fetchWebChromeClient(): WebChromeClient {
+    protected  open fun fetchWebChromeClient(): WebChromeClient {
         return object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
@@ -303,7 +300,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
      * [WebView] 是否设置提交报文
      * @return [Boolean] true:是；false:否
      */
-    open fun isPostMethod(): Boolean = true
+    protected open fun isPostMethod(): Boolean = true
 
     override fun initLayoutData() {
         mStateView.showLoading()
@@ -369,7 +366,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
     /**
      * 设置 [WebView] 加载拦截接口
      */
-    open fun fetchOnInterceptUrlLoading(): OnInterceptUrlLoading? = null
+    protected open fun fetchOnInterceptUrlLoading(): OnInterceptUrlLoading? = null
 
     interface OnInterceptUrlLoading {
         fun onLoading(view: WebView, url: String)

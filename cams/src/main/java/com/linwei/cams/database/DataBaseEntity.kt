@@ -1,9 +1,13 @@
 package com.linwei.cams.database
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2020/5/19
+ * @Contact linwei9605@gmail.com
+ * @Follow https://github.com/WeiShuaiDev
  * @Description: 数据库实体类
+ *-----------------------------------------------------------------------
  */
 
 /**

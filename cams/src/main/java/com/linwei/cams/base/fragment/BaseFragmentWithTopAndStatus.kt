@@ -1,87 +1,93 @@
 package com.linwei.cams.base.fragment
 
 import android.os.Build
-import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import com.linwei.cams.R
 import com.linwei.cams.base.holder.TopViewHolder
-import com.linwei.cams.listener.OnTopLeftClickListener
-import com.linwei.cams.listener.OnTopRightClickListener
+import com.linwei.cams.ext.string
+import com.linwei.cams.listener.OnTopBarLeftClickListener
+import com.linwei.cams.listener.OnTopBarRightClickListener
 import com.linwei.cams.utils.UIUtils
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2019/10/14
- * @Description: BaseFragmentWithTopAndStatus基类
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description: 增加状态栏基类 [BaseFragmentWithTopAndStatus]
+ *-----------------------------------------------------------------------
  */
 abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
     lateinit var mTopViewHolder: TopViewHolder
-    lateinit var mTopBarView: ViewGroup
 
-    private var mOnTopLeftListener: OnTopLeftClickListener? = null//左边监听
-    private var mOnTopRightListener: OnTopRightClickListener? = null //右边监听
-    override fun getTopViewGroup(): ViewGroup? {
-        return initTopBar()
-    }
+    private var mTopBarLeftClickListener: OnTopBarLeftClickListener? = null
+    private var mTopBarRightClickListener: OnTopBarRightClickListener? = null
 
-    private fun initTopBar(): ViewGroup? {
-        if (getTopBarId() != -1) {
-            mTopBarView = View.inflate(mActivity, getTopBarId(), null) as ViewGroup
+    override fun withTopBarContainer(): ViewGroup? {
+        val topBarView: ViewGroup = View.inflate(mActivity, provideTopBarId(), null) as ViewGroup
+        mTopViewHolder = TopViewHolder(topBarView)
 
-            mTopViewHolder = TopViewHolder(mTopBarView)
+        initTopBar()
 
-            val titleId = getTitleId()
-            if (titleId != 0) {
-                setTopBarTitle(titleId)
-            }
-
-            //设置导航栏左边监听
-            mOnTopLeftListener = getTopLeftListener()
-//            mTopViewHolder.mBtnBack.setOnClickListener {
-//                if (mOnTopLeftListener != null) {
-//                    mOnTopLeftListener?.onTopClickListener()
-//                } else {
-//                    //关闭页面前收起软键盘
-//                    mActivity.finish()
-//                }
-//            }
-
-            //设置导航栏右边监听
-            mOnTopRightListener = getTopRightListener()
-//            mTopViewHolder.mBtnRefresh.setOnClickListener {
-//                if (mOnTopRightListener != null) {
-//                    mOnTopRightListener?.onTopRightClickListener()
-//                }
-//            }
-
-            updateTopBarIsVisible()
-        }
         return if (useImmersive()) {
-            addStatusView(mTopBarView)
+            markStatusView(topBarView)
         } else {
-            mTopBarView
+            topBarView
         }
     }
 
     /**
-     * 解决状态栏
+     * `TopBar`初始化处理,并通过 [OnTopLeftClickListener]、[OnTopRightClickListener]
+     * 接口回调
      */
-    private fun addStatusView(view: View?): ViewGroup {
-        val linearLayout =
+    private fun initTopBar() {
+        val topBarTitle: Int = fetchTopBarTitle()
+        if (topBarTitle > 0) setTopBarTitle(topBarTitle)
+
+        mTopBarLeftClickListener = obtainTopBarLeftListener()
+        mTopViewHolder.mTvLeftTitle.setOnClickListener {
+            mTopBarLeftClickListener?.onLeftClick()
+        }
+
+        mTopViewHolder.mIbLeftImage.setOnClickListener {
+            mTopBarLeftClickListener?.onLeftClick()
+        }
+
+        mTopBarRightClickListener = obtainTopBarRightListener()
+        mTopViewHolder.mIbRightImage.setOnClickListener {
+            mTopBarRightClickListener?.onRightClick()
+        }
+        mTopViewHolder.mTvRightTitle.setOnClickListener {
+            mTopBarRightClickListener?.onRightClick()
+        }
+    }
+
+    /**
+     * 对 [view] 增加状态栏功能,并成功返回增加了沉浸式状态栏 [View] 控件
+     * [fetchStatusColor] 方法定义状态栏颜色。[fetchStatusBarHeight] 方法定义状态栏高度
+     * @param view [View]
+     * @return [ViewGroup] 返回已经增加沉浸式状态栏 [ViewGroup]
+     */
+    private fun markStatusView(view: View?): ViewGroup {
+        val linearLayout:LinearLayout =
             View.inflate(mActivity, R.layout.base_content_layout, null) as LinearLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val mStatusFillView = View(mActivity)
-            var statusBarHeight: Int = getStatusbarHeight()
+            var statusBarHeight: Int = fetchStatusBarHeight()
             if (statusBarHeight <= 0) {
                 statusBarHeight = UIUtils.dp2px(mActivity, 25f)
             }
 
             val params =
                 LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight)
-            mStatusFillView.setBackgroundResource(getStatusColor())
+            mStatusFillView.setBackgroundResource(fetchStatusColor())
             mStatusFillView.layoutParams = params
             linearLayout.addView(mStatusFillView)
         }
@@ -99,113 +105,129 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
         return linearLayout
     }
 
-    open fun getTopBarId(): Int = -1
-
-    open fun getTitleId(): Int = -1
-
-    open fun getStatusColor(): Int = R.color.colorPrimary
-
     /**
-     * 是否使用沉浸式，默认是
+     * 计算设备沉浸式效果状态栏高度
+     * @return [Int] 高度
      */
-    open fun useImmersive() = false
-
+    private fun fetchStatusBarHeight(): Int {
+        return 0
+    }
 
     /**
-     * 设置返回键显示或隐藏
-     *
-     * @param visible
+     * 是否使用沉浸式效果
+     * @return [Boolean] `false`:不使用; `true`:使用
      */
-    open fun setTopBarBackVisible(): Boolean = false
+    protected abstract fun useImmersive(): Boolean
 
     /**
-     * 设置标题文本
-     *
+     * 沉浸式状态栏颜色
+     * @return　[Int]
+     */
+    protected open fun fetchStatusColor(): Int = R.color.colorPrimary
+
+    /**
+     * 导航栏布局`ResId`
+     * @return [Int] 布局文件Id
+     */
+    protected open fun provideTopBarId(): Int = R.layout.include_top_view
+
+    /**
+     * 导航栏标题`ResId`
+     * @return [Int] 字符串Id
+     */
+    protected abstract fun fetchTopBarTitle(): Int
+
+    /**
+     * 导航栏左侧点击事件
+     * @return [OnTopBarLeftClickListener]
+     */
+    protected open fun obtainTopBarLeftListener(): OnTopBarLeftClickListener? {
+        return null
+    }
+
+    /**
+     * 导航栏右侧点击事件
+     * @return [OnTopBarRightClickListener]
+     */
+    protected open fun obtainTopBarRightListener(): OnTopBarRightClickListener? {
+        return null
+    }
+
+    /**
+     * 设置 `TopBar`  标题文本
      * @param resId 资源id
      */
-    fun setTopBarTitle(resId: Int) {
+    protected fun setTopBarTitle(resId: Int) {
         if (resId > 0) {
-            setTopBarTitle(getString(resId))
+            setTopBarTitle(resId.string())
         }
     }
 
     /**
-     * 设置标题文本
-     *
-     * @param title 字符
+     * 设置 `TopBar` 标题文本
      */
-    fun setTopBarTitle(title: String) {
+    protected fun setTopBarTitle(title: String) {
         mTopViewHolder.mTvTitle.text = title
-        updateTopBarIsVisible()
     }
 
     /**
-     * 设置标题显示或隐藏
+     * 获取 `TopBar` 标题文本
      */
-    open fun getTopBarTitleVisible(): Boolean = true
-
-    /**
-     * 是否显示横
-     */
-    open fun setTopBarLineVisible(): Boolean = false
-
-    /**
-     * 设置右边点击事件
-     */
-    open fun getTopRightListener(): OnTopRightClickListener? = null
-
-    /**
-     * 左侧返回按钮的点击事件
-     */
-    open fun getTopLeftListener(): OnTopLeftClickListener? = null
-
-    /**
-     * 设置右边图片id
-     */
-    fun setTopBarRightImage(resId: Int) {
-//        mTopViewHolder.mBtnRefresh.setImageResource(resId)
-    }
-
-
-    /**
-     * 设置右边logo不可见
-     */
-    open fun setTopBarRightImageVisible(): Boolean = false
-
-    /**
-     * 设置右边标题
-     */
-    fun setTopBarRightText(resId: Int) {
-        if (resId > 0) {
-            setTopBarRightText(getString(resId))
-        }
-    }
-
-    fun setTopBarRightText(text: String) {
-        var title: String = text
-        if (TextUtils.isEmpty(text)) {
-            title = ""
-        }
-//        mTopViewHolder.mRightTitle.text = title
+    protected fun getTopBarTvTitle(): TextView? {
+        return mTopViewHolder.mTvTitle
     }
 
     /**
-     *设置右边标题可见
+     * 设置 `TopBar` 右边 [Textview] 文本信息
+     * @param resId [Int] 显示文本信息，默认显示`刷新`
      */
-    open fun setTopBarRightTextVisible(): Boolean = false
-
-    /**
-     * 刷新TopBar是否显示
-     */
-    private fun updateTopBarIsVisible() {
-        mTopViewHolder.apply {
-//            mIbChoose.setVisible(setTopBarRightImageVisible())
-//            mIvBack.setVisible(setTopBarBackVisible())
-//            mLine.setVisible(setTopBarLineVisible())
-//            mRightTitle.setVisible(setTopBarRightTextVisible())
-//            mTvTitle.setVisible(getTopBarTitleVisible())
-        }
+    protected fun setTopBarRightTitle(resId: Int = R.string.refresh) {
+        mTopViewHolder.setRightTitleForId(resId)
     }
 
+    /**
+     * 设置 `TopBar` 右边 [ImageButton] 图片
+     * @param resId [Int] 显示图片信息，默认显示`刷新图片箭头`
+     */
+    protected fun setTopBarRightImage(resId: Int = R.drawable.ic_refresh_black_24dp) {
+        mTopViewHolder.setRightImageForId(resId)
+    }
 
+    /**
+     * 设置 `TopBar` 左边 [Textview] 文本信息
+     * @param resId [Int] 显示文本信息，默认显示 `退出`
+     */
+    protected fun setTopBarLeftTitle(resId: Int = R.string.setting) {
+        mTopViewHolder.setLeftTitleForId(resId)
+    }
+
+    /**
+     * 设置 `TopBar` 左边 [ImageButton] 图片
+     * @param resId [Int] 显示图片信息，默认显示 `退出图片箭头`
+     */
+    protected fun setTopBarLeftImage(resId: Int = R.drawable.ic_arrow_back_black_24dp) {
+        mTopViewHolder.setLeftImageForId(resId)
+    }
+
+    /**
+     *  获取 `TopBar` 加载控件
+     * @return [ProgressBar]
+     */
+    protected fun getTopBarLoadingView(): ProgressBar {
+        return mTopViewHolder.mPbLoading
+    }
+
+    /**
+     * 获取 `TopBar` 刷新控件
+     * @return [ProgressBar]
+     */
+    protected fun getTopBarRefreshView(): ProgressBar {
+        return mTopViewHolder.mPbRefresh
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mTopBarRightClickListener = null
+        mTopBarLeftClickListener = null
+    }
 }

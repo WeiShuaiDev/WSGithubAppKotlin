@@ -6,6 +6,10 @@ import androidx.fragment.app.FragmentManager
 import com.linwei.cams.base.global.ConfigModule
 import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.di.module.GlobalConfigModule
+import com.linwei.cams_mvp.di.qualifier.ActivityRxLifecycleQualifier
+import com.linwei.cams_mvp.di.qualifier.FragmentRxLifecycleQualifier
+import com.linwei.cams_mvp.lifecycle.ActivityLifecycleForRxLifecycle
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -18,9 +22,16 @@ import com.linwei.cams.di.module.GlobalConfigModule
  */
 class GlobalMvpConfiguration : ConfigModule {
 
+    @Inject
+    @FragmentRxLifecycleQualifier
+    lateinit var mFragmentRxLifecycle: FragmentManager.FragmentLifecycleCallbacks
+
+    @Inject
+    @ActivityRxLifecycleQualifier
+    lateinit var mActivityRxLifecycle: Application.ActivityLifecycleCallbacks
+
 
     override fun applyOptions(context: Context, builder: GlobalConfigModule.Builder) {
-
 
 
     }
@@ -33,15 +44,14 @@ class GlobalMvpConfiguration : ConfigModule {
         context: Context,
         lifecycles: MutableList<Application.ActivityLifecycleCallbacks>
     ) {
-        lifecycles.add(ActivityLifecycleMvpCallbacksImpl())
+        lifecycles.add(mActivityRxLifecycle)
     }
 
     override fun injectFragmentLifecycle(
         context: Context,
         lifecycles: MutableList<FragmentManager.FragmentLifecycleCallbacks>
     ) {
-        lifecycles.add(FragmentLifecycleMvpCallbacksImpl())
+        lifecycles.add(mFragmentRxLifecycle)
     }
-
 
 }

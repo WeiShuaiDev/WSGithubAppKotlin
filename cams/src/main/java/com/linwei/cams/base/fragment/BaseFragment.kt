@@ -11,28 +11,43 @@ import com.github.nukc.stateview.StateView
 import com.linwei.cams.R
 import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.http.cache.CacheType
-import com.linwei.cams.manager.HandlerManager
 import com.linwei.cams.utils.ToastUtils
 import com.linwei.cams.utils.UIUtils
 import javax.inject.Inject
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2019/10/14
- * @Description: BaseFragment基类
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description: 普通基类 [BaseFragment]
+ *-----------------------------------------------------------------------
  */
 abstract class BaseFragment : LazeLoadFragment(), IFragment {
-    private var mRootView: View? = null
-    lateinit var mStateView: StateView  //用于显示加载中、网络异常，空布局、内容布局
     protected lateinit var mActivity: Activity
     protected lateinit var mContext: Context
-    private var mToast: ToastUtils? = null
+
+    protected lateinit var mStateView: StateView  //用于显示加载中、网络异常，空布局、内容布局
+    private var mRootView: View? = null
+    protected var mToast: ToastUtils? = null
 
     @Inject
     lateinit var mCacheFactory: Cache.Factory
 
+    /**
+     * `Fragment` 模块 [Cache]缓存处理
+     * @return [Cache]
+     */
     override fun provideCache(): Cache<String, Any> =
         mCacheFactory.build(CacheType.fragmentCacheType)
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mActivity = context as Activity
+        mContext = context
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,11 +55,11 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
         savedInstanceState: Bundle?
     ): View? {
         if (mRootView == null) {
-            val topViewGroup = getTopViewGroup()
+            val withTopContainer: ViewGroup? = withTopBarContainer()
             if (provideContentViewId() > 0) {
-                if (topViewGroup != null) {
+                if (withTopContainer != null) {
                     //有公共头部
-                    mRootView = inflater.inflate(provideContentViewId(), topViewGroup, true)
+                    mRootView = inflater.inflate(provideContentViewId(), withTopContainer, true)
                 } else {
                     mRootView = inflater.inflate(provideContentViewId(), container, false)
                 }
@@ -52,23 +67,26 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
                 mRootView = bindingContentViewId(inflater, container, savedInstanceState, false)
             }
         } else {
-            val parent = mRootView?.parent as? ViewGroup
+            val parent: ViewGroup? = mRootView?.parent as? ViewGroup
             parent?.removeView(mRootView)
         }
         return mRootView
     }
 
-    open fun getTopViewGroup(): ViewGroup? = null
+    /**
+     * 界面导航栏内容布局 [ViewGroup]
+     * @return [ViewGroup]
+     */
+    protected open fun withTopBarContainer(): ViewGroup? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (hasStateView()) {
-            mStateView = getStateViewRoot()?.let { StateView.inject(it) }!!
+        if (useStateView()) {
+            mStateView = obtainStateViewRoot()?.let { StateView.inject(it) }!!
             mStateView.setLoadingResource(R.layout.page_loading)
             mStateView.setEmptyResource(R.layout.page_empty)
             mStateView.setRetryResource(R.layout.page_error)
         }
         initToastBuilder()
-        init()
         initLayoutView(mRootView)
         initLayoutData()
         initLayoutListener()
@@ -77,35 +95,32 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
     }
 
     /**
-     * 初始化
-     */
-    open fun init() {}
-
-    /**
      * 初始化View
      * @param rootView
      */
-    open fun initLayoutView(rootView: View?) {}
+    protected abstract fun initLayoutView(rootView: View?)
 
     /**
      * 初始化数据
      */
-    open fun initLayoutData() {}
+    protected abstract fun initLayoutData()
 
     /**
-     * 设置listener的操作
+     * 初始化事件
      */
-    open fun initLayoutListener() {}
+    protected abstract fun initLayoutListener()
 
     /**
-     * 获取布局Id
+     * 界面内容布局 `ResId`
+     * @return [Int] 布局文件Id
      */
-    open fun provideContentViewId(): Int = -1
+    protected open fun provideContentViewId(): Int = -1
 
     /**
-     * dataBinding布局绑定
+     * 界面内容布局 [View]
+     * @return [View]
      */
-    open fun bindingContentViewId(
+    protected open fun bindingContentViewId(
         inflater: LayoutInflater,
         topViewGroup: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -113,21 +128,22 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
     ): View? = null
 
     /**
-     * 是否有stateView 默认没有
+     * 是否使用状态页面
+     * @return [Boolean] `false`:不使用; `true`:使用
      */
-    open fun hasStateView(): Boolean = false
+    protected open fun useStateView(): Boolean = false
 
-    /**StateView的null，默认是整个界面，如果需要变换可以重写此方法 */
-    open fun getStateViewRoot(): View? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mActivity = context as Activity
-        mContext = context
-    }
 
     /**
-     * 重新加载
+     * 获取状态页面绑定顶层 [View]
+     * @return [View]
+     */
+    protected open fun obtainStateViewRoot(): View? = null
+
+
+    /**
+     * [Fragment] 界面状态发生改变，会触发该回调
+     * @param isVisible [Boolean] true:可见；false:不可见
      */
     override fun onFragmentVisibleChange(isVisible: Boolean) {
         if (isVisible) {
@@ -135,73 +151,59 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
         }
     }
 
-    /**onFragmentVisibleChange
-     * 重新加载数据
-     */
-    protected abstract fun reloadData()
-
     /**
-     * 当第一次可见的时候，加载数据
+     * 当第一次可见的时候，会触发该回调
      */
     override fun onFragmentFirstVisible() {
         loadData()
     }
 
-    //加载数据
-    open fun loadData() {}
+    /**
+     * [LazeLoadFragment] 重新加载数据
+     */
+    protected abstract fun reloadData()
 
 
     /**
-     * 设置状态栏高度
+     * [LazeLoadFragment]  首次加载数据
      */
-    protected fun hasTranslucentStatusBar(topView: View) {
+    protected abstract fun loadData()
+
+
+    /**
+     * 修改 [View] 状态栏高度 [fetchStatusBarHeight],状态栏背景颜色 [fetchStatusColor] 功能
+     * [fetchStatusColor] 方法定义状态栏颜色。[fetchStatusBarHeight] 方法定义状态栏高度
+     * @param view [View]
+     */
+    protected fun hasTranslucentStatusBar(topBarView: View) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return
         }
-        val params = topView.layoutParams
-        var statusBarHeight: Int = getStatusbarHeight()
+        val params = topBarView.layoutParams
+        var statusBarHeight: Int = fetchStatusBarHeight()
         if (statusBarHeight <= 0) {
             statusBarHeight = UIUtils.dp2px(mActivity, 25f)
         }
         params.height = statusBarHeight
-        topView.layoutParams = params
+        topBarView.layoutParams = params
     }
 
-    fun getStatusbarHeight(): Int {
+    /**
+     * 计算设备沉浸式效果状态栏高度
+     * @return [Int] 高度
+     */
+    private fun fetchStatusBarHeight(): Int {
         return 0
     }
 
-
-    open fun useBlackStatusText(): Boolean = false
-
     /**
-     * 是否使用修复resize，默认true
-     */
-    open fun useResizeFix(): Boolean = true
-
-    /**
-     * 显示Toast
+     * 初始化 [Toast] 配置
      */
     private fun initToastBuilder() {
         mToast = ToastUtils.Builder(mActivity)
             .setBgResource(R.drawable.shape_toast_background)
             .setMessageColor(R.color.colorGlobalBlack)
             .build()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        synchronized(HandlerManager.getInstance()) {
-            HandlerManager.getInstance().removeTask()
-        }
-    }
-
-    fun postTaskSafely(task: Runnable) {
-        HandlerManager.getInstance().postTaskSafely(task)
-    }
-
-    fun postTaskDelay(task: Runnable, delayMillis: Int) {
-        HandlerManager.getInstance().postTaskDelay(task, delayMillis)
     }
 
 }

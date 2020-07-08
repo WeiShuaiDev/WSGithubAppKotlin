@@ -5,8 +5,6 @@ import android.app.Application.ActivityLifecycleCallbacks
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.linwei.cams.di.scope.ActivityScope
-import com.linwei.cams_mvp.di.qualifier.ActivityRxLifecycleQualifier
 import com.linwei.cams_mvp.di.qualifier.FragmentRxLifecycleQualifier
 import com.trello.rxlifecycle4.android.ActivityEvent
 import io.reactivex.subjects.Subject
@@ -25,24 +23,12 @@ import javax.inject.Singleton
 @Singleton
 class ActivityLifecycleForRxLifecycle : ActivityLifecycleCallbacks {
 
-    @Inject
-    @FragmentRxLifecycleQualifier
-    lateinit var mFragmentRxLifecycle: FragmentManager.FragmentLifecycleCallbacks
-
-
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
 
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         obtainSubject(activity)?.onNext(ActivityEvent.CREATE)
-
-        if (activity is FragmentActivity) {
-            activity.supportFragmentManager.registerFragmentLifecycleCallbacks(
-                mFragmentRxLifecycle,
-                true
-            )
-        }
     }
 
     override fun onActivityResumed(activity: Activity) {

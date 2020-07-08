@@ -8,11 +8,14 @@ import android.net.Uri
 import android.os.Build
 import android.provider.CallLog
 import android.provider.ContactsContract
-
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2020/5/20
- * @Description:提供数据库查询功能
+ * @Contact linwei9605@gmail.com
+ * @Follow https://github.com/WeiShuaiDev
+ * @Description: 提供数据库查询功能
+ *-----------------------------------------------------------------------
  */
 object DataBaseProvide {
 

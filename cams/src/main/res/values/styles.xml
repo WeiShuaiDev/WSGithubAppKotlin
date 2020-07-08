@@ -61,8 +61,6 @@
         <item name="android:textSize">@dimen/sp_12</item>
     </style>
 
-    s
-
     <style name="tv_14_style" parent="@style/WrapAndWrap.GlobalTextGrayColor">
         <item name="android:textSize">@dimen/sp_14</item>
     </style>

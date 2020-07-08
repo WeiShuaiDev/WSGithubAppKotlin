@@ -18,6 +18,9 @@ import dagger.Component
 @Component(dependencies = [AppComponent::class], modules = [BaseFragmentModule::class])
 interface BaseFragmentComponent {
 
+
+
+
     @Component.Builder
     interface Builder {
 

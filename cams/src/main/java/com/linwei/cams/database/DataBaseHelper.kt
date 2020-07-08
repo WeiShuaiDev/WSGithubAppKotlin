@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
-
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2020/5/20
+ * @Contact linwei9605@gmail.com
+ * @Follow https://github.com/WeiShuaiDev
  * @Description: 获取设备数据库
+ *-----------------------------------------------------------------------
  */
 class DataBaseHelper(val mContext: Context) {
     private val mResolver: ContentResolver = mContext.contentResolver

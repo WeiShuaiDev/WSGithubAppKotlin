@@ -6,10 +6,20 @@ package com.linwei.cams.listener
  * @Time: 2019/10/14
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description: 权限接口回调接口定义
+ * @Description: 导航栏点击事件接口回调接口定义
  *-----------------------------------------------------------------------
  */
-interface OnPermissionListener {
-    fun onGranted()
-    fun onDenied(deniedPermissions: List<String>)
+
+/**
+ * `TopBar` 左边监听
+ */
+interface OnTopBarLeftClickListener {
+    fun onLeftClick()
+}
+
+/**
+ * `TopBar` 右边监听
+ */
+interface OnTopBarRightClickListener {
+    fun onRightClick()
 }

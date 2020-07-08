@@ -18,9 +18,7 @@ import com.github.anzewei.parallaxbacklayout.widget.ParallaxBackLayout.EDGE_MODE
 import com.github.anzewei.parallaxbacklayout.widget.ParallaxBackLayout.LAYOUT_COVER
 import com.github.nukc.stateview.StateView
 import com.linwei.cams.R
-import com.linwei.cams.manager.HandlerManager
 import com.linwei.cams.config.LibConfig
-import com.linwei.cams.ext.obtainAppComponent
 import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.http.cache.CacheType
 import com.linwei.cams.listener.OnPermissionListener
@@ -36,23 +34,26 @@ import javax.inject.Inject
  * @Time: 2019/10/14
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: [Activity] 基类
+ * @Description:普通基类 [BaseActivity]
  *-----------------------------------------------------------------------
  */
 abstract class BaseActivity : AppCompatActivity(), IActivity {
-    private var currentActivity: Activity? = null// 对所有activity进行管理
-    private var activities: MutableList<Activity> = mutableListOf()
+    private var currentActivity: Activity? = null
+    private var activities: MutableList<Activity> = mutableListOf()  //对所有activity进行管理
 
     protected lateinit var mContext: Context
-    private var mToast: ToastUtils? = null
+    protected var mToast: ToastUtils? = null
 
-    lateinit var mStateView: StateView
-    lateinit var mPermissionListener: OnPermissionListener
+    protected lateinit var mStateView: StateView
+    protected lateinit var mPermissionListener: OnPermissionListener
 
     @Inject
     lateinit var mCacheFactory: Cache.Factory
 
-
+    /**
+     * `Activity` 模块 [Cache]缓存处理
+     * @return [Cache]
+     */
     override fun provideCache(): Cache<String, Any> =
         mCacheFactory.build(CacheType.activityCacheType)
 
@@ -65,17 +66,17 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         super.onCreate(savedInstanceState)
         mContext = this
 
-        val withTopContentView: View? = withTopContentView()
-        val contentView: View = if (withTopContentView != null) {
+        val withTopBarView: View? = withTopBarView()
+        val contentView: View = if (withTopBarView != null) {
             if (useImmersive()) {
-                markStatusView(withTopContentView)
+                markStatusView(withTopBarView)
             } else {
-                withTopContentView
+                withTopBarView
             }
         } else {
             val view: View? = View.inflate(this, provideContentViewId(), null)
             if (useImmersive()) {
-                markStatusView(view!!)
+                markStatusView(view)
             } else {
                 view!!
             }
@@ -83,7 +84,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
         setContentView(contentView)
 
-        if (hasStateView()) {
+        if (useStateView()) {
             mStateView = obtainStateViewRoot()?.let { StateView.inject(it) }!!
             mStateView.setLoadingResource(R.layout.page_loading)
             mStateView.setEmptyResource(R.layout.page_empty)
@@ -120,7 +121,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * @param view [View]
      * @return [View] 返回已经增加沉浸式状态栏 [View]
      */
-    private fun markStatusView(view: View): View {
+    private fun markStatusView(view: View?): View {
         val linearLayout: LinearLayout =
             View.inflate(this, R.layout.base_content_layout, null) as LinearLayout
 
@@ -138,12 +139,15 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             linearLayout.addView(mStatusFillView)
         }
 
-        val params = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-        view.layoutParams = params
-        linearLayout.addView(view)
+        if (view != null) {
+            val params =
+                ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            view.layoutParams = params
+            linearLayout.addView(view)
+        }
 
         return linearLayout
     }
@@ -154,37 +158,37 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * [fetchStatusColor] 方法定义状态栏颜色。[fetchStatusBarHeight] 方法定义状态栏高度
      * @param view [View]
      */
-    fun hasTranslucentStatusBar(topView: View) {
+    protected fun hasTranslucentStatusBar(topBarView: View) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return
         }
-        val params: ViewGroup.LayoutParams = topView.layoutParams
+        val params: ViewGroup.LayoutParams = topBarView.layoutParams
         var statusBarHeight: Int = fetchStatusBarHeight()
         if (statusBarHeight <= 0) {
             statusBarHeight = UIUtils.dp2px(this, 25f)
         }
         params.height = statusBarHeight
-        topView.layoutParams = params
-        topView.setBackgroundResource(fetchStatusColor())
+        topBarView.layoutParams = params
+        topBarView.setBackgroundResource(fetchStatusColor())
     }
 
     /**
      * 是否使用沉浸式效果
      * @return [Boolean] `false`:不使用; `true`:使用
      */
-    open fun useImmersive(): Boolean = false
+    protected open fun useImmersive(): Boolean = false
 
     /**
      * 沉浸式状态栏颜色
      * @return　[Int]
      */
-    open fun fetchStatusColor(): Int = R.color.colorPrimary
+    protected open fun fetchStatusColor(): Int = R.color.colorPrimary
 
     /**
      * 是否使用沉浸式黑体文字
      * @return [Boolean] `false`:不使用; `true`:使用
      */
-    open fun useBlackStatusText(): Boolean = false
+    protected open fun useBlackStatusText(): Boolean = false
 
     /**
      * 计算设备沉浸式效果状态栏高度
@@ -198,7 +202,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 获取状态页面绑定顶层 [View]
      * @return [View]
      */
-    open fun obtainStateViewRoot(): View? {
+    protected open fun obtainStateViewRoot(): View? {
         return null
     }
 
@@ -206,19 +210,19 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 是否使用状态页面
      * @return [Boolean] `false`:不使用; `true`:使用
      */
-    open fun hasStateView(): Boolean = false
+    protected open fun useStateView(): Boolean = false
 
 
     /**
-     * 界面内容布局 [View]
+     * 界面导航栏内容布局 [View]
      * @return [View]
      */
-    open fun withTopContentView(): View? = null
+    protected open fun withTopBarView(): View? = null
 
     /**
      * dataBinding布局绑定
      */
-    open fun bindingContentViewId(
+    protected open fun bindingContentViewId(
         savedInstanceState: Bundle?
     ): View? = null
 
@@ -226,7 +230,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 是否使用手势滑动
      * @return [Boolean] `false`:不使用; `true`:使用
      */
-    open fun enableSlideClose(): Boolean {
+    protected open fun enableSlideClose(): Boolean {
         return false
     }
 
@@ -234,7 +238,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 默认为左滑，子类可重写返回对应的方向
      * @return [Int]
      */
-    open fun fetchEdgeDirection(): Int {
+    protected open fun fetchEdgeDirection(): Int {
         return EDGE_LEFT
     }
 
@@ -242,30 +246,30 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 默认为覆盖滑动关闭效果，子类可重写
      * @return [Int]
      */
-    open fun fetchSlideLayoutType(): Int {
+    protected open fun fetchSlideLayoutType(): Int {
         return LAYOUT_COVER
     }
 
     /**
      * 初始化控件
      */
-    abstract fun initLayoutView();
+    protected abstract fun initLayoutView();
 
     /**
      * 初始化数据
      */
-    abstract fun initLayoutData();
+    protected abstract fun initLayoutData();
 
     /**
      * 初始化事件
      */
-    abstract fun initLayoutListener();
+    protected abstract fun initLayoutListener();
 
     /**
      * 界面内容布局 `ResId`
      * @return [Int] 布局文件Id
      */
-    abstract fun provideContentViewId(): Int
+    protected abstract fun provideContentViewId(): Int
 
     /**
      * 初始化 [Toast] 配置
@@ -287,18 +291,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         currentActivity = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        HandlerManager.getInstance().removeTask()
-    }
-
-    fun postTaskSafely(task: Runnable) {
-        HandlerManager.getInstance().postTaskSafely(task)
-    }
-
-    fun postTaskDelay(task: Runnable, delayMillis: Int) {
-        HandlerManager.getInstance().postTaskDelay(task, delayMillis)
-    }
 
     /**
      * 增加 [Activity] 任务栈中 [activity] 实例
@@ -340,7 +332,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * Activity任务栈，返回顶层 [Activity]
      * @return [Activity] 顶层 `Activity`
      */
-    fun getCurrentActivity(): Activity? {
+    protected fun getCurrentActivity(): Activity? {
         return currentActivity
     }
 
@@ -414,5 +406,4 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             }
         }
     }
-
 }

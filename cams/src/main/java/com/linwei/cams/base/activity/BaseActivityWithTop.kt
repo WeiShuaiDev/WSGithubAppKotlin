@@ -1,6 +1,5 @@
 package com.linwei.cams.base.activity
 
-import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -10,8 +9,8 @@ import com.linwei.cams.R
 import com.linwei.cams.base.holder.TopViewHolder
 import com.linwei.cams.ext.hideSoftKeyboard
 import com.linwei.cams.ext.string
-import com.linwei.cams.listener.OnTopLeftClickListener
-import com.linwei.cams.listener.OnTopRightClickListener
+import com.linwei.cams.listener.OnTopBarLeftClickListener
+import com.linwei.cams.listener.OnTopBarRightClickListener
 
 /**
  * ---------------------------------------------------------------------
@@ -19,40 +18,47 @@ import com.linwei.cams.listener.OnTopRightClickListener
  * @Time: 2019/10/14
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: [Activity] 导航栏基类
+ * @Description:增加导航栏基类 [BaseActivityWithTop]
  *-----------------------------------------------------------------------
  */
 abstract class BaseActivityWithTop : BaseActivity() {
 
     lateinit var mTopViewHolder: TopViewHolder
 
-    override fun withTopContentView(): View {
+    private var mTopBarLeftClickListener: OnTopBarLeftClickListener? = null
+    private var mTopBarRightClickListener: OnTopBarRightClickListener? = null
+
+    override fun withTopBarView(): View {
         val view: View = View.inflate(this, provideContentViewId(), null)
         return addTopBarView(view)
     }
 
     /**
      * `TopBar` 配置处理，同时返回控件
+     * @param view [View]
      */
     private fun addTopBarView(view: View): View {
-        val topBarView: View = View.inflate(this, getTopBarId(), null) as ViewGroup
+        val topBarView: View = View.inflate(this, provideTopBarId(), null) as ViewGroup
         mTopViewHolder = TopViewHolder(topBarView)
         mTopViewHolder.mIncludeContent.addView(view)//添加内容区域的视图
 
-        initTopBarEvent()
+        initTopBar()
 
         return topBarView
     }
 
     /**
-     * `TopBar` 增加事件处理,并通过 [OnTopLeftClickListener]、[OnTopRightClickListener]
+     * `TopBar`初始化处理,并通过 [OnTopLeftClickListener]、[OnTopRightClickListener]
      * 接口回调
      */
-    private fun initTopBarEvent() {
-        val topBarLeftListener: OnTopLeftClickListener? = fetchTopBarLeftListener()
+    private fun initTopBar() {
+        val topBarTitle: Int = fetchTopBarTitle()
+        if (topBarTitle > 0) setTopBarTitle(topBarTitle)
+
+        mTopBarLeftClickListener = obtainTopBarLeftListener()
         mTopViewHolder.mTvLeftTitle.setOnClickListener {
-            if (topBarLeftListener != null) {
-                topBarLeftListener.onTopClickListener()
+            if (mTopBarLeftClickListener != null) {
+                mTopBarLeftClickListener?.onLeftClick()
             } else {
                 //关闭页面前收起软键盘
                 window.decorView.hideSoftKeyboard()
@@ -61,8 +67,8 @@ abstract class BaseActivityWithTop : BaseActivity() {
         }
 
         mTopViewHolder.mIbLeftImage.setOnClickListener {
-            if (topBarLeftListener != null) {
-                topBarLeftListener.onTopClickListener()
+            if (mTopBarLeftClickListener != null) {
+                mTopBarLeftClickListener?.onLeftClick()
             } else {
                 //关闭页面前收起软键盘
                 window.decorView.hideSoftKeyboard()
@@ -71,12 +77,12 @@ abstract class BaseActivityWithTop : BaseActivity() {
         }
 
         // 获取头部右标题点击监听
-        val topBarRightListener: OnTopRightClickListener? = fetchTopBarRightListener()
+        mTopBarRightClickListener = obtainTopBarRightListener()
         mTopViewHolder.mIbRightImage.setOnClickListener {
-            topBarRightListener?.onTopRightClickListener()
+            mTopBarRightClickListener?.onRightClick()
         }
         mTopViewHolder.mTvRightTitle.setOnClickListener {
-            topBarRightListener?.onTopRightClickListener()
+            mTopBarRightClickListener?.onRightClick()
         }
     }
 
@@ -84,21 +90,27 @@ abstract class BaseActivityWithTop : BaseActivity() {
      * 导航栏布局`ResId`
      * @return [Int] 布局文件Id
      */
-    abstract fun getTopBarId(): Int
+    protected open fun provideTopBarId(): Int = R.layout.include_top_view
+
+    /**
+     * 导航栏标题`ResId`
+     * @return [Int] 字符串Id
+     */
+    protected abstract fun fetchTopBarTitle(): Int
 
     /**
      * 导航栏左侧点击事件
-     * @return [OnTopLeftClickListener]
+     * @return [OnTopBarLeftClickListener]
      */
-    open fun fetchTopBarLeftListener(): OnTopLeftClickListener? {
+    protected open fun obtainTopBarLeftListener(): OnTopBarLeftClickListener? {
         return null
     }
 
     /**
      * 导航栏右侧点击事件
-     * @return [OnTopRightClickListener]
+     * @return [OnTopBarRightClickListener]
      */
-    open fun fetchTopBarRightListener(): OnTopRightClickListener? {
+    protected open fun obtainTopBarRightListener(): OnTopBarRightClickListener? {
         return null
     }
 
@@ -106,7 +118,7 @@ abstract class BaseActivityWithTop : BaseActivity() {
      * 设置 `TopBar`  标题文本
      * @param resId 资源id
      */
-    fun setTopBarTitle(resId: Int) {
+    protected fun setTopBarTitle(resId: Int) {
         if (resId > 0) {
             setTopBarTitle(resId.string())
         }
@@ -115,13 +127,14 @@ abstract class BaseActivityWithTop : BaseActivity() {
     /**
      * 设置 `TopBar` 标题文本
      */
-    fun setTopBarTitle(title:String){
+    protected fun setTopBarTitle(title: String) {
         mTopViewHolder.mTvTitle.text = title
     }
+
     /**
      * 获取 `TopBar` 标题文本
      */
-    fun getTopBarTvTitle(): TextView? {
+    protected fun getTopBarTvTitle(): TextView? {
         return mTopViewHolder.mTvTitle
     }
 
@@ -130,7 +143,7 @@ abstract class BaseActivityWithTop : BaseActivity() {
      * 设置 `TopBar` 右边 [Textview] 文本信息
      * @param resId [Int] 显示文本信息，默认显示`刷新`
      */
-    fun setTopBarRightTitle(resId: Int = R.string.refresh) {
+    protected fun setTopBarRightTitle(resId: Int = R.string.refresh) {
         mTopViewHolder.setRightTitleForId(resId)
     }
 
@@ -138,7 +151,7 @@ abstract class BaseActivityWithTop : BaseActivity() {
      * 设置 `TopBar` 右边 [ImageButton] 图片
      * @param resId [Int] 显示图片信息，默认显示`刷新图片箭头`
      */
-    fun setTopBarRightImage(resId: Int = R.drawable.ic_refresh_black_24dp) {
+    protected fun setTopBarRightImage(resId: Int = R.drawable.ic_refresh_black_24dp) {
         mTopViewHolder.setRightImageForId(resId)
     }
 
@@ -147,7 +160,7 @@ abstract class BaseActivityWithTop : BaseActivity() {
      * 设置 `TopBar` 左边 [Textview] 文本信息
      * @param resId [Int] 显示文本信息，默认显示 `退出`
      */
-    fun setTopBarLeftTitle(resId: Int = R.string.setting) {
+    protected fun setTopBarLeftTitle(resId: Int = R.string.setting) {
         mTopViewHolder.setLeftTitleForId(resId)
     }
 
@@ -155,7 +168,7 @@ abstract class BaseActivityWithTop : BaseActivity() {
      * 设置 `TopBar` 左边 [ImageButton] 图片
      * @param resId [Int] 显示图片信息，默认显示 `退出图片箭头`
      */
-    fun setTopBarLeftImage(resId: Int = R.drawable.ic_refresh_black_24dp) {
+    protected fun setTopBarLeftImage(resId: Int = R.drawable.ic_arrow_back_black_24dp) {
         mTopViewHolder.setLeftImageForId(resId)
     }
 
@@ -163,16 +176,21 @@ abstract class BaseActivityWithTop : BaseActivity() {
      *  获取 `TopBar` 加载控件
      * @return [ProgressBar]
      */
-    fun getTopBarLoadingView(): ProgressBar {
-       return mTopViewHolder.mPbLoading
+    protected fun getTopBarLoadingView(): ProgressBar {
+        return mTopViewHolder.mPbLoading
     }
 
     /**
      * 获取 `TopBar` 刷新控件
      * @return [ProgressBar]
      */
-    fun getTopBarRefreshView(): ProgressBar {
+    protected fun getTopBarRefreshView(): ProgressBar {
         return mTopViewHolder.mPbRefresh
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mTopBarRightClickListener = null
+        mTopBarLeftClickListener = null
+    }
 }
