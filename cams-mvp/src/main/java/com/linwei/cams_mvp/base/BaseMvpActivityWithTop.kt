@@ -45,16 +45,16 @@ abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseMv
         mTopViewHolder = TopViewHolder(topBarView)
         mTopViewHolder.mIncludeContent.addView(view)//添加内容区域的视图
 
-        initTopBarEvent()
+        initTopBar()
 
         return topBarView
     }
 
     /**
-     * `TopBar` 增加事件处理,并通过 [OnTopLeftClickListener]、[OnTopRightClickListener]
+     * `TopBar` 增加事件处理,并通过 [OnTopBarLeftClickListener]、[OnTopBarRightClickListener]
      * 接口回调
      */
-    private fun initTopBarEvent() {
+    private fun initTopBar() {
         mTopBarLeftClickListener = obtainTopBarLeftListener()
         mTopViewHolder.mTvLeftTitle.setOnClickListener {
             if (mTopBarLeftClickListener != null) {
@@ -134,7 +134,7 @@ abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseMv
 
 
     /**
-     * 设置 `TopBar` 右边 [Textview] 文本信息
+     * 设置 `TopBar` 右边 [TextView] 文本信息
      * @param resId [Int] 显示文本信息，默认显示`刷新`
      */
     fun setTopBarRightTitle(resId: Int = R.string.refresh) {
@@ -151,7 +151,7 @@ abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseMv
 
 
     /**
-     * 设置 `TopBar` 左边 [Textview] 文本信息
+     * 设置 `TopBar` 左边 [TextView] 文本信息
      * @param resId [Int] 显示文本信息，默认显示 `退出`
      */
     fun setTopBarLeftTitle(resId: Int = R.string.setting) {

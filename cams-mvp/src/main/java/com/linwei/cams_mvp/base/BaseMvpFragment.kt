@@ -1,7 +1,16 @@
 package com.linwei.cams_mvp.base
-
 import com.linwei.cams.base.fragment.BaseFragment
 import com.linwei.cams.di.component.AppComponent
+import com.linwei.cams_mvp.di.component.BaseFragmentComponent
+import com.linwei.cams_mvp.di.component.DaggerBaseFragmentComponent
+import com.linwei.cams_mvp.lifecycle.FragmentRxLifecycle
+import com.linwei.cams_mvp.mvp.BasePresenter
+import com.linwei.cams_mvp.mvp.IModel
+import com.linwei.cams_mvp.mvp.IView
+import com.trello.rxlifecycle4.android.FragmentEvent
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -12,8 +21,34 @@ import com.linwei.cams.di.component.AppComponent
  * @Description: `MVP` 架构 `Fragment`基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseMvpFragment : BaseFragment() {
+abstract class BaseMvpFragment<T : BasePresenter<IModel, IView>> : BaseFragment(),
+    FragmentRxLifecycle {
+    private var mLifecycleSubject: BehaviorSubject<FragmentEvent> = BehaviorSubject.create()
+
+    @Inject
+    lateinit var mPresenter: T
+
     override fun setupFragmentComponent(appComponent: AppComponent?) {
+        val fragmentComponent: BaseFragmentComponent = DaggerBaseFragmentComponent.builder()
+            .appComponent(appComponent) //提供application
+            .build()
+
+        setUpFragmentChildComponent(fragmentComponent)
     }
 
+    override fun provideLifecycleSubject(): Subject<FragmentEvent>? = mLifecycleSubject
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mPresenter.onDestroy()
+    }
+
+    /**
+     * 提供给 {@link BaseMvpActivity}实现类，进行{@code appComponent}依赖
+     * @param fragmentComponent [BaseFragmentComponent]
+     */
+    abstract fun setUpFragmentChildComponent(fragmentComponent: BaseFragmentComponent?)
+
 }
+
