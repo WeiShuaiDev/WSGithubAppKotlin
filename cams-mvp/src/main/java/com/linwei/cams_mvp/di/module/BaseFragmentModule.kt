@@ -1,12 +1,8 @@
 package com.linwei.cams_mvp.di.module
 
-import android.app.Application
 import androidx.fragment.app.FragmentManager
-import com.linwei.cams.di.scope.ActivityScope
 import com.linwei.cams.di.scope.FragmentScope
-import com.linwei.cams_mvp.di.qualifier.ActivityRxLifecycleQualifier
 import com.linwei.cams_mvp.di.qualifier.FragmentRxLifecycleQualifier
-import com.linwei.cams_mvp.lifecycle.ActivityLifecycleForRxLifecycle
 import com.linwei.cams_mvp.lifecycle.FragmentLifecycleForRxLifecycle
 import dagger.Binds
 import dagger.Module

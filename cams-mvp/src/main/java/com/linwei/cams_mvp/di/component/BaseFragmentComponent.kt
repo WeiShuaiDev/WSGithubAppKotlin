@@ -19,8 +19,6 @@ import dagger.Component
 interface BaseFragmentComponent {
 
 
-
-
     @Component.Builder
     interface Builder {
 

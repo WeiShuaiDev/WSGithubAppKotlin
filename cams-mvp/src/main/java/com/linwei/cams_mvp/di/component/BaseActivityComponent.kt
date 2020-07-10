@@ -18,9 +18,6 @@ import dagger.Component
 @Component(dependencies = [AppComponent::class], modules = [BaseActivityModule::class])
 interface BaseActivityComponent {
 
-
-
-
     @Component.Builder
     interface Builder {
 

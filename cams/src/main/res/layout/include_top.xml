@@ -40,7 +40,5 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mToolBar" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

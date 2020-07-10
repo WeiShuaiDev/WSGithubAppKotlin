@@ -3,13 +3,9 @@ package com.linwei.cams_mvp.lifecycle
 import android.app.Activity
 import android.app.Application.ActivityLifecycleCallbacks
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import com.linwei.cams_mvp.di.qualifier.FragmentRxLifecycleQualifier
+import com.linwei.cams.di.scope.ActivityScope
 import com.trello.rxlifecycle4.android.ActivityEvent
 import io.reactivex.subjects.Subject
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * ---------------------------------------------------------------------
@@ -20,7 +16,7 @@ import javax.inject.Singleton
  * @Description:
  *-----------------------------------------------------------------------
  */
-@Singleton
+@ActivityScope
 class ActivityLifecycleForRxLifecycle : ActivityLifecycleCallbacks {
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
@@ -39,21 +35,17 @@ class ActivityLifecycleForRxLifecycle : ActivityLifecycleCallbacks {
         obtainSubject(activity)?.onNext(ActivityEvent.START)
     }
 
-
     override fun onActivityPaused(activity: Activity) {
         obtainSubject(activity)?.onNext(ActivityEvent.PAUSE)
     }
-
 
     override fun onActivityStopped(activity: Activity) {
         obtainSubject(activity)?.onNext(ActivityEvent.STOP)
     }
 
-
     override fun onActivityDestroyed(activity: Activity) {
         obtainSubject(activity)?.onNext(ActivityEvent.DESTROY)
     }
-
 
     /**
      * 父类 [BaseMvpActivity] 集成 [ActivityRxLifecycle],并重写 `provideLifecycleSubject` 方法

@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.linwei.cams.di.scope.FragmentScope
 import com.trello.rxlifecycle4.android.FragmentEvent
 import io.reactivex.subjects.Subject
-import javax.inject.Singleton
 
 /**
  * ---------------------------------------------------------------------
@@ -18,7 +18,7 @@ import javax.inject.Singleton
  * @Description:
  *-----------------------------------------------------------------------
  */
-@Singleton
+@FragmentScope
 class FragmentLifecycleForRxLifecycle :
     FragmentManager.FragmentLifecycleCallbacks() {
 
