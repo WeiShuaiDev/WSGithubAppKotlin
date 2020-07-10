@@ -3,7 +3,6 @@ package com.linwei.cams.manager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import androidx.room.Index
 import com.google.gson.JsonObject
 import com.linwei.cams.http.cache.CacheProvide
 import com.linwei.cams.http.cache.kinds.DiskLruCache
@@ -166,7 +165,6 @@ class DiskStorageManager private constructor (
      * 保存字节数组 {@code value} 数据到 {@code key} 文件中
      * @param key 文件名
      * @param value ByteArray
-     * @param saveTime 有效期
      */
     override fun put(key: String, value: ByteArray) {
         val file: File = mDisLruCache.newFile(key)
@@ -201,7 +199,6 @@ class DiskStorageManager private constructor (
      * 保存序列化 {@code value} 数据到 {@code key} 文件中
      * @param key 文件名
      * @param value Serializable
-     * @param saveTime 有效期
      */
     override fun put(key: String, value: Serializable) {
         put(key, value, -1)

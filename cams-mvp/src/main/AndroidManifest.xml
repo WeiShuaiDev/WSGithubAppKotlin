@@ -3,7 +3,6 @@
     package="com.linwei.cams_mvp">
 
     <application>
-
         <meta-data
             android:name="com.linwei.cams_mvp.global.GlobalMvpConfiguration"
             android:value="ConfigModule" />
