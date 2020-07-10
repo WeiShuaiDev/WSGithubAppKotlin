@@ -8,6 +8,7 @@ import com.linwei.cams_mvp.lifecycle.FragmentRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
 import com.linwei.cams_mvp.mvp.IModel
 import com.linwei.cams_mvp.mvp.IView
+import com.mimefin.baselib.common.fragment.BaseFragmentWithTop
 import com.trello.rxlifecycle4.android.FragmentEvent
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -22,7 +23,7 @@ import javax.inject.Inject
  * @Description: `MVP` 架构 `Fragment`基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseMvpFragment<T : BasePresenter<IModel, IView>> : BaseFragment(),
+abstract class BaseMvpFragmentWidthTop<T : BasePresenter<IModel, IView>> : BaseFragmentWithTop(),
     FragmentRxLifecycle {
 
     private var mLifecycleSubject: BehaviorSubject<FragmentEvent> = BehaviorSubject.create()

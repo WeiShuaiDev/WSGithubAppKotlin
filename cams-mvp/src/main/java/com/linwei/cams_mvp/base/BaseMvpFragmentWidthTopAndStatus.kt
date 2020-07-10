@@ -1,6 +1,7 @@
 package com.linwei.cams_mvp.base
 
 import com.linwei.cams.base.fragment.BaseFragment
+import com.linwei.cams.base.fragment.BaseFragmentWithTopAndStatus
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams_mvp.di.component.BaseFragmentComponent
 import com.linwei.cams_mvp.di.component.DaggerBaseFragmentComponent
@@ -22,7 +23,8 @@ import javax.inject.Inject
  * @Description: `MVP` 架构 `Fragment`基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseMvpFragment<T : BasePresenter<IModel, IView>> : BaseFragment(),
+abstract class BaseMvpFragmentWidthTopAndStatus<T : BasePresenter<IModel, IView>> :
+    BaseFragmentWithTopAndStatus(),
     FragmentRxLifecycle {
 
     private var mLifecycleSubject: BehaviorSubject<FragmentEvent> = BehaviorSubject.create()
@@ -48,10 +50,8 @@ abstract class BaseMvpFragment<T : BasePresenter<IModel, IView>> : BaseFragment(
 
     override fun onDestroy() {
         super.onDestroy()
-
         mPresenter.onDestroy()
     }
-
 
 }
 

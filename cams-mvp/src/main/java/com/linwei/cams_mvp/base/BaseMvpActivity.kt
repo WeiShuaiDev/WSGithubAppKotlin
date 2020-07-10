@@ -40,17 +40,17 @@ abstract class BaseMvpActivity<T : BasePresenter<IModel, IView>> : BaseActivity(
 
     override fun provideLifecycleSubject(): Subject<ActivityEvent>? = mLifecycleSubject
 
+    /**
+     * 提供给 {@link Activity}实现类，进行{@code appComponent}依赖
+     * @param activityComponent [BaseActivityComponent]
+     */
+    abstract fun setUpActivityChildComponent(activityComponent: BaseActivityComponent?)
+
     override fun onDestroy() {
         super.onDestroy()
 
         mPresenter.onDestroy()
     }
-
-    /**
-     * 提供给 {@link BaseMvpActivity}实现类，进行{@code appComponent}依赖
-     * @param activityComponent [BaseActivityComponent]
-     */
-    abstract fun setUpActivityChildComponent(activityComponent: BaseActivityComponent?)
 
 
 }
