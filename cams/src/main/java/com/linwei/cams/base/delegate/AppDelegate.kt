@@ -103,8 +103,16 @@ class AppDelegate constructor(
         mAppLifecycles.forEach {
             it.onTerminate(application)
         }
+    }
+
+    override fun onLowMemory(application: Application) {
 
     }
+
+    override fun onTrimMemory(level: Int) {
+
+    }
+
 
     /**
      * 通过解析 AndroidManifest.xml 中 'meta-data' 的ConfigModule数据，通过回调 [ConfigModule.applyOptions] 方法，给开发者扩张 `Builder` 配置，

@@ -85,6 +85,9 @@ dependencies {
     //Dagger
     api rootProject.ext.dependencies["dagger2"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]
+    api rootProject.ext.dependencies["dagger2-android"]
+    api rootProject.ext.dependencies["dagger2-android-support"]
+    kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
     //RxCache2
     api(rootProject.ext.dependencies["rxcache2"]) {
@@ -109,11 +112,8 @@ dependencies {
     api rootProject.ext.dependencies["stateview"]
     api rootProject.ext.dependencies["parallaxbacklayout"]
 
-    //Klog
-    api rootProject.ext.dependencies["klog"]
-
-    //Animation
-    api rootProject.ext.dependencies["avi"]
+    //Timber
+    api rootProject.ext.dependencies["timber"]
 
     //Permission
     api rootProject.ext.dependencies["easypermissions"]

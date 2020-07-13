@@ -7,6 +7,10 @@ import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.config.LibConfig
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.utils.AppLanguageUtils
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -18,8 +22,11 @@ import com.linwei.cams.utils.AppLanguageUtils
  * 方法注入国际化处理。
  *----------------------------------------------------------------------
  */
-class BaseApplication : Application(), App {
+class BaseApplication : Application(), App, HasAndroidInjector {
     private lateinit var mAppDelegate: AppDelegate
+
+    @Inject
+    lateinit var mAndroidInjector: DispatchingAndroidInjector<Any>
 
     companion object {
         lateinit var mContext: Context
@@ -43,6 +50,16 @@ class BaseApplication : Application(), App {
         mAppDelegate.onTerminate(this)
     }
 
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mAppDelegate.onLowMemory(this)
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        mAppDelegate.onTrimMemory(level)
+    }
+
     override fun getAppComponent(): AppComponent = mAppDelegate.getAppComponent()
 
     override fun getApplication(): Application = mAppDelegate.getApplication()
@@ -51,4 +68,6 @@ class BaseApplication : Application(), App {
         super.onConfigurationChanged(newConfig)
         AppLanguageUtils.setLanguage(this, LibConfig.LANGUAGE)
     }
+
+    override fun androidInjector(): AndroidInjector<Any> = mAndroidInjector
 }

@@ -9,6 +9,7 @@ import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.manager.*
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 /**
@@ -21,7 +22,7 @@ import javax.inject.Singleton
  *-----------------------------------------------------------------------
  */
 @Singleton
-@Component(modules = [AppModule::class, ClientModule::class, GlobalConfigModule::class])
+@Component(modules = [AndroidInjectionModule::class, AppModule::class, ClientModule::class, GlobalConfigModule::class])
 interface AppComponent {
 
     fun application(): Application
