@@ -12,6 +12,7 @@ import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.http.cache.CacheType
 import com.linwei.cams.http.cache.CacheType.Companion.ACTIVITY_CACHE_TYPE_ID
 import com.linwei.cams.http.cache.CacheType.Companion.CACHE_SERVICE_CACHE_TYPE_ID
+import com.linwei.cams.http.cache.CacheType.Companion.DATABASE_CACHE_TYPE_ID
 import com.linwei.cams.http.cache.CacheType.Companion.EXTRAS_TYPE_ID
 import com.linwei.cams.http.cache.CacheType.Companion.FRAGMENT_CACHE_TYPE_ID
 import com.linwei.cams.http.cache.CacheType.Companion.RETROFIT_SERVICE_CACHE_TYPE_ID
@@ -52,16 +53,17 @@ class GlobalConfigModule(val mBuilder: Builder) {
     fun provideCacheFactory(application: Application): Cache.Factory {
         return mBuilder.cacheFactory ?: object : Cache.Factory {
             override fun <K, V> build(type: CacheType): Cache<K, V> {
-                when (type.getCacheTypeId()) {
+                return when (type.getCacheTypeId()) {
                     RETROFIT_SERVICE_CACHE_TYPE_ID,
                     CACHE_SERVICE_CACHE_TYPE_ID,
+                    DATABASE_CACHE_TYPE_ID,
                     EXTRAS_TYPE_ID,
                     ACTIVITY_CACHE_TYPE_ID,
                     FRAGMENT_CACHE_TYPE_ID -> {
-                        return LruCache(type.calculateCacheSize(application))
+                         LruCache(type.calculateCacheSize(application))
                     }
                     else -> {
-                        return LruCache(type.calculateCacheSize(application))
+                         LruCache(type.calculateCacheSize(application))
                     }
                 }
             }

@@ -1,5 +1,7 @@
 package com.linwei.cams.http.repository
 
+import android.app.Application
+
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
@@ -9,17 +11,17 @@ package com.linwei.cams.http.repository
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface HttpDataRepository {
+interface IDataRepository {
 
     /**
-     * 根据 [serviceClass] 从 [Cache] 获取 `Retrofit` 接口对象
+     * 根据 [serviceClass] 从 `Cache` 获取 `Retrofit` 接口对象
      * @param serviceClass [Class]
      * @return [T]
      */
     fun <T> obtainRetrofitService(serviceClass: Class<T>): T
 
     /**
-     * 根据 [serviceClass] 从 [RxCache] 获取 `Retrofit` 接口对象
+     * 根据 [serviceClass] 从 `RxCache` 获取 `Retrofit` 接口对象
      * @param serviceClass [Class]
      * @return [T]
      */
@@ -27,9 +29,13 @@ interface HttpDataRepository {
 
 
     /**
-     * 清除 [RxCache] 中数据
+     * 清除 `RxCache` 中数据
      */
     fun clearAllRxCache()
 
+    /**
+     * 返回 [Application]
+     */
+    fun fetchApplication(): Application
 
 }
