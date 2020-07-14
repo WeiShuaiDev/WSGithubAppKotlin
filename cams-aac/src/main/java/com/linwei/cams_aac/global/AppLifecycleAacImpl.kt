@@ -23,4 +23,10 @@ class AppLifecycleAacImpl: AppLifecycles {
 
     override fun onTerminate(application: Application) {
     }
+
+    override fun onLowMemory(application: Application) {
+    }
+
+    override fun onTrimMemory(level: Int) {
+    }
 }

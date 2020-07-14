@@ -1,11 +1,9 @@
 package com.linwei.cams.http.interceptor
 
-import android.util.Log
-import com.linwei.cams.http.config.HttpConstant
-import com.socks.library.KLog
 import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
+import timber.log.Timber
 import java.io.IOException
 import java.net.URLDecoder
 
@@ -46,19 +44,15 @@ class LogInterceptor : Interceptor {
 
         //请求数据
         val requestFormat = "| Request: method：[%s] url：[%s] params：[%s]"
-        KLog.e(
-            HttpConstant.HTTP_LOG_TAG,
-            String.format(requestFormat, request.method, request.url, body)
-        )
+        Timber.i(requestFormat, request.method, request.url, body)
 
         //响应数据
         val responseFormat = "|response:[%s]"
-        KLog.e(HttpConstant.HTTP_LOG_TAG, String.format(responseFormat, content?:""))
+        Timber.i(responseFormat, content ?: "")
 
-        Log.e(HttpConstant.HTTP_LOG_TAG, "----------Request End:" + duration + "毫秒----------")
-
+        Timber.i("----------Request End: %s 毫秒----------", duration)
         return response.newBuilder()
-            .body((content?:"").toResponseBody(mediaType))
+            .body((content ?: "").toResponseBody(mediaType))
             .build()
     }
 

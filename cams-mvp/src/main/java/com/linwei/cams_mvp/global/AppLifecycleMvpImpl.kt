@@ -13,7 +13,7 @@ import com.linwei.cams.base.lifecycle.AppLifecycles
  * @Description:
  *-----------------------------------------------------------------------
  */
-class AppLifecycleMvpImpl: AppLifecycles {
+class AppLifecycleMvpImpl : AppLifecycles {
 
     override fun attachBaseContext(context: Context) {
     }
@@ -22,5 +22,11 @@ class AppLifecycleMvpImpl: AppLifecycles {
     }
 
     override fun onTerminate(application: Application) {
+    }
+
+    override fun onLowMemory(application: Application) {
+    }
+
+    override fun onTrimMemory(level: Int) {
     }
 }
