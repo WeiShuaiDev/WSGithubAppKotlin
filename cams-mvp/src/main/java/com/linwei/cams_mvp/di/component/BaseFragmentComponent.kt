@@ -3,6 +3,7 @@ package com.linwei.cams_mvp.di.component
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.di.scope.FragmentScope
 import com.linwei.cams_mvp.di.module.BaseFragmentModule
+import dagger.BindsInstance
 import dagger.Component
 
 /**
@@ -21,7 +22,7 @@ interface BaseFragmentComponent {
 
     @Component.Builder
     interface Builder {
-
+        @BindsInstance
         fun appComponent(appComponent: AppComponent?): Builder
 
         fun build(): BaseFragmentComponent

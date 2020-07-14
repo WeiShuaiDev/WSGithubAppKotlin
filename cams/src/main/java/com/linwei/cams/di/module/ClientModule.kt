@@ -2,6 +2,7 @@ package com.linwei.cams.di.module
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import com.google.gson.Gson
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
 import com.linwei.cams.http.config.HttpConstant
@@ -57,7 +58,6 @@ class ClientModule {
         executorService: ExecutorService?
     ): OkHttpClient {
         return builder.also {
-
             it.connectTimeout(HttpConstant.CONNECT_TIME_OUT, TimeUnit.SECONDS)
             it.writeTimeout(HttpConstant.WRITE_TIME_OUT, TimeUnit.SECONDS)
             it.readTimeout(HttpConstant.READ_TIME_OUT, TimeUnit.SECONDS)

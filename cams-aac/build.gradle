@@ -52,7 +52,6 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-
     //Navigation
     api rootProject.ext.dependencies["navigation-fragment-ktx"]
     api rootProject.ext.dependencies["navigation-ui-ktx"]

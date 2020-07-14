@@ -62,8 +62,8 @@ class RepositoryManager private constructor() {
 
 
     /**
-     * 根据 [serviceClass] 获取接口对象，根据 `serviceClass`作为`key`，在 [mRetrofitServiceCache]、[mRetrofitServiceDelegate] 获取接口对象,
-     * [mRetrofitServiceDelegate] 回调接口，提供给开发者扩展
+     * 根据 [serviceClass] 获取接口对象，根据 `serviceClass`作为`key`，在 [mRetrofitServiceCache] 获取接口对象,
+     * [mRetrofitServiceDelegate] 回调接口，提供给开发者扩展功能
      * @param serviceClass [Class] `Retrofit` 接口 Class 对象
      * @return 接口对象
      */
@@ -100,10 +100,10 @@ class RepositoryManager private constructor() {
      */
     @Suppress("UNCHECKED_CAST")
     @Synchronized
-    fun <T> obtainCacheService(serviceClass: Class<T>): T {
+    fun <T> obtainRxCacheService(serviceClass: Class<T>): T {
         var retrofitService: Any? =
             mCacheServiceCache.get(serviceClass.canonicalName ?: serviceClass.simpleName)
-        if (retrofitService != null) {
+        if (retrofitService == null) {
 
             retrofitService = mRxCache.using(serviceClass) as Any
 
