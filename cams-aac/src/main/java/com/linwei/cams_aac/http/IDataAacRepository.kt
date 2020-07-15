@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface IAccDataRepository {
+interface IDataAacRepository {
 
     /**
      * 根据 [databaseClass] 从 `Cache` 获取 `RoomDatabase` 对象

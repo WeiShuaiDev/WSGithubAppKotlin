@@ -1,7 +1,8 @@
-package com.linwei.cams_aac.acc
+package com.linwei.cams_aac.aac
 
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.OnLifecycleEvent
 
 /**
  * ---------------------------------------------------------------------
@@ -12,11 +13,8 @@ import androidx.lifecycle.ViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface IView<VM : ViewModel> : LifecycleObserver {
+interface IModel : LifecycleObserver {
 
-    /**
-     * 获取 [ViewModel] 对象
-     * @return VM [ViewModel]
-     */
-    fun createViewModel(): VM
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onDestroy()
 }

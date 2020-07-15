@@ -1,13 +1,21 @@
-package com.linwei.cams_aac.acc
-
+package com.linwei.cams_aac.base
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2020/7/15
- * @Contact: linwei9605@gmail.com"
- * @Follow: https://github.com/WeiShuaiDev
+ * @Contact: linwei9605@gmail.com
+ * @Github: https://github.com/WeiShuaiDev
  * @Description:
  *-----------------------------------------------------------------------
  */
 interface ILoading {
+    /**
+     * 显示加载
+     */
+    fun showLoading()
+
+    /**
+     * 隐藏加载
+     */
+    fun hideLoading()
 }

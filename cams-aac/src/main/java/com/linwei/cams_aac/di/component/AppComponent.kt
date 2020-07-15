@@ -2,8 +2,8 @@ package com.linwei.cams_aac.di.component
 
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.di.scope.ApplicationScope
-import com.linwei.cams_aac.di.module.BaseActivityModule
-import com.linwei.cams_aac.di.module.BaseFragmentModule
+import com.linwei.cams_aac.di.module.BaseAacActivityModule
+import com.linwei.cams_aac.di.module.BaseAacFragmentModule
 import com.linwei.cams_aac.di.module.ViewModelFactoryModule
 import dagger.BindsInstance
 import dagger.Component
@@ -21,8 +21,8 @@ import dagger.android.AndroidInjectionModule
 @ApplicationScope
 @Component(
     dependencies = [AppComponent::class],
-    modules = [AndroidInjectionModule::class, BaseActivityModule::class,
-        BaseFragmentModule::class, ViewModelFactoryModule::class]
+    modules = [AndroidInjectionModule::class, BaseAacActivityModule::class,
+        BaseAacFragmentModule::class, ViewModelFactoryModule::class]
 )
 interface AppComponent {
 

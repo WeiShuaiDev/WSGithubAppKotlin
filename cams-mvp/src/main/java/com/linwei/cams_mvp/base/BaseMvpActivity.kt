@@ -2,7 +2,7 @@ package com.linwei.cams_mvp.base
 
 import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.di.component.AppComponent
-import com.linwei.cams_mvp.di.component.BaseActivityComponent
+import com.linwei.cams_mvp.di.component.BaseMvpActivityComponent
 import com.linwei.cams_mvp.di.component.DaggerBaseActivityComponent
 import com.linwei.cams_mvp.lifecycle.ActivityRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
@@ -31,20 +31,20 @@ abstract class BaseMvpActivity<T : BasePresenter<IModel, IView>> : BaseActivity(
     lateinit var mPresenter: T
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
-        val activityComponent: BaseActivityComponent = DaggerBaseActivityComponent.builder()
+        val mvpActivityComponent: BaseMvpActivityComponent = DaggerBaseActivityComponent.builder()
             .appComponent(appComponent) //提供application
             .build()
 
-        setUpActivityChildComponent(activityComponent)
+        setUpActivityChildComponent(mvpActivityComponent)
     }
 
     override fun provideLifecycleSubject(): Subject<ActivityEvent>? = mLifecycleSubject
 
     /**
      * 提供给 {@link Activity}实现类，进行{@code appComponent}依赖
-     * @param activityComponent [BaseActivityComponent]
+     * @param mvpActivityComponent [BaseMvpActivityComponent]
      */
-    abstract fun setUpActivityChildComponent(activityComponent: BaseActivityComponent?)
+    abstract fun setUpActivityChildComponent(mvpActivityComponent: BaseMvpActivityComponent?)
 
     override fun onDestroy() {
         super.onDestroy()

@@ -15,7 +15,7 @@ import com.linwei.cams.http.repository.DataRepository
  * @Description:
  *-----------------------------------------------------------------------
  */
-class AccDataRepository : DataRepository(), IAccDataRepository {
+class DataAacRepository : DataRepository(), IDataAacRepository {
 
     /**
      * `RoomDataBase` 对象缓存存储

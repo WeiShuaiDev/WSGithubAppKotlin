@@ -1,4 +1,4 @@
-package com.linwei.cams_aac.acc
+package com.linwei.cams_aac.aac
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -15,6 +15,7 @@ import androidx.lifecycle.OnLifecycleEvent
  *-----------------------------------------------------------------------
  */
 interface IViewModel : LifecycleObserver {
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate()
 
@@ -37,5 +38,5 @@ interface IViewModel : LifecycleObserver {
     fun onAny(
         owner: LifecycleOwner,
         event: Lifecycle.Event
-    ): Unit
+    )
 }

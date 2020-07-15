@@ -13,7 +13,7 @@ import dagger.Module
  *-----------------------------------------------------------------------
  */
 @Module(subcomponents = [BaseFragmentSubComponent::class])
-interface BaseFragmentModule {
+interface BaseAacFragmentModule {
 
 
 }

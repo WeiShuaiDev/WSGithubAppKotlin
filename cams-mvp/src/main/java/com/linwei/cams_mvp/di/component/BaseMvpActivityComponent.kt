@@ -1,9 +1,7 @@
 package com.linwei.cams_mvp.di.component
-import android.app.Application
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.di.scope.ActivityScope
 import com.linwei.cams_mvp.di.module.BaseActivityModule
-import dagger.BindsInstance
 import dagger.Component
 
 /**
@@ -17,13 +15,13 @@ import dagger.Component
  */
 @ActivityScope
 @Component(dependencies = [AppComponent::class], modules = [BaseActivityModule::class])
-interface BaseActivityComponent {
+interface BaseMvpActivityComponent {
 
     @Component.Builder
     interface Builder {
         fun appComponent(appComponent: AppComponent?): Builder
 
-        fun build(): BaseActivityComponent
+        fun build(): BaseMvpActivityComponent
     }
 
 }

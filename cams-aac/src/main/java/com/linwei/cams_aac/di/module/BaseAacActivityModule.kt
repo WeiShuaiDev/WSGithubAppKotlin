@@ -14,7 +14,7 @@ import dagger.Module
  *-----------------------------------------------------------------------
  */
 @Module(subcomponents = [BaseActivitySubComponent::class])
-interface BaseActivityModule {
+interface BaseAacActivityModule {
 
 
 }

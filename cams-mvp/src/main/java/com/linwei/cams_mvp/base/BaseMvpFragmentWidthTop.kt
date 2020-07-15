@@ -1,8 +1,7 @@
 package com.linwei.cams_mvp.base
 
-import com.linwei.cams.base.fragment.BaseFragment
 import com.linwei.cams.di.component.AppComponent
-import com.linwei.cams_mvp.di.component.BaseFragmentComponent
+import com.linwei.cams_mvp.di.component.BaseMvpFragmentComponent
 import com.linwei.cams_mvp.di.component.DaggerBaseFragmentComponent
 import com.linwei.cams_mvp.lifecycle.FragmentRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
@@ -32,20 +31,20 @@ abstract class BaseMvpFragmentWidthTop<T : BasePresenter<IModel, IView>> : BaseF
     lateinit var mPresenter: T
 
     override fun setupFragmentComponent(appComponent: AppComponent?) {
-        val fragmentComponent: BaseFragmentComponent = DaggerBaseFragmentComponent.builder()
+        val mvpFragmentComponent: BaseMvpFragmentComponent = DaggerBaseFragmentComponent.builder()
             .appComponent(appComponent) //提供application
             .build()
 
-        setUpFragmentChildComponent(fragmentComponent)
+        setUpFragmentChildComponent(mvpFragmentComponent)
     }
 
     override fun provideLifecycleSubject(): Subject<FragmentEvent>? = mLifecycleSubject
 
     /**
      * 提供给 {@link Activity}实现类，进行{@code appComponent}依赖
-     * @param fragmentComponent [BaseFragmentComponent]
+     * @param mvpFragmentComponent [BaseMvpFragmentComponent]
      */
-    abstract fun setUpFragmentChildComponent(fragmentComponent: BaseFragmentComponent?)
+    abstract fun setUpFragmentChildComponent(mvpFragmentComponent: BaseMvpFragmentComponent?)
 
     override fun onDestroy() {
         super.onDestroy()
