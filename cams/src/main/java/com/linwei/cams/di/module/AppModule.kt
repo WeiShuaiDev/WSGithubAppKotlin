@@ -9,6 +9,8 @@ import com.linwei.cams.base.lifecycle.ActivityLifecycle
 import com.linwei.cams.base.lifecycle.FragmentLifecycle
 import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.http.cache.CacheType
+import com.linwei.cams.http.repository.DataRepository
+import com.linwei.cams.http.repository.IDataRepository
 import com.linwei.cams.manager.*
 import com.linwei.cams.utils.FileUtils
 import dagger.Binds
@@ -154,5 +156,14 @@ object AppModule {
         @Singleton
         @Binds
         fun bindFragmentLifecycle(fragmentLifecycle: FragmentLifecycle): FragmentManager.FragmentLifecycleCallbacks
+
+        /**
+         * 框架全局网络数据源 `dataRepository`
+         * @param dataRepository [DataRepository]
+         * @return [IDataRepository]
+         */
+        @Singleton
+        @Binds
+        fun bindDataRepository(dataRepository: DataRepository): IDataRepository
     }
 }

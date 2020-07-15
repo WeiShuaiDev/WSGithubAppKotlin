@@ -60,10 +60,10 @@ class GlobalConfigModule(val mBuilder: Builder) {
                     EXTRAS_TYPE_ID,
                     ACTIVITY_CACHE_TYPE_ID,
                     FRAGMENT_CACHE_TYPE_ID -> {
-                         LruCache(type.calculateCacheSize(application))
+                        LruCache(type.calculateCacheSize(application))
                     }
                     else -> {
-                         LruCache(type.calculateCacheSize(application))
+                        LruCache(type.calculateCacheSize(application))
                     }
                 }
             }
@@ -149,7 +149,6 @@ class GlobalConfigModule(val mBuilder: Builder) {
     fun provideGlobalHttpHandler(): GlobalHttpHandler {
         return mBuilder.globalHttpHandler ?: GlobalHttpHandler.Emtry
     }
-
 
     @Singleton
     @Provides

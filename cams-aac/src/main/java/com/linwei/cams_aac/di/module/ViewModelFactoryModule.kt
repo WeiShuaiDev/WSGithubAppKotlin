@@ -21,4 +21,6 @@ interface ViewModelFactoryModule {
     @ViewModelScope
     @Binds
     fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+
+
 }

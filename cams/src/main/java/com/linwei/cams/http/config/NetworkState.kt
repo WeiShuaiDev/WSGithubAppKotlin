@@ -12,30 +12,6 @@ import android.net.ConnectivityManager
  * @Description: 网络状态处理
  *-----------------------------------------------------------------------
  */
-enum class Status {
-    RUNNNIG,
-    SUCCESS,
-    FAILED,
-    HIDDEN
-}
-
-/**
- *Request网络状态
- */
-data class NetworkState private constructor(
-    val state: Status
-) {
-    companion object {
-        val LOADED = NetworkState(Status.SUCCESS)
-        val LOADING = NetworkState(Status.RUNNNIG)
-        val HIDDEN = NetworkState(Status.HIDDEN)
-        val FAILED = NetworkState(Status.FAILED)
-    }
-}
-
-/**
- * Response状态码
- */
 class NetWorkStateCode {
     val responseCode: MutableMap<String, Int> = mutableMapOf()
 
@@ -73,7 +49,7 @@ class NetWorkStateCode {
      * @return bool [Boolean]  返回网络状态，false:网络繁忙，网络断开;true:网络连接中
      */
     fun isNetworkAvailable(context: Context): Boolean {
-        val connectivity = context
+        val connectivity: ConnectivityManager = context
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         @Suppress("DEPRECATION") val networkInfo = connectivity.activeNetworkInfo
         if (networkInfo != null) {

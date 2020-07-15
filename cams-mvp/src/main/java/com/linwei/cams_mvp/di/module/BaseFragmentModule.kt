@@ -3,7 +3,7 @@ package com.linwei.cams_mvp.di.module
 import androidx.fragment.app.FragmentManager
 import com.linwei.cams.di.scope.FragmentScope
 import com.linwei.cams_mvp.di.qualifier.FragmentRxLifecycleQualifier
-import com.linwei.cams_mvp.lifecycle.FragmentLifecycleForRxLifecycle
+import com.linwei.cams_mvp.global.FragmentLifecycleMvpImpl
 import dagger.Binds
 import dagger.Module
 
@@ -24,13 +24,13 @@ object BaseFragmentModule {
 
         /**
          * 框架全局 `Fragment` 生命周期回调配置
-         * @param fragmentRxLifecycle [FragmentLifecycleForRxLifecycle]
+         * @param fragmentRxLifecycle [FragmentLifecycleMvpImpl]
          * @return [FragmentManager.FragmentLifecycleCallbacks]
          */
         @FragmentRxLifecycleQualifier
         @FragmentScope
         @Binds
-        fun bindFragmentRxLifecycle(fragmentRxLifecycle: FragmentLifecycleForRxLifecycle): FragmentManager.FragmentLifecycleCallbacks
+        fun bindFragmentRxLifecycle(fragmentRxLifecycle: FragmentLifecycleMvpImpl): FragmentManager.FragmentLifecycleCallbacks
     }
 
 }

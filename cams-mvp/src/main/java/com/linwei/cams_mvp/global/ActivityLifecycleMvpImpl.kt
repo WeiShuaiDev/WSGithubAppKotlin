@@ -1,9 +1,10 @@
-package com.linwei.cams_mvp.lifecycle
+package com.linwei.cams_mvp.global
 
 import android.app.Activity
 import android.app.Application.ActivityLifecycleCallbacks
 import android.os.Bundle
 import com.linwei.cams.di.scope.ActivityScope
+import com.linwei.cams_mvp.lifecycle.ActivityRxLifecycle
 import com.trello.rxlifecycle4.android.ActivityEvent
 import io.reactivex.subjects.Subject
 
@@ -17,7 +18,7 @@ import io.reactivex.subjects.Subject
  *-----------------------------------------------------------------------
  */
 @ActivityScope
-class ActivityLifecycleForRxLifecycle : ActivityLifecycleCallbacks {
+class ActivityLifecycleMvpImpl : ActivityLifecycleCallbacks {
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
 

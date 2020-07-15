@@ -163,7 +163,7 @@ class ClientModule {
     fun provideOkHttpClientBuilder(): OkHttpClient.Builder = OkHttpClient().newBuilder()
 
     /**
-     * 创建 [LiveDataCallAdapterFactory] 对象，用于 `Retrofit` 初始化创建,配置回调适配器
+     * 创建 [LiveDataCallAdapterFactory] 对象，`LiveData`适配器,用于 `Retrofit` 初始化创建,配置回调适配器
      * @return [LiveDataCallAdapterFactory]
      */
     @Singleton
@@ -172,6 +172,10 @@ class ClientModule {
         LiveDataCallAdapterFactory()
 
 
+    /**
+     * 创建 [RxJava2CallAdapterFactory] 对象，`RxJava2`适配器，用于 `Retrofit` 初始化创建,配置回调适配器
+     * @return [RxJava2CallAdapterFactory]
+     */
     @Singleton
     @Provides
     fun provideRxJava2CallAdapterFactory(): RxJava2CallAdapterFactory =

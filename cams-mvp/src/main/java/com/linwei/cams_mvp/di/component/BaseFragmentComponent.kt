@@ -22,7 +22,6 @@ interface BaseFragmentComponent {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance
         fun appComponent(appComponent: AppComponent?): Builder
 
         fun build(): BaseFragmentComponent

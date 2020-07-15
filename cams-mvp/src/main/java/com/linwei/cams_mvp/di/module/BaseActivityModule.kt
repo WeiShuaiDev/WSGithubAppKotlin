@@ -2,7 +2,7 @@ package com.linwei.cams_mvp.di.module
 import android.app.Application
 import com.linwei.cams.di.scope.ActivityScope
 import com.linwei.cams_mvp.di.qualifier.ActivityRxLifecycleQualifier
-import com.linwei.cams_mvp.lifecycle.ActivityLifecycleForRxLifecycle
+import com.linwei.cams_mvp.global.ActivityLifecycleMvpImpl
 import dagger.Binds
 import dagger.Module
 
@@ -23,13 +23,13 @@ object BaseActivityModule {
     interface Bindings {
         /**
          * 框架全局 `Activity` 生命周期回调配置
-         * @param activityRxLifecycle [ActivityLifecycleForRxLifecycle]
+         * @param activityRxLifecycle [ActivityLifecycleMvpImpl]
          * @return [Application.ActivityLifecycleCallbacks]
          */
         @ActivityRxLifecycleQualifier
         @ActivityScope
         @Binds
-        fun bindActivityRxLifecycle(activityRxLifecycle: ActivityLifecycleForRxLifecycle): Application.ActivityLifecycleCallbacks
+        fun bindActivityRxLifecycle(activityRxLifecycle: ActivityLifecycleMvpImpl): Application.ActivityLifecycleCallbacks
 
     }
 }

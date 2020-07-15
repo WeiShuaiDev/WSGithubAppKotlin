@@ -21,7 +21,6 @@ interface BaseActivityComponent {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance
         fun appComponent(appComponent: AppComponent?): Builder
 
         fun build(): BaseActivityComponent

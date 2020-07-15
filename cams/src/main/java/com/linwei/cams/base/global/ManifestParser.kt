@@ -66,7 +66,7 @@ class ManifestParser private constructor(val mContext: Context) {
      * 并存储到 [configModuleLists] 并返回
      * @return configModuleLists [MutableList]
      */
-    fun fetchConfigModule(): MutableList<ConfigModule> {
+    fun obtainConfigModule(): MutableList<ConfigModule> {
         val configModuleLists: MutableList<ConfigModule> = mutableListOf()
         try {
             val appInfo: ApplicationInfo = mContext.packageManager.getApplicationInfo(

@@ -6,11 +6,6 @@ import androidx.fragment.app.FragmentManager
 import com.linwei.cams.base.global.ConfigModule
 import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.di.module.GlobalConfigModule
-import com.linwei.cams_mvp.di.qualifier.ActivityRxLifecycleQualifier
-import com.linwei.cams_mvp.di.qualifier.FragmentRxLifecycleQualifier
-import com.linwei.cams_mvp.lifecycle.ActivityLifecycleForRxLifecycle
-import com.linwei.cams_mvp.lifecycle.FragmentLifecycleForRxLifecycle
-import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -35,14 +30,14 @@ class GlobalMvpConfiguration : ConfigModule {
         context: Context,
         lifecycles: MutableList<Application.ActivityLifecycleCallbacks>
     ) {
-        lifecycles.add(ActivityLifecycleForRxLifecycle())
+        lifecycles.add(ActivityLifecycleMvpImpl())
     }
 
     override fun injectFragmentLifecycle(
         context: Context,
         lifecycles: MutableList<FragmentManager.FragmentLifecycleCallbacks>
     ) {
-        lifecycles.add(FragmentLifecycleForRxLifecycle())
+        lifecycles.add(FragmentLifecycleMvpImpl())
     }
 
 }

@@ -1,5 +1,6 @@
 package com.linwei.cams_aac.di.module
 
+import com.linwei.cams.di.component.BaseActivitySubComponent
 import com.linwei.cams.di.component.BaseFragmentSubComponent
 import dagger.Module
 
@@ -12,8 +13,8 @@ import dagger.Module
  * @Description:
  *-----------------------------------------------------------------------
  */
-@Module(subcomponents = [BaseFragmentSubComponent::class])
-interface ActivityModule {
+@Module(subcomponents = [BaseActivitySubComponent::class])
+interface BaseActivityModule {
 
 
 }

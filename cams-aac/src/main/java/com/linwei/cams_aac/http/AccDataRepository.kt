@@ -6,6 +6,15 @@ import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.http.cache.CacheType
 import com.linwei.cams.http.repository.DataRepository
 
+/**
+ * ---------------------------------------------------------------------
+ * @Author: WeiShuai
+ * @Time: 2020/7/15
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description:
+ *-----------------------------------------------------------------------
+ */
 class AccDataRepository : DataRepository(), IAccDataRepository {
 
     /**
@@ -13,6 +22,7 @@ class AccDataRepository : DataRepository(), IAccDataRepository {
      */
     private var mDataBaseCache: Cache<String, Any> =
         mCacheFactory.build(CacheType.databaseCacheType)
+
 
     @Suppress("UNCHECKED_CAST")
     @Synchronized
@@ -22,7 +32,8 @@ class AccDataRepository : DataRepository(), IAccDataRepository {
                 databaseClass.canonicalName ?: databaseClass.simpleName
             )
         if (roomDatabase == null) {
-            val builder = Room.databaseBuilder(mApplication, databaseClass, dbName)
+            val builder: RoomDatabase.Builder<T> =
+                Room.databaseBuilder(mApplication, databaseClass, dbName)
             roomDatabase = builder.build()
 
             //保存 `RoomDataBase` 对象到 `Cache` 中
@@ -34,5 +45,4 @@ class AccDataRepository : DataRepository(), IAccDataRepository {
 
         return roomDatabase as T
     }
-
 }

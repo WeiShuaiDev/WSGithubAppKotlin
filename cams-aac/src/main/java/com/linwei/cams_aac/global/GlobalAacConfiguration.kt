@@ -19,22 +19,24 @@ import com.linwei.cams.di.module.GlobalConfigModule
 class GlobalAacConfiguration : ConfigModule {
 
     override fun applyOptions(context: Context, builder: GlobalConfigModule.Builder) {
-
+        
     }
 
     override fun injectAppLifecycle(context: Context, lifecycles: MutableList<AppLifecycles>) {
+        lifecycles.add(AppLifecycleAacImpl())
     }
 
     override fun injectActivityLifecycle(
         context: Context,
         lifecycles: MutableList<Application.ActivityLifecycleCallbacks>
     ) {
+        lifecycles.add(ActivityLifecycleAacImpl())
     }
 
     override fun injectFragmentLifecycle(
         context: Context,
         lifecycles: MutableList<FragmentManager.FragmentLifecycleCallbacks>
     ) {
+        lifecycles.add(FragmentLifecycleAacImpl())
     }
-
 }

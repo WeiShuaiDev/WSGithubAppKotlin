@@ -40,7 +40,7 @@ class AppDelegate constructor(
         mutableListOf()
 
     //解析 AndroidManifest.xml 中 'meta-data' 的ConfigModule数据
-    private val mConfigModuleLists: MutableList<ConfigModule> = mManifestParser.fetchConfigModule()
+    private val mConfigModuleLists: MutableList<ConfigModule> = mManifestParser.obtainConfigModule()
 
     private lateinit var mApplication: Application
 

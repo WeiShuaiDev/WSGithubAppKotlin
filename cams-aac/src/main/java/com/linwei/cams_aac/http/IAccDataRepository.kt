@@ -2,6 +2,15 @@ package com.linwei.cams_aac.http
 
 import androidx.room.RoomDatabase
 
+/**
+ * ---------------------------------------------------------------------
+ * @Author: WeiShuai
+ * @Time: 2020/7/15
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description:
+ *-----------------------------------------------------------------------
+ */
 interface IAccDataRepository {
 
     /**
