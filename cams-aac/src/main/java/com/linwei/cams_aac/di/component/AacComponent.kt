@@ -2,10 +2,8 @@ package com.linwei.cams_aac.di.component
 
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.di.scope.ApplicationScope
-import com.linwei.cams_aac.di.module.BaseAacActivityModule
-import com.linwei.cams_aac.di.module.BaseAacFragmentModule
-import com.linwei.cams_aac.di.module.ViewModelFactoryModule
-import dagger.BindsInstance
+import com.linwei.cams_aac.di.module.AacModelModule
+import com.linwei.cams_aac.di.module.AacViewModelModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 
@@ -21,16 +19,14 @@ import dagger.android.AndroidInjectionModule
 @ApplicationScope
 @Component(
     dependencies = [AppComponent::class],
-    modules = [AndroidInjectionModule::class, BaseAacActivityModule::class,
-        BaseAacFragmentModule::class, ViewModelFactoryModule::class]
+    modules = [AndroidInjectionModule::class, AacViewModelModule::class, AacModelModule::class]
 )
-interface AppComponent {
+interface AacComponent {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance
         fun appComponent(appComponent: AppComponent?): Builder
 
-        fun build(): com.linwei.cams_aac.di.component.AppComponent
+        fun build(): AacComponent
     }
 }

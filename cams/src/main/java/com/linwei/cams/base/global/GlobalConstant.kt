@@ -10,7 +10,17 @@ package com.linwei.cams.base.global
  *-----------------------------------------------------------------------
  */
 
+/**
+ * 缓存配置常量
+ */
 object CacheConstant {
-    //ConfigModule 标识
+    //ConfigModule Cache缓存标识
     const val CACHE_CONFIG_MODULE: String = "CACHE_CONFIG_MODULE"
+}
+
+/**
+ * `ConfigModule` 配置常量
+ */
+object ConfigModuleConstant {
+    const val GLOBAL_CONFIG_MODULE: String = "GlobalConfigModule"
 }

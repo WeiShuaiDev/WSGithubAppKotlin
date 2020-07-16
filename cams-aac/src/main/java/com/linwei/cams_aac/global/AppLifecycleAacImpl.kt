@@ -3,6 +3,7 @@ package com.linwei.cams_aac.global
 import android.app.Application
 import android.content.Context
 import com.linwei.cams.base.lifecycle.AppLifecycles
+import timber.log.Timber
 
 /**
  * ---------------------------------------------------------------------
@@ -13,20 +14,25 @@ import com.linwei.cams.base.lifecycle.AppLifecycles
  * @Description:
  *-----------------------------------------------------------------------
  */
-class AppLifecycleAacImpl: AppLifecycles {
+class AppLifecycleAacImpl : AppLifecycles {
 
     override fun attachBaseContext(context: Context) {
+        Timber.i("AppLifecycleAacImpl to attachBaseContext!")
     }
 
     override fun onCreate(application: Application) {
+        Timber.i("AppLifecycleAacImpl to onCreate!")
     }
 
     override fun onTerminate(application: Application) {
+        Timber.i("AppLifecycleAacImpl to onTerminate!")
     }
 
     override fun onLowMemory(application: Application) {
+        Timber.i("AppLifecycleAacImpl to onLowMemory!")
     }
 
     override fun onTrimMemory(level: Int) {
+        Timber.i("AppLifecycleAacImpl to onTrimMemory!")
     }
 }

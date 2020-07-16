@@ -40,7 +40,7 @@ import javax.inject.Singleton
  *-----------------------------------------------------------------------
  */
 @Module
-class GlobalConfigModule(val mBuilder: Builder) {
+class GlobalConfigModule(private val mBuilder: Builder) {
 
     companion object {
         fun builder(): Builder {

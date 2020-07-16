@@ -22,7 +22,7 @@ import javax.inject.Singleton
  *-----------------------------------------------------------------------
  */
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, AppModule::class, ClientModule::class, GlobalConfigModule::class])
+@Component(modules = [AppModule::class, ClientModule::class, GlobalConfigModule::class])
 interface AppComponent {
 
     fun application(): Application

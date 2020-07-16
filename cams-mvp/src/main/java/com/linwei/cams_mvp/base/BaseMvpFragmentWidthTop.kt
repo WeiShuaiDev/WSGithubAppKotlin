@@ -2,7 +2,7 @@ package com.linwei.cams_mvp.base
 
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams_mvp.di.component.BaseMvpFragmentComponent
-import com.linwei.cams_mvp.di.component.DaggerBaseFragmentComponent
+import com.linwei.cams_mvp.di.component.DaggerBaseMvpFragmentComponent
 import com.linwei.cams_mvp.lifecycle.FragmentRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
 import com.linwei.cams_mvp.mvp.IModel
@@ -31,7 +31,7 @@ abstract class BaseMvpFragmentWidthTop<T : BasePresenter<IModel, IView>> : BaseF
     lateinit var mPresenter: T
 
     override fun setupFragmentComponent(appComponent: AppComponent?) {
-        val mvpFragmentComponent: BaseMvpFragmentComponent = DaggerBaseFragmentComponent.builder()
+        val mvpFragmentComponent: BaseMvpFragmentComponent = DaggerBaseMvpFragmentComponent.builder()
             .appComponent(appComponent) //提供application
             .build()
 

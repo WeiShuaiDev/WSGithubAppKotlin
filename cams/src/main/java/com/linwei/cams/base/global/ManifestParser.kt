@@ -1,4 +1,5 @@
 package com.linwei.cams.base.global
+
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -62,7 +63,7 @@ class ManifestParser private constructor(val mContext: Context) {
     }
 
     /**
-     * 解析 `AndroidManifest.xml` 清单文件 `meta-data` 字段，获取 `meta-data` 中 value=`ConfigModule` 数据，
+     * 解析 `AndroidManifest.xml` 清单文件 `meta-data` 字段，获取 `meta-data` 中 value=`GlobalConfigModule` 数据，
      * 并存储到 [configModuleLists] 并返回
      * @return configModuleLists [MutableList]
      */
@@ -74,7 +75,7 @@ class ManifestParser private constructor(val mContext: Context) {
                 PackageManager.GET_META_DATA
             )
             appInfo.metaData?.keySet()?.forEach {
-                if (ConfigModule.CONFIG_MODULE == appInfo.metaData[it]) {
+                if (ConfigModuleConstant.GLOBAL_CONFIG_MODULE == appInfo.metaData[it]) {
                     val configModule: ConfigModule? = parseModule(it)
                     if (configModule != null) {
                         configModuleLists.add(configModule)

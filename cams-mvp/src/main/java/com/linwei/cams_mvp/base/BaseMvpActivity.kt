@@ -3,7 +3,7 @@ package com.linwei.cams_mvp.base
 import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams_mvp.di.component.BaseMvpActivityComponent
-import com.linwei.cams_mvp.di.component.DaggerBaseActivityComponent
+import com.linwei.cams_mvp.di.component.DaggerBaseMvpActivityComponent
 import com.linwei.cams_mvp.lifecycle.ActivityRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
 import com.linwei.cams_mvp.mvp.IModel
@@ -31,7 +31,7 @@ abstract class BaseMvpActivity<T : BasePresenter<IModel, IView>> : BaseActivity(
     lateinit var mPresenter: T
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
-        val mvpActivityComponent: BaseMvpActivityComponent = DaggerBaseActivityComponent.builder()
+      val mvpActivityComponent: BaseMvpActivityComponent = DaggerBaseMvpActivityComponent.builder()
             .appComponent(appComponent) //提供application
             .build()
 

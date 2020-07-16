@@ -37,7 +37,6 @@ import javax.inject.Singleton
  */
 @Module
 class ClientModule {
-
     /**
      * 创建 `OkHttpBuilder` 对象，并配置拦截器 [HttpRequestInterceptor] 通用拦截器,对请求发起链接超时配置
      * [connectTimeOut],流写入超时配置 [writeTimeOut],流读取超时配置 [readTimeOut],最后通过调用 [build] 方法创建 [OkHttpClient] 对象
@@ -190,7 +189,6 @@ class ClientModule {
     @Provides
     fun provideGSonConverterFactory(gson: Gson): GsonConverterFactory =
         GsonConverterFactory.create(gson)
-
 
     /**
      * [Retrofit] 配置,开发者通过实现 [RetrofitConfiguration] 接口中方法，在调用 [Retrofit.Builder] 对象进行配置，

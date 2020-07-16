@@ -5,7 +5,7 @@
     <application>
         <meta-data
             android:name="com.linwei.cams_mvp.global.GlobalMvpConfiguration"
-            android:value="ConfigModule" />
+            android:value="GlobalConfigModule" />
     </application>
 
 </manifest>

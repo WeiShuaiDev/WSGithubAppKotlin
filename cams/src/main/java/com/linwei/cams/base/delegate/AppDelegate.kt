@@ -113,7 +113,6 @@ class AppDelegate constructor(
 
     }
 
-
     /**
      * 通过解析 AndroidManifest.xml 中 'meta-data' 的ConfigModule数据，通过回调 [ConfigModule.applyOptions] 方法，给开发者扩张 `Builder` 配置，
      * 获取最新配置信息 [GlobalConfigModule] ,如果解析ConfigModule数据为空，则返回默认配置信息 [GlobalConfigModule]

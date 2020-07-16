@@ -1,4 +1,4 @@
-package com.linwei.cams_aac.di.module
+package com.linwei.wsgithubappkotlin.di.module
 
 import com.linwei.cams.di.component.BaseFragmentSubComponent
 import dagger.Module
@@ -13,7 +13,7 @@ import dagger.Module
  *-----------------------------------------------------------------------
  */
 @Module(subcomponents = [BaseFragmentSubComponent::class])
-interface BaseAacFragmentModule {
+interface FragmentModule {
 
 
 }

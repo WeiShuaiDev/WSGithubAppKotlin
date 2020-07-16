@@ -17,10 +17,6 @@ import com.linwei.cams.di.module.GlobalConfigModule
  */
 interface ConfigModule {
 
-    companion object {
-        const val CONFIG_MODULE: String = "ConfigModule"
-    }
-
     /**
      * 使用 [GlobalConfigModule.Builder] 给框架配置一些配置参数
      *

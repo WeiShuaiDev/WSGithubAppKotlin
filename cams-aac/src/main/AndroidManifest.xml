@@ -4,6 +4,6 @@
     <application>
         <meta-data
             android:name="com.linwei.cams_aac.global.GlobalAacConfiguration"
-            android:value="ConfigModule" />
+            android:value="GlobalConfigModule" />
     </application>
 </manifest>

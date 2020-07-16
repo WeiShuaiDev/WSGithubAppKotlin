@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application.ActivityLifecycleCallbacks
 import android.os.Bundle
 import com.linwei.cams.di.scope.ActivityScope
+import timber.log.Timber
 
 /**
  * ---------------------------------------------------------------------
@@ -18,24 +19,30 @@ import com.linwei.cams.di.scope.ActivityScope
 class ActivityLifecycleAacImpl : ActivityLifecycleCallbacks {
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-
+        Timber.i("ActivityLifecycleAacImpl to onActivitySaveInstanceState!")
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        Timber.i("ActivityLifecycleAacImpl to onActivityCreated!")
     }
 
     override fun onActivityResumed(activity: Activity) {
+        Timber.i("ActivityLifecycleAacImpl to onActivityResumed!")
     }
 
     override fun onActivityStarted(activity: Activity) {
+        Timber.i("ActivityLifecycleAacImpl to onActivityStarted!")
     }
 
     override fun onActivityPaused(activity: Activity) {
+        Timber.i("ActivityLifecycleAacImpl to onActivityPaused!")
     }
 
     override fun onActivityStopped(activity: Activity) {
+        Timber.i("ActivityLifecycleAacImpl to onActivityStopped!")
     }
 
     override fun onActivityDestroyed(activity: Activity) {
+        Timber.i("ActivityLifecycleAacImpl to onActivityDestroyed!")
     }
 }

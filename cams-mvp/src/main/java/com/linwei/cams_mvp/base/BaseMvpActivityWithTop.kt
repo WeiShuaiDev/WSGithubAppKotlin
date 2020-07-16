@@ -3,7 +3,7 @@ package com.linwei.cams_mvp.base
 import com.linwei.cams.base.activity.BaseActivityWithTop
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams_mvp.di.component.BaseMvpActivityComponent
-import com.linwei.cams_mvp.di.component.DaggerBaseActivityComponent
+import com.linwei.cams_mvp.di.component.DaggerBaseMvpActivityComponent
 import com.linwei.cams_mvp.lifecycle.ActivityRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
 import com.linwei.cams_mvp.mvp.IModel
@@ -32,7 +32,7 @@ abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseAc
 
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
-        val mvpActivityComponent: BaseMvpActivityComponent = DaggerBaseActivityComponent.builder()
+        val mvpActivityComponent: BaseMvpActivityComponent = DaggerBaseMvpActivityComponent.builder()
             .appComponent(appComponent) //提供application
             .build()
 
