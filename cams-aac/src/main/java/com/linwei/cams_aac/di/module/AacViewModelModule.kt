@@ -1,10 +1,14 @@
 package com.linwei.cams_aac.di.module
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.linwei.cams_aac.aac.ViewModelFactory
+import com.linwei.cams_aac.base.BaseViewModel
+import com.linwei.cams_aac.di.scope.ViewModelKey
 import com.linwei.cams_aac.di.scope.ViewModelScope
 import dagger.Binds
 import dagger.Module
+import dagger.multibindings.IntoMap
 
 /**
  * ---------------------------------------------------------------------
@@ -16,10 +20,17 @@ import dagger.Module
  *-----------------------------------------------------------------------
  */
 @Module
-interface AacViewModelModule {
+abstract class AacViewModelModule {
 
     @ViewModelScope
     @Binds
-    fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+    @IntoMap
+    @ViewModelKey(BaseViewModel::class)
+    internal abstract fun bindBaseViewModel(baseViewModel: BaseViewModel): ViewModel
+
+
+    @ViewModelScope
+    @Binds
+    internal abstract  fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 
 }

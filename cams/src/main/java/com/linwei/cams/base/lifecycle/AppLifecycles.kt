@@ -1,5 +1,4 @@
 package com.linwei.cams.base.lifecycle
-
 import android.app.Application
 import android.content.Context
 

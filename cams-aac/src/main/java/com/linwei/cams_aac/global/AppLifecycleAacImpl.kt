@@ -3,6 +3,9 @@ package com.linwei.cams_aac.global
 import android.app.Application
 import android.content.Context
 import com.linwei.cams.base.lifecycle.AppLifecycles
+import com.linwei.cams.ext.obtainAppComponent
+import com.linwei.cams_aac.di.component.AacComponent
+import com.linwei.cams_aac.di.component.DaggerAacComponent
 import timber.log.Timber
 
 /**
@@ -16,12 +19,18 @@ import timber.log.Timber
  */
 class AppLifecycleAacImpl : AppLifecycles {
 
+    private lateinit var mAacComponent: AacComponent
+
     override fun attachBaseContext(context: Context) {
         Timber.i("AppLifecycleAacImpl to attachBaseContext!")
     }
 
     override fun onCreate(application: Application) {
-        Timber.i("AppLifecycleAacImpl to onCreate!")
+        this.mAacComponent = DaggerAacComponent
+            .builder()
+            .appComponent(obtainAppComponent())
+            .build()
+        mAacComponent.inject(this)
     }
 
     override fun onTerminate(application: Application) {

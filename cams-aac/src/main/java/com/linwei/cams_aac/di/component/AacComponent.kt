@@ -1,5 +1,6 @@
 package com.linwei.cams_aac.di.component
 
+import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.di.scope.ApplicationScope
 import com.linwei.cams_aac.di.module.AacModelModule
@@ -22,6 +23,12 @@ import dagger.android.AndroidInjectionModule
     modules = [AndroidInjectionModule::class, AacViewModelModule::class, AacModelModule::class]
 )
 interface AacComponent {
+
+    /**
+     * 注入 [AppLifecycles] 对象
+     * @param appLifecycles [AppLifecycles]
+     */
+    fun inject(appLifecycles: AppLifecycles)
 
     @Component.Builder
     interface Builder {

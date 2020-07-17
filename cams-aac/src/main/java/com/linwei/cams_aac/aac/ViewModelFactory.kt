@@ -15,7 +15,7 @@ import javax.inject.Provider
  *-----------------------------------------------------------------------
  */
 class ViewModelFactory(
-    private val creators: Map<Class<out ViewModel>, Provider<ViewModel>>
+    private val creators: Map<Class<out ViewModel>,@JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

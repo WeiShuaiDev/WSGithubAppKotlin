@@ -1,8 +1,11 @@
 package com.linwei.cams.http.model
-import androidx.annotation.StringDef
+
+import androidx.annotation.IntDef
+import com.linwei.cams.http.model.StatusCode.Companion.END
 import com.linwei.cams.http.model.StatusCode.Companion.ERROR
 import com.linwei.cams.http.model.StatusCode.Companion.FAILURE
 import com.linwei.cams.http.model.StatusCode.Companion.LOADING
+import com.linwei.cams.http.model.StatusCode.Companion.START
 import com.linwei.cams.http.model.StatusCode.Companion.SUCCESS
 
 /**
@@ -15,13 +18,15 @@ import com.linwei.cams.http.model.StatusCode.Companion.SUCCESS
  *-----------------------------------------------------------------------
  */
 
-@StringDef(LOADING, SUCCESS, FAILURE, ERROR)
+@IntDef(START, LOADING, SUCCESS, FAILURE, ERROR, END)
 @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
 annotation class StatusCode {
     companion object {
-        const val LOADING: String = "0"
-        const val SUCCESS: String = "1"
-        const val FAILURE: String = "2"
-        const val ERROR: String = "3"
+        const val START: Int = 0
+        const val LOADING: Int = 1
+        const val SUCCESS: Int = 2
+        const val FAILURE: Int = 3
+        const val ERROR: Int = 4
+        const val END: Int = 5
     }
 }

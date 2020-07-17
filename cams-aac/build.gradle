@@ -52,7 +52,7 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //Navigation
+    // Navigation
     api rootProject.ext.dependencies["navigation-fragment-ktx"]
     api rootProject.ext.dependencies["navigation-ui-ktx"]
 
@@ -73,8 +73,12 @@ dependencies {
     // paging
     api rootProject.ext.dependencies["paging-runtime"]
 
-    //work
+    // work
     api rootProject.ext.dependencies["work-runtime-ktx"]
+
+    // dagger
+    kapt rootProject.ext.dependencies["dagger2-compiler"]
+    kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
     implementation project(path: ':cams')
 }

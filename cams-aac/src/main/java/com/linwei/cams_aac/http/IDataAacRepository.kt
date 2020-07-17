@@ -1,7 +1,6 @@
 package com.linwei.cams_aac.http
 
 import androidx.room.RoomDatabase
-import com.linwei.cams_aac.GlobalConstant
 
 /**
  * ---------------------------------------------------------------------
