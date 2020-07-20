@@ -1,7 +1,14 @@
 package com.linwei.cams_aac.base
 
+import androidx.lifecycle.ViewModelProvider
 import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.di.component.AppComponent
+import com.linwei.cams_aac.aac.IView
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
+
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
@@ -12,11 +19,22 @@ import com.linwei.cams.di.component.AppComponent
  *-----------------------------------------------------------------------
  *
  */
-abstract class BaseAacActivity : BaseActivity() {
+abstract class BaseAacActivity<VM : BaseViewModel> : BaseActivity(), HasAndroidInjector, ILoading,
+    IView<VM> {
+
+
+    @Inject
+    lateinit var mAndroidInjector: DispatchingAndroidInjector<Any>
+
+    @Inject
+    lateinit var mViewModelFactory: ViewModelProvider.Factory
 
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+
     }
+
+    override fun androidInjector(): AndroidInjector<Any> = mAndroidInjector
 
 }
