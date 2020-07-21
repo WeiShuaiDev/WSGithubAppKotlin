@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.CallLog
 import android.provider.ContactsContract
+
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
@@ -348,7 +349,6 @@ object DataBaseProvide {
         cursor.close()
         return contactDetail
     }
-
 
     /**
      * 根据自定的{@link Uri}地址，获取联系人信息

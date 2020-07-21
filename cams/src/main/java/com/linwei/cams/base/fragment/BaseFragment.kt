@@ -64,7 +64,12 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
                     mRootView = inflater.inflate(provideContentViewId(), container, false)
                 }
             } else {
-                mRootView = bindingContentViewId(inflater, container, savedInstanceState, false)
+                if (withTopContainer != null) {
+                    mRootView =
+                        bindingContentViewId(inflater, withTopContainer, savedInstanceState, false)
+                } else {
+                    mRootView = bindingContentViewId(inflater, container, savedInstanceState, false)
+                }
             }
         } else {
             val parent: ViewGroup? = mRootView?.parent as? ViewGroup

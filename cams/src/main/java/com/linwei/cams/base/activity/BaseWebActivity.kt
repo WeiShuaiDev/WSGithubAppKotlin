@@ -1,4 +1,5 @@
 package com.linwei.cams.base.activity
+
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Bitmap
@@ -150,7 +151,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
      * 获取WebChromeClient  子类可复写
      * @return [WebChromeClient]
      */
-    protected  open fun fetchWebChromeClient(): WebChromeClient {
+    protected open fun fetchWebChromeClient(): WebChromeClient {
         return object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)

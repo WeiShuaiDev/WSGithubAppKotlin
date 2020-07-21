@@ -63,7 +63,9 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        onCreateExpandConfigBefore(savedInstanceState)
         super.onCreate(savedInstanceState)
+        onCreateExpandConfigAfter(savedInstanceState)
         mContext = this
 
         val withTopBarView: View? = withTopBarView()
@@ -82,7 +84,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             }
         }
 
-        setContentView(contentView)
+        setContentView(bindingContentView(savedInstanceState, contentView) ?: contentView)
 
         if (useStateView()) {
             mStateView = obtainStateViewRoot()?.let { StateView.inject(it) }!!
@@ -114,6 +116,16 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         initLayoutData()
         initLayoutListener()
     }
+
+
+    /**
+     * 界面内容布局 [View]
+     * @return [View]
+     */
+    protected open fun bindingContentView(
+        contentView1: Bundle?,
+        contentView: View
+    ): View? = null
 
     /**
      * 对 [view] 增加状态栏功能,并成功返回增加了沉浸式状态栏 [View] 控件
@@ -170,6 +182,26 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         params.height = statusBarHeight
         topBarView.layoutParams = params
         topBarView.setBackgroundResource(fetchStatusColor())
+    }
+
+    /**
+     * [onCreateExpandConfigBefore] `OnCreate` 配置方法
+     *`OnCreate`方法在调用父类方法之前，触发该方法
+     * @param savedInstanceState [Bundle]
+     */
+    protected open fun onCreateExpandConfigBefore(
+        savedInstanceState: Bundle?
+    ) {
+    }
+
+    /**
+     * [onCreateExpandConfigAfter] `OnCreate` 配置方法
+     *`OnCreate`方法在调用父类方法结束后，触发该方法
+     * @param savedInstanceState [Bundle]
+     */
+    protected open fun onCreateExpandConfigAfter(
+        savedInstanceState: Bundle?
+    ) {
     }
 
     /**
