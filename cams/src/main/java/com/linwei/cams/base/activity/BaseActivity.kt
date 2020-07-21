@@ -252,7 +252,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     protected open fun withTopBarView(): View? = null
 
     /**
-     * dataBinding布局绑定
+     * ing布局绑定
      */
     protected open fun bindingContentViewId(
         savedInstanceState: Bundle?

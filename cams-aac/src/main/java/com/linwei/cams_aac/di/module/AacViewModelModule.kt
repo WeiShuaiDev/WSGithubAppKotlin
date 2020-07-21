@@ -31,6 +31,6 @@ abstract class AacViewModelModule {
 
     @ViewModelScope
     @Binds
-    internal abstract  fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+    internal abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 
 }

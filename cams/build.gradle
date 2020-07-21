@@ -37,17 +37,13 @@ android {
         }
     }
 
-    dataBinding {
-        enabled true
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    configurations.all{
-        resolutionStrategy{
+    configurations.all {
+        resolutionStrategy {
             force 'com.android.support:support-v4:27.1.1'
         }
     }
