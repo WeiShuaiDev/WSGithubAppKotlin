@@ -1,5 +1,6 @@
 package com.linwei.cams_aac.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Message
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.lifecycle.ViewModelStore
 import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.http.model.StatusCode
+import com.linwei.cams.utils.DialogUtils
+import com.linwei.cams_aac.R
 import com.linwei.cams_aac.aac.IView
 import com.linwei.cams_aac.livedatabus.MessageLiveEvent
 import com.linwei.cams_aac.livedatabus.StatusLiveEvent
@@ -44,6 +47,8 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
     private var mViewDataBinding: VDB? = null
 
     private var mViewModel: VM? = null
+
+    private var mProgressDialog: Dialog? = null
 
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
@@ -107,15 +112,21 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
      * 接收消息事件总线数据
      * @param msg [Message] 消息
      */
-    private fun receiveMessageLiveEvent(msg: Message) {
-
+    protected open fun receiveMessageLiveEvent(msg: Message) {
+        if (msg.what == 0) {
+            mToast?.showShort(msg.obj.toString())
+        }
     }
 
     /**
      * 接收状态事件总线数据
      * @param code [StatusCode]
      */
-    private fun receiveStatusLiveEvent(code: @StatusCode Int) {
+    protected open fun receiveStatusLiveEvent(code: @StatusCode Int) {
+        when (code) {
+            StatusCode.LOADING -> showLoading()
+            else -> hideLoading()
+        }
     }
 
     /**
@@ -193,7 +204,7 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
      * 获取 [ViewModelProvider.Factory] 对象
      * @return mViewModelFactory [ViewModelProvider.Factory]
      */
-    protected fun fetchViewModelFactory(): ViewModelProvider.Factory = mViewModelFactory
+    protected fun getViewModelFactory(): ViewModelProvider.Factory = mViewModelFactory
 
     /**
      * 创建 `ViewModel` 类
@@ -205,13 +216,31 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
      * 获取 `ViewDataBinding` 对象
      * @return mViewDataBinding [VDB]
      */
-    protected fun fetchViewDataBinding(): VDB? = mViewDataBinding
+    protected fun getViewDataBinding(): VDB? = mViewDataBinding
 
     /**
      *  获取 `ViewModel` 对象
      *  @return mViewModel [VM]
      */
-    protected fun fetchViewModel(): VM? = mViewModel
+    protected fun getViewModel(): VM? = mViewModel
+
+    /**
+     * 显示加载框
+     */
+    override fun showLoading() {
+        if (mProgressDialog?.isShowing == true) {
+            mProgressDialog?.hide()
+        }
+        mProgressDialog = DialogUtils.createCustomDialog(mContext, R.layout.progress_dialog)
+        mProgressDialog?.show()
+    }
+
+    /**
+     * 隐藏加载框
+     */
+    override fun hideLoading() {
+        mProgressDialog?.hide()
+    }
 
     override fun androidInjector(): AndroidInjector<Any> = mAndroidInjector
 

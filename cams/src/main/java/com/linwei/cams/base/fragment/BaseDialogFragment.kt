@@ -62,7 +62,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * [Dialog] 样式
      * @return [Int]
      */
-    protected open fun fetchDialogAnimStyle(): Int = R.style.top_dialog_animation
+    protected open fun fetchDialogAnimStyle(): Int = R.style.dialog_animation
 
     /**
      * [Dialog] 手势外边框关闭显示

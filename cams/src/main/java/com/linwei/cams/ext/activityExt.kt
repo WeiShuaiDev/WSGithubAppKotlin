@@ -13,9 +13,9 @@ fun Context.jumpIntent(url: String) {
     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
 }
 
-/*
-*https://play.google.com/store/apps/details?id="
-*/
+/**
+ *https://play.google.com/store/apps/details?id="
+ */
 fun Context.jumpGooglePlay(url: String) {
     try {
         val launchIntent: Intent? = packageManager.getLaunchIntentForPackage("com.android.vending")

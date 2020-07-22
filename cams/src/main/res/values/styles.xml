@@ -89,9 +89,10 @@
         <item name="android:backgroundDimAmount">0.5</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowAnimationStyle">@style/dialog_animation</item>
     </style>
 
-    <style name="top_dialog_animation" parent="android:Animation">
+    <style name="dialog_animation" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/push_top_in</item>
         <item name="android:windowExitAnimation">@anim/push_top_out</item>
     </style>

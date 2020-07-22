@@ -279,3 +279,16 @@ private inline fun FragmentManager.transact(action: FragmentTransaction.() -> Un
     }.commit()
 }
 
+/**
+ * 屏幕像素长度
+ * @return  widthPixels [Int]
+ */
+fun getScreenWidthPixels(): Int = ctx.resources.displayMetrics.widthPixels
+
+
+/**
+ * 屏幕像素高度
+ * @return  heightPixels [Int]
+ */
+fun getScreenHeightPixels(): Int = ctx.resources.displayMetrics.heightPixels
+
