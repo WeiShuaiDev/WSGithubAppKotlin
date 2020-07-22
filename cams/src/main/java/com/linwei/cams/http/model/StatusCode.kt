@@ -18,15 +18,16 @@ import com.linwei.cams.http.model.StatusCode.Companion.SUCCESS
  *-----------------------------------------------------------------------
  */
 
+@Target(AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.TYPE)
 @IntDef(START, LOADING, SUCCESS, FAILURE, ERROR, END)
 @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
 annotation class StatusCode {
     companion object {
-        const val START: Int = 0
-        const val LOADING: Int = 1
-        const val SUCCESS: Int = 2
-        const val FAILURE: Int = 3
-        const val ERROR: Int = 4
-        const val END: Int = 5
+        const val START: Int = 1
+        const val LOADING: Int = 2
+        const val SUCCESS: Int = 3
+        const val FAILURE: Int = 4
+        const val ERROR: Int = 5
+        const val END: Int = 6
     }
 }

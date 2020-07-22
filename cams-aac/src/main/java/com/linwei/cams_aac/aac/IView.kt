@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel
  * @Description: AAC架构中 `View` 模块,绑定生命周期，定义 `IView` 接口
  *-----------------------------------------------------------------------
  */
-interface IView<VM : ViewModel> : LifecycleObserver {
+interface IView<VM : ViewModel> {
 
     /**
      * 获取 [ViewModel] 对象

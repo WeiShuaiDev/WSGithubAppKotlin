@@ -1,13 +1,19 @@
 package com.linwei.cams_aac.base
 
 import android.os.Bundle
+import android.os.Message
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
 import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.di.component.AppComponent
+import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_aac.aac.IView
+import com.linwei.cams_aac.livedatabus.MessageLiveEvent
+import com.linwei.cams_aac.livedatabus.StatusLiveEvent
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -24,7 +30,6 @@ import javax.inject.Inject
  * @Github: https://github.com/WeiShuaiDev
  * @Description:  `AAC` 架构 `Activity` 基类
  *-----------------------------------------------------------------------
- *
  */
 abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : BaseActivity(),
     HasAndroidInjector, ILoading,
@@ -74,6 +79,43 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
         if (mViewModel != null) {
             lifecycle.addObserver(mViewModel!!)
         }
+        registerLiveEvent()
+    }
+
+    /**
+     * 注册 `LiveData` 事件，注册两个事件，分别为: [MessageLiveEvent]:消息事件、[StatusLiveEvent]:状态事件
+     */
+    private fun registerLiveEvent() {
+        mViewModel?.fetchStatusLiveEvent()?.observe(this,
+            Observer<@StatusCode Int> {
+                it?.let {
+                    if (it > 0) {
+                        receiveStatusLiveEvent(it)
+                    }
+                }
+            })
+
+        mViewModel?.fetchMessageLiveEvent()?.observe(this,
+            Observer<Message> {
+                it?.let {
+                    receiveMessageLiveEvent(it)
+                }
+            })
+    }
+
+    /**
+     * 接收消息事件总线数据
+     * @param msg [Message] 消息
+     */
+    private fun receiveMessageLiveEvent(msg: Message) {
+
+    }
+
+    /**
+     * 接收状态事件总线数据
+     * @param code [StatusCode]
+     */
+    private fun receiveStatusLiveEvent(code: @StatusCode Int) {
     }
 
     /**
@@ -81,7 +123,7 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
      * @return Class<VM> [Class]
      */
     @Suppress("UNCHECKED_CAST")
-    private fun fetchVMClass(): Class<VM>? {
+    private fun fetchVMClass(): Class<VM> {
         var cls: Class<*>? = javaClass
         var vmClass: Class<VM>? = null
         while (vmClass == null && cls != null) {
@@ -104,8 +146,8 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
         val type: Type? = cls.genericSuperclass
 
         if (type is ParameterizedType) {
-            val types = type.actualTypeArguments
-            for (t in types) {
+            val types: Array<out Type> = type.actualTypeArguments
+            for (t: Type in types) {
                 if (t is Class<*>) {
                     if (BaseViewModel::class.java.isAssignableFrom(t)) {
                         return t as Class<VM>
@@ -128,23 +170,48 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
      * @param vmClass [Class]
      * @return  [ViewModel]
      */
-    private fun obtainViewModel(vmClass: Class<VM>?): VM? {
-        return null
-    }
+    private fun obtainViewModel(vmClass: Class<VM>): VM? = obtainViewModel(viewModelStore, vmClass)
 
+    /**
+     * 根据 `ViewModel` 的 [vmClass],获取 `ViewModel` 对象
+     * @param store [ViewModelStore]
+     * @param vmClass [Class]
+     * @return  [ViewModel]
+     */
+    private fun obtainViewModel(store: ViewModelStore, vmClass: Class<VM>): VM? =
+        createViewModelProvider(store).get(vmClass)
+
+    /**
+     * 创建 [ViewModelProvider] 对象
+     * @param store [ViewModelStore]
+     * @return [ViewModelProvider] 对象
+     */
+    private fun createViewModelProvider(store: ViewModelStore): ViewModelProvider =
+        ViewModelProvider(store, mViewModelFactory)
+
+    /**
+     * 获取 [ViewModelProvider.Factory] 对象
+     * @return mViewModelFactory [ViewModelProvider.Factory]
+     */
+    protected fun fetchViewModelFactory(): ViewModelProvider.Factory = mViewModelFactory
+
+    /**
+     * 创建 `ViewModel` 类
+     * @return [VM]
+     */
     override fun createViewModel(): VM? = null
 
     /**
      * 获取 `ViewDataBinding` 对象
      * @return mViewDataBinding [VDB]
      */
-    protected fun getViewDataBinding(): VDB? = mViewDataBinding
+    protected fun fetchViewDataBinding(): VDB? = mViewDataBinding
 
     /**
      *  获取 `ViewModel` 对象
      *  @return mViewModel [VM]
      */
-    protected fun getViewModel(): VM? = mViewModel
+    protected fun fetchViewModel(): VM? = mViewModel
 
     override fun androidInjector(): AndroidInjector<Any> = mAndroidInjector
 

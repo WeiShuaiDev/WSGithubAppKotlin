@@ -15,7 +15,7 @@ import com.linwei.cams.http.model.StatusCode
  *          `StatusCode.FAILURE`:失败状态; `StatusCode.ERROR`: 错误状态
  *-----------------------------------------------------------------------
  */
-class StatusLiveEvent : LiveDataEvent<Int>() {
+class StatusLiveEvent : LiveDataEvent<@StatusCode Int>() {
 
     fun observe(owner: LifecycleOwner, observer: StatusLiveObserver) {
         super.observe(owner, Observer {
