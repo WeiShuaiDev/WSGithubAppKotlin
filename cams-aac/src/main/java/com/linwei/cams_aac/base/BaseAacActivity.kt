@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import com.linwei.cams.base.activity.BaseActivity
-import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_aac.R
@@ -50,26 +49,17 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
 
     private var mProgressDialog: Dialog? = null
 
-
-    override fun setUpActivityComponent(appComponent: AppComponent?) {
-
-    }
-
-    override fun onCreateExpandConfigBefore(
-        savedInstanceState: Bundle?
-    ) {
-        super.onCreateExpandConfigBefore(savedInstanceState)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        //Dagger.Android Fragment 注入
         AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
+
+        initViewModel() //初始化ViewModel
     }
 
-    override fun bindingContentView(contentView1: Bundle?, contentView: View): View? {
+    override fun bindingContentView(bundle: Bundle?, contentView: View): View? {
         mViewDataBinding = DataBindingUtil.bind(contentView)
         return mViewDataBinding?.root
-    }
-
-    override fun initLayoutView() {
-        initViewModel()
     }
 
     /**

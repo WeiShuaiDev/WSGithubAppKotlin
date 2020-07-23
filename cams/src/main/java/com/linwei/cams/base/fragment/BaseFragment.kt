@@ -24,7 +24,8 @@ import javax.inject.Inject
  * @Description: 普通基类 [BaseFragment]
  *-----------------------------------------------------------------------
  */
-abstract class BaseFragment : LazeLoadFragment(), IFragment {
+abstract class BaseFragment() : LazeLoadFragment(),
+    IFragment {
     protected lateinit var mActivity: Activity
     protected lateinit var mContext: Context
 
@@ -39,9 +40,7 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
      * `Fragment` 模块 [Cache]缓存处理
      * @return [Cache]
      */
-    override fun provideCache(): Cache<String, Any> =
-        mCacheFactory.build(CacheType.fragmentCacheType)
-
+    override fun provideCache(): Cache<String, Any> = mCacheFactory.build(CacheType.fragmentCacheType)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -63,13 +62,10 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
                 } else {
                     mRootView = inflater.inflate(provideContentViewId(), container, false)
                 }
-            } else {
-                if (withTopContainer != null) {
+
+                if (mRootView != null)
                     mRootView =
-                        bindingContentViewId(inflater, withTopContainer, savedInstanceState, false)
-                } else {
-                    mRootView = bindingContentViewId(inflater, container, savedInstanceState, false)
-                }
+                        bindingContentView(inflater, mRootView!!, savedInstanceState) ?: mRootView
             }
         } else {
             val parent: ViewGroup? = mRootView?.parent as? ViewGroup
@@ -85,6 +81,7 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
     protected open fun withTopBarContainer(): ViewGroup? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (useStateView()) {
             mStateView = obtainStateViewRoot()?.let { StateView.inject(it) }!!
             mStateView.setLoadingResource(R.layout.page_loading)
@@ -95,8 +92,6 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
         initLayoutView(mRootView)
         initLayoutData()
         initLayoutListener()
-
-        super.onViewCreated(view, savedInstanceState)
     }
 
     /**
@@ -125,11 +120,10 @@ abstract class BaseFragment : LazeLoadFragment(), IFragment {
      * 界面内容布局 [View]
      * @return [View]
      */
-    protected open fun bindingContentViewId(
+    protected open fun bindingContentView(
         inflater: LayoutInflater,
-        topViewGroup: ViewGroup?,
-        savedInstanceState: Bundle?,
-        attachToRoot: Boolean
+        contentView: View,
+        savedInstanceState: Bundle?
     ): View? = null
 
     /**

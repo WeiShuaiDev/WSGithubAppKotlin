@@ -8,7 +8,6 @@ import com.linwei.cams_aac.livedatabus.StatusLiveEvent
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 /**
  * ---------------------------------------------------------------------

@@ -2,11 +2,9 @@ package com.linwei.cams_aac.base
 
 import android.app.Application
 import android.os.Message
-import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.linwei.cams.ext.string
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_aac.aac.IViewModel
 import com.linwei.cams_aac.livedatabus.MessageLiveEvent

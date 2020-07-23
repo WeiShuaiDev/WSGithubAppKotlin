@@ -37,7 +37,7 @@ import javax.inject.Inject
  * @Description:普通基类 [BaseActivity]
  *-----------------------------------------------------------------------
  */
-abstract class BaseActivity : AppCompatActivity(), IActivity {
+abstract class BaseActivity() : AppCompatActivity(), IActivity {
     private var currentActivity: Activity? = null
     private var activities: MutableList<Activity> = mutableListOf()  //对所有activity进行管理
 
@@ -57,15 +57,12 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     override fun provideCache(): Cache<String, Any> =
         mCacheFactory.build(CacheType.activityCacheType)
 
-
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(AppLanguageUtils.attachBaseContext(newBase, LibConfig.LANGUAGE))
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        onCreateExpandConfigBefore(savedInstanceState)
         super.onCreate(savedInstanceState)
-        onCreateExpandConfigAfter(savedInstanceState)
         mContext = this
 
         val withTopBarView: View? = withTopBarView()
@@ -117,13 +114,12 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         initLayoutListener()
     }
 
-
     /**
      * 界面内容布局 [View]
      * @return [View]
      */
     protected open fun bindingContentView(
-        contentView1: Bundle?,
+        bundle: Bundle?,
         contentView: View
     ): View? = null
 
@@ -164,9 +160,8 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         return linearLayout
     }
 
-
     /**
-     * 修改 [View] 状态栏高度 [fetchStatusBarHeight],状态栏背景颜色 [fetchStatusColor] 功能
+     * 修改 [View] 状态栏高度 [fetchStatusBarHeight] ,状态栏背景颜色 [fetchStatusColor] 功能
      * [fetchStatusColor] 方法定义状态栏颜色。[fetchStatusBarHeight] 方法定义状态栏高度
      * @param view [View]
      */
@@ -182,26 +177,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         params.height = statusBarHeight
         topBarView.layoutParams = params
         topBarView.setBackgroundResource(fetchStatusColor())
-    }
-
-    /**
-     * [onCreateExpandConfigBefore] `OnCreate` 配置方法
-     *`OnCreate`方法在调用父类方法之前，触发该方法
-     * @param savedInstanceState [Bundle]
-     */
-    protected open fun onCreateExpandConfigBefore(
-        savedInstanceState: Bundle?
-    ) {
-    }
-
-    /**
-     * [onCreateExpandConfigAfter] `OnCreate` 配置方法
-     *`OnCreate`方法在调用父类方法结束后，触发该方法
-     * @param savedInstanceState [Bundle]
-     */
-    protected open fun onCreateExpandConfigAfter(
-        savedInstanceState: Bundle?
-    ) {
     }
 
     /**
@@ -243,7 +218,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * @return [Boolean] `false`:不使用; `true`:使用
      */
     protected open fun useStateView(): Boolean = false
-
 
     /**
      * 界面导航栏内容布局 [View]

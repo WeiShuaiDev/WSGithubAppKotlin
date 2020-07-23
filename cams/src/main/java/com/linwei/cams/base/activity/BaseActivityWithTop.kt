@@ -87,13 +87,13 @@ abstract class BaseActivityWithTop : BaseActivity() {
     }
 
     /**
-     * 导航栏布局`ResId`
+     * 导航栏布局 `ResId`
      * @return [Int] 布局文件Id
      */
     protected open fun provideTopBarId(): Int = R.layout.include_top_view
 
     /**
-     * 导航栏标题`ResId`
+     * 导航栏标题 `ResId`
      * @return [Int] 字符串Id
      */
     protected abstract fun fetchTopBarTitle(): Int
@@ -115,7 +115,7 @@ abstract class BaseActivityWithTop : BaseActivity() {
     }
 
     /**
-     * 设置 `TopBar`  标题文本
+     * 设置 `TopBar` 标题文本
      * @param resId 资源id
      */
     protected fun setTopBarTitle(resId: Int) {
@@ -138,7 +138,6 @@ abstract class BaseActivityWithTop : BaseActivity() {
         return mTopViewHolder.mTvTitle
     }
 
-
     /**
      * 设置 `TopBar` 右边 [Textview] 文本信息
      * @param resId [Int] 显示文本信息，默认显示`刷新`
@@ -154,7 +153,6 @@ abstract class BaseActivityWithTop : BaseActivity() {
     protected fun setTopBarRightImage(resId: Int = R.drawable.ic_refresh_black_24dp) {
         mTopViewHolder.setRightImageForId(resId)
     }
-
 
     /**
      * 设置 `TopBar` 左边 [Textview] 文本信息

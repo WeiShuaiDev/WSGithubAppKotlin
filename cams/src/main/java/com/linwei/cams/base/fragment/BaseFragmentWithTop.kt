@@ -63,14 +63,14 @@ abstract class BaseFragmentWithTop : BaseFragment() {
         }
     }
 
-    /**
-     * 导航栏布局`ResId`
+     /**
+     * 导航栏布局 `ResId`
      * @return [Int] 布局文件Id
      */
     protected open fun provideTopBarId(): Int = R.layout.include_top_view
 
     /**
-     * 导航栏标题`ResId`
+     * 导航栏标题 `ResId`
      * @return [Int] 字符串Id
      */
     protected abstract fun fetchTopBarTitle():Int
@@ -92,7 +92,7 @@ abstract class BaseFragmentWithTop : BaseFragment() {
     }
 
     /**
-     * 设置 `TopBar`  标题文本
+     * 设置 `TopBar` 标题文本
      * @param resId 资源id
      */
     protected fun setTopBarTitle(resId: Int) {

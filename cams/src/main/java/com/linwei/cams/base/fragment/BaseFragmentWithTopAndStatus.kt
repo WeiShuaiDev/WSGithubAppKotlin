@@ -154,7 +154,7 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
     }
 
     /**
-     * 设置 `TopBar`  标题文本
+     * 设置 `TopBar` 标题文本
      * @param resId 资源id
      */
     protected fun setTopBarTitle(resId: Int) {
