@@ -4,7 +4,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
+import com.linwei.cams.http.callback.RxJavaCallback
+import com.linwei.cams.http.model.BaseResponse
 import com.linwei.cams.manager.EventBusManager
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -68,6 +71,13 @@ abstract class BasePresenter<M : IModel, V : IView>(
      * @return [Boolean] true：使用；false：不使用
      */
     open fun useEventBus(): Boolean = false
+
+    /**
+     * @param observable [Observable] 接口对象
+     * @param callBack  [RxJavaCallback] 接口回调对象
+     */
+    fun <T> doRequest(observable: Observable<BaseResponse<T>>, callBack: RxJavaCallback<T>) {
+    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy(owner: LifecycleOwner) {

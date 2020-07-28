@@ -9,10 +9,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.linwei.cams.R
 import com.linwei.cams.base.holder.TopViewHolder
+import com.linwei.cams.ext.dp2px
 import com.linwei.cams.ext.string
 import com.linwei.cams.listener.OnTopBarLeftClickListener
 import com.linwei.cams.listener.OnTopBarRightClickListener
-import com.linwei.cams.utils.UIUtils
 
 /**
  * ---------------------------------------------------------------------
@@ -82,7 +82,7 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
             val mStatusFillView = View(mActivity)
             var statusBarHeight: Int = fetchStatusBarHeight()
             if (statusBarHeight <= 0) {
-                statusBarHeight = UIUtils.dp2px(mActivity, 25f)
+                statusBarHeight = 25f.dp2px()
             }
 
             val params =

@@ -17,9 +17,13 @@ import androidx.annotation.StringRes
 import java.lang.ref.WeakReference
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time:  2019/10/18
+ * @Time: 2019/10/18
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
  * @Description: Toast工具类
+ *-----------------------------------------------------------------------
  */
 const val DEFAULT_COLOR = 0x12000000
 

@@ -1,12 +1,12 @@
 package com.linwei.cams.utils
 
-import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
 import androidx.annotation.RequiresApi
+import com.linwei.cams.ext.isNotNullOrEmpty
 import java.util.*
 
 /**
@@ -62,7 +62,7 @@ object AppLanguageUtils {
      * 根据language key获取Locale
      */
     private fun getLocaleByLanguage(language: String?): Locale? {
-        if (UIUtils.isNotNullOrEmpty(language)) {
+        if (language.isNotNullOrEmpty()) {
             if (mLanguageTypes.containsKey(language)) {
                 return mLanguageTypes[language]
             }

@@ -1,5 +1,9 @@
 package com.linwei.cams.utils
 
+import android.annotation.SuppressLint
+import java.text.SimpleDateFormat
+import java.util.*
+
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
@@ -140,6 +144,71 @@ object TimeUtils {
         }
         return "${currentTime}-${second}${mSeparator}"
     }
+
+
+    /**
+     * 时间格式化
+     */
+    @SuppressLint("SimpleDateFormat")
+    fun getCurrentDate(format: String = "yyyy-MM-dd HH:mm:ss"): String {
+        return SimpleDateFormat(format).format(GregorianCalendar().time)
+    }
+
+    /**
+     * 时间格式化
+     */
+    @SuppressLint("SimpleDateFormat")
+    fun formatTime(date: Long, format: String = "yyyy-MM-dd HH:mm:ss"): String {
+        return SimpleDateFormat(format).format(date).toString()
+    }
+
+    /**
+     * 毫秒时间格式化
+     */
+    fun getTime(date: Long): String {
+        if (date < 10) {
+            return "00:0$date"
+        }
+        if (date < 60) {
+            return "00:$date"
+        }
+        if (date < 3600) {
+            val minute = date / 60
+            val second = date - minute * 60
+            if (minute < 10) {
+                return if (second < 10) {
+                    "0$minute:0$second"
+                } else "0$minute:$second"
+            }
+            return if (second < 10) {
+                "$minute:0$second"
+            } else "$minute:$second"
+        }
+
+        val hour = date / 3600
+        val minute = (date - hour * 3600) / 60
+        val second = date - hour * 3600 - minute * 60
+        if (hour < 10) {
+            if (minute < 10) {
+                return if (second < 10) {
+                    "0$hour:0$minute:0$second"
+                } else "0$hour:0$minute:$second"
+            }
+            return if (second < 10) {
+                "0$hour$minute:0$second"
+            } else "0$hour$minute:$second"
+        }
+        if (minute < 10) {
+            return if (second < 10) {
+                "$hour:0$minute:0$second"
+            } else "$hour:0$minute:$second"
+        }
+
+        return if (second < 10) {
+            (hour + minute).toString() + ":0" + second
+        } else (hour + minute).toString() + ":" + second
+    }
+
 
 
 }

@@ -11,8 +11,6 @@ import com.linwei.cams.utils.TimeUtils
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
-import javax.inject.Inject
-
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai

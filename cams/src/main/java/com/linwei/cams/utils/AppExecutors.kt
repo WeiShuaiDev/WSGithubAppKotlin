@@ -6,9 +6,13 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 /**
+ * ---------------------------------------------------------------------
  * @Author: WeiShuai
  * @Time: 2019/10/17
- * @Description:线程池类
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description: 线程池类
+ *-----------------------------------------------------------------------
  */
 const val THREAD_COUNT = 3
 

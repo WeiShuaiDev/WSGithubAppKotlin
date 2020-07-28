@@ -16,6 +16,8 @@ import com.linwei.cams.manager.RepositoryManager
  *-----------------------------------------------------------------------
  */
 class BaseModel(private var repositoryManager: RepositoryManager?) : IModel, LifecycleObserver {
+
+
     override fun onDestroy() {
         repositoryManager = null
     }
@@ -25,6 +27,4 @@ class BaseModel(private var repositoryManager: RepositoryManager?) : IModel, Lif
     fun onDestroy(owner: LifecycleOwner) {
         owner.lifecycle.removeObserver(this)
     }
-
-
 }

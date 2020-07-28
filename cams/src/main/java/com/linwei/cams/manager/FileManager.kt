@@ -1,7 +1,4 @@
 package com.linwei.cams.manager
-
-import javax.inject.Inject
-
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai

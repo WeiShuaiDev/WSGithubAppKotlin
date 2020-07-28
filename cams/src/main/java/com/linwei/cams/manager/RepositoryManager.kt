@@ -41,6 +41,7 @@ class RepositoryManager private constructor() : IDataRepository {
     override fun <T> obtainRetrofitService(serviceClass: Class<T>): T =
         mDataRepository.obtainRetrofitService(serviceClass)
 
+
     override fun <T> obtainRxCacheService(serviceClass: Class<T>): T =
         mDataRepository.obtainRxCacheService(serviceClass)
 

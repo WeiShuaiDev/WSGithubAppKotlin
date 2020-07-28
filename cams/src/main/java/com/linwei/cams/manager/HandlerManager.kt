@@ -2,8 +2,6 @@ package com.linwei.cams.manager
 
 import android.os.Handler
 import com.linwei.cams.base.BaseApplication
-import javax.inject.Singleton
-
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai

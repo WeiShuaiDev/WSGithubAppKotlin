@@ -11,8 +11,12 @@ import com.linwei.cams.base.BaseApplication
 import com.linwei.cams.utils.ToastUtils
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.util.Base64
 import com.linwei.cams.base.App
@@ -47,118 +51,55 @@ fun obtainApplication(): Application {
     return (ctx as App).getApplication()
 }
 
+
 /**
- *短时间 [Toast]
+ * 启动默认浏览器
  */
-fun Any.showShort(vararg args: String) {
-    toastBuild().showShort(this.string(), args)
+fun Context.jumpIntent(url: String) {
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
 }
 
 /**
- * 长时间 [Toast]
+ * 根据不同的外链，进行跳转
+ * 外链格式:https://play.google.com/store/apps/details?id="
+ * @param url [String]
  */
-fun Any.showLong(vararg args: String) {
-    toastBuild().showLong(this.string(), args)
-}
-
-/**
- * 安全模式短时间 [Toast]
- */
-fun Any.showShortSafe(vararg args: String) {
-    toastBuild().showShortSafe(this.string(), args)
-}
-
-/**
- * 安全模式长时间 [Toast]
- */
-fun Any.showLongSafe(vararg args: String) {
-    toastBuild().showLongSafe(this.string(), args)
-}
-
-fun Int.color(): Int {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        ctx.resources.getColor(this, null)
-    } else {
-        @Suppress("DEPRECATION")
-        ctx.resources.getColor(this)
-    }
-}
-
-/**
- * [ResId] 转换为字符串 [String]
- * @param [ResId]
- * @return [String]
- */
-fun Any.string(): String {
-    return if (this is Int) {
-        ctx.resources.getString(this)
-    } else {
-        this.toString()
-    }
-}
-
-/**
- * [ResId] 转换为字符串 [String]
- * @param [ResId] 字符串Id, [args] 字符串格式化参数
- * @return [String]
- */
-fun Any.string(vararg args: String): String {
-    return if (this is Int) {
-        ctx.resources.getString(this, *args)
-    } else {
-        this.toString()
-    }
-}
-
-
-/**
- * 获取ToastUtils
- */
-fun toastBuild(): ToastUtils {
-    return ToastUtils.Builder(ctx)
-        .setBgResource(R.drawable.shape_toast_background)
-        .setMessageColor(R.color.colorGlobalBlack)
-        .build()
-}
-
-
-/**
- * 判断是否为空
- */
-fun isEmptyParameter(vararg params: String?): Boolean {
-    for (p in params)
-        if (p.isNullOrEmpty() || p == "null" || p == "NULL") {
-            return true
-        }
-    return false
-}
-
-/**
- * 序列化对象
- */
-fun Any.fromBean(): String {
+fun Context.jumpGooglePlay(url: String) {
     try {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        val objectOutputStream = ObjectOutputStream(byteArrayOutputStream)
-        objectOutputStream.writeObject(this)
-        return base64(byteArrayOutputStream.toByteArray(), Base64.DEFAULT)
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-    return ""
-}
-
-/**
- * 反序列化对象
- */
-fun String.toBean(): Any? {
-    try {
-        val bytes = Base64.decode(this, Base64.NO_WRAP)
-        return ObjectInputStream(ByteArrayInputStream(bytes)).readObject()
+        val launchIntent: Intent? = packageManager.getLaunchIntentForPackage("com.android.vending")
+        val componentName: ComponentName = ComponentName(
+            "com.android.vending",
+            "com.google.android.finsky.activities.LaunchUrlHandlerActivity"
+        )
+        launchIntent?.component = componentName
+        launchIntent?.data = Uri.parse(
+            "market://details?id=" + url.split("id=")
+                .toTypedArray().get(1)
+        )
+        startActivity(launchIntent)
     } catch (e: Exception) {
-        e.printStackTrace()
+        jumpIntent(url)
     }
-    return null
+}
+
+/**
+ * 根据不同的外链，进行跳转
+ * 格式:"market://details?"
+ * @param url [String]
+ */
+fun Context.jumpNewGooglePlay(url: String) {
+    try {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        intent.setPackage("com.android.vending") //这里对应的是谷歌商店，跳转别的商店改成对应的即可
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        } else { //没有应用市场，通过浏览器跳转到Google Play
+            jumpIntent(url)
+        }
+    } catch (activityNotFoundException1: ActivityNotFoundException) {
+        jumpIntent(url)
+    }
 }
 
 /**
@@ -171,70 +112,6 @@ fun base64(bytes: ByteArray, flag: Int): String {
         return ""
     }
 }
-
-/**
- * 时间格式化
- */
-@SuppressLint("SimpleDateFormat")
-fun getCurrentDate(format: String = "yyyy-MM-dd HH:mm:ss"): String {
-    return SimpleDateFormat(format).format(GregorianCalendar().time)
-}
-
-/**
- * 时间格式化
- */
-@SuppressLint("SimpleDateFormat")
-fun formatTime(date: Long, format: String = "yyyy-MM-dd HH:mm:ss"): String {
-    return SimpleDateFormat(format).format(date).toString()
-}
-
-/**
- * 毫秒时间格式化
- */
-fun getTime(date: Long): String {
-    if (date < 10) {
-        return "00:0$date"
-    }
-    if (date < 60) {
-        return "00:$date"
-    }
-    if (date < 3600) {
-        val minute = date / 60
-        val second = date - minute * 60
-        if (minute < 10) {
-            return if (second < 10) {
-                "0$minute:0$second"
-            } else "0$minute:$second"
-        }
-        return if (second < 10) {
-            "$minute:0$second"
-        } else "$minute:$second"
-    }
-
-    val hour = date / 3600
-    val minute = (date - hour * 3600) / 60
-    val second = date - hour * 3600 - minute * 60
-    if (hour < 10) {
-        if (minute < 10) {
-            return if (second < 10) {
-                "0$hour:0$minute:0$second"
-            } else "0$hour:0$minute:$second"
-        }
-        return if (second < 10) {
-            "0$hour$minute:0$second"
-        } else "0$hour$minute:$second"
-    }
-    if (minute < 10) {
-        return if (second < 10) {
-            "$hour:0$minute:0$second"
-        } else "$hour:0$minute:$second"
-    }
-
-    return if (second < 10) {
-        (hour + minute).toString() + ":0" + second
-    } else (hour + minute).toString() + ":" + second
-}
-
 
 /**
  * 获取运算后内存大小
@@ -279,16 +156,5 @@ private inline fun FragmentManager.transact(action: FragmentTransaction.() -> Un
     }.commit()
 }
 
-/**
- * 屏幕像素长度
- * @return  widthPixels [Int]
- */
-fun getScreenWidthPixels(): Int = ctx.resources.displayMetrics.widthPixels
 
-
-/**
- * 屏幕像素高度
- * @return  heightPixels [Int]
- */
-fun getScreenHeightPixels(): Int = ctx.resources.displayMetrics.heightPixels
 
