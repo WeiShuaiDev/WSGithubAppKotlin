@@ -71,6 +71,7 @@ open class DataRepository : IDataRepository {
                     RetrofitServiceProxyHandler(serviceClass)
                 )
             }
+
             //保存 `Retrofit Service` 对象到 `Cache` 中
             mRetrofitServiceCache.put(
                 serviceClass.canonicalName ?: serviceClass.simpleName,

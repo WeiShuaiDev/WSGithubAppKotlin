@@ -31,9 +31,10 @@ abstract class BaseMvpActivity<T : BasePresenter<IModel, IView>> : BaseActivity(
     lateinit var mPresenter: T
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
-      val mvpActivityComponent: BaseMvpActivityComponent = DaggerBaseMvpActivityComponent.builder()
-            .appComponent(appComponent) //提供application
-            .build()
+        val mvpActivityComponent: BaseMvpActivityComponent =
+            DaggerBaseMvpActivityComponent.builder()
+                .appComponent(appComponent) //提供application
+                .build()
 
         setUpActivityChildComponent(mvpActivityComponent)
     }
@@ -51,6 +52,5 @@ abstract class BaseMvpActivity<T : BasePresenter<IModel, IView>> : BaseActivity(
 
         mPresenter.onDestroy()
     }
-
 
 }

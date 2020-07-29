@@ -1,5 +1,6 @@
 package com.linwei.cams.ext
 
+import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.text.SpannableString
@@ -9,13 +10,13 @@ import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.util.Base64
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.linwei.cams.R
 import com.linwei.cams.utils.ToastUtils
 import java.io.*
-import java.lang.Exception
 import java.util.*
 
 /**
@@ -332,6 +333,7 @@ fun View.showSoftKeyboard() {
         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(this, 0)
 }
+
 
 /**
  * ---------------------------------Size---------------------------------

@@ -50,13 +50,13 @@ abstract class RetrofitCallback<T> : Callback<BaseResponse<T>> {
      * @param code [String] 成功状态码
      * @param data [T] 响应数据
      */
-    open fun onSuccess(code: String?, data: T?){}
+    open fun onSuccess(code: String?, data: T?) {}
 
     /**
      * 接口请求失败，回调 [onFailure] 方法
      * @param code [String] 失败状态码
      * @param message [String] 失败信息
      */
-     open fun onFailure(code: String?, message: String?){}
+    open fun onFailure(code: String?, message: String?) {}
 
 }

@@ -42,22 +42,6 @@ class NetWorkStateCode {
     fun isExistByCode(code: String?): Boolean {
         return responseCode.containsKey(code)
     }
-
-    /**
-     * 获取当前网络状态,根据网络状态，返回 [Boolean] 类型
-     * @param context [Context] 上下文
-     * @return bool [Boolean]  返回网络状态，false:网络繁忙，网络断开;true:网络连接中
-     */
-    fun isNetworkAvailable(context: Context): Boolean {
-        val connectivity: ConnectivityManager = context
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        @Suppress("DEPRECATION") val networkInfo = connectivity.activeNetworkInfo
-        if (networkInfo != null) {
-            @Suppress("DEPRECATION")
-            return networkInfo.isAvailable
-        }
-        return false
-    }
 }
 
 

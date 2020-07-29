@@ -6,6 +6,7 @@ import android.content.Intent
 import com.google.gson.Gson
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
 import com.linwei.cams.http.config.HttpConstant
+import com.linwei.cams.http.glide.GlideHelper
 import com.linwei.cams.http.interceptor.HttpRequestInterceptor
 import com.linwei.cams.http.interceptor.HttpResponseInterceptor
 import com.linwei.cams.http.interceptor.LogInterceptor
@@ -135,7 +136,7 @@ class ClientModule {
     }
 
     /**
-     * 创建 `RxCache` 名称缓存文件
+     * 创建 `RxCache` 文件名缓存文件
      * @param cacheDir [File] 缓存文件
      * @return [File] 指定 [cacheDir] 路径,生成文件名 `RxCache` 文件
      */
@@ -145,8 +146,9 @@ class ClientModule {
     fun provideRxCacheDirectory(cacheDir: File): File =
         File(FileUtils.makeDirs(cacheDir), "RxCache")
 
+
     /**
-     * 创建 [Retrofit.Builder] 对象
+     * 创建 `Retrofit.Builder` 对象
      * @return [Retrofit.Builder]
      */
     @Singleton
@@ -154,7 +156,7 @@ class ClientModule {
     fun provideRetrofitBuilder(): Retrofit.Builder = Retrofit.Builder()
 
     /**
-     * 创建 [OkHttpClient.Builder] 对象，用于 `Retrofit` 初始化创建,配置底层 `OkHttp`
+     * 创建 `OkHttpClient.Builder` 对象，用于 `Retrofit` 初始化创建,配置底层 `OkHttp`
      * @return [OkHttpClient.Builder]
      */
     @Singleton
@@ -162,7 +164,7 @@ class ClientModule {
     fun provideOkHttpClientBuilder(): OkHttpClient.Builder = OkHttpClient().newBuilder()
 
     /**
-     * 创建 [LiveDataCallAdapterFactory] 对象，`LiveData`适配器,用于 `Retrofit` 初始化创建,配置回调适配器
+     * 创建 `LiveDataCallAdapterFactory` 对象，`LiveData`适配器,用于 `Retrofit` 初始化创建,配置回调适配器
      * @return [LiveDataCallAdapterFactory]
      */
     @Singleton
@@ -172,7 +174,7 @@ class ClientModule {
 
 
     /**
-     * 创建 [RxJava2CallAdapterFactory] 对象，`RxJava2`适配器，用于 `Retrofit` 初始化创建,配置回调适配器
+     * 创建 `RxJava2CallAdapterFactory` 对象，`RxJava2`适配器，用于 `Retrofit` 初始化创建,配置回调适配器
      * @return [RxJava2CallAdapterFactory]
      */
     @Singleton
@@ -189,6 +191,14 @@ class ClientModule {
     @Provides
     fun provideGSonConverterFactory(gson: Gson): GsonConverterFactory =
         GsonConverterFactory.create(gson)
+
+    /**
+     * 创建 `GlideHelper` 对象
+     * @return [GlideHelper]
+     */
+    @Singleton
+    @Provides
+    fun provideGlideHelper(): GlideHelper = GlideHelper.getInstance()
 
     /**
      * [Retrofit] 配置,开发者通过实现 [RetrofitConfiguration] 接口中方法，在调用 [Retrofit.Builder] 对象进行配置，
