@@ -97,7 +97,7 @@ abstract class BasePresenter<M : IModel, V : IView>(
     /**
      * 停止集合中正在执行的 RxJava 任务
      */
-    fun unDispose() {
+    private fun unDispose() {
         mCompositeDisposable.clear()
     }
 }
