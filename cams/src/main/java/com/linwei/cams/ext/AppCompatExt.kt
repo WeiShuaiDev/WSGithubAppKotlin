@@ -135,12 +135,14 @@ fun Context.fetchStatusBarHeight(): Int {
     return 0
 }
 
+/**
+ * 实体按键高度
+ * @return [Int] 高度
+ */
 fun Context.fetchNavMenuHeight(): Int {
     if (!this.isNavMenuExist()) {
         return 0
     }
-    // 小米4没有nav bar, 而 navigation_bar_height 有值
-    // 小米4没有nav bar, 而 navigation_bar_height 有值
     val resourceId: Int =
         this.resources.getIdentifier("navigation_bar_height", "dimen", "android")
     return if (resourceId > 0) {
@@ -188,6 +190,10 @@ fun Context.fetchRealScreenSize(): IntArray? {
     return size
 }
 
+/**
+ * 判断是否存在实体按键
+ * @return bool [Boolean]
+ */
 fun Context.isNavMenuExist(): Boolean {
     //通过判断设备是否有返回键、菜单键(不是虚拟键,是手机屏幕外的按键)来确定是否有navigation bar
     val hasMenuKey: Boolean = ViewConfiguration.get(this).hasPermanentMenuKey()
@@ -198,6 +204,7 @@ fun Context.isNavMenuExist(): Boolean {
 
 /**
  * 启动默认浏览器
+ * @param url [Boolean]
  */
 fun Context.jumpIntent(url: String) {
     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
@@ -248,6 +255,8 @@ fun Context.jumpNewGooglePlay(url: String) {
 
 /**
  * 转换为Base64
+ * @param bytes [ByteArray]
+ * @param flag [Int]
  */
 fun base64(bytes: ByteArray, flag: Int): String {
     if (bytes.isNotEmpty()) {
@@ -260,6 +269,8 @@ fun base64(bytes: ByteArray, flag: Int): String {
 /**
  * 获取运算后内存大小
  * {@code maxSize}最大内存大小，{@ multiplierSize}内存运算阈值
+ * @param maxSize [Int]
+ * @param multiplierSize [Float]
  */
 fun Context.getCalculateCacheSize(maxSize: Int, multiplierSize: Float): Int {
     val activityManager: ActivityManager =

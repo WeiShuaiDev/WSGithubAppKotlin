@@ -11,7 +11,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
-import com.linwei.cams.base.fragment.BaseFragment
+import com.linwei.cams.base.fragment.BaseFragmentWithTopAndStatus
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_aac.R
@@ -37,7 +37,8 @@ import javax.inject.Inject
  * @Description:  `AAC` 架构 `Fragment` 基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseAacFragment<VM : BaseViewModel, VDB : ViewDataBinding> : BaseFragment(),
+abstract class BaseAacFragmentWithTopAndStatus<VM : BaseViewModel, VDB : ViewDataBinding> :
+    BaseFragmentWithTopAndStatus(),
     HasAndroidInjector, ILoading,
     IView<VM> {
 

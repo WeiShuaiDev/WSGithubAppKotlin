@@ -20,6 +20,7 @@ import com.linwei.cams_aac.aac.ILoading
 import com.linwei.cams_aac.aac.IView
 import com.linwei.cams_aac.livedatabus.MessageLiveEvent
 import com.linwei.cams_aac.livedatabus.StatusLiveEvent
+import com.mimefin.baselib.common.fragment.BaseFragmentWithTop
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -37,7 +38,8 @@ import javax.inject.Inject
  * @Description:  `AAC` 架构 `Fragment` 基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseAacFragment<VM : BaseViewModel, VDB : ViewDataBinding> : BaseFragment(),
+abstract class BaseAacFragmentWithTop<VM : BaseViewModel, VDB : ViewDataBinding> :
+    BaseFragmentWithTop(),
     HasAndroidInjector, ILoading,
     IView<VM> {
 

@@ -19,6 +19,4 @@ object HttpConstant {
     const val CONNECT_TIME_OUT: Long = 10
     const val WRITE_TIME_OUT: Long = 10
     const val READ_TIME_OUT: Long = 10
-
-    const val HTTP_LOG_TAG: String = "HttpLog"
 }

@@ -3,7 +3,7 @@ package com.linwei.cams_aac.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.linwei.cams_aac.aac.ViewModelFactory
-import com.linwei.cams_aac.base.BaseViewModel
+import com.linwei.cams_aac.aac.BaseViewModel
 import com.linwei.cams_aac.di.scope.ViewModelKey
 import com.linwei.cams_aac.di.scope.ViewModelScope
 import dagger.Binds

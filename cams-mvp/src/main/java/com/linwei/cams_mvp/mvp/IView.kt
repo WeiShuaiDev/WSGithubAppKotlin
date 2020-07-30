@@ -27,4 +27,10 @@ interface IView {
      */
     fun showMessage(message: Int)
 
+    /**
+     * 显示日志信息
+     * @param message [String]
+     */
+    fun showMessage(message: String)
+
 }

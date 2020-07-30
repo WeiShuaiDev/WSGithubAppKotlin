@@ -1,7 +1,11 @@
 package com.linwei.cams_mvp.base
 
+import android.app.Dialog
 import com.linwei.cams.base.activity.BaseActivityWithTop
 import com.linwei.cams.di.component.AppComponent
+import com.linwei.cams.ext.showShort
+import com.linwei.cams.utils.DialogUtils
+import com.linwei.cams_mvp.R
 import com.linwei.cams_mvp.di.component.BaseMvpActivityComponent
 import com.linwei.cams_mvp.di.component.DaggerBaseMvpActivityComponent
 import com.linwei.cams_mvp.lifecycle.ActivityRxLifecycle
@@ -23,6 +27,7 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseActivityWithTop(),
+    IView,
     ActivityRxLifecycle {
 
     private var mLifecycleSubject: BehaviorSubject<ActivityEvent> = BehaviorSubject.create()
@@ -30,11 +35,13 @@ abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseAc
     @Inject
     lateinit var mPresenter: T
 
+    private var mProgressDialog: Dialog? = null
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
-        val mvpActivityComponent: BaseMvpActivityComponent = DaggerBaseMvpActivityComponent.builder()
-            .appComponent(appComponent) //提供application
-            .build()
+        val mvpActivityComponent: BaseMvpActivityComponent =
+            DaggerBaseMvpActivityComponent.builder()
+                .appComponent(appComponent) //提供application
+                .build()
 
         setUpActivityChildComponent(mvpActivityComponent)
     }
@@ -47,11 +54,35 @@ abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseAc
      */
     abstract fun setUpActivityChildComponent(mvpActivityComponent: BaseMvpActivityComponent?)
 
-    override fun onDestroy() {
-        super.onDestroy()
 
-        mPresenter.onDestroy()
+    override fun showLoading(message: Int) {
+        if (mProgressDialog?.isShowing == true) {
+            mProgressDialog?.hide()
+        }
+        mProgressDialog = DialogUtils.createCustomDialog(mContext, R.layout.progress_dialog)
+        mProgressDialog?.show()
     }
 
 
+    override fun hideLoading() {
+        mProgressDialog?.hide()
+    }
+
+    override fun showMessage(message: Int) {
+        message.showShort()
+    }
+
+    override fun showMessage(message: String) {
+        message.showShort()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.onDestroy()
+
+        if (mProgressDialog?.isShowing == true) {
+            mProgressDialog?.dismiss()
+        }
+        mProgressDialog = null
+    }
 }

@@ -1,6 +1,5 @@
 package com.linwei.cams.ext
 
-import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.text.SpannableString
@@ -10,7 +9,6 @@ import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.util.Base64
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -18,6 +16,7 @@ import com.linwei.cams.R
 import com.linwei.cams.utils.ToastUtils
 import java.io.*
 import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * ---------------------------------------------------------------------
@@ -135,6 +134,17 @@ fun isEmptyParameter(vararg params: String?): Boolean {
 }
 
 /**
+ * 判断字符串数组是否为空
+ */
+fun isEmptyArraysParameter(params: Array<out String?>): Boolean {
+    for (p: String? in params)
+        if (p.isNullOrEmpty() || p == "null" || p == "NULL") {
+            return true
+        }
+    return false
+}
+
+/**
  * 判断字符串是否为空
  * @param params [String]
  */
@@ -152,6 +162,7 @@ fun String?.isNotNullOrEmpty(): Boolean {
 /**
  * 至少包含大小写字母及数字中的两种
  * 是否包含
+ * @return bool [Boolean]
  */
 fun String.isMatchPwdFormat(): Boolean {
     if (this.isNotNullOrEmpty())
@@ -159,7 +170,7 @@ fun String.isMatchPwdFormat(): Boolean {
 
     var isDigit = false//定义一个boolean值，用来表示是否包含数字
     var isLetter = false//定义一个boolean值，用来表示是否包含字母
-    for (i in 0 until this.length) {
+    for (i: Int in this.indices) {
         if (Character.isDigit(this[i])) {   //用char包装类中的判断数字的方法判断每一个字符
             isDigit = true
         } else if (Character.isLetter(this[i])) {  //用char包装类中的判断字母的方法判断每一个字符
@@ -185,13 +196,17 @@ fun String.phoneFormat(): String {
 
 /***
  * 检查手机号码是否正确
- *
+ * @return [String]
  */
 fun String.checkPhonePattern(): Boolean {
     val phonePattern = "^1[3-9]\\d{9}$"
     return isNullOrEmpty().not() && matches(phonePattern.toRegex())
 }
 
+/**
+ * 检查中文
+ * @return [Boolean]
+ */
 fun String.checkNamePattern(): Boolean {
     val namePattern = "^[\\u4E00-\\u9FA5·.]+$"
     return matches(namePattern.toRegex())
@@ -261,13 +276,45 @@ fun View.onClick(listener: View.OnClickListener): View {
 }
 
 /**
- * 扩展点击事件，参数为方法
- * @param 事件方法[method]
- * @return [View]
+ * 点击事件处理
+ * @param method [Method]
+ * @param params  [String]
+ * @param message [String]
  */
-fun View.onClick(method: () -> Unit): View {
-    setOnClickListener { method() }
+fun View.onClick(method: () -> Unit, message: Int = -1, vararg params: String?): View {
+    setOnClickListener {
+        checkClick({
+            if (isEmptyArraysParameter(params)) {
+                if (message > 0)
+                    message.showShort()
+            } else {
+                method()
+            }
+        }, {
+            R.string.operate_often.showShort()
+        })
+    }
     return this
+}
+
+
+/**
+ * 防止多次点击处理
+ */
+private val timer = Timer()
+private val mPending: AtomicBoolean = AtomicBoolean(true)
+fun checkClick(success: () -> Unit, failure: () -> Unit) {
+    if (mPending.compareAndSet(true, false)) {
+        success()
+        //延时
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                mPending.set(true)
+            }
+        }, 1000)
+    } else {
+        failure()
+    }
 }
 
 /**

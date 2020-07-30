@@ -13,6 +13,8 @@ import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_aac.R
+import com.linwei.cams_aac.aac.BaseViewModel
+import com.linwei.cams_aac.aac.ILoading
 import com.linwei.cams_aac.aac.IView
 import com.linwei.cams_aac.livedatabus.MessageLiveEvent
 import com.linwei.cams_aac.livedatabus.StatusLiveEvent
@@ -241,6 +243,11 @@ abstract class BaseAacActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Base
             mViewModel = null
         }
         mViewDataBinding?.unbind()
+
+        if (mProgressDialog?.isShowing == true) {
+            mProgressDialog?.dismiss()
+        }
+        mProgressDialog = null
     }
 
 }

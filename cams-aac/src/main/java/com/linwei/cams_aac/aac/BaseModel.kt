@@ -1,9 +1,8 @@
-package com.linwei.cams_aac.base
+package com.linwei.cams_aac.aac
 
 import android.app.Application
 import androidx.room.RoomDatabase
 import com.linwei.cams.http.repository.IDataRepository
-import com.linwei.cams_aac.aac.IModel
 import com.linwei.cams_aac.http.DataAacRepository
 import com.linwei.cams_aac.http.IDataAacRepository
 import javax.inject.Inject

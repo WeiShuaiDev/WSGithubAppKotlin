@@ -1,17 +1,16 @@
 package com.linwei.cams_aac.base
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.os.Message
-import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
-import com.linwei.cams.base.fragment.BaseFragment
+import com.linwei.cams.base.activity.BaseActivity
+import com.linwei.cams.base.activity.BaseActivityWithTop
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_aac.R
@@ -20,10 +19,10 @@ import com.linwei.cams_aac.aac.ILoading
 import com.linwei.cams_aac.aac.IView
 import com.linwei.cams_aac.livedatabus.MessageLiveEvent
 import com.linwei.cams_aac.livedatabus.StatusLiveEvent
+import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 import javax.inject.Inject
@@ -31,13 +30,13 @@ import javax.inject.Inject
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/7/21
+ * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description:  `AAC` 架构 `Fragment` 基类
+ * @Description:  `AAC` 架构 `Activity` 基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseAacFragment<VM : BaseViewModel, VDB : ViewDataBinding> : BaseFragment(),
+abstract class BaseAacActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding> : BaseActivityWithTop(),
     HasAndroidInjector, ILoading,
     IView<VM> {
 
@@ -53,23 +52,15 @@ abstract class BaseAacFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Base
 
     private var mProgressDialog: Dialog? = null
 
-    override fun onAttach(context: Context) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         //Dagger.Android Fragment 注入
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
+        AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
+
+        initViewModel() //初始化ViewModel
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initViewModel()
-
-    }
-
-    override fun bindingContentView(
-        inflater: LayoutInflater,
-        contentView: View,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun bindingContentView(bundle: Bundle?, contentView: View): View? {
         mViewDataBinding = DataBindingUtil.bind(contentView)
         return mViewDataBinding?.root
     }
@@ -253,6 +244,11 @@ abstract class BaseAacFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Base
             mViewModel = null
         }
         mViewDataBinding?.unbind()
+
+        if (mProgressDialog?.isShowing == true) {
+            mProgressDialog?.dismiss()
+        }
+        mProgressDialog = null
     }
 
 }

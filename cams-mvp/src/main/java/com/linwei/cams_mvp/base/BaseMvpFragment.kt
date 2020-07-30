@@ -1,7 +1,11 @@
 package com.linwei.cams_mvp.base
 
+import android.app.Dialog
 import com.linwei.cams.base.fragment.BaseFragment
 import com.linwei.cams.di.component.AppComponent
+import com.linwei.cams.ext.showShort
+import com.linwei.cams.utils.DialogUtils
+import com.linwei.cams_mvp.R
 import com.linwei.cams_mvp.di.component.BaseMvpFragmentComponent
 import com.linwei.cams_mvp.di.component.DaggerBaseMvpFragmentComponent
 import com.linwei.cams_mvp.lifecycle.FragmentRxLifecycle
@@ -22,13 +26,15 @@ import javax.inject.Inject
  * @Description: `MVP` 架构 `Fragment`基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseMvpFragment<T : BasePresenter<IModel, IView>> : BaseFragment(),
+abstract class BaseMvpFragment<T : BasePresenter<IModel, IView>> : BaseFragment(),IView,
     FragmentRxLifecycle {
 
     private var mLifecycleSubject: BehaviorSubject<FragmentEvent> = BehaviorSubject.create()
 
     @Inject
     lateinit var mPresenter: T
+
+    private var mProgressDialog: Dialog? = null
 
     override fun setupFragmentComponent(appComponent: AppComponent?) {
         val mvpFragmentComponent: BaseMvpFragmentComponent = DaggerBaseMvpFragmentComponent.builder()
@@ -46,10 +52,37 @@ abstract class BaseMvpFragment<T : BasePresenter<IModel, IView>> : BaseFragment(
      */
     abstract fun setUpFragmentChildComponent(mvpFragmentComponent: BaseMvpFragmentComponent?)
 
+
+    override fun showLoading(message: Int) {
+        if (mProgressDialog?.isShowing == true) {
+            mProgressDialog?.hide()
+        }
+        mProgressDialog = DialogUtils.createCustomDialog(mContext, R.layout.progress_dialog)
+        mProgressDialog?.show()
+    }
+
+
+    override fun hideLoading() {
+        mProgressDialog?.hide()
+    }
+
+    override fun showMessage(message: Int) {
+        message.showShort()
+    }
+
+    override fun showMessage(message: String) {
+        message.showShort()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
         mPresenter.onDestroy()
+
+        if (mProgressDialog?.isShowing == true) {
+            mProgressDialog?.dismiss()
+        }
+        mProgressDialog = null
     }
 
 
