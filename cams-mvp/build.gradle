@@ -58,6 +58,8 @@ dependencies {
     }
 
     kapt rootProject.ext.dependencies["dagger2-compiler"]
+    kapt rootProject.ext.dependencies["dagger2-android-processor"]
+
 
     api project(path: ':cams')
 

@@ -37,7 +37,6 @@
                         style="@style/WrapAndMatch"
                         android:background="?attr/selectableItemBackground"
                         android:drawableStart="@mipmap/ic_black_back"
-                        android:drawableLeft="@mipmap/ic_black_back"
                         android:drawablePadding="@dimen/dp_5"
                         android:gravity="center"
                         android:padding="@dimen/dp_15"
