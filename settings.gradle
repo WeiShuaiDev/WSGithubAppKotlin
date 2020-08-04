@@ -1,5 +1,5 @@
 rootProject.name='WSGithubAppKotlin'
-include ':example'
+include ':cams-mvvm-template'
 include ':cams'
 include ':cams-mvp'
 include ':cams-mvvm'

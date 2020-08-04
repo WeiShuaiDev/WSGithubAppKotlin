@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'kotlin-kapt'
 
@@ -84,5 +83,5 @@ dependencies {
     kapt rootProject.ext.dependencies["dagger2-compiler"]
     kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
-    implementation project(path: ':cams')
+    api project(path: ':cams')
 }

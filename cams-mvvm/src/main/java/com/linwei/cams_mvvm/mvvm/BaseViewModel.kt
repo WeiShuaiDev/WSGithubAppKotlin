@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @Description: AAC架构中 `Model` 模块，tigong
  *-----------------------------------------------------------------------
  */
-class BaseViewModel @Inject constructor(
+open class BaseViewModel @Inject constructor(
     private val model: BaseModel,
     application: Application
 ) : AndroidViewModel(application),
@@ -73,13 +73,13 @@ class BaseViewModel @Inject constructor(
      * @return [BaseModel]
      *
      */
-     fun fetchBaseModel(): BaseModel = model
+    fun fetchBaseModel(): BaseModel = model
 
     /**
      * 同步发送消息
      * @param message [Message] 消息内容
      */
-     fun sendMessage(message: Message) {
+    fun sendMessage(message: Message) {
         mMessageLiveEvent.value = message
     }
 
@@ -88,7 +88,7 @@ class BaseViewModel @Inject constructor(
      * @param what [Int]  消息编号
      * @param  obj [Any] 消息数据
      */
-     fun sendMessage(what: Int, obj: Any) {
+    fun sendMessage(what: Int, obj: Any) {
         val message: Message = Message.obtain()
         message.what = what
         message.obj = obj
@@ -99,7 +99,7 @@ class BaseViewModel @Inject constructor(
      * 异步发送消息
      * @param message [Message] 消息内容
      */
-     fun postMessage(message: Message) {
+    fun postMessage(message: Message) {
         mMessageLiveEvent.postValue(message)
     }
 
@@ -108,7 +108,7 @@ class BaseViewModel @Inject constructor(
      * @param what [Int]  消息编号
      * @param  obj [Any] 消息数据
      */
-     fun postMessage(what: Int, obj: Any) {
+    fun postMessage(what: Int, obj: Any) {
         val message: Message = Message.obtain()
         message.what = what
         message.obj = obj
@@ -119,7 +119,7 @@ class BaseViewModel @Inject constructor(
      * 同步更新状态
      * @param status [Int] 状态码
      */
-     fun sendUpdateStatus(@StatusCode status: Int) {
+    fun sendUpdateStatus(@StatusCode status: Int) {
         mStatusLiveEvent.value = status
     }
 
@@ -127,7 +127,7 @@ class BaseViewModel @Inject constructor(
      * 异步更新状态
      * @param status [Int] 状态码
      */
-     fun postUpdateStatus(@StatusCode status: Int) {
+    fun postUpdateStatus(@StatusCode status: Int) {
         mStatusLiveEvent.postValue(status)
     }
 
@@ -135,7 +135,7 @@ class BaseViewModel @Inject constructor(
      * 获取消息事件总线
      * @return  mMessageLiveEvent [MessageLiveEvent]
      */
-     fun fetchMessageLiveEvent() = mMessageLiveEvent
+    fun fetchMessageLiveEvent() = mMessageLiveEvent
 
     /**
      * 获取状态事件总线

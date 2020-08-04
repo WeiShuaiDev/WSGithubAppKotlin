@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import com.linwei.cams.base.activity.BaseActivity
+import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_mvvm.R
@@ -57,6 +58,9 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
         super.onCreate(savedInstanceState)
 
         initViewModel() //初始化ViewModel
+    }
+
+    override fun setUpActivityComponent(appComponent: AppComponent?) {
     }
 
     override fun bindingContentView(bundle: Bundle?, contentView: View): View? {
@@ -249,5 +253,4 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
         }
         mProgressDialog = null
     }
-
 }

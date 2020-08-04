@@ -1,4 +1,4 @@
-package com.linwei.cams_mvvm.global
+package com.linwei.wsgithubappkotlin.global
 
 import android.content.Context
 import android.os.Bundle
@@ -7,18 +7,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.linwei.cams.di.scope.FragmentScope
 import timber.log.Timber
-
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/7/15
+ * @Time: 2020/8/3
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
  * @Description:
  *-----------------------------------------------------------------------
  */
 @FragmentScope
-class FragmentLifecycleMvvmImpl :
+class FragmentLifecycleImpl :
     FragmentManager.FragmentLifecycleCallbacks() {
 
     override fun onFragmentAttached(
@@ -26,7 +25,7 @@ class FragmentLifecycleMvvmImpl :
         fragment: Fragment,
         context: Context
     ) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentAttached!")
+        Timber.i("FragmentLifecycleImpl to onFragmentAttached!")
     }
 
     override fun onFragmentCreated(
@@ -34,43 +33,42 @@ class FragmentLifecycleMvvmImpl :
         fragment: Fragment,
         savedInstanceState: Bundle?
     ) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentCreated!")
+        Timber.i("FragmentLifecycleImpl to onFragmentCreated!")
     }
 
     override fun onFragmentViewCreated(
         fragmentManager: FragmentManager, fragment: Fragment, view: View,
         savedInstanceState: Bundle?
     ) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentViewCreated!")
+        Timber.i("FragmentLifecycleImpl to onFragmentViewCreated!")
     }
 
 
     override fun onFragmentStarted(fragmentManager: FragmentManager, fragment: Fragment) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentStarted!")
+        Timber.i("FragmentLifecycleImpl to onFragmentStarted!")
     }
 
     override fun onFragmentResumed(fragmentManager: FragmentManager, fragment: Fragment) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentResumed!")
+        Timber.i("FragmentLifecycleImpl to onFragmentResumed!")
     }
 
     override fun onFragmentPaused(fragmentManager: FragmentManager, fragment: Fragment) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentPaused!")
+        Timber.i("FragmentLifecycleImpl to onFragmentPaused!")
     }
 
     override fun onFragmentStopped(fragmentManager: FragmentManager, fragment: Fragment) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentStopped!")
+        Timber.i("FragmentLifecycleImpl to onFragmentStopped!")
     }
 
     override fun onFragmentViewDestroyed(fragmentManager: FragmentManager, fragment: Fragment) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentViewDestroyed!")
+        Timber.i("FragmentLifecycleImpl to onFragmentViewDestroyed!")
     }
 
     override fun onFragmentDestroyed(fragmentManager: FragmentManager, fragment: Fragment) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentDestroyed!")
+        Timber.i("FragmentLifecycleImpl to onFragmentDestroyed!")
     }
 
     override fun onFragmentDetached(fragmentManager: FragmentManager, fragment: Fragment) {
-        Timber.i("FragmentLifecycleMvvmImpl to onFragmentDetached!")
+        Timber.i("FragmentLifecycleImpl to onFragmentDetached!")
     }
-
 }

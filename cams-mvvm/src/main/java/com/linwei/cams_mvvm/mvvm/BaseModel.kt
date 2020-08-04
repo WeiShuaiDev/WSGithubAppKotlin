@@ -16,7 +16,7 @@ import javax.inject.Inject
  * @Description: AAC架构中 `Model` 模块，作为数据源提供多种方式获取数据，包括 `Retrofit` 网络数据源 、`Room` 数据库数据源
  *-----------------------------------------------------------------------
  */
-class BaseModel @Inject constructor(private val dataRepository: DataMvvmRepository) : IModel,
+open class BaseModel @Inject constructor(private val dataRepository: DataMvvmRepository) : IModel,
     IDataRepository, IDataMvvmRepository {
 
     /**

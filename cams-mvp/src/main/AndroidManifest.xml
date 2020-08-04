@@ -7,5 +7,4 @@
             android:name="com.linwei.cams_mvp.global.GlobalMvpConfiguration"
             android:value="GlobalConfigModule" />
     </application>
-
 </manifest>

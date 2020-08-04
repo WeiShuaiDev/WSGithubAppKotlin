@@ -1,6 +1,8 @@
 package com.linwei.wsgithubappkotlin.di.module
 import com.linwei.cams.di.component.BaseActivitySubComponent
+import com.linwei.wsgithubappkotlin.mvvm.ui.activity.MainActivity
 import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
 /**
  * ---------------------------------------------------------------------
@@ -13,6 +15,9 @@ import dagger.Module
  */
 @Module(subcomponents = [BaseActivitySubComponent::class])
 interface ActivityModule {
+
+    @ContributesAndroidInjector
+    fun contributeMainActivity(): MainActivity
 
 
 }

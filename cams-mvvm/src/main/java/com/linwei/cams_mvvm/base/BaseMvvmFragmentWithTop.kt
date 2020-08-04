@@ -11,6 +11,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
+import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_mvvm.R
@@ -73,6 +74,9 @@ abstract class BaseMvvmFragmentWithTop<VM : BaseViewModel, VDB : ViewDataBinding
     ): View? {
         mViewDataBinding = DataBindingUtil.bind(contentView)
         return mViewDataBinding?.root
+    }
+
+    override fun setupFragmentComponent(appComponent: AppComponent?) {
     }
 
     /**

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import com.linwei.cams.base.activity.BaseActivityWithTop
+import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_mvvm.R
@@ -63,6 +64,10 @@ abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding
         mViewDataBinding = DataBindingUtil.bind(contentView)
         return mViewDataBinding?.root
     }
+
+    override fun setUpActivityComponent(appComponent: AppComponent?) {
+    }
+
 
     /**
      *  根据 `Class` 类，获取不同的 `ViewModel` 对象

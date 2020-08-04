@@ -19,29 +19,29 @@ import timber.log.Timber
  */
 class AppLifecycleMvvmImpl : AppLifecycles {
 
-    private lateinit var mAacComponent: MvvmComponent
+    private lateinit var mMvvmComponent: MvvmComponent
 
     override fun attachBaseContext(context: Context) {
-        Timber.i("AppLifecycleAacImpl to attachBaseContext!")
+        Timber.i("AppLifecycleMvvmImpl to attachBaseContext!")
     }
 
     override fun onCreate(application: Application) {
-        this.mAacComponent = DaggerMvvmComponent
+        this.mMvvmComponent = DaggerMvvmComponent
             .builder()
             .appComponent(obtainAppComponent())
             .build()
-        mAacComponent.inject(this)
+        mMvvmComponent.inject(this)
     }
 
     override fun onTerminate(application: Application) {
-        Timber.i("AppLifecycleAacImpl to onTerminate!")
+        Timber.i("AppLifecycleMvvmImpl to onTerminate!")
     }
 
     override fun onLowMemory(application: Application) {
-        Timber.i("AppLifecycleAacImpl to onLowMemory!")
+        Timber.i("AppLifecycleMvvmImpl to onLowMemory!")
     }
 
     override fun onTrimMemory(level: Int) {
-        Timber.i("AppLifecycleAacImpl to onTrimMemory!")
+        Timber.i("AppLifecycleMvvmImpl to onTrimMemory!")
     }
 }
