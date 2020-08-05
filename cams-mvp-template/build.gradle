@@ -9,7 +9,7 @@ android {
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     defaultConfig {
-        applicationId "com.linwei.cams_mvvm_template"
+        applicationId "com.linwei.cams_mvp_template"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
@@ -98,14 +98,14 @@ def buildTime() {
     return new Date().format("MMdd_HHmm", TimeZone.getTimeZone("GMT+8"))
 }
 
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
 
     kapt rootProject.ext.dependencies["dagger2-compiler"]
     kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
-    implementation project(path: ':cams-mvvm')
+    implementation project(path: ':cams-mvp')
 
     //test
     implementation 'androidx.appcompat:appcompat:1.1.0'

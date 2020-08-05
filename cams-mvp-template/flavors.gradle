@@ -7,8 +7,8 @@ android {
             versionCode 1
             buildConfigField('String', 'VERSION', '\"1.0\"')
 
-            resValue('string', 'app_name', 'MVVM Template')
-            buildConfigField('String', 'APP_NAME', '\"MVVM Template\"')
+            resValue('string', 'app_name', 'MVP Template')
+            buildConfigField('String', 'APP_NAME', '\"MVP Template\"')
 
             //Bugly配置
             buildConfigField('String', 'BUGLY_APP_ID', '\"\"')
