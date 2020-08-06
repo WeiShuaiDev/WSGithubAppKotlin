@@ -6,11 +6,10 @@ import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.ext.showShort
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_mvp.R
-import com.linwei.cams_mvp.di.component.BaseMvpActivityComponent
-import com.linwei.cams_mvp.di.component.DaggerBaseMvpActivityComponent
+import com.linwei.cams_mvp.di.component.DaggerMvpActivityComponent
+import com.linwei.cams_mvp.di.component.MvpActivityComponent
 import com.linwei.cams_mvp.lifecycle.ActivityRxLifecycle
-import com.linwei.cams_mvp.mvp.BasePresenter
-import com.linwei.cams_mvp.mvp.IModel
+import com.linwei.cams_mvp.mvp.IPresenter
 import com.linwei.cams_mvp.mvp.IView
 import com.trello.rxlifecycle4.android.ActivityEvent
 import io.reactivex.subjects.BehaviorSubject
@@ -26,7 +25,7 @@ import javax.inject.Inject
  * @Description: `MVP` 架构 `Activity` 基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseMvpActivity<T : BasePresenter<IModel, IView>> : BaseActivity(), IView,
+abstract class BaseMvpActivity<T : IPresenter> : BaseActivity(), IView,
     ActivityRxLifecycle {
 
     private var mLifecycleSubject: BehaviorSubject<ActivityEvent> = BehaviorSubject.create()
@@ -37,8 +36,8 @@ abstract class BaseMvpActivity<T : BasePresenter<IModel, IView>> : BaseActivity(
     private var mProgressDialog: Dialog? = null
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
-        val mvpActivityComponent: BaseMvpActivityComponent =
-            DaggerBaseMvpActivityComponent.builder()
+        val mvpActivityComponent: MvpActivityComponent =
+            DaggerMvpActivityComponent.builder()
                 .appComponent(appComponent) //提供application
                 .build()
 
@@ -47,9 +46,9 @@ abstract class BaseMvpActivity<T : BasePresenter<IModel, IView>> : BaseActivity(
 
     /**
      * 提供给 {@link Activity}实现类，进行{@code appComponent}依赖
-     * @param mvpActivityComponent [BaseMvpActivityComponent]
+     * @param mvpActivityComponent [MvpActivityComponent]
      */
-    abstract fun setUpActivityChildComponent(mvpActivityComponent: BaseMvpActivityComponent?)
+    abstract fun setUpActivityChildComponent(mvpActivityComponent: MvpActivityComponent?)
 
     override fun showLoading(message: Int) {
         if (mProgressDialog?.isShowing == true) {

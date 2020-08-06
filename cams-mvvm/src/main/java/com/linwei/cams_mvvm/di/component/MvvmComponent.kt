@@ -4,7 +4,7 @@ import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.di.scope.ApplicationScope
 import com.linwei.cams_mvvm.di.module.MvvmModelModule
-import com.linwei.cams_mvvm.di.module.AacViewModelModule
+import com.linwei.cams_mvvm.di.module.MvvmViewModelModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 
@@ -20,7 +20,7 @@ import dagger.android.AndroidInjectionModule
 @ApplicationScope
 @Component(
     dependencies = [AppComponent::class],
-    modules = [AndroidInjectionModule::class, AacViewModelModule::class, MvvmModelModule::class]
+    modules = [AndroidInjectionModule::class, MvvmViewModelModule::class, MvvmModelModule::class]
 )
 interface MvvmComponent {
 

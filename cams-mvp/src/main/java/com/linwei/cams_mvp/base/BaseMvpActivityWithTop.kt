@@ -6,8 +6,8 @@ import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.ext.showShort
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_mvp.R
-import com.linwei.cams_mvp.di.component.BaseMvpActivityComponent
-import com.linwei.cams_mvp.di.component.DaggerBaseMvpActivityComponent
+import com.linwei.cams_mvp.di.component.DaggerMvpActivityComponent
+import com.linwei.cams_mvp.di.component.MvpActivityComponent
 import com.linwei.cams_mvp.lifecycle.ActivityRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
 import com.linwei.cams_mvp.mvp.IModel
@@ -38,8 +38,8 @@ abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseAc
     private var mProgressDialog: Dialog? = null
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
-        val mvpActivityComponent: BaseMvpActivityComponent =
-            DaggerBaseMvpActivityComponent.builder()
+        val mvpActivityComponent: MvpActivityComponent =
+            DaggerMvpActivityComponent.builder()
                 .appComponent(appComponent) //提供application
                 .build()
 
@@ -50,9 +50,9 @@ abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseAc
 
     /**
      * 提供给 {@link Activity}实现类，进行{@code appComponent}依赖
-     * @param mvpActivityComponent [BaseMvpActivityComponent]
+     * @param mvpActivityComponent [MvpActivityComponent]
      */
-    abstract fun setUpActivityChildComponent(mvpActivityComponent: BaseMvpActivityComponent?)
+    abstract fun setUpActivityChildComponent(mvpActivityComponent: MvpActivityComponent?)
 
 
     override fun showLoading(message: Int) {

@@ -15,8 +15,8 @@ import dagger.Module
  * @Description:
  *-----------------------------------------------------------------------
  */
-@Module(includes = [BaseActivityModule.Bindings::class])
-object BaseActivityModule {
+@Module(includes = [MvpActivityModule.Bindings::class])
+object MvpActivityModule {
 
 
     @Module

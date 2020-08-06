@@ -1,7 +1,4 @@
-package com.linwei.cams_mvvm_template.mvvm.contract
-
-import com.linwei.cams_mvvm.mvvm.IModel
-import com.linwei.cams_mvvm.mvvm.IView
+package com.linwei.cams_mvvm_template.mvvm.model.api
 
 /**
  * ---------------------------------------------------------------------
@@ -9,21 +6,10 @@ import com.linwei.cams_mvvm.mvvm.IView
  * @Time: 2020/8/3
  * @Contact: linwei9605@gmail.com"d
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: 网络接口定义
  *-----------------------------------------------------------------------
  */
-interface MainContract {
+interface Api {
 
-    interface View{
-
-    }
-
-    interface ViewModel {
-
-    }
-
-    interface Model {
-
-    }
 
 }

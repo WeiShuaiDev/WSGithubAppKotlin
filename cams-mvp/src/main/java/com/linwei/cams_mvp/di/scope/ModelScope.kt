@@ -1,4 +1,4 @@
-package com.linwei.cams_mvvm.di.scope
+package com.linwei.cams_mvp.di.scope
 
 import javax.inject.Scope
 

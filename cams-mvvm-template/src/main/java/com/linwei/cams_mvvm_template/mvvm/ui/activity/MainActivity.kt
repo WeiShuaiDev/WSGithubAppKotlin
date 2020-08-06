@@ -1,7 +1,9 @@
 package com.linwei.cams_mvvm_template.mvvm.ui.activity
+
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm_template.R
 import com.linwei.cams_mvvm_template.databinding.ActivityMainBinding
+import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
 import com.linwei.cams_mvvm_template.mvvm.viewmodel.MainViewModel
 
 /**
@@ -13,9 +15,9 @@ import com.linwei.cams_mvvm_template.mvvm.viewmodel.MainViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class MainActivity : BaseMvvmActivity<MainViewModel, ActivityMainBinding>() {
+class MainActivity : BaseMvvmActivity<MainViewModel, ActivityMainBinding>(), MainContract.View {
 
-    override fun provideContentViewId(): Int= R.layout.activity_main
+    override fun provideContentViewId(): Int = R.layout.activity_main
 
     override fun initLayoutView() {
     }

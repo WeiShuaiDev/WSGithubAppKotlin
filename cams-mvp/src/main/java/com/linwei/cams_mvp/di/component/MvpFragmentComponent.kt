@@ -2,7 +2,7 @@ package com.linwei.cams_mvp.di.component
 
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.di.scope.FragmentScope
-import com.linwei.cams_mvp.di.module.BaseFragmentModule
+import com.linwei.cams_mvp.di.module.MvpFragmentModule
 import dagger.Component
 
 /**
@@ -15,15 +15,15 @@ import dagger.Component
  *-----------------------------------------------------------------------
  */
 @FragmentScope
-@Component(dependencies = [AppComponent::class], modules = [BaseFragmentModule::class])
-interface BaseMvpFragmentComponent {
+@Component(dependencies = [AppComponent::class], modules = [MvpFragmentModule::class])
+interface MvpFragmentComponent {
 
 
     @Component.Builder
     interface Builder {
         fun appComponent(appComponent: AppComponent?): Builder
 
-        fun build(): BaseMvpFragmentComponent
+        fun build(): MvpFragmentComponent
     }
 
 }

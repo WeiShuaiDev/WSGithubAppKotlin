@@ -20,7 +20,7 @@ import io.reactivex.Observable
  * @Description: MVP架构中 `Model` 接口实现类
  *-----------------------------------------------------------------------
  */
-class BaseModel(private var repositoryManager: RepositoryManager?) : IModel, LifecycleObserver {
+open class BaseModel(private var repositoryManager: RepositoryManager?) : IModel, LifecycleObserver {
 
     override fun onDestroy() {
         repositoryManager = null

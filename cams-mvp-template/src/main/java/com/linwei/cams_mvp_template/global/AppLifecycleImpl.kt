@@ -1,45 +1,38 @@
-package com.linwei.cams_mvvm.global
+package com.linwei.cams_mvp_template.global
 
 import android.app.Application
 import android.content.Context
 import com.linwei.cams.base.lifecycle.AppLifecycles
-import com.linwei.cams_mvvm.di.component.MvvmComponent
 import timber.log.Timber
 
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/7/10
+ * @Time: 2020/8/6
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
  * @Description:
  *-----------------------------------------------------------------------
  */
-class AppLifecycleMvvmImpl : AppLifecycles {
-
-    private lateinit var mMvvmComponent: MvvmComponent
+class AppLifecycleImpl : AppLifecycles {
 
     override fun attachBaseContext(context: Context) {
-        Timber.i("AppLifecycleMvvmImpl to attachBaseContext!")
+        Timber.i("AppLifecycleImpl to attachBaseContext!")
     }
 
     override fun onCreate(application: Application) {
-//        this.mMvvmComponent = DaggerMvvmComponent
-//            .builder()
-//            .appComponent(obtainAppComponent())
-//            .build()
-//        mMvvmComponent.inject(this)
+        Timber.i("AppLifecycleImpl to onCreate!")
     }
 
     override fun onTerminate(application: Application) {
-        Timber.i("AppLifecycleMvvmImpl to onTerminate!")
+        Timber.i("AppLifecycleImpl to onTerminate!")
     }
 
     override fun onLowMemory(application: Application) {
-        Timber.i("AppLifecycleMvvmImpl to onLowMemory!")
+        Timber.i("AppLifecycleImpl to onLowMemory!")
     }
 
     override fun onTrimMemory(level: Int) {
-        Timber.i("AppLifecycleMvvmImpl to onTrimMemory!")
+        Timber.i("AppLifecycleImpl to onTrimMemory!")
     }
 }

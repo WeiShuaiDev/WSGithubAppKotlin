@@ -1,7 +1,4 @@
-package com.linwei.cams_mvvm_template.mvvm.contract
-
-import com.linwei.cams_mvvm.mvvm.IModel
-import com.linwei.cams_mvvm.mvvm.IView
+package com.linwei.cams_mvvm_template.mvvm.model.api.service
 
 /**
  * ---------------------------------------------------------------------
@@ -12,18 +9,5 @@ import com.linwei.cams_mvvm.mvvm.IView
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface MainContract {
-
-    interface View{
-
-    }
-
-    interface ViewModel {
-
-    }
-
-    interface Model {
-
-    }
-
+interface CommonService {
 }

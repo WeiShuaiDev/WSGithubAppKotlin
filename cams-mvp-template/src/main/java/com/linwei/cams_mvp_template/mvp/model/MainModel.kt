@@ -1,7 +1,7 @@
-package com.linwei.cams_mvvm_template.mvvm.model
+package com.linwei.cams_mvp_template.mvp.model
 
-import com.linwei.cams_mvvm.http.DataMvvmRepository
-import com.linwei.cams_mvvm.mvvm.BaseModel
+import com.linwei.cams.manager.RepositoryManager
+import com.linwei.cams_mvp.mvp.BaseModel
 import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
 import javax.inject.Inject
 
@@ -14,8 +14,8 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class MainModel @Inject constructor(dataRepository: DataMvvmRepository) :
-    BaseModel(dataRepository), MainContract.Model {
+class MainModel @Inject constructor(repositoryManager: RepositoryManager) :
+    BaseModel(repositoryManager), MainContract.Model {
 
 
 }

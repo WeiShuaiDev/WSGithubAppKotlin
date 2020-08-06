@@ -22,7 +22,7 @@ import javax.inject.Inject
  * 方法注入国际化处理。
  *----------------------------------------------------------------------
  */
-class BaseApplication : Application(), App, HasAndroidInjector {
+open class BaseApplication : Application(), App, HasAndroidInjector {
     private lateinit var mAppDelegate: AppDelegate
 
     @Inject

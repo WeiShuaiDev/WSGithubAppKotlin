@@ -5,8 +5,8 @@ import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.ext.showShort
 import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_mvp.R
-import com.linwei.cams_mvp.di.component.BaseMvpFragmentComponent
-import com.linwei.cams_mvp.di.component.DaggerBaseMvpFragmentComponent
+import com.linwei.cams_mvp.di.component.DaggerMvpFragmentComponent
+import com.linwei.cams_mvp.di.component.MvpFragmentComponent
 import com.linwei.cams_mvp.lifecycle.FragmentRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
 import com.linwei.cams_mvp.mvp.IModel
@@ -37,7 +37,7 @@ abstract class BaseMvpFragmentWithTop<T : BasePresenter<IModel, IView>> : BaseFr
     private var mProgressDialog: Dialog? = null
 
     override fun setupFragmentComponent(appComponent: AppComponent?) {
-        val mvpFragmentComponent: BaseMvpFragmentComponent = DaggerBaseMvpFragmentComponent.builder()
+        val mvpFragmentComponent: MvpFragmentComponent = DaggerMvpFragmentComponent.builder()
             .appComponent(appComponent) //提供application
             .build()
 
@@ -48,9 +48,9 @@ abstract class BaseMvpFragmentWithTop<T : BasePresenter<IModel, IView>> : BaseFr
 
     /**
      * 提供给 {@link Activity}实现类，进行{@code appComponent}依赖
-     * @param mvpFragmentComponent [BaseMvpFragmentComponent]
+     * @param mvpFragmentComponent [MvpFragmentComponent]
      */
-    abstract fun setUpFragmentChildComponent(mvpFragmentComponent: BaseMvpFragmentComponent?)
+    abstract fun setUpFragmentChildComponent(mvpFragmentComponent: MvpFragmentComponent?)
 
 
     override fun showLoading(message: Int) {

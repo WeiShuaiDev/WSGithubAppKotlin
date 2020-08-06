@@ -16,8 +16,8 @@ import dagger.Module
  * @Description:
  *-----------------------------------------------------------------------
  */
-@Module(includes = [BaseFragmentModule.Bindings::class])
-object BaseFragmentModule {
+@Module(includes = [MvpFragmentModule.Bindings::class])
+object MvpFragmentModule {
 
     @Module
     interface Bindings {

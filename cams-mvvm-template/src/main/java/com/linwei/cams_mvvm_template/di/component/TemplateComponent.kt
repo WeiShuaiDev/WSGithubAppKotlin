@@ -5,7 +5,7 @@ import com.linwei.cams_mvvm.di.component.MvvmComponent
 import com.linwei.cams_mvvm_template.di.module.ActivityModule
 import com.linwei.cams_mvvm_template.di.module.FragmentModule
 import com.linwei.cams_mvvm_template.di.module.ViewModelModule
-import com.linwei.cams_mvvm_template.di.scope.TemplateScope
+import com.linwei.cams_mvvm_template.di.scope.MvvmScope
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 
@@ -18,7 +18,7 @@ import dagger.android.AndroidInjectionModule
  * @Description:
  *-----------------------------------------------------------------------
  */
-@TemplateScope
+@MvvmScope
 @Component(
     dependencies = [MvvmComponent::class],
     modules = [AndroidInjectionModule::class, ViewModelModule::class, ActivityModule::class,

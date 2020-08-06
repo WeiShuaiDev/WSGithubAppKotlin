@@ -20,7 +20,7 @@ import dagger.multibindings.IntoMap
  *-----------------------------------------------------------------------
  */
 @Module
-abstract class AacViewModelModule {
+abstract class MvvmViewModelModule {
 
     @ViewModelScope
     @Binds

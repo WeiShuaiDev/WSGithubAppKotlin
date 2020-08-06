@@ -1,7 +1,8 @@
 package com.linwei.cams_mvvm_template.mvvm.contract
 
-import com.linwei.cams_mvvm.mvvm.IModel
-import com.linwei.cams_mvvm.mvvm.IView
+import com.linwei.cams_mvp.mvp.IModel
+import com.linwei.cams_mvp.mvp.IPresenter
+import com.linwei.cams_mvp.mvp.IView
 
 /**
  * ---------------------------------------------------------------------
@@ -14,16 +15,14 @@ import com.linwei.cams_mvvm.mvvm.IView
  */
 interface MainContract {
 
-    interface View{
+    interface View :IView{
 
     }
 
-    interface ViewModel {
+    interface Model:IModel {
 
     }
 
-    interface Model {
-
-    }
+    interface Presenter:IPresenter
 
 }
