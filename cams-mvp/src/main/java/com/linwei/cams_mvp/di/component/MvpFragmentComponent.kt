@@ -5,6 +5,7 @@ import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.di.scope.FragmentScope
 import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.manager.*
+import com.linwei.cams_mvp.di.module.MvpActivityModule
 import com.linwei.cams_mvp.di.module.MvpFragmentModule
 import dagger.Component
 
@@ -14,7 +15,7 @@ import dagger.Component
  * @Time: 2020/7/7
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVP` 架构 `Fragment` 依赖注入Component,内部提供 [MvpFragmentModule] 模块。
  *-----------------------------------------------------------------------
  */
 @FragmentScope

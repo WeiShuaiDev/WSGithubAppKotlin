@@ -4,6 +4,7 @@ import android.view.View
 import com.linwei.cams.base.fragment.BaseFragment
 import com.linwei.cams_mvp.base.BaseMvpFragment
 import com.linwei.cams_mvp.di.component.MvpFragmentComponent
+import com.linwei.cams_mvp_template.mvp.contract.MainContract
 import com.linwei.cams_mvp_template.mvp.presenter.MainPresenter
 
 /**
@@ -15,9 +16,8 @@ import com.linwei.cams_mvp_template.mvp.presenter.MainPresenter
  * @Description:
  *-----------------------------------------------------------------------
  */
-class LoginFragment : BaseMvpFragment<MainPresenter>() {
+class LoginFragment : BaseMvpFragment<MainPresenter>(), MainContract.View  {
     override fun setUpFragmentChildComponent(mvpFragmentComponent: MvpFragmentComponent?) {
-        TODO("Not yet implemented")
     }
 
     override fun initLayoutView(rootView: View?) {

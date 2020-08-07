@@ -9,8 +9,7 @@ import io.reactivex.subjects.Subject
  * @Time: 2020/7/6
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 让 [Activity]/[Fragment]实现此接口,即可正常使用 {@link RxLifecycle}
- * 无需再继承 {@link RxLifecycle} 提供的 Activity/Fragment
+ * @Description: `MVP` 架构  [Activity]、[Fragment]实现此接口,即可正常使用 [RxLifecycle],无需再继承 [RxLifecycle]
  *-----------------------------------------------------------------------
  */
 interface RxLifecycle<E> {

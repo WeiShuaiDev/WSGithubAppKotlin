@@ -6,7 +6,7 @@ package com.linwei.cams_mvp.mvp
  * @Time: 2020/7/6
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: MVP架构中 `View` 接口定义
+ * @Description: MVP架构  `View` 接口定义
  *-----------------------------------------------------------------------
  */
 interface IView {

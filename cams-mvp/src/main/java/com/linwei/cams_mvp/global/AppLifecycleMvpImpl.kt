@@ -10,7 +10,7 @@ import com.linwei.cams.base.lifecycle.AppLifecycles
  * @Time: 2020/7/6
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVP` 架构 `Application` 回调。
  *-----------------------------------------------------------------------
  */
 class AppLifecycleMvpImpl : AppLifecycles {

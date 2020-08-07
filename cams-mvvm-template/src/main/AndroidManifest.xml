@@ -10,10 +10,10 @@
         android:theme="@style/AppTheme">
 
         <meta-data
-            android:name="com.linwei.cams_mvvm_template.global.GlobalConfiguration"
+            android:name=".global.GlobalConfiguration"
             android:value="GlobalConfigModule" />
 
-        <activity android:name="com.linwei.cams_mvvm_template.SplashActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.linwei.cams_mvp_template.mvp.ui.activity.MainActivity"/>
+        <activity android:name=".mvvm.ui.activity.MainActivity" />
     </application>
 
 </manifest>

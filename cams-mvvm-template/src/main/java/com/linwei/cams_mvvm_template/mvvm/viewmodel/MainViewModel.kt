@@ -15,7 +15,7 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class MainViewModel @Inject constructor(
+class MainViewModel constructor(
     model: MainModel,
     application: Application
 ) : BaseViewModel(model, application), MainContract.ViewModel {

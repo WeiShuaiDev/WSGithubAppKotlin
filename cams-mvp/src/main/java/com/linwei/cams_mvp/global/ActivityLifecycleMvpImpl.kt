@@ -14,7 +14,8 @@ import io.reactivex.subjects.Subject
  * @Time: 2020/7/7
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVP` 架构 `ActivityLifecycle` 生命周期增加到 `ActivityLifecycleCallbacks` 回调，
+ *                进而注入到 `Activity` 整个生命周期中。
  *-----------------------------------------------------------------------
  */
 @ActivityScope

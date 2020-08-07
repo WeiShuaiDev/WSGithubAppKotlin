@@ -22,7 +22,7 @@ import javax.inject.Inject
  * @Time: 2020/7/5
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: `MVP` 架构 `Activity` 基类
+ * @Description: `MVP` 架构 `Activity` 核心基类
  *-----------------------------------------------------------------------
  */
 abstract class BaseMvpActivity<T : IPresenter> : BaseActivity(), IView,

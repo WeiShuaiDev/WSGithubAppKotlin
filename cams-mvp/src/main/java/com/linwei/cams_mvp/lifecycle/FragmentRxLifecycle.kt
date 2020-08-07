@@ -8,7 +8,7 @@ import com.trello.rxlifecycle4.android.FragmentEvent
  * @Time: 2020/7/6
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 让 [Fragment] 实现此接口,即可正常使用 {@link RxLifecycle}
+ * @Description: `MVP` 架构 [Fragment] 实现此接口,即可正常使用 [RxLifecycle]
  *-----------------------------------------------------------------------
  */
 interface FragmentRxLifecycle : RxLifecycle<FragmentEvent> {

@@ -14,14 +14,14 @@ import io.reactivex.disposables.Disposable
  * @Time: 2020/7/6
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: MVP架构中 `Presenter` 接口实现类
+ * @Description: MVP架构  `Presenter` 接口实现类，提供注入 `Model`生命周期，事件总线处理。
  *-----------------------------------------------------------------------
  */
 abstract class BasePresenter<M : IModel, V : IView>(
     private var eventBusManager: EventBusManager,
     private var model: M?,
     private var rootView: V?
-) :IPresenter,
+) : IPresenter,
     LifecycleObserver {
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()

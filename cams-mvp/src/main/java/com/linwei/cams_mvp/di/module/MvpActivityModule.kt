@@ -1,4 +1,5 @@
 package com.linwei.cams_mvp.di.module
+
 import android.app.Application
 import com.linwei.cams.di.scope.ActivityScope
 import com.linwei.cams_mvp.di.qualifier.ActivityRxLifecycleQualifier
@@ -12,7 +13,7 @@ import dagger.Module
  * @Time: 2020/7/7
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVP` 架构 `Activity` 中 `Module`模块,提供生命周期注入。
  *-----------------------------------------------------------------------
  */
 @Module(includes = [MvpActivityModule.Bindings::class])

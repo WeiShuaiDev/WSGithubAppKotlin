@@ -8,7 +8,7 @@ import javax.inject.Qualifier
  * @Time: 2020/7/7
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description:  `MVP` 架构 `FragmentRxLifecycle` 标识限定符。
  *-----------------------------------------------------------------------
  */
 @Qualifier

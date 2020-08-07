@@ -1,4 +1,5 @@
 package com.linwei.cams_mvp.di.component
+
 import android.app.Application
 import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.base.lifecycle.AppLifecycles
@@ -15,7 +16,7 @@ import dagger.Component
  * @Time: 2020/7/7
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVP` 架构 `Activity` 依赖注入Component,内部提供 [MvpActivityModule] 模块。
  *-----------------------------------------------------------------------
  */
 @ActivityScope

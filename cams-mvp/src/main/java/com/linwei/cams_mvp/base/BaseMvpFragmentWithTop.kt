@@ -24,7 +24,7 @@ import javax.inject.Inject
  * @Time: 2020/7/8
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: `MVP` 架构 `Fragment`基类
+ * @Description: `MVP` 架构 `Fragment` 导航栏基类
  *-----------------------------------------------------------------------
  */
 abstract class BaseMvpFragmentWithTop<T : IPresenter> : BaseFragmentWithTop(),IView,

@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @Description: AAC架构中 `Model` 模块，tigong
  *-----------------------------------------------------------------------
  */
-open class BaseViewModel @Inject constructor(
+open class BaseViewModel constructor(
     private val model: BaseModel,
     application: Application
 ) : AndroidViewModel(application),

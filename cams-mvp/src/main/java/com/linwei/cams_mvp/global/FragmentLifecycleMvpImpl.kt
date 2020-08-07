@@ -16,7 +16,8 @@ import io.reactivex.subjects.Subject
  * @Time: 2020/7/7
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description:`MVP` 架构 `FragmentLifecycle` 生命周期增加到 `FragmentLifecycleCallbacks` 回调，
+ *                进而注入到 `Fragment` 整个生命周期中。
  *-----------------------------------------------------------------------
  */
 @FragmentScope
