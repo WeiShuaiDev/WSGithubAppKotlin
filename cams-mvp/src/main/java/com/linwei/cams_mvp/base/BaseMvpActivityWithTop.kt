@@ -11,6 +11,7 @@ import com.linwei.cams_mvp.di.component.MvpActivityComponent
 import com.linwei.cams_mvp.lifecycle.ActivityRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
 import com.linwei.cams_mvp.mvp.IModel
+import com.linwei.cams_mvp.mvp.IPresenter
 import com.linwei.cams_mvp.mvp.IView
 import com.trello.rxlifecycle4.android.ActivityEvent
 import io.reactivex.subjects.BehaviorSubject
@@ -26,7 +27,7 @@ import javax.inject.Inject
  * @Description: `MVP`架构 `Activity` 导航栏基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseMvpActivityWithTop<T : BasePresenter<IModel, IView>> : BaseActivityWithTop(),
+abstract class BaseMvpActivityWithTop<T : IPresenter> : BaseActivityWithTop(),
     IView,
     ActivityRxLifecycle {
 
