@@ -1,8 +1,8 @@
-package com.linwei.cams_mvvm_template.di.module
+package com.linwei.cams_mvp_template.di.module
 
-import com.linwei.cams_mvp.di.scope.ModelScope
+import com.linwei.cams_mvp_template.di.scope.MvpScope
 import com.linwei.cams_mvp_template.mvp.model.MainModel
-import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
+import com.linwei.cams_mvp_template.mvp.contract.MainContract
 import dagger.Binds
 import dagger.Module
 
@@ -21,7 +21,7 @@ object MainModule {
     @Module
     interface Bindings {
 
-        @ModelScope
+        @MvpScope
         @Binds
         fun bindMainModel(mainModel: MainModel): MainContract.Model
 

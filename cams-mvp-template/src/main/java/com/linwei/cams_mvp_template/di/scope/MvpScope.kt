@@ -1,4 +1,4 @@
-package com.linwei.cams_mvvm_template.di.scope
+package com.linwei.cams_mvp_template.di.scope
 
 import javax.inject.Scope
 
@@ -9,5 +9,5 @@ import javax.inject.Scope
  */
 @Scope
 @MustBeDocumented
-@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class MvpScope

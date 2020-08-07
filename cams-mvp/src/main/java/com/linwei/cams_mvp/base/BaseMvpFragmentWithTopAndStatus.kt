@@ -11,6 +11,7 @@ import com.linwei.cams_mvp.di.component.MvpFragmentComponent
 import com.linwei.cams_mvp.lifecycle.FragmentRxLifecycle
 import com.linwei.cams_mvp.mvp.BasePresenter
 import com.linwei.cams_mvp.mvp.IModel
+import com.linwei.cams_mvp.mvp.IPresenter
 import com.linwei.cams_mvp.mvp.IView
 import com.trello.rxlifecycle4.android.FragmentEvent
 import io.reactivex.subjects.BehaviorSubject
@@ -26,7 +27,7 @@ import javax.inject.Inject
  * @Description: `MVP` 架构 `Fragment`基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseMvpFragmentWithTopAndStatus<T : BasePresenter<IModel, IView>> :
+abstract class BaseMvpFragmentWithTopAndStatus<T : IPresenter> :
     BaseFragmentWithTopAndStatus(), IView,
     FragmentRxLifecycle {
 

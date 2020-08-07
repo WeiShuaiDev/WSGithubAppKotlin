@@ -1,4 +1,4 @@
-package com.linwei.cams_mvvm_template.mvvm.ui.adapter
+package com.linwei.cams_mvp_template.mvp.ui.adapter
 
 /**
  * ---------------------------------------------------------------------

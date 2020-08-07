@@ -2,7 +2,7 @@ package com.linwei.cams_mvp_template.mvp.model
 
 import com.linwei.cams.manager.RepositoryManager
 import com.linwei.cams_mvp.mvp.BaseModel
-import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
+import com.linwei.cams_mvp_template.mvp.contract.MainContract
 import javax.inject.Inject
 
 /**

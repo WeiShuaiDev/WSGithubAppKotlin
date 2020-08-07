@@ -1,4 +1,4 @@
-package com.linwei.cams_mvvm_template.mvvm.model.api.cache
+package com.linwei.cams_mvp_template.mvp.model.api.cache
 
 /**
  * ---------------------------------------------------------------------

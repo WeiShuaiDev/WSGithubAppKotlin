@@ -48,7 +48,7 @@ abstract class BaseMvpActivity<T : IPresenter> : BaseActivity(), IView,
      * 提供给 {@link Activity}实现类，进行{@code appComponent}依赖
      * @param mvpActivityComponent [MvpActivityComponent]
      */
-    abstract fun setUpActivityChildComponent(mvpActivityComponent: MvpActivityComponent?)
+    abstract fun setUpActivityChildComponent(mvpActivityComponent: MvpActivityComponent)
 
     override fun showLoading(message: Int) {
         if (mProgressDialog?.isShowing == true) {

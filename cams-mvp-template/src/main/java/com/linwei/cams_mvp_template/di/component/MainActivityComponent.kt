@@ -1,13 +1,12 @@
 package com.linwei.cams_mvp_template.di.component
 
 import com.linwei.cams_mvp.di.component.MvpActivityComponent
-import com.linwei.cams_mvvm_template.di.module.MainModule
-import com.linwei.cams_mvvm_template.di.scope.MvpScope
-import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
-import com.linwei.cams_mvvm_template.mvvm.ui.activity.MainActivity
+import com.linwei.cams_mvp_template.di.module.MainModule
+import com.linwei.cams_mvp_template.di.scope.MvpScope
+import com.linwei.cams_mvp_template.mvp.contract.MainContract
+import com.linwei.cams_mvp_template.mvp.ui.activity.MainActivity
 import dagger.BindsInstance
 import dagger.Component
-
 
 /**
  * ---------------------------------------------------------------------
@@ -18,13 +17,13 @@ import dagger.Component
  * @Description:
  *-----------------------------------------------------------------------
  */
+
 @MvpScope
 @Component(
     dependencies = [MvpActivityComponent::class],
     modules = [MainModule::class]
 )
-interface MainComponent {
-
+interface MainActivityComponent {
     /**
      * 注入 [MainActivity] 对象
      * @param activity [MainActivity]
@@ -33,11 +32,12 @@ interface MainComponent {
 
     @Component.Builder
     interface Builder {
+
         @BindsInstance
         fun view(view: MainContract.View): Builder
 
         fun component(component: MvpActivityComponent): Builder
 
-        fun build(): MainComponent
+        fun build(): MainActivityComponent
     }
 }

@@ -1,12 +1,12 @@
-package com.linwei.cams_mvvm_template.mvvm.ui.activity
+package com.linwei.cams_mvp_template.mvp.ui.activity
 
 import com.linwei.cams_mvp.base.BaseMvpActivity
 import com.linwei.cams_mvp.di.component.MvpActivityComponent
-import com.linwei.cams_mvp.di.component.MvpFragmentComponent
 import com.linwei.cams_mvp_template.R
-import com.linwei.cams_mvp_template.di.component.MainComponent
+import com.linwei.cams_mvp_template.di.component.DaggerMainActivityComponent
+import com.linwei.cams_mvp_template.di.component.MainActivityComponent
 import com.linwei.cams_mvp_template.mvp.presenter.MainPresenter
-import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
+import com.linwei.cams_mvp_template.mvp.contract.MainContract
 
 /**
  * ---------------------------------------------------------------------
@@ -19,11 +19,12 @@ import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
  */
 class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.View {
 
-    override fun setUpActivityChildComponent(mvpActivityComponent: MvpActivityComponent?) {
-//        val mainComponent: DaggerMainComponent =
-//            DaggerMainComponent.builder()
-//                .appComponent(appComponent) //提供application
-//                .build()
+    override fun setUpActivityChildComponent(mvpActivityComponent: MvpActivityComponent) {
+        val mainActivityComponent: MainActivityComponent =
+            DaggerMainActivityComponent.builder()
+                .component(mvpActivityComponent) //提供application
+                .build()
+        mainActivityComponent.inject(this)
     }
 
     override fun initLayoutView() {

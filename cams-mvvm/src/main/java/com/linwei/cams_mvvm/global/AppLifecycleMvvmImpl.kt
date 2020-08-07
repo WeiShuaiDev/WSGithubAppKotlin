@@ -3,6 +3,8 @@ package com.linwei.cams_mvvm.global
 import android.app.Application
 import android.content.Context
 import com.linwei.cams.base.lifecycle.AppLifecycles
+import com.linwei.cams.ext.obtainAppComponent
+import com.linwei.cams_mvvm.di.component.DaggerMvvmComponent
 import com.linwei.cams_mvvm.di.component.MvvmComponent
 import timber.log.Timber
 
@@ -24,11 +26,11 @@ class AppLifecycleMvvmImpl : AppLifecycles {
     }
 
     override fun onCreate(application: Application) {
-//        this.mMvvmComponent = DaggerMvvmComponent
-//            .builder()
-//            .appComponent(obtainAppComponent())
-//            .build()
-//        mMvvmComponent.inject(this)
+        this.mMvvmComponent = DaggerMvvmComponent
+            .builder()
+            .appComponent(obtainAppComponent())
+            .build()
+        mMvvmComponent.inject(this)
     }
 
     override fun onTerminate(application: Application) {

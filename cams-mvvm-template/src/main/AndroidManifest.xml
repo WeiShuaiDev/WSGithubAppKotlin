@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.linwei.cams_mvvm_template.mvvm.ui.activity.MainActivity"/>
+        <activity android:name="com.linwei.cams_mvp_template.mvp.ui.activity.MainActivity"/>
     </application>
 
 </manifest>
