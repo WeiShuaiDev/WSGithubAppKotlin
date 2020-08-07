@@ -16,7 +16,7 @@ import javax.inject.Inject
  * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description: AAC架构中 `Model` 模块，tigong
+ * @Description: MVVM架构 `Model` 模块，提供 [MessageLiveEvent]消息事件总线、[StatusLiveEvent]状态事件总线功能。
  *-----------------------------------------------------------------------
  */
 open class BaseViewModel constructor(

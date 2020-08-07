@@ -10,7 +10,7 @@ import javax.inject.Provider
  * @Time: 2020/7/14
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 生产 [ViewModel]工厂类，通过 `Dagger2` 注入ViewModel对象，把 `Provider<ViewModel>` 存储到 Map集合中 `value`，
+ * @Description: MVVM架构生产 [ViewModel]工厂类，通过 `Dagger2` 注入ViewModel对象，把 `Provider<ViewModel>` 存储到 Map集合中 `value`，
  *               `Class<in ViewModel>` 存储到 Map 集合中 `key`
  *-----------------------------------------------------------------------
  */

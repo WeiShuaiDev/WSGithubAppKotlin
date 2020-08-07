@@ -13,7 +13,7 @@ import com.linwei.cams_mvvm.GlobalConstant
  * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description:  MVVM架构数据处理库，增加 `Room` 数据库处理。
  *-----------------------------------------------------------------------
  */
 class DataMvvmRepository : DataRepository(), IDataMvvmRepository {

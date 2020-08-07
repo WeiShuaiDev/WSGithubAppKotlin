@@ -6,7 +6,7 @@ package com.linwei.cams_mvvm
  * @Time: 2020/6/16
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
- * @Description: 定义全局参数，分别包含:[CacheConstant] 缓存参数、
+ * @Description: MVVM架构全局参数，分别包含:[CacheConstant] 缓存参数、
  *-----------------------------------------------------------------------
  */
 

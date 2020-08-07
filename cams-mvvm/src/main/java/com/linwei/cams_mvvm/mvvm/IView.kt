@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
  * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: AAC架构中 `View` 模块,绑定生命周期，定义 `IView` 接口
+ * @Description: MVVM架构  `View` 模块,绑定生命周期，定义 `IView` 接口
  *-----------------------------------------------------------------------
  */
 interface IView<VM : ViewModel> {

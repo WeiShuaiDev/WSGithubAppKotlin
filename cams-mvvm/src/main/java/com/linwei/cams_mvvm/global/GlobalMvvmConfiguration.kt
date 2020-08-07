@@ -13,7 +13,7 @@ import com.linwei.cams.di.module.GlobalConfigModule
  * @Time: 2020/7/6
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVVM` 架构注入配置扩展类 [ActivityLifecycleMvvmImpl]、[FragmentLifecycleMvvmImpl]、[AppLifecycleMvvmImpl]
  *-----------------------------------------------------------------------
  */
 class GlobalMvvmConfiguration : ConfigModule {

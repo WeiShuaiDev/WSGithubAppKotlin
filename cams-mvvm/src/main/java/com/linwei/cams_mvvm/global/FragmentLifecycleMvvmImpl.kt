@@ -14,7 +14,8 @@ import timber.log.Timber
  * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVVM` 架构 `FragmentLifecycle` 生命周期增加到 `FragmentLifecycleCallbacks` 回调，
+ *                进而注入到 `Fragment` 整个生命周期中。
  *-----------------------------------------------------------------------
  */
 @FragmentScope

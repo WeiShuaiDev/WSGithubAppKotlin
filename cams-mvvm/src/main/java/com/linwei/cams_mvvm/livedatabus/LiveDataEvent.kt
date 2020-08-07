@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @Time: 2020/7/16
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 单通道事件总线，提供 `observe`、`observeForever` 两种方式。
+ * @Description: MVVM架构单通道事件总线，提供 `observe`、`observeForever` 两种方式。
  *-----------------------------------------------------------------------
  */
 open class LiveDataEvent<T> : MutableLiveData<T>() {

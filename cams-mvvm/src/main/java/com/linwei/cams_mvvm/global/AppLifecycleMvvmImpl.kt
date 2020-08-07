@@ -14,7 +14,7 @@ import timber.log.Timber
  * @Time: 2020/7/10
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVVM` 架构 `Application` 回调。
  *-----------------------------------------------------------------------
  */
 class AppLifecycleMvvmImpl : AppLifecycles {

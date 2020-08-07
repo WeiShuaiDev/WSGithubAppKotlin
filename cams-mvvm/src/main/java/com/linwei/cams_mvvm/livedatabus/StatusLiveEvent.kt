@@ -10,7 +10,7 @@ import com.linwei.cams.http.model.StatusCode
  * @Time: 2020/7/16
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:  状态事件总线，提供 `observe`、`observeForever` 两种方式。
+ * @Description:  MVVM架构状态事件总线，提供 `observe`、`observeForever` 两种方式。
  *          这里定义四种状态值: `StatusCode.LOADING`:加载中；`StatusCode.SUCCESS`: 成功状态；
  *          `StatusCode.FAILURE`:失败状态; `StatusCode.ERROR`: 错误状态
  *-----------------------------------------------------------------------

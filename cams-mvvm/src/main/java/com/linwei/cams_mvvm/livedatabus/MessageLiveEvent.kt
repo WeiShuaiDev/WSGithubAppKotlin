@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
  * @Time: 2020/7/16
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 消息事件总线，提供 `observe`、`observeForever` 两种方式。
+ * @Description: MVVM架构消息事件总线，提供 `observe`、`observeForever` 两种方式。
  *-----------------------------------------------------------------------
  */
 class MessageLiveEvent : LiveDataEvent<Message>() {

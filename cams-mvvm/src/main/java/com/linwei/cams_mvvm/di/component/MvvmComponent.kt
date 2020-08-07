@@ -17,7 +17,7 @@ import dagger.android.AndroidInjectionModule
  * @Time: 2020/7/14
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVVM` 架构 `Application` 依赖注入Component,内部提供 [MvvmViewModelModule]、[MvvmModelModule] 模块。
  *-----------------------------------------------------------------------
  */
 @ApplicationScope

@@ -11,7 +11,7 @@ import androidx.lifecycle.OnLifecycleEvent
  * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: AAC架构中 `ViewModel` 模块,绑定生命周期，定义 `IViewModel` 接口
+ * @Description: MVVM架构  `ViewModel` 模块,绑定生命周期，定义 `IViewModel` 接口
  *-----------------------------------------------------------------------
  */
 interface IViewModel : LifecycleObserver {

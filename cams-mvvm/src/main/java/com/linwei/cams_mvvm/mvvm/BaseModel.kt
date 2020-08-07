@@ -13,7 +13,7 @@ import javax.inject.Inject
  * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description: AAC架构中 `Model` 模块，作为数据源提供多种方式获取数据，包括 `Retrofit` 网络数据源 、`Room` 数据库数据源
+ * @Description: MVVM架构 `Model` 模块，作为数据源提供多种方式获取数据，包括 `Retrofit` 网络数据源 、`Room` 数据库数据源
  *-----------------------------------------------------------------------
  */
 open class BaseModel @Inject constructor(private val dataRepository: DataMvvmRepository) : IModel,

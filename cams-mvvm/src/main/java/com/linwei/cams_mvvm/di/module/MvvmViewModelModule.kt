@@ -16,7 +16,7 @@ import dagger.multibindings.IntoMap
  * @Time: 2020/7/16
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVVM` 架构 `ViewModel` 中 `Module`模块,提供注入 `ViewModel` 类。
  *-----------------------------------------------------------------------
  */
 @Module

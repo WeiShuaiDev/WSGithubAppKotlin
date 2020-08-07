@@ -15,7 +15,7 @@ import dagger.Provides
  * @Time: 2020/7/16
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVVM` 架构 `Model` 中 `Module`模块,提供事件总线，数据处理库。
  *-----------------------------------------------------------------------
  */
 @Module(includes = [MvvmModelModule.Bindings::class])

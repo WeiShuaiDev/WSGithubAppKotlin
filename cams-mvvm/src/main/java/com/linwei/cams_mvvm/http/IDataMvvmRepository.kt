@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
  * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: MVVM架构数据处理库接口定义，增加 `Room` 数据库处理。
  *-----------------------------------------------------------------------
  */
 interface IDataMvvmRepository {

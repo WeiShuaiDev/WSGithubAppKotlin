@@ -12,7 +12,8 @@ import timber.log.Timber
  * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com"d
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVVM` 架构 `ActivityLifecycle` 生命周期增加到 `ActivityLifecycleCallbacks` 回调，
+ *                进而注入到 `Activity` 整个生命周期中。
  *-----------------------------------------------------------------------
  */
 @ActivityScope

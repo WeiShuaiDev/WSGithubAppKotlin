@@ -33,7 +33,7 @@ import javax.inject.Inject
  * @Time: 2020/7/15
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description:  `AAC` 架构 `Activity` 基类
+ * @Description:  `MVVM`架构 `Activity` 导航栏基类
  *-----------------------------------------------------------------------
  */
 abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding> : BaseActivityWithTop(),
