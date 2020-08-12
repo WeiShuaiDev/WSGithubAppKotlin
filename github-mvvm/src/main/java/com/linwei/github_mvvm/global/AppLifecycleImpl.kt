@@ -1,15 +1,15 @@
-package com.linwei.cams_mvvm_template.global
+package com.linwei.github_mvvm.global
 
 import android.app.Application
 import android.content.Context
 import com.linwei.cams.base.lifecycle.AppLifecycles
-import com.linwei.cams_mvvm_template.di.component.TemplateComponent
+import com.linwei.github_mvvm.di.component.GithubComponent
 import timber.log.Timber
 
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/8/3
+ * @Time: 2020/8/12
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
  * @Description:
@@ -17,11 +17,11 @@ import timber.log.Timber
  */
 class AppLifecycleImpl : AppLifecycles {
 
-    private lateinit var mTemplateComponent: TemplateComponent
+    private lateinit var mGithubComponent: GithubComponent
 
     override fun attachBaseContext(context: Context) {
-//        this.mTemplateComponent = DaggerTemplateComponent.builder().build()
-//        mTemplateComponent.inject(this)
+//        this.mGithubComponent = DaggerGithubComponent.builder().build()
+//        mGithubComponent.inject(this)
     }
 
     override fun onCreate(application: Application) {
