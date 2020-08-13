@@ -19,6 +19,13 @@ class MainActivity : BaseMvvmActivity<MainViewModel, ActivityMainBinding>(), Mai
 
     override fun provideContentViewId(): Int = R.layout.activity_main
 
+    override fun bindViewModel() {
+        mViewDataBinding?.let {
+            it.viewModel = mViewModel
+            it.lifecycleOwner = this@MainActivity
+        }
+    }
+
     override fun initLayoutView() {
     }
 
@@ -27,4 +34,6 @@ class MainActivity : BaseMvvmActivity<MainViewModel, ActivityMainBinding>(), Mai
 
     override fun initLayoutListener() {
     }
+
+
 }

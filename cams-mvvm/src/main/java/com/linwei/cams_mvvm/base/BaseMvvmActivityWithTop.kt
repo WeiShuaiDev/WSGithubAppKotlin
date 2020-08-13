@@ -46,11 +46,11 @@ abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding
     @Inject
     lateinit var mViewModelFactory: ViewModelProvider.Factory
 
-    private var mViewDataBinding: VDB? = null
+    protected var mViewDataBinding: VDB? = null
 
-    private var mViewModel: VM? = null
+    protected var mViewModel: VM? = null
 
-    private var mProgressDialog: Dialog? = null
+    protected var mProgressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Dagger.Android Fragment 注入

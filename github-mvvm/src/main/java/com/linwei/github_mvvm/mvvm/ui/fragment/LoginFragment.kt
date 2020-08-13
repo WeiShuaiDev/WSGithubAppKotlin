@@ -16,6 +16,14 @@ import com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel
  *-----------------------------------------------------------------------
  */
 class LoginFragment : BaseMvvmFragment<MainViewModel, ActivityMainBinding>(), MainContract.View {
+
+    override fun bindViewModel() {
+        mViewDataBinding?.let {
+            it.viewModel = mViewModel
+            it.lifecycleOwner = viewLifecycleOwner
+        }
+    }
+
     override fun initLayoutView(rootView: View?) {
 
     }
@@ -31,4 +39,5 @@ class LoginFragment : BaseMvvmFragment<MainViewModel, ActivityMainBinding>(), Ma
 
     override fun loadData() {
     }
+
 }

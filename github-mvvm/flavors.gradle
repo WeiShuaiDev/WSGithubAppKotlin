@@ -1,0 +1,32 @@
+android {
+    productFlavors {
+        flavorDimensions "default", "server"
+        app {
+            applicationId 'com.linwei.github_mvvm'
+            versionName '1.0.0'
+            versionCode 1
+            buildConfigField('String', 'VERSION', '\"1.0\"')
+
+            resValue('string', 'app_name', 'Github App')
+            buildConfigField('String', 'APP_NAME', '\"Github App\"')
+
+            //Bugly配置
+            buildConfigField('String', 'BUGLY_APP_ID', '\"\"')
+
+            dimension "default"
+        }
+
+        online {  //线上
+            buildConfigField('String', 'BASE_URL', '\"https://app.pautang724.com/borrow/\"')
+            //https://openapi.happyrin.com/borrow/
+            buildConfigField('String', 'BASE_URL_H5', '\"https://h.pautang724.com/\"')
+            dimension "server"
+        }
+
+        offline {  //线下
+            buildConfigField('String', 'BASE_URL', '\"https://25d76v0748.qicp.vip:39049/borrow/\"')
+            buildConfigField('String', 'BASE_URL_H5', '\"https://192.168.1.5:8080/subyuang/\"')
+            dimension "server"
+        }
+    }
+}

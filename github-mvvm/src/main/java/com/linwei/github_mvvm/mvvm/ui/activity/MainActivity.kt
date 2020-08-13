@@ -17,6 +17,13 @@ import com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel
  */
 class MainActivity : BaseMvvmActivity<MainViewModel, ActivityMainBinding>(), MainContract.View {
 
+    override fun bindViewModel() {
+        mViewDataBinding?.let {
+            it.viewModel = mViewModel
+            it.lifecycleOwner = this@MainActivity
+        }
+    }
+
     override fun provideContentViewId(): Int = R.layout.activity_main
 
     override fun initLayoutView() {

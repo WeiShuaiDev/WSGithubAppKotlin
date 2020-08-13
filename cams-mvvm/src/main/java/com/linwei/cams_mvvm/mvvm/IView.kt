@@ -18,4 +18,9 @@ interface IView<VM : ViewModel> {
      * @return VM [ViewModel]
      */
     fun createViewModel(): VM?
+
+    /**
+     * 绑定 [ViewModel] 对象，到 `DataBinding` 中
+     */
+    fun bindViewModel()
 }
