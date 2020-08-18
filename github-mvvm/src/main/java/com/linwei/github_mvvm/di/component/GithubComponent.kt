@@ -33,4 +33,12 @@ interface GithubComponent {
      */
     fun inject(appLifecycles: AppLifecycles)
 
+
+    @Component.Builder
+    interface Builder {
+        fun appComponent(mvvmComponent: MvvmComponent?): Builder
+
+        fun build(): GithubComponent
+    }
+
 }
