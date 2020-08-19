@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.ui.fragment
+package com.linwei.github_mvvm.mvvm.ui.module.main
 
 import android.view.View
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
@@ -15,7 +15,7 @@ import com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class LoginFragment : BaseMvvmFragment<MainViewModel, ActivityMainBinding>(), MainContract.View {
+class DynamicFragment : BaseMvvmFragment<MainViewModel, ActivityMainBinding>(), MainContract.View {
 
     override fun bindViewModel() {
         mViewDataBinding?.let {
@@ -23,6 +23,7 @@ class LoginFragment : BaseMvvmFragment<MainViewModel, ActivityMainBinding>(), Ma
             it.lifecycleOwner = viewLifecycleOwner
         }
     }
+
 
     override fun initLayoutView(rootView: View?) {
 

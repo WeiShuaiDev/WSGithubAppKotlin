@@ -2,23 +2,41 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.ui.activity.MainActivity">
+    tools:context=".mvvm.ui.module.main.MainActivity">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout style="@style/MatchAndWrap">
+    <LinearLayout
+        style="@style/MatchAndWrap"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-        <TextView
-            style="@style/MatchAndMatch"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <fragment
+                android:id="@+id/mNavHostFragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/main_navigation" />
+
+        </FrameLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/mBnvNavigation"
+            style="@style/WrapAndWrap"
+            android:background="@color/colorNavigationBackground"
+            app:itemIconTint="@color/select_main_bottom"
+            app:itemTextColor="@color/select_main_bottom"
+            app:menu="@menu/menu_main" />
+
+    </LinearLayout>
 </layout>

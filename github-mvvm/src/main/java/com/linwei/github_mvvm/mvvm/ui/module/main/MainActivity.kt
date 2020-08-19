@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.ui.activity
+package com.linwei.github_mvvm.mvvm.ui.module.main
 
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.github_mvvm.R

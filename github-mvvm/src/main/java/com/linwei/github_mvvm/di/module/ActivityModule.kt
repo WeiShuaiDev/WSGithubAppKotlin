@@ -1,7 +1,7 @@
 package com.linwei.github_mvvm.di.module
 
 import com.linwei.cams.di.component.BaseActivitySubComponent
-import com.linwei.github_mvvm.mvvm.ui.activity.MainActivity
+import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

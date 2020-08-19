@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/recommendedFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/recommendedFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.main.RecommendedFragment"
+        android:label="fragment_recommended"
+        tools:layout="@layout/fragment_recommended" />
+
+    <fragment
+        android:id="@+id/dynamicFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.main.DynamicFragment"
+        android:label="fragment_dynamic"
+        tools:layout="@layout/fragment_dynamic" />
+
+
+    <fragment
+        android:id="@+id/mineFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.main.MineFragment"
+        android:label="fragment_mine"
+        tools:layout="@layout/fragment_mine" />
+
+
+</navigation>
