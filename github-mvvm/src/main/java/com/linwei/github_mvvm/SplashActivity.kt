@@ -2,6 +2,8 @@ package com.linwei.github_mvvm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.linwei.cams.base.activity.BaseActivity
+import com.linwei.cams.di.component.AppComponent
 
 /**
  * ---------------------------------------------------------------------
@@ -12,10 +14,19 @@ import android.os.Bundle
  * @Description:
  *-----------------------------------------------------------------------
  */
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
+    override fun provideContentViewId(): Int = R.layout.activity_splash
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+    override fun initLayoutView() {
     }
+
+    override fun initLayoutData() {
+    }
+
+    override fun initLayoutListener() {
+    }
+
+    override fun setUpActivityComponent(appComponent: AppComponent?) {
+    }
+
 }

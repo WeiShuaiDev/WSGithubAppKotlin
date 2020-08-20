@@ -5,13 +5,14 @@
     tools:context=".mvvm.ui.module.main.MainActivity">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel" />
+            type="com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel" />
     </data>
 
     <LinearLayout
-        style="@style/MatchAndWrap"
+        style="@style/MatchAndMatch"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
@@ -20,7 +21,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/mNavHostFragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"

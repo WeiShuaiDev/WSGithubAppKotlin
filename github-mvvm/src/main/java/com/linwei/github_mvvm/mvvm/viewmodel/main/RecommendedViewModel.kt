@@ -1,9 +1,9 @@
-package com.linwei.github_mvvm.mvvm.viewmodel
+package com.linwei.github_mvvm.mvvm.viewmodel.main
 
 import android.app.Application
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
-import com.linwei.github_mvvm.mvvm.contract.MainContract
-import com.linwei.github_mvvm.mvvm.model.MainModel
+import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
+import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
 
 /**
  * ---------------------------------------------------------------------
@@ -14,10 +14,10 @@ import com.linwei.github_mvvm.mvvm.model.MainModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class MainViewModel constructor(
-    model: MainModel,
+class RecommendedViewModel constructor(
+    model: RecommendedModel,
     application: Application
-) : BaseViewModel(model, application), MainContract.ViewModel {
+) : BaseViewModel(model, application), RecommendedContract.ViewModel {
 
 
 }

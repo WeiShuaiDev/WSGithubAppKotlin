@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.ui.module.main.MainActivity">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel" />
+            type="com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel" />
     </data>
 
     <LinearLayout
         style="@style/MatchAndWrap"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DynamicFragment" />
 
     </LinearLayout>
 </layout>

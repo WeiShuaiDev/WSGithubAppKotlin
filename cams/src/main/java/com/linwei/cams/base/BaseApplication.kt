@@ -3,6 +3,7 @@ package com.linwei.cams.base
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import androidx.multidex.MultiDexApplication
 import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.config.LibConfig
 import com.linwei.cams.di.component.AppComponent
@@ -22,7 +23,7 @@ import javax.inject.Inject
  * 方法注入国际化处理。
  *----------------------------------------------------------------------
  */
-open class BaseApplication : Application(), App, HasAndroidInjector {
+open class BaseApplication : MultiDexApplication(), App, HasAndroidInjector {
     private lateinit var mAppDelegate: AppDelegate
 
     @Inject

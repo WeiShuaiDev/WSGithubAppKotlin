@@ -3,4 +3,6 @@
     <string name="tab_recommended">推荐</string>
     <string name="tab_dynamic">动态</string>
     <string name="tab_mine">我的</string>
+
+    <string name="exit_app_tip">再次点击，退出应用程序</string>
 </resources>

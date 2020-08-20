@@ -106,8 +106,8 @@ dependencies {
     kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
     //ARouter
-    implementation rootProject.ext.dependencies["arouter-api"]
-    kapt rootProject.ext.dependencies["arouter-compiler"]
+    //implementation rootProject.ext.dependencies["arouter-api"]
+    //kapt rootProject.ext.dependencies["arouter-compiler"]
 
     implementation project(path: ':cams-mvvm')
 

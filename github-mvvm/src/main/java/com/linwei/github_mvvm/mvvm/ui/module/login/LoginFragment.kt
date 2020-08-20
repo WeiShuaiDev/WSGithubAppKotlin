@@ -2,9 +2,10 @@ package com.linwei.github_mvvm.mvvm.ui.module.login
 
 import android.view.View
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
+import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.ActivityMainBinding
-import com.linwei.github_mvvm.mvvm.contract.MainContract
-import com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel
+import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
+import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
 
 /**
  * ---------------------------------------------------------------------
@@ -15,7 +16,10 @@ import com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class LoginFragment : BaseMvvmFragment<MainViewModel, ActivityMainBinding>(), MainContract.View {
+class LoginFragment : BaseMvvmFragment<DynamicViewModel, ActivityMainBinding>(), RecommendedContract.View {
+
+
+    override fun provideContentViewId(): Int = R.layout.fragment_login
 
     override fun bindViewModel() {
         mViewDataBinding?.let {

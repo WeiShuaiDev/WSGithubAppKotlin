@@ -2,9 +2,12 @@ package com.linwei.github_mvvm.mvvm.ui.module.main
 
 import android.view.View
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
+import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.ActivityMainBinding
-import com.linwei.github_mvvm.mvvm.contract.MainContract
-import com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel
+import com.linwei.github_mvvm.databinding.FragmentRecommendedBinding
+import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
+import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.main.RecommendedViewModel
 
 /**
  * ---------------------------------------------------------------------
@@ -15,7 +18,10 @@ import com.linwei.github_mvvm.mvvm.viewmodel.MainViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class RecommendedFragment : BaseMvvmFragment<MainViewModel, ActivityMainBinding>(), MainContract.View {
+class RecommendedFragment : BaseMvvmFragment<RecommendedViewModel, FragmentRecommendedBinding>(),
+    RecommendedContract.View {
+
+    override fun provideContentViewId(): Int = R.layout.fragment_recommended
 
     override fun bindViewModel() {
         mViewDataBinding?.let {

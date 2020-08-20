@@ -5,9 +5,10 @@
     tools:context=".mvvm.ui.module.main.MainActivity">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.linwei.github_mvvm.mvvm.viewmodel.main.RecommendedViewModel" />
+            type="com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel" />
     </data>
 
     <LinearLayout
@@ -18,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RecommendedFragment" />
+            android:text="LoginFragment" />
 
     </LinearLayout>
 </layout>

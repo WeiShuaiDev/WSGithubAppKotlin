@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.contract
+package com.linwei.github_mvvm.mvvm.contract.main
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
@@ -8,7 +8,7 @@ package com.linwei.github_mvvm.mvvm.contract
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface MainContract {
+interface RecommendedContract {
 
     interface View{
 

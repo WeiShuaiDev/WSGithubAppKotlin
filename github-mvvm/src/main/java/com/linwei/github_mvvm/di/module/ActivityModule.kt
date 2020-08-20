@@ -16,8 +16,10 @@ import dagger.android.ContributesAndroidInjector
  */
 @Module(subcomponents = [BaseActivitySubComponent::class])
 interface ActivityModule {
-
+    /**
+     * [MainActivity] 注入 `Dagger`
+     */
     @ContributesAndroidInjector
-    fun contributeMainActivity(): MainActivity
+    fun contributeMainActivityInjector(): MainActivity
 
 }

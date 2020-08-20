@@ -58,6 +58,7 @@ abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding
         super.onCreate(savedInstanceState)
 
         initViewModel() //初始化ViewModel
+        registerLiveEvent()  //注册事件总线
     }
 
     override fun bindingContentView(bundle: Bundle?, contentView: View): View? {
@@ -81,7 +82,7 @@ abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding
         if (mViewModel != null) {
             lifecycle.addObserver(mViewModel!!)
         }
-        registerLiveEvent()
+        bindViewModel()
     }
 
     /**

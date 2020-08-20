@@ -62,8 +62,8 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
-
+        initViewModel()      //初始化ViewModel
+        registerLiveEvent()  //注册事件总线
     }
 
     override fun bindingContentView(
@@ -91,7 +91,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
         if (mViewModel != null) {
             lifecycle.addObserver(mViewModel!!)
         }
-        registerLiveEvent()
+        bindViewModel()
     }
 
     /**

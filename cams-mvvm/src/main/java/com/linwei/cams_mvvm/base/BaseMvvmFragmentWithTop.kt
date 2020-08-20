@@ -63,7 +63,8 @@ abstract class BaseMvvmFragmentWithTop<VM : BaseViewModel, VDB : ViewDataBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
+        initViewModel()      //初始化ViewModel
+        registerLiveEvent()  //注册事件总线
 
     }
 

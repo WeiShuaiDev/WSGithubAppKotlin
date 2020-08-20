@@ -58,6 +58,7 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
         super.onCreate(savedInstanceState)
 
         initViewModel() //初始化ViewModel
+        registerLiveEvent()  //注册事件总线
     }
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
@@ -80,7 +81,8 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
         if (mViewModel != null) {
             lifecycle.addObserver(mViewModel!!)
         }
-        registerLiveEvent()
+
+        bindViewModel()
     }
 
     /**
