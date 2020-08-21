@@ -85,7 +85,6 @@ dependencies {
     api rootProject.ext.dependencies["dagger2"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["dagger2-android"]
-    api rootProject.ext.dependencies["dagger2-android-support"]
     kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
     //RxCache2
