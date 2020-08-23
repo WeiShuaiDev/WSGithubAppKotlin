@@ -2,7 +2,9 @@ package com.linwei.cams_mvvm_template.global
 
 import android.app.Application
 import android.content.Context
+import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
+import com.linwei.cams.ext.obtainAppComponent
 import com.linwei.cams_mvvm_template.di.component.DaggerTemplateComponent
 import com.linwei.cams_mvvm_template.di.component.TemplateComponent
 import timber.log.Timber
@@ -21,12 +23,15 @@ class AppLifecycleImpl : AppLifecycles {
     private lateinit var mTemplateComponent: TemplateComponent
 
     override fun attachBaseContext(context: Context) {
-        this.mTemplateComponent = DaggerTemplateComponent.builder().build()
-        mTemplateComponent.inject(this)
+        Timber.i("AppLifecycleImpl to attachBaseContext!")
     }
 
-    override fun onCreate(application: Application) {
-        Timber.i("AppLifecycleImpl to attachBaseContext!")
+    override fun onCreate(application: Application, appDelegate: AppDelegate?) {
+        this.mTemplateComponent = DaggerTemplateComponent
+            .builder()
+            .appComponent(obtainAppComponent())
+            .build()
+        mTemplateComponent.inject(this)
     }
 
     override fun onTerminate(application: Application) {

@@ -1,6 +1,8 @@
 package com.linwei.cams.base.lifecycle
+
 import android.app.Application
 import android.content.Context
+import com.linwei.cams.base.delegate.AppDelegate
 
 /**
  * ---------------------------------------------------------------------
@@ -22,7 +24,7 @@ interface AppLifecycles {
      * 初始化
      * @param application [Application]
      */
-    fun onCreate(application: Application)
+    fun onCreate(application: Application,appDelegate: AppDelegate?)
 
     /**
      * 回收资源时执行

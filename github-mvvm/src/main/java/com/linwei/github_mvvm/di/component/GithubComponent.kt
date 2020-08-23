@@ -1,12 +1,13 @@
 package com.linwei.github_mvvm.di.component
 
+import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.di.component.AppComponent
-import com.linwei.cams_mvvm.di.component.MvvmComponent
 import com.linwei.github_mvvm.di.module.ActivityModule
 import com.linwei.github_mvvm.di.module.FragmentModule
 import com.linwei.github_mvvm.di.module.ViewModelModule
 import com.linwei.github_mvvm.di.scope.GithubScope
+import com.linwei.github_mvvm.global.AppLifecycleImpl
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 
@@ -37,7 +38,7 @@ interface GithubComponent {
 
     @Component.Builder
     interface Builder {
-        fun appComponent(appComponent: AppComponent?): Builder
+        fun appComponent(appComponent: AppComponent): Builder
 
         fun build(): GithubComponent
     }

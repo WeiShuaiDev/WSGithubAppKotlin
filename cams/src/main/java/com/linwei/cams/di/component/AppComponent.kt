@@ -9,7 +9,6 @@ import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.manager.*
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 /**

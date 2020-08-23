@@ -2,6 +2,7 @@ package com.linwei.cams_mvp_template.global
 
 import android.app.Application
 import android.content.Context
+import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
 import timber.log.Timber
 
@@ -20,7 +21,7 @@ class AppLifecycleImpl : AppLifecycles {
         Timber.i("AppLifecycleImpl to attachBaseContext!")
     }
 
-    override fun onCreate(application: Application) {
+    override fun onCreate(application: Application,appDelegate: AppDelegate?) {
         Timber.i("AppLifecycleImpl to onCreate!")
     }
 

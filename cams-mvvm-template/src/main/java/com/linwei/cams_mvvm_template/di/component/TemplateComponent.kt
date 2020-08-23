@@ -21,7 +21,7 @@ import dagger.android.AndroidInjectionModule
  */
 @MvvmScope
 @Component(
-    dependencies = [MvvmComponent::class],
+    dependencies = [AppComponent::class],
     modules = [AndroidInjectionModule::class, ViewModelModule::class, ActivityModule::class,
         FragmentModule::class]
 )
@@ -36,7 +36,7 @@ interface TemplateComponent {
 
     @Component.Builder
     interface Builder {
-        fun appComponent(mvvmComponent: MvvmComponent?): Builder
+        fun appComponent(appComponent: AppComponent?): Builder
 
         fun build(): TemplateComponent
     }

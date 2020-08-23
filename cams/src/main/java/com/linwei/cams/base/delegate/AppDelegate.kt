@@ -65,7 +65,8 @@ class AppDelegate constructor(
         }
     }
 
-    override fun onCreate(application: Application) {
+
+    override fun onCreate(application: Application, appDelegate: AppDelegate?) {
         this.mApplication = application
         this.mAppComponent = DaggerAppComponent
             .builder()
@@ -89,7 +90,7 @@ class AppDelegate constructor(
 
         //回调开发者扩展的 `AppLifecycles.onCreate()` 方法
         mAppLifecycles.forEach {
-            it.onCreate(application)
+            it.onCreate(application, this)
         }
     }
 

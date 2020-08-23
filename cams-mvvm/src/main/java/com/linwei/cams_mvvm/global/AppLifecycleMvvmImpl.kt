@@ -2,6 +2,7 @@ package com.linwei.cams_mvvm.global
 
 import android.app.Application
 import android.content.Context
+import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.ext.obtainAppComponent
 import com.linwei.cams_mvvm.di.component.DaggerMvvmComponent
@@ -25,7 +26,8 @@ class AppLifecycleMvvmImpl : AppLifecycles {
         Timber.i("AppLifecycleMvvmImpl to attachBaseContext!")
     }
 
-    override fun onCreate(application: Application) {
+    override fun onCreate(application: Application,appDelegate: AppDelegate?) {
+        System.out.println("AppLifecycleMvvmImpl onCreate")
         this.mMvvmComponent = DaggerMvvmComponent
             .builder()
             .appComponent(obtainAppComponent())

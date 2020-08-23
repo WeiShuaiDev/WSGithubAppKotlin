@@ -1,7 +1,5 @@
 package com.linwei.github_mvvm
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.di.component.AppComponent
 

@@ -2,6 +2,7 @@ package com.linwei.github_mvvm.global
 
 import android.app.Application
 import android.content.Context
+import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.ext.obtainAppComponent
 import com.linwei.github_mvvm.di.component.DaggerGithubComponent
@@ -22,13 +23,14 @@ class AppLifecycleImpl : AppLifecycles {
     private lateinit var mGithubComponent: GithubComponent
 
     override fun attachBaseContext(context: Context) {
-        this.mGithubComponent = DaggerGithubComponent.builder()
-            .appComponent(obtainAppComponent()).build()
-        mGithubComponent.inject(this)
     }
 
-    override fun onCreate(application: Application) {
-        Timber.i("AppLifecycleImpl to attachBaseContext!")
+    override fun onCreate(application: Application, appDelegate: AppDelegate?) {
+        this.mGithubComponent = DaggerGithubComponent
+            .builder()
+            .appComponent(obtainAppComponent())
+            .build()
+            mGithubComponent.inject(this)
     }
 
     override fun onTerminate(application: Application) {

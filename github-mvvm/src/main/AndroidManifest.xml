@@ -10,6 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.linwei.github_mvvm.global.GlobalConfiguration"
+            android:value="GlobalConfigModule" />
+
         <activity android:name=".mvvm.ui.module.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

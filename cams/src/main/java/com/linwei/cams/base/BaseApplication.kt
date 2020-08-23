@@ -1,5 +1,6 @@
 package com.linwei.cams.base
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
@@ -35,6 +36,7 @@ open class BaseApplication : MultiDexApplication(), App, HasAndroidInjector {
 
     override fun attachBaseContext(context: Context) {
         super.attachBaseContext(AppLanguageUtils.attachBaseContext(context, LibConfig.LANGUAGE))
+        mContext = context
         mAppDelegate = AppDelegate(context)
         mAppDelegate.attachBaseContext(context)
     }
@@ -43,7 +45,7 @@ open class BaseApplication : MultiDexApplication(), App, HasAndroidInjector {
         super.onCreate()
         mContext = this
         AppLanguageUtils.setLanguage(this, LibConfig.LANGUAGE)
-        mAppDelegate.onCreate(this)
+        mAppDelegate.onCreate(this, null)
     }
 
     override fun onTerminate() {

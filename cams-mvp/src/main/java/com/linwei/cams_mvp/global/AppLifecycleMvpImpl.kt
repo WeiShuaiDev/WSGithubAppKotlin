@@ -2,6 +2,7 @@ package com.linwei.cams_mvp.global
 
 import android.app.Application
 import android.content.Context
+import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
 
 /**
@@ -18,7 +19,7 @@ class AppLifecycleMvpImpl : AppLifecycles {
     override fun attachBaseContext(context: Context) {
     }
 
-    override fun onCreate(application: Application) {
+    override fun onCreate(application: Application,appDelegate: AppDelegate?) {
     }
 
     override fun onTerminate(application: Application) {
