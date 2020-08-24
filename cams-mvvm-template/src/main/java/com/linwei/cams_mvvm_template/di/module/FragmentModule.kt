@@ -1,6 +1,6 @@
 package com.linwei.cams_mvvm_template.di.module
 
-import com.linwei.cams.di.component.BaseFragmentSubComponent
+import com.linwei.cams_mvvm.di.component.BaseFragmentSubComponent
 import dagger.Module
 
 /**

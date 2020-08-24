@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @Description: MVVM架构 `Model` 模块，提供 [MessageLiveEvent]消息事件总线、[StatusLiveEvent]状态事件总线功能。
  *-----------------------------------------------------------------------
  */
-open class BaseViewModel constructor(
+open class BaseViewModel @Inject constructor(
     private val model: BaseModel,
     application: Application
 ) : AndroidViewModel(application),

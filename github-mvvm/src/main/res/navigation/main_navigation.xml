@@ -18,7 +18,6 @@
         android:label="fragment_dynamic"
         tools:layout="@layout/fragment_dynamic" />
 
-
     <fragment
         android:id="@+id/mineFragment"
         android:name="com.linwei.github_mvvm.mvvm.ui.module.main.MineFragment"

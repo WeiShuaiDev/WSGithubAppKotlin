@@ -20,19 +20,12 @@ import timber.log.Timber
  */
 class AppLifecycleMvvmImpl : AppLifecycles {
 
-    private lateinit var mMvvmComponent: MvvmComponent
-
     override fun attachBaseContext(context: Context) {
         Timber.i("AppLifecycleMvvmImpl to attachBaseContext!")
     }
 
     override fun onCreate(application: Application,appDelegate: AppDelegate?) {
-        System.out.println("AppLifecycleMvvmImpl onCreate")
-        this.mMvvmComponent = DaggerMvvmComponent
-            .builder()
-            .appComponent(obtainAppComponent())
-            .build()
-        mMvvmComponent.inject(this)
+        Timber.i("AppLifecycleMvvmImpl to onCreate!")
     }
 
     override fun onTerminate(application: Application) {

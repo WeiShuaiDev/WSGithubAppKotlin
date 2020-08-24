@@ -1,5 +1,6 @@
 package com.linwei.github_mvvm.mvvm.ui.module.main
 
+import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController

@@ -2,6 +2,7 @@ package com.linwei.cams_mvvm.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.linwei.cams.di.scope.ApplicationScope
 import com.linwei.cams_mvvm.mvvm.ViewModelFactory
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.cams_mvvm.di.scope.ViewModelKey
@@ -22,15 +23,15 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class MvvmViewModelModule {
 
-    @ViewModelScope
+    @ApplicationScope
     @Binds
     @IntoMap
     @ViewModelKey(BaseViewModel::class)
-    internal abstract fun bindBaseViewModel(baseViewModel: BaseViewModel): ViewModel
+    abstract fun bindBaseViewModel(baseViewModel: BaseViewModel): ViewModel
 
 
-    @ViewModelScope
+    @ApplicationScope
     @Binds
-    internal abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+    abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 
 }

@@ -1,13 +1,11 @@
 package com.linwei.github_mvvm.di.component
 
-import com.linwei.cams.base.delegate.AppDelegate
-import com.linwei.cams.base.lifecycle.AppLifecycles
-import com.linwei.cams.di.component.AppComponent
+import com.linwei.cams_mvvm.di.component.MvvmComponent
+import com.linwei.github_mvvm.GithubApplication
 import com.linwei.github_mvvm.di.module.ActivityModule
 import com.linwei.github_mvvm.di.module.FragmentModule
 import com.linwei.github_mvvm.di.module.ViewModelModule
-import com.linwei.github_mvvm.di.scope.GithubScope
-import com.linwei.github_mvvm.global.AppLifecycleImpl
+import com.linwei.github_mvvm.di.scope.GithubssScope
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 
@@ -21,24 +19,23 @@ import dagger.android.AndroidInjectionModule
  * @Description:
  *-----------------------------------------------------------------------
  */
-@GithubScope
+@GithubssScope
 @Component(
-    dependencies = [AppComponent::class],
+    dependencies = [MvvmComponent::class],
     modules = [AndroidInjectionModule::class, ViewModelModule::class, ActivityModule::class,
         FragmentModule::class]
 )
 interface GithubComponent {
 
     /**
-     * 注入 [AppLifecycles] 对象
-     * @param appLifecycles [AppLifecycles]
+     * 注入 [GithubApplication] 对象
+     * @param application [GithubApplication]
      */
-    fun inject(appLifecycles: AppLifecycles)
-
+    fun inject(application: GithubApplication)
 
     @Component.Builder
     interface Builder {
-        fun appComponent(appComponent: AppComponent): Builder
+        fun appComponent(mvvmComponent: MvvmComponent): Builder
 
         fun build(): GithubComponent
     }

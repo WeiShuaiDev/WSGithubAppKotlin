@@ -16,6 +16,7 @@ import dagger.Provides
 import io.rx_cache2.internal.RxCache
 import io.victoralbertos.jolyglot.GsonSpeaker
 import okhttp3.Dispatcher
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -99,7 +100,7 @@ class ClientModule {
         configuration: RetrofitConfiguration?,
         converterFactory: GsonConverterFactory?,
         client: OkHttpClient,
-        baseUrl: String
+        baseUrl: HttpUrl?
     ): Retrofit {
         return builder.also {
             it.baseUrl(baseUrl)
@@ -225,7 +226,7 @@ class ClientModule {
         fun <T> createRetrofitService(
             retrofit: Retrofit,
             serviceClass: Class<T>
-        ): T
+        ): T?
     }
 
     /**

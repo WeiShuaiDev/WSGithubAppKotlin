@@ -9,6 +9,8 @@ import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.manager.*
 import dagger.BindsInstance
 import dagger.Component
+import io.rx_cache2.internal.RxCache
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 /**
@@ -75,6 +77,23 @@ interface AppComponent {
      * @return [PermissionManager]
      */
     fun permissionManager(): PermissionManager
+
+    /**
+     * 网络请求对象
+     * @return [Retrofit]
+     */
+    fun retrofit(): Retrofit
+
+    /**
+     * 缓存对象
+     * @return [RxCache]
+     */
+    fun rxCache(): RxCache
+
+    /**
+     * @return [ClientModule.RetrofitServiceDelegate]
+     */
+    fun retrofitServiceDelegate(): ClientModule.RetrofitServiceDelegate
 
     /**
      * 注入

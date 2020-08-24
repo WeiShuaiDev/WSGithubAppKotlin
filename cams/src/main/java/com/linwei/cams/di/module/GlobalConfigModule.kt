@@ -128,8 +128,12 @@ class GlobalConfigModule(private val mBuilder: Builder) {
 
     @Singleton
     @Provides
-    fun provideRetrofitServiceDelegate(): ClientModule.RetrofitServiceDelegate? {
-        return mBuilder.retrofitServiceDelegate
+    fun provideRetrofitServiceDelegate(): ClientModule.RetrofitServiceDelegate {
+        return mBuilder.retrofitServiceDelegate ?: object : ClientModule.RetrofitServiceDelegate {
+            override fun <T> createRetrofitService(retrofit: Retrofit, serviceClass: Class<T>): T? {
+                return null
+            }
+        }
     }
 
     @Singleton

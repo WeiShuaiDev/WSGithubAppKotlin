@@ -53,7 +53,6 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
     protected var mProgressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        System.out.println("BaseMvvmActivity onCreate")
         //Dagger.Android Fragment 注入
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)

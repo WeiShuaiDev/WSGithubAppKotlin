@@ -6,6 +6,7 @@ import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.http.cache.CacheType
 import com.linwei.cams.http.repository.DataRepository
 import com.linwei.cams_mvvm.GlobalConstant
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -16,7 +17,7 @@ import com.linwei.cams_mvvm.GlobalConstant
  * @Description:  MVVM架构数据处理库，增加 `Room` 数据库处理。
  *-----------------------------------------------------------------------
  */
-class DataMvvmRepository : DataRepository(), IDataMvvmRepository {
+class DataMvvmRepository @Inject constructor() : DataRepository(), IDataMvvmRepository {
 
     /**
      * `RoomDataBase` 对象缓存存储

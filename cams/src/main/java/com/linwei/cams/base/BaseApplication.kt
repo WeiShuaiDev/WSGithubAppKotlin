@@ -1,6 +1,5 @@
 package com.linwei.cams.base
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
@@ -24,11 +23,8 @@ import javax.inject.Inject
  * 方法注入国际化处理。
  *----------------------------------------------------------------------
  */
-open class BaseApplication : MultiDexApplication(), App, HasAndroidInjector {
+open class BaseApplication : MultiDexApplication(), App{
     private lateinit var mAppDelegate: AppDelegate
-
-    @Inject
-    lateinit var mAndroidInjector: DispatchingAndroidInjector<Any>
 
     companion object {
         lateinit var mContext: Context
@@ -71,6 +67,4 @@ open class BaseApplication : MultiDexApplication(), App, HasAndroidInjector {
         super.onConfigurationChanged(newConfig)
         AppLanguageUtils.setLanguage(this, LibConfig.LANGUAGE)
     }
-
-    override fun androidInjector(): AndroidInjector<Any> = mAndroidInjector
 }

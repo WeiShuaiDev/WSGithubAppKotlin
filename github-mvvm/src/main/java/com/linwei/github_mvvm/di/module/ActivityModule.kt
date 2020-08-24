@@ -1,6 +1,7 @@
 package com.linwei.github_mvvm.di.module
 
-import com.linwei.cams.di.component.BaseActivitySubComponent
+import com.linwei.cams_mvvm.di.component.BaseActivitySubComponent
+import com.linwei.github_mvvm.SplashActivity
 import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -20,6 +21,12 @@ interface ActivityModule {
      * [MainActivity] 注入 `Dagger`
      */
     @ContributesAndroidInjector
-    fun contributeMainActivityInjector(): MainActivity
+    fun contributeMainActivity(): MainActivity
+
+    /**
+     * [SplashActivity] 注入 `Dagger`
+     */
+    @ContributesAndroidInjector
+    fun contributeSplashActivityInjector(): SplashActivity
 
 }

@@ -86,7 +86,7 @@ dependencies {
     kapt rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["dagger2-android"]
     kapt rootProject.ext.dependencies["dagger2-android-processor"]
-
+    api rootProject.ext.dependencies["dagger2-android-support"]
     //RxCache2
     api(rootProject.ext.dependencies["rxcache2"]) {
         exclude module: 'rxjava'

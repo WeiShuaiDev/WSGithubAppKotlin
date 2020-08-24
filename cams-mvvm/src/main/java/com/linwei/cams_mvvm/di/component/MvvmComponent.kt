@@ -1,11 +1,12 @@
 package com.linwei.cams_mvvm.di.component
 
 import android.app.Application
-import com.linwei.cams.base.lifecycle.AppLifecycles
+import androidx.lifecycle.ViewModelProvider
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.di.scope.ApplicationScope
 import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.manager.*
+import com.linwei.cams_mvvm.MvvmApplication
 import com.linwei.cams_mvvm.di.module.MvvmModelModule
 import com.linwei.cams_mvvm.di.module.MvvmViewModelModule
 import dagger.Component
@@ -76,15 +77,20 @@ interface MvvmComponent {
      */
     fun permissionManager(): PermissionManager
 
+
     /**
-     * 注入 [AppLifecycles] 对象
-     * @param appLifecycles [AppLifecycles]
+     * @return [ViewModelProvider.Factory]
      */
-    fun inject(appLifecycles: AppLifecycles)
+    fun viewModelFactory(): ViewModelProvider.Factory
+
+    /**
+     * 注入 [MvvmApplication] 对象
+     */
+    fun inject(application: MvvmApplication)
 
     @Component.Builder
     interface Builder {
-        fun appComponent(appComponent: AppComponent?): Builder
+        fun appComponent(appComponent: AppComponent): Builder
 
         fun build(): MvvmComponent
     }
