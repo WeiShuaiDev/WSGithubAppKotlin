@@ -33,6 +33,8 @@ abstract class MvvmApplication : BaseApplication(), HasAndroidInjector {
             .appComponent(obtainAppComponent())
             .build()
         mMvvmComponent.inject(this)
+
+        setUpAppChildComponent(mMvvmComponent)
     }
 
     /**

@@ -1,16 +1,22 @@
 package com.linwei.github_mvvm.mvvm.ui.module.main
 
 import android.os.Bundle
+import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.ext.showShort
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
+import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.ActivityMainBinding
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
-import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -21,17 +27,20 @@ import kotlinx.android.synthetic.main.activity_main.*
  * @Description:
  *-----------------------------------------------------------------------
  */
-class MainActivity : BaseMvvmActivity<DynamicViewModel, ActivityMainBinding>(), RecommendedContract.View {
+class MainActivity : BaseActivity(), HasAndroidInjector {
     private var mPreTime: Long = 0
+
+    @Inject
+    lateinit var mAndroidInjector: DispatchingAndroidInjector<Any>
 
     override fun provideContentViewId(): Int = R.layout.activity_main
 
-    override fun bindViewModel() {
-        mViewDataBinding?.let {
-            it.viewModel = mViewModel
-            it.lifecycleOwner = this@MainActivity
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        //Dagger.Android Fragment 注入
+        AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
     }
+
 
     override fun initLayoutView() {
         initBottomNavigationView()
@@ -76,4 +85,6 @@ class MainActivity : BaseMvvmActivity<DynamicViewModel, ActivityMainBinding>(), 
             mPreTime = System.currentTimeMillis()
         }
     }
+
+    override fun androidInjector(): AndroidInjector<Any> = mAndroidInjector
 }

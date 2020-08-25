@@ -1,7 +1,7 @@
 package com.linwei.github_mvvm.di.module
 
+import com.linwei.cams.di.scope.FragmentScope
 import com.linwei.cams_mvvm.di.component.BaseFragmentSubComponent
-import com.linwei.github_mvvm.mvvm.ui.module.login.LoginFragment
 import com.linwei.github_mvvm.mvvm.ui.module.main.DynamicFragment
 import com.linwei.github_mvvm.mvvm.ui.module.main.MineFragment
 import com.linwei.github_mvvm.mvvm.ui.module.main.RecommendedFragment
@@ -22,25 +22,23 @@ interface FragmentModule {
     /**
      * [RecommendedFragment] 注入 `Dagger`
      */
+    @FragmentScope
     @ContributesAndroidInjector
     fun contributeRecommendedFragmentInjector(): RecommendedFragment
 
     /**
      * [DynamicFragment] 注入 `Dagger`
      */
+    @FragmentScope
     @ContributesAndroidInjector
     fun contributeDynamicFragmentInjector(): DynamicFragment
 
     /**
      * [MineFragment] 注入 `Dagger`
      */
+    @FragmentScope
     @ContributesAndroidInjector
     fun contributeMineFragmentInjector(): MineFragment
 
-    /**
-     * [LoginFragment] 注入 `Dagger`
-     */
-    @ContributesAndroidInjector
-    fun contributeLoginFragmentInjector(): LoginFragment
 
 }

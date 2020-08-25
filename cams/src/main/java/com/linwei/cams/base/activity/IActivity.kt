@@ -27,7 +27,7 @@ interface IActivity {
      * AppComponent主要提供一些单例工具
      *@param appComponent [AppComponent]
      */
-    fun setUpActivityComponent(appComponent: AppComponent?)
+     fun setUpActivityComponent(appComponent: AppComponent?){}
 
     /**
      * 当前Activity对象增加到内存栈，方便管理

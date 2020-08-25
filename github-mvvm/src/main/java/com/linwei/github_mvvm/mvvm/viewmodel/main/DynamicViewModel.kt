@@ -6,6 +6,7 @@ import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
 import com.linwei.github_mvvm.mvvm.model.main.DynamicModel
 import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -16,7 +17,7 @@ import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class DynamicViewModel constructor(
+class DynamicViewModel @Inject constructor(
     model: DynamicModel,
     application: Application
 ) : BaseViewModel(model, application), DynamicContract.ViewModel {

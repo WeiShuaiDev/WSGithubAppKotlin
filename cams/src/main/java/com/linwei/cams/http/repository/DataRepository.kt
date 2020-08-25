@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-open class DataRepository : IDataRepository {
+open class DataRepository @Inject constructor() : IDataRepository {
 
     @Inject
     lateinit var mRetrofit: Retrofit

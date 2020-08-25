@@ -1,6 +1,10 @@
 package com.linwei.cams_mvvm.di.component
 
+import androidx.databinding.ViewDataBinding
 import com.linwei.cams.base.activity.BaseActivity
+import com.linwei.cams.di.scope.ActivityScope
+import com.linwei.cams_mvvm.base.BaseMvvmActivity
+import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import dagger.Subcomponent
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
@@ -14,11 +18,11 @@ import javax.inject.Singleton
  * @Description:
  *-----------------------------------------------------------------------
  */
-@Singleton
+@ActivityScope
 @Subcomponent(modules = [AndroidInjectionModule::class])
 interface BaseActivitySubComponent :
-    AndroidInjector<BaseActivity> {
+    AndroidInjector<BaseMvvmActivity<BaseViewModel, ViewDataBinding>> {
     @Subcomponent.Factory
     interface Factory :
-        AndroidInjector.Factory<BaseActivity>
+        AndroidInjector.Factory<BaseMvvmActivity<BaseViewModel, ViewDataBinding>>
 }

@@ -91,6 +91,7 @@ interface AppComponent {
     fun rxCache(): RxCache
 
     /**
+     * Retrofit代理类
      * @return [ClientModule.RetrofitServiceDelegate]
      */
     fun retrofitServiceDelegate(): ClientModule.RetrofitServiceDelegate

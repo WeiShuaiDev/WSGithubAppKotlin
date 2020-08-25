@@ -1,43 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.ui.module.main.MainActivity">
+    style="@style/MatchAndMatch"
+    android:orientation="vertical"
+    tools:context=".mvvm.ui.module.main.MainActivity"
+    tools:ignore="MissingConstraints">
 
-    <data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <variable
-            name="viewModel"
-            type="com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel" />
-    </data>
-
-    <LinearLayout
-        style="@style/MatchAndMatch"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
-
-        <FrameLayout
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mNavHostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_navigation" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/mNavHostFragment"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/main_navigation" />
+    </FrameLayout>
 
-        </FrameLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/mBnvNavigation"
+        style="@style/WrapAndWrap"
+        android:background="@color/colorNavigationBackground"
+        app:itemIconTint="@color/select_main_bottom"
+        app:itemTextColor="@color/select_main_bottom"
+        app:menu="@menu/menu_main" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/mBnvNavigation"
-            style="@style/WrapAndWrap"
-            android:background="@color/colorNavigationBackground"
-            app:itemIconTint="@color/select_main_bottom"
-            app:itemTextColor="@color/select_main_bottom"
-            app:menu="@menu/menu_main" />
-
-    </LinearLayout>
-</layout>
+</LinearLayout>

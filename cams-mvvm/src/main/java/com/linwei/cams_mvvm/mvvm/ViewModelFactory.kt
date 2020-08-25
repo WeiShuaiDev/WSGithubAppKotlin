@@ -35,10 +35,10 @@ class ViewModelFactory @Inject constructor(
         if (creator == null) {
             throw IllegalArgumentException("Unknown model class $modelClass")
         }
-        try {
+//        try {
             return creator?.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException()
-        }
+//        } catch (e: Exception) {
+//            throw RuntimeException()
+//        }
     }
 }

@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.di.scope
+package com.linwei.cams_mvvm.di.scope
 
 import javax.inject.Scope
 
@@ -10,4 +10,4 @@ import javax.inject.Scope
 @Scope
 @MustBeDocumented
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-annotation class GithubssScope
+annotation class MvvmScope

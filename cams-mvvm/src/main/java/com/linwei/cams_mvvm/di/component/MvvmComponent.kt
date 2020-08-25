@@ -3,14 +3,20 @@ package com.linwei.cams_mvvm.di.component
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
 import com.linwei.cams.di.component.AppComponent
-import com.linwei.cams.di.scope.ApplicationScope
+import com.linwei.cams.di.module.ClientModule
 import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.manager.*
 import com.linwei.cams_mvvm.MvvmApplication
 import com.linwei.cams_mvvm.di.module.MvvmModelModule
 import com.linwei.cams_mvvm.di.module.MvvmViewModelModule
+import com.linwei.cams_mvvm.di.module.ViewModelFactoryModule
+import com.linwei.cams_mvvm.di.scope.MvvmScope
+import com.linwei.cams_mvvm.livedatabus.MessageLiveEvent
+import com.linwei.cams_mvvm.livedatabus.StatusLiveEvent
 import dagger.Component
 import dagger.android.AndroidInjectionModule
+import io.rx_cache2.internal.RxCache
+import retrofit2.Retrofit
 
 /**
  * ---------------------------------------------------------------------
@@ -21,12 +27,16 @@ import dagger.android.AndroidInjectionModule
  * @Description: `MVVM` 架构 `Application` 依赖注入Component,内部提供 [MvvmViewModelModule]、[MvvmModelModule] 模块。
  *-----------------------------------------------------------------------
  */
-@ApplicationScope
+@MvvmScope
 @Component(
     dependencies = [AppComponent::class],
-    modules = [AndroidInjectionModule::class, MvvmViewModelModule::class, MvvmModelModule::class]
+    modules = [AndroidInjectionModule::class, MvvmViewModelModule::class, MvvmModelModule::class,
+        ViewModelFactoryModule::class]
 )
 interface MvvmComponent {
+
+    fun application(): Application
+
     /**
      * 用来存取一些整个 App 公用的数据, 切勿大量存放大容量数据, 这里的存放的数据和 [Application] 的生命周期一致
      *
@@ -79,9 +89,34 @@ interface MvvmComponent {
 
 
     /**
-     * @return [ViewModelProvider.Factory]
+     * 网络请求对象
+     * @return [Retrofit]
      */
-    fun viewModelFactory(): ViewModelProvider.Factory
+    fun retrofit(): Retrofit
+
+    /**
+     * 缓存对象
+     * @return [RxCache]
+     */
+    fun rxCache(): RxCache
+
+    /**
+     * 消息总线
+     * @return [MessageLiveEvent]
+     */
+    fun messageLiveEvent(): MessageLiveEvent
+
+    /**
+     * 状态总线
+     * @return [MessageLiveEvent]
+     */
+    fun statusLiveEvent(): StatusLiveEvent
+
+    /**
+     * Retrofit代理类
+     * @return [ClientModule.RetrofitServiceDelegate]
+     */
+    fun retrofitServiceDelegate(): ClientModule.RetrofitServiceDelegate
 
     /**
      * 注入 [MvvmApplication] 对象

@@ -24,7 +24,4 @@ class SplashActivity : BaseActivity() {
     override fun initLayoutListener() {
     }
 
-    override fun setUpActivityComponent(appComponent: AppComponent?) {
-    }
-
 }

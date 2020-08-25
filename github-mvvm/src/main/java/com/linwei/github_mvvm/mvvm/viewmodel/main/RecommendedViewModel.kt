@@ -4,6 +4,7 @@ import android.app.Application
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
 import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -14,7 +15,7 @@ import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class RecommendedViewModel constructor(
+class RecommendedViewModel @Inject constructor(
     model: RecommendedModel,
     application: Application
 ) : BaseViewModel(model, application), RecommendedContract.ViewModel {

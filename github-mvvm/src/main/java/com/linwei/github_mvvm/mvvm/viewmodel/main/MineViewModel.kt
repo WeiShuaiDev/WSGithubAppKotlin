@@ -6,6 +6,7 @@ import com.linwei.github_mvvm.mvvm.contract.main.MineContract
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
 import com.linwei.github_mvvm.mvvm.model.main.MineModel
 import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -16,7 +17,7 @@ import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class MineViewModel constructor(
+class MineViewModel @Inject constructor(
     model: MineModel,
     application: Application
 ) : BaseViewModel(model, application), MineContract.ViewModel {

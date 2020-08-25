@@ -3,10 +3,8 @@ package com.linwei.github_mvvm.mvvm.ui.module.main
 import android.view.View
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.ActivityMainBinding
 import com.linwei.github_mvvm.databinding.FragmentRecommendedBinding
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
-import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.RecommendedViewModel
 
 /**
