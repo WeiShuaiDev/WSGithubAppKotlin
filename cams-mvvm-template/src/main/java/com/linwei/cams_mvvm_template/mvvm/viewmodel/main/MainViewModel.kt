@@ -1,9 +1,9 @@
-package com.linwei.cams_mvvm_template.mvvm.viewmodel
+package com.linwei.cams_mvvm_template.mvvm.viewmodel.main
 
 import android.app.Application
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
-import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
-import com.linwei.cams_mvvm_template.mvvm.model.MainModel
+import com.linwei.cams_mvvm_template.mvvm.contract.main.MainContract
+import com.linwei.cams_mvvm_template.mvvm.model.main.MainModel
 import javax.inject.Inject
 
 /**
@@ -15,7 +15,7 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class MainViewModel constructor(
+class MainViewModel @Inject constructor(
     model: MainModel,
     application: Application
 ) : BaseViewModel(model, application), MainContract.ViewModel {

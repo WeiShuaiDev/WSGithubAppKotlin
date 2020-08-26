@@ -1,11 +1,11 @@
-package com.linwei.cams_mvvm_template.mvvm.ui.fragment
+package com.linwei.cams_mvvm_template.mvvm.ui.module.login
 
 import android.view.View
-import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
-import com.linwei.cams_mvvm_template.databinding.ActivityMainBinding
-import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
-import com.linwei.cams_mvvm_template.mvvm.viewmodel.MainViewModel
+import com.linwei.cams_mvvm_template.R
+import com.linwei.cams_mvvm_template.databinding.FragmentLoginBinding
+import com.linwei.cams_mvvm_template.mvvm.contract.login.LoginContract
+import com.linwei.cams_mvvm_template.mvvm.viewmodel.login.LoginViewModel
 
 /**
  * ---------------------------------------------------------------------
@@ -16,13 +16,17 @@ import com.linwei.cams_mvvm_template.mvvm.viewmodel.MainViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class LoginFragment : BaseMvvmFragment<MainViewModel, ActivityMainBinding>(), MainContract.View {
+class LoginFragment : BaseMvvmFragment<LoginViewModel, FragmentLoginBinding>(), LoginContract.View {
+
+    override fun provideContentViewId(): Int = R.layout.fragment_login
+
     override fun bindViewModel() {
         mViewDataBinding?.let {
             it.viewModel = mViewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
     }
+
 
     override fun initLayoutView(rootView: View?) {
 
@@ -39,6 +43,5 @@ class LoginFragment : BaseMvvmFragment<MainViewModel, ActivityMainBinding>(), Ma
 
     override fun loadData() {
     }
-
 
 }

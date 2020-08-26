@@ -130,7 +130,7 @@ object AppModule {
     @Provides
     @Named("DiskCacheDirectory")
     fun provideDiskCacheDirectory(cacheDir: File): File =
-        File(FileUtils.makeDirs(cacheDir), "DiskCache")
+        FileUtils.makeDirs(File(cacheDir, "DiskCache"))
 
 
     interface GsonConfiguration {

@@ -1,12 +1,12 @@
 package com.linwei.cams_mvvm_template.di.component
 
-import com.linwei.cams.base.lifecycle.AppLifecycles
-import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams_mvvm.di.component.MvvmComponent
+import com.linwei.cams_mvvm.di.module.ViewModelFactoryModule
+import com.linwei.cams_mvvm_template.TemplateApplication
 import com.linwei.cams_mvvm_template.di.module.ActivityModule
 import com.linwei.cams_mvvm_template.di.module.FragmentModule
 import com.linwei.cams_mvvm_template.di.module.ViewModelModule
-import com.linwei.cams_mvvm_template.di.scope.MvvmScope
+import com.linwei.cams_mvvm_template.di.scope.TemplateScope
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 
@@ -19,24 +19,24 @@ import dagger.android.AndroidInjectionModule
  * @Description:
  *-----------------------------------------------------------------------
  */
-@MvvmScope
+@TemplateScope
 @Component(
-    dependencies = [AppComponent::class],
+    dependencies = [MvvmComponent::class],
     modules = [AndroidInjectionModule::class, ViewModelModule::class, ActivityModule::class,
-        FragmentModule::class]
+        FragmentModule::class, ViewModelFactoryModule::class]
 )
 interface TemplateComponent {
 
     /**
-     * 注入 [AppLifecycles] 对象
-     * @param appLifecycles [AppLifecycles]
+     * 注入 [TemplateApplication] 对象
+     * @param application [TemplateApplication]
      */
-    fun inject(appLifecycles: AppLifecycles)
+    fun inject(application: TemplateApplication)
 
 
     @Component.Builder
     interface Builder {
-        fun appComponent(appComponent: AppComponent?): Builder
+        fun appComponent(mvvmComponent: MvvmComponent): Builder
 
         fun build(): TemplateComponent
     }

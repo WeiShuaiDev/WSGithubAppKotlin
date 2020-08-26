@@ -1,6 +1,5 @@
 package com.linwei.cams_mvvm.di.module
 
-import com.linwei.cams_mvvm.di.scope.MvvmScope
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.http.IDataMvvmRepository
 import com.linwei.cams_mvvm.livedatabus.MessageLiveEvent
@@ -34,7 +33,7 @@ object MvvmModelModule {
      * 状态事件总线
      */
     @Provides
-     fun provideStatusLiveEvent(): StatusLiveEvent {
+    fun provideStatusLiveEvent(): StatusLiveEvent {
         return StatusLiveEvent()
     }
 
@@ -42,6 +41,6 @@ object MvvmModelModule {
     @Module
     abstract class Bindings {
         @Binds
-         abstract fun bindDataAacRepository(dataAacRepository: DataMvvmRepository): IDataMvvmRepository
+        abstract fun bindDataAacRepository(dataAacRepository: DataMvvmRepository): IDataMvvmRepository
     }
 }

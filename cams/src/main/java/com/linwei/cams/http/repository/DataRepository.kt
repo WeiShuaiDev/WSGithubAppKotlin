@@ -39,14 +39,12 @@ open class DataRepository @Inject constructor() : IDataRepository {
     /**
      * `RetrofitService` 对象缓存存储
      */
-    private var mRetrofitServiceCache: Cache<String, Any> =
-        mCacheFactory.build(CacheType.retrofitServiceCacheType)
+    private lateinit var mRetrofitServiceCache: Cache<String, Any>
 
     /**
      * `CacheService` 对象缓存存储
      */
-    private var mCacheServiceCache: Cache<String, Any> =
-        mCacheFactory.build(CacheType.cacheServiceCacheType)
+    private lateinit var mCacheServiceCache: Cache<String, Any>
 
     /**
      * 根据 [serviceClass] 获取接口对象，根据 `serviceClass`作为`key`，在 [mRetrofitServiceCache] 获取接口对象,
@@ -57,6 +55,8 @@ open class DataRepository @Inject constructor() : IDataRepository {
     @Suppress("UNCHECKED_CAST")
     @Synchronized
     override fun <T> obtainRetrofitService(serviceClass: Class<T>): T {
+        mRetrofitServiceCache = mCacheFactory.build(CacheType.retrofitServiceCacheType)
+
         var retrofitService: Any? =
             mRetrofitServiceCache.get(serviceClass.canonicalName ?: serviceClass.simpleName)
 
@@ -90,6 +90,8 @@ open class DataRepository @Inject constructor() : IDataRepository {
     @Suppress("UNCHECKED_CAST")
     @Synchronized
     override fun <T> obtainRxCacheService(serviceClass: Class<T>): T {
+        mCacheServiceCache = mCacheFactory.build(CacheType.cacheServiceCacheType)
+
         var retrofitService: Any? =
             mCacheServiceCache.get(serviceClass.canonicalName ?: serviceClass.simpleName)
         if (retrofitService == null) {

@@ -1,11 +1,8 @@
 package com.linwei.cams_mvvm.di.module
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.linwei.cams_mvvm.mvvm.ViewModelFactory
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.cams_mvvm.di.scope.ViewModelKey
-import com.linwei.cams_mvvm.mvvm.TestViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

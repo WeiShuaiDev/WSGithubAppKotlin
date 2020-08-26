@@ -16,6 +16,8 @@ object ApiStateConstant {
 }
 
 object HttpConstant {
+    const val API_URL: String = "https://api.github.com/"
+
     const val CONNECT_TIME_OUT: Long = 10
     const val WRITE_TIME_OUT: Long = 10
     const val READ_TIME_OUT: Long = 10

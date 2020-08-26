@@ -22,9 +22,7 @@ class DataMvvmRepository @Inject constructor() : DataRepository(), IDataMvvmRepo
     /**
      * `RoomDataBase` 对象缓存存储
      */
-    private var mDataBaseCache: Cache<String, Any> =
-        mCacheFactory.build(CacheType.databaseCacheType)
-
+    private lateinit var mDataBaseCache: Cache<String, Any>
 
     /**
      * 根据 [databaseClass] 从 `Cache` 获取 `RoomDatabase` 对象
@@ -34,6 +32,8 @@ class DataMvvmRepository @Inject constructor() : DataRepository(), IDataMvvmRepo
     @Suppress("UNCHECKED_CAST")
     @Synchronized
     override fun <T : RoomDatabase> obtainRoomDataBase(databaseClass: Class<T>): T {
+        mDataBaseCache = mCacheFactory.build(CacheType.databaseCacheType)
+
         var roomDatabase: Any? =
             mDataBaseCache.get(
                 databaseClass.canonicalName ?: databaseClass.simpleName

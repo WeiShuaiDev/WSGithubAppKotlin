@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import com.google.gson.Gson
+import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
 import com.linwei.cams.http.config.HttpConstant
 import com.linwei.cams.http.glide.GlideHelper
@@ -103,7 +104,12 @@ class ClientModule {
         baseUrl: HttpUrl?
     ): Retrofit {
         return builder.also {
-            it.baseUrl(baseUrl)
+            if (baseUrl != null) {
+                it.baseUrl(baseUrl)
+            } else {
+                it.baseUrl(HttpConstant.API_URL)
+            }
+
             it.client(client)
 
             if (converterFactory != null)
@@ -145,7 +151,7 @@ class ClientModule {
     @Provides
     @Named("RxCacheDirectory")
     fun provideRxCacheDirectory(cacheDir: File): File =
-        File(FileUtils.makeDirs(cacheDir), "RxCache")
+        FileUtils.makeDirs(File(cacheDir, "RxCache"))
 
 
     /**

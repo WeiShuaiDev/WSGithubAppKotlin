@@ -1,7 +1,10 @@
 package com.linwei.cams_mvvm_template.di.module
 
+import com.linwei.cams.di.scope.FragmentScope
 import com.linwei.cams_mvvm.di.component.BaseFragmentSubComponent
+import com.linwei.cams_mvvm_template.mvvm.ui.module.login.LoginFragment
 import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
 /**
  * ---------------------------------------------------------------------
@@ -14,6 +17,10 @@ import dagger.Module
  */
 @Module(subcomponents = [BaseFragmentSubComponent::class])
 interface FragmentModule {
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    fun contributeLoginActivity(): LoginFragment
 
 
 }

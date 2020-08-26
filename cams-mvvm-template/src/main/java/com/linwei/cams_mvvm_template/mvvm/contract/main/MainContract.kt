@@ -1,4 +1,4 @@
-package com.linwei.cams_mvvm_template.mvvm.contract
+package com.linwei.cams_mvvm_template.mvvm.contract.main
 
 import com.linwei.cams_mvvm.mvvm.IModel
 import com.linwei.cams_mvvm.mvvm.IView

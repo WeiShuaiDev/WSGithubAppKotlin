@@ -2,7 +2,6 @@ package com.linwei.github_mvvm.di.module
 
 import androidx.lifecycle.ViewModel
 import com.linwei.cams_mvvm.di.scope.ViewModelKey
-import com.linwei.cams_mvvm.mvvm.TestViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.RecommendedViewModel

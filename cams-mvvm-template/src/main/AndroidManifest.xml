@@ -3,14 +3,14 @@
     package="com.linwei.cams_mvvm_template">
 
     <application
-        android:name="com.linwei.cams.base.BaseApplication"
+        android:name=".TemplateApplication"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <meta-data
-            android:name=".global.GlobalConfiguration"
+            android:name="com.linwei.cams_mvvm_template.global.GlobalConfiguration"
             android:value="GlobalConfigModule" />
 
         <activity android:name=".SplashActivity">
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".mvvm.ui.activity.MainActivity" />
+        <activity android:name=".mvvm.ui.module.main.MainActivity" />
     </application>
 
 </manifest>

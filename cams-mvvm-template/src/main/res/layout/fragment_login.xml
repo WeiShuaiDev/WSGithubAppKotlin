@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.linwei.cams_mvvm_template.mvvm.viewmodel.main.MainViewModel" />
+            type="com.linwei.cams_mvvm_template.mvvm.viewmodel.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout style="@style/MatchAndWrap">

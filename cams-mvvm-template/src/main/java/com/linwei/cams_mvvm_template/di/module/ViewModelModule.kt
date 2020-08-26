@@ -1,7 +1,9 @@
 package com.linwei.cams_mvvm_template.di.module
+
+import androidx.lifecycle.ViewModel
 import com.linwei.cams_mvvm.di.scope.ViewModelKey
-import com.linwei.cams_mvvm_template.mvvm.contract.MainContract
-import com.linwei.cams_mvvm_template.mvvm.viewmodel.MainViewModel
+import com.linwei.cams_mvvm_template.mvvm.viewmodel.login.LoginViewModel
+import com.linwei.cams_mvvm_template.mvvm.viewmodel.main.MainViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -21,6 +23,11 @@ interface ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(MainViewModel::class)
-    fun bindMainViewModel(viewModel: MainViewModel): MainContract.ViewModel
+    fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
 
 }
