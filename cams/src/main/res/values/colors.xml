@@ -5,8 +5,9 @@
     <color name="colorAccent">#1979D1</color>
 
     <color name="colorGlobalLine">#E9E9E9</color>
-    <color name="colorGlobalTextGray">#333333</color>
+    <color name="colorGlobalTextGray">#666666</color>
     <color name="colorGlobalTextWhite">#FFFFFF</color>
+    <color name="colorGlobalTextBlack">#333333</color>
     <color name="colorGlobalBackground">#F9F9F9</color>
     <color name="colorGlobalWhite">#FFFFFF</color>
     <color name="colorGlobalBlack">#000000</color>

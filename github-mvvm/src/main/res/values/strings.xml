@@ -1,4 +1,5 @@
 <resources>
+    <string name="author">WeiShuaiDev</string>
 
     <string name="tab_recommended">推荐</string>
     <string name="tab_dynamic">动态</string>

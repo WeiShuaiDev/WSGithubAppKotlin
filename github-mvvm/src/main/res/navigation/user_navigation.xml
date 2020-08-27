@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/AccountLoginFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/AccountLoginFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.login.AccountLoginFragment"
+        android:label="fragment_account_login"
+        tools:layout="@layout/fragment_account_login">
+
+        <action
+            android:id="@+id/action_account_login_to_oauth_login"
+            app:destination="@id/OAuthLoginFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/OAuthLoginFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.login.OAuthLoginFragment"
+        android:label="fragment_oauth_login"
+        tools:layout="@layout/fragment_oauth_login" />
+
+</navigation>

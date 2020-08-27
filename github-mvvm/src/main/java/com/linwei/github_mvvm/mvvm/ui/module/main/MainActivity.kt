@@ -1,5 +1,6 @@
 package com.linwei.github_mvvm.mvvm.ui.module.main
 
+import android.content.Context
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
@@ -16,6 +17,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 /**
@@ -27,20 +29,19 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class MainActivity : BaseActivity(), HasAndroidInjector {
+class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
     private var mPreTime: Long = 0
 
-    @Inject
-    lateinit var mAndroidInjector: DispatchingAndroidInjector<Any>
-
-    override fun provideContentViewId(): Int = R.layout.activity_main
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        //Dagger.Android Fragment 注入
-        AndroidInjection.inject(this)
-        super.onCreate(savedInstanceState)
+    companion object {
+        @JvmStatic
+        fun start(context: Context) {
+            context.startActivity<MainActivity>()
+        }
     }
 
+    override fun useDataBinding(): Boolean = false
+
+    override fun provideContentViewId(): Int = R.layout.activity_main
 
     override fun initLayoutView() {
         initBottomNavigationView()
@@ -86,5 +87,7 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         }
     }
 
-    override fun androidInjector(): AndroidInjector<Any> = mAndroidInjector
+    override fun bindViewModel() {
+    }
+
 }

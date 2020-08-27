@@ -52,10 +52,14 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
 
     protected var mProgressDialog: Dialog? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun setUpOnCreateAndSuperStart(savedInstanceState: Bundle?) {
+        super.setUpOnCreateAndSuperStart(savedInstanceState)
         //Dagger.Android Fragment 注入
         AndroidInjection.inject(this)
-        super.onCreate(savedInstanceState)
+    }
+
+    override fun setUpOnCreateAndSuperEnd(savedInstanceState: Bundle?) {
+        super.setUpOnCreateAndSuperEnd(savedInstanceState)
 
         initViewModel() //初始化ViewModel
         registerLiveEvent()  //注册事件总线
@@ -65,9 +69,17 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
     }
 
     override fun bindingContentView(bundle: Bundle?, contentView: View): View? {
-        mViewDataBinding = DataBindingUtil.bind(contentView)
-        return mViewDataBinding?.root
+        return if (useDataBinding()) {
+            mViewDataBinding = DataBindingUtil.bind(contentView)
+            mViewDataBinding?.root
+        } else null
     }
+
+    /**
+     * 是否使用 `Databinding` 布局
+     * @return [Boolean] true:使用；false:不使用
+     */
+    open fun useDataBinding(): Boolean = true
 
     /**
      *  根据 `Class` 类，获取不同的 `ViewModel` 对象

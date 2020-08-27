@@ -62,7 +62,9 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        setUpOnCreateAndSuperStart(savedInstanceState)
         super.onCreate(savedInstanceState)
+        setUpOnCreateAndSuperEnd(savedInstanceState)
         mContext = this
 
         val withTopBarView: View? = withTopBarView()
@@ -255,6 +257,19 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
     protected open fun fetchSlideLayoutType(): Int {
         return LAYOUT_COVER
     }
+
+    /**
+     * 执行 [OnCreate] 方法之前配置回调
+     * @param savedInstanceState [Bundle]
+     */
+    protected open fun setUpOnCreateAndSuperStart(savedInstanceState: Bundle?) {}
+
+
+    /**
+     * 执行 [OnCreate] 方法之后配置回调
+     * @param savedInstanceState [Bundle]
+     */
+    protected open fun setUpOnCreateAndSuperEnd(savedInstanceState: Bundle?) {}
 
     /**
      * 初始化控件

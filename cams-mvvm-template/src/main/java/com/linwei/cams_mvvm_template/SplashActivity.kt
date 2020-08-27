@@ -3,6 +3,11 @@ package com.linwei.cams_mvvm_template
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.linwei.cams.base.activity.BaseActivity
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -13,7 +18,15 @@ import com.linwei.cams.base.activity.BaseActivity
  * @Description:
  *-----------------------------------------------------------------------
  */
-class SplashActivity : BaseActivity() {
+class SplashActivity : BaseActivity(), HasAndroidInjector {
+
+    @Inject
+    lateinit var mAndroidInjector: DispatchingAndroidInjector<Any>
+
+    override fun setUpOnCreateAndSuperStart(savedInstanceState: Bundle?) {
+        super.setUpOnCreateAndSuperStart(savedInstanceState)
+        AndroidInjection.inject(this)
+    }
 
     override fun provideContentViewId(): Int = R.layout.activity_splash
 
@@ -25,4 +38,6 @@ class SplashActivity : BaseActivity() {
 
     override fun initLayoutListener() {
     }
+
+    override fun androidInjector(): AndroidInjector<Any> = mAndroidInjector
 }

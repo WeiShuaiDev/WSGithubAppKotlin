@@ -72,9 +72,18 @@ abstract class BaseMvvmFragmentWithTopAndStatus<VM : BaseViewModel, VDB : ViewDa
         contentView: View,
         savedInstanceState: Bundle?
     ): View? {
-        mViewDataBinding = DataBindingUtil.bind(contentView)
-        return mViewDataBinding?.root
+        return if (useDataBinding()) {
+            mViewDataBinding = DataBindingUtil.bind(contentView)
+            mViewDataBinding?.root
+        } else null
     }
+
+
+    /**
+     * 是否使用 `Databinding` 布局
+     * @return [Boolean] true:使用；false:不使用
+     */
+    open fun useDataBinding(): Boolean = true
 
     override fun setupFragmentComponent(appComponent: AppComponent?) {
     }
