@@ -105,9 +105,9 @@ dependencies {
     kapt rootProject.ext.dependencies["dagger2-compiler"]
     kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
-    //ARouter
-    implementation rootProject.ext.dependencies["arouter-api"]
-    kapt rootProject.ext.dependencies["arouter-compiler"]
+//    //ARouter
+//    implementation rootProject.ext.dependencies["arouter-api"]
+//    kapt rootProject.ext.dependencies["arouter-compiler"]
 
     //Mikepenz
     implementation "com.mikepenz:iconics-core:4.0.1-b01"

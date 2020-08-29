@@ -2,12 +2,9 @@ package com.linwei.cams.di.module
 
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import com.google.gson.Gson
-import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
 import com.linwei.cams.http.config.HttpConstant
-import com.linwei.cams.http.glide.GlideHelper
 import com.linwei.cams.http.interceptor.HttpRequestInterceptor
 import com.linwei.cams.http.interceptor.HttpResponseInterceptor
 import com.linwei.cams.http.interceptor.LogInterceptor
@@ -203,9 +200,6 @@ class ClientModule {
      * 创建 `GlideHelper` 对象
      * @return [GlideHelper]
      */
-    @Singleton
-    @Provides
-    fun provideGlideHelper(): GlideHelper = GlideHelper.getInstance()
 
     /**
      * [Retrofit] 配置,开发者通过实现 [RetrofitConfiguration] 接口中方法，在调用 [Retrofit.Builder] 对象进行配置，
