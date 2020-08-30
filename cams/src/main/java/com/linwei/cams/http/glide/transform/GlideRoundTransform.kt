@@ -1,4 +1,4 @@
-package com.linwei.cams.http.glide
+package com.linwei.cams.http.glide.transform
 
 import android.graphics.*
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool

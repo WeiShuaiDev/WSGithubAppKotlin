@@ -14,7 +14,7 @@ import java.io.File
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface GlideImageLoader {
+interface ImageLoader {
 
     /**
      * 加载图片
@@ -44,7 +44,7 @@ interface GlideImageLoader {
      * @param extendOption 额外配置接口
      * @return Boolean 是否已经缓存到本地
      */
-    fun isCache(loadOption: GlideLoadOption, extendOption: GlideImageLoader.ExtendedOptions? = null): Boolean
+    fun isCache(loadOption: GlideLoadOption, extendOption: ExtendedOptions? = null): Boolean
 
     /**
      * 获取本地缓存
@@ -52,7 +52,7 @@ interface GlideImageLoader {
      * @param extendOption 额外配置接口
      * @return File
      */
-    fun getLocalCache(loadOption: GlideLoadOption, extendOption: GlideImageLoader.ExtendedOptions? = null): File?
+    fun getLocalCache(loadOption: GlideLoadOption, extendOption: ExtendedOptions? = null): File?
 
     /**
      * 获取本地缓存bitmap
@@ -60,7 +60,7 @@ interface GlideImageLoader {
      * @param extendOption 额外配置接口
      * @return Bitmap
      */
-    fun getLocalCacheBitmap(loadOption: GlideLoadOption, extendOption: GlideImageLoader.ExtendedOptions? = null): Bitmap?
+    fun getLocalCacheBitmap(loadOption: GlideLoadOption, extendOption: ExtendedOptions? = null): Bitmap?
 
 
     /**
@@ -77,7 +77,7 @@ interface GlideImageLoader {
      * @param extendOption 额外配置接口
      * @return Bitmap
      */
-    fun downloadOnly(loadOption: GlideLoadOption, callback: GlideImageLoader.Callback?, extendOption: GlideImageLoader.ExtendedOptions? = null)
+    fun downloadOnly(loadOption: GlideLoadOption, callback: Callback?, extendOption: ExtendedOptions? = null)
 
     /**
      * 额外配置支持
