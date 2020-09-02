@@ -2,8 +2,10 @@ package com.linwei.github_mvvm.global
 
 import android.app.Application
 import android.content.Context
+import com.alibaba.android.arouter.launcher.ARouter
 import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
+import com.linwei.github_mvvm.BuildConfig
 import timber.log.Timber
 
 /**
@@ -23,6 +25,19 @@ class AppLifecycleImpl : AppLifecycles {
 
     override fun onCreate(application: Application, appDelegate: AppDelegate?) {
         Timber.i("AppLifecycleImpl to onCreate!")
+        initARouter(application)
+    }
+
+    /**
+     * 初始化路由器 `ARouter`
+     * @param application [Application]
+     */
+    private fun initARouter(application: Application) {
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog()
+            ARouter.openDebug()
+        }
+        ARouter.init(application)
     }
 
     override fun onTerminate(application: Application) {

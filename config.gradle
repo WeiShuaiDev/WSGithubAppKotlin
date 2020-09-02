@@ -51,6 +51,12 @@ ext {
             "appcompat"                 : "androidx.appcompat:appcompat:${version["androidXSdkVersion"]}",
             "constraintlayout"          : "androidx.constraintlayout:constraintlayout:${version["androidXSdkVersion"]}",
 
+            //recyclerview
+            "recyclerview"              : "androidx.recyclerview:recyclerview:${version["androidXSdkVersion"]}",
+
+            "legacy-support-v4"         : "androidx.legacy:legacy-support-v4:1.0.0",
+            "annotation"                : "androidx.annotation:annotation:1.0.0",
+
             /**
              * ---------------------------------------------Kotlin----------------------------------
              */
@@ -162,6 +168,7 @@ ext {
             "parallaxbacklayout"        : "com.github.anzewei:parallaxbacklayout:${version["parallaxbacklayoutVersion"]}",
             //Animation
             "avi"                       : "com.wang.avi:library:${version["aviVersion"]}",
+
 
             /**
              * ---------------------------------------------Test------------------------------------

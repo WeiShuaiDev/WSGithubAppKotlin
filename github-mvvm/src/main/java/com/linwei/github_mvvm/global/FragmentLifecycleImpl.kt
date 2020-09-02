@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.linwei.cams.di.scope.FragmentScope
 import timber.log.Timber
+
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
@@ -34,6 +36,8 @@ class FragmentLifecycleImpl :
         savedInstanceState: Bundle?
     ) {
         Timber.i("FragmentLifecycleImpl to onFragmentCreated!")
+        //绑定路由器
+        ARouter.getInstance().inject(fragment)
     }
 
     override fun onFragmentViewCreated(

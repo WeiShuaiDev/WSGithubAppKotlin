@@ -3,6 +3,7 @@ package com.linwei.github_mvvm.global
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import com.alibaba.android.arouter.launcher.ARouter
 import com.linwei.cams.di.scope.ActivityScope
 import timber.log.Timber
 
@@ -24,6 +25,9 @@ class ActivityLifecycleImpl : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         Timber.i("ActivityLifecycleImpl to onActivityCreated!")
+        //绑定路由器
+        ARouter.getInstance().inject(activity)
+
     }
 
     override fun onActivityResumed(activity: Activity) {
