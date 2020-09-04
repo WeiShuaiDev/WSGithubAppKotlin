@@ -5,7 +5,7 @@
     <color name="colorAccent">#212121</color>
 
     <!--Navigation-->
-    <color name="colorNavigationBackground">#FFFFFF</color>
-    <color name="colorNavigationIconSelect">#366BFC</color>
-    <color name="colorNavigationIconNormal">#212121</color>
+    <color name="colorNavigationBackground">#2c2c2c</color>
+    <color name="colorNavigationIconSelect">#FFFFFF</color>
+    <color name="colorNavigationIconNormal">#bfbfbf</color>
 </resources>

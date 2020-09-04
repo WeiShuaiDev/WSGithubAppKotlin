@@ -2,10 +2,10 @@ package com.linwei.github_mvvm.global
 
 import android.app.Application
 import android.content.Context
-import com.alibaba.android.arouter.launcher.ARouter
 import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
-import com.linwei.github_mvvm.BuildConfig
+import com.linwei.github_mvvm.mvvm.factory.IconFontFactory
+import com.mikepenz.iconics.Iconics
 import timber.log.Timber
 
 /**
@@ -25,19 +25,16 @@ class AppLifecycleImpl : AppLifecycles {
 
     override fun onCreate(application: Application, appDelegate: AppDelegate?) {
         Timber.i("AppLifecycleImpl to onCreate!")
-        initARouter(application)
+        initIconics(application)
     }
 
     /**
-     * 初始化路由器 `ARouter`
+     * 初始化 `Iconics`
      * @param application [Application]
      */
-    private fun initARouter(application: Application) {
-        if (BuildConfig.DEBUG) {
-            ARouter.openLog()
-            ARouter.openDebug()
-        }
-        ARouter.init(application)
+    private fun initIconics(application: Application) {
+        Iconics.init(application)
+        Iconics.registerFont(IconFontFactory)
     }
 
     override fun onTerminate(application: Application) {

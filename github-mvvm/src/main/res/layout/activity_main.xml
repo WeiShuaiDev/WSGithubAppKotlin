@@ -28,6 +28,7 @@
         android:background="@color/colorNavigationBackground"
         app:itemIconTint="@color/select_main_bottom"
         app:itemTextColor="@color/select_main_bottom"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_main" />
 
 </LinearLayout>

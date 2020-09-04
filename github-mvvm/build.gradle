@@ -18,6 +18,17 @@ android {
         /**添加多 dex分包支持*/
         multiDexEnabled true
     }
+
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+        }
+        javacOptions {
+            // 增加错误提示
+            option("-Xmaxerrs", 500)
+        }
+    }
+
     signingConfigs {
         debug {
             keyAlias "${SIGNING_KEYALIAS}"
@@ -38,6 +49,8 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "boolean", "USE_CANARY", "true"
             minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }
@@ -45,6 +58,8 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "boolean", "USE_CANARY", "true"
             minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }
@@ -90,6 +105,10 @@ android {
         preDexLibraries = false
     }
 
+    packagingOptions {
+        exclude 'META-INF/library-core_release.kotlin_module'
+    }
+
 }
 
 
@@ -101,33 +120,37 @@ def buildTime() {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //Dagger2
+    ///Dagger2
     kapt rootProject.ext.dependencies["dagger2-compiler"]
     kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
-    //ARouter
-    implementation rootProject.ext.dependencies["arouter-api"]
-    kapt rootProject.ext.dependencies["arouter-compiler"]
+    ///ARouter
+    //implementation rootProject.ext.dependencies["arouter-api"]
+    //implementation rootProject.ext.dependencies["arouter-register"]
+    //kapt rootProject.ext.dependencies["arouter-compiler"]
 
-    //TabBar
+    ///TabBar
     implementation "devlight.io:navigationtabbar:1.2.5"
 
-    //TextFieldBoxes
+    ///TextFieldBoxes
     implementation "com.github.HITGIF:TextFieldBoxes:1.4.5"
 
-    //Drawer
+    ///Drawer
     implementation "com.mikepenz:materialdrawer:7.0.0-rc03"
 
-    //DropDownMenu
+    ///DropDownMenu
     implementation "com.github.dongjunkun:DropDownMenu:1.0.4"
 
-    //lottie
+    ///lottie
     implementation "com.airbnb.android:lottie:2.8.0"
 
-    //PhotoView
-    implementation "com.github.chrisbanes:PhotoView:2.1.4"
+    ///PhotoView
+    implementation "com.github.chrisbanes:PhotoView:2.3.0"
 
-    //Mikepenz
+    ///BaseRecyclerViewAdapterHelper
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
+    ///Mikepenz
     implementation "com.mikepenz:iconics-core:4.0.1-b01"
     implementation "com.mikepenz:iconics-views:4.0.1-b01"
     implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.6-kotlin@aar'
@@ -138,7 +161,7 @@ dependencies {
     implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.5-kotlin@aar'
     implementation 'com.mikepenz:ionicons-typeface:2.0.1.5-kotlin@aar'
 
-    //iconics
+    ///iconics
     implementation "com.mikepenz:iconics-core:4.0.1-b01"
     implementation "com.mikepenz:iconics-views:4.0.1-b01"
     implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.6-kotlin@aar'
@@ -150,7 +173,6 @@ dependencies {
     implementation 'com.mikepenz:ionicons-typeface:2.0.1.5-kotlin@aar'
 
     implementation project(path: ':cams-mvvm')
-
 
     //test
     implementation rootProject.ext.dependencies["appcompat"]
