@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchAndMatch"
     android:orientation="vertical"
-    tools:context=".mvvm.ui.module.main.MainActivity"
     tools:ignore="MissingConstraints">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LoginFragment" />
+    <fragment
+        android:id="@+id/mNavHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        style="@style/MatchAndMatch"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/user_navigation"
+        tools:ignore="MissingConstraints" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

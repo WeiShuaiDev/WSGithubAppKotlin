@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.ui.module.main.MainActivity">
 
@@ -10,15 +11,132 @@
             type="com.linwei.github_mvvm.mvvm.viewmodel.login.AccountLoginViewModel" />
     </data>
 
-    <LinearLayout
-        style="@style/MatchAndWrap"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/MatchAndMatch"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DynamicFragment" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/colorGlobalWhite"
+            app:cardCornerRadius="@dimen/dp_5"
+            app:cardElevation="@dimen/dp_4"
+            app:contentPadding="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_percent=".8">
 
-    </LinearLayout>
+            <LinearLayout
+                style="@style/MatchAndMatch"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="@dimen/dp_80"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:layout_marginBottom="@dimen/dp_30"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    style="@style/MatchAndWrap"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="@dimen/dp_25"
+                        android:layout_height="@dimen/dp_25"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        app:iiv_color="@color/colorPrimary"
+                        app:iiv_icon="APP_LOGIN_USER" />
+
+                    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                        style="@style/MatchAndWrap"
+                        app:hasClearButton="true"
+                        app:labelText="@string/login_user_name"
+                        app:panelBackgroundColor="@color/colorGlobalWhite"
+                        app:primaryColor="@color/colorPrimary"
+                        app:secondaryColor="@color/colorSubLightText"
+                        app:useDenseSpacing="true">
+
+                        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                            android:id="@+id/login_username_input"
+                            style="@style/WrapAndWrap"
+                            android:text="@={viewModel.username}" />
+
+                    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    style="@style/MatchAndWrap"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="@dimen/dp_25"
+                        android:layout_height="@dimen/dp_25"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        app:iiv_color="@color/colorPrimary"
+                        app:iiv_icon="APP_LOGIN_PW" />
+
+                    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                        style="@style/MatchAndWrap"
+                        app:hasClearButton="true"
+                        app:labelText="@string/login_password"
+                        app:panelBackgroundColor="@color/colorGlobalWhite"
+                        app:primaryColor="@color/colorPrimary"
+                        app:secondaryColor="@color/colorSubLightText"
+                        app:useDenseSpacing="true">
+
+                        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                            android:id="@+id/login_password_input"
+                            style="@style/WrapAndWrap"
+                            android:text="@={viewModel.password}" />
+
+                    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.linwei.github_mvvm.mvvm.ui.view.StateButton
+                    android:id="@+id/login_submit_btn"
+                    style="@style/MatchAndWrap"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:onClick="@{viewModel::onSubmitClick}"
+                    android:text="@string/login_button"
+                    android:textSize="@dimen/sp_16"
+                    app:animationDuration="1000"
+                    app:normalBackgroundColor="@color/colorPrimaryDark"
+                    app:normalTextColor="@android:color/white"
+                    app:pressedTextColor="@android:color/white"
+                    app:radius="5dp"
+                    app:roundsize="false"
+                    app:unableBackgroundColor="@color/colorPrimaryDark"
+                    app:unableTextColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

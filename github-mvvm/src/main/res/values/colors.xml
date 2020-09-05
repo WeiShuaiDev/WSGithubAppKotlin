@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#212121</color>
-    <color name="colorAccent">#212121</color>
+    <color name="colorPrimary">#313335</color>
+    <color name="colorPrimaryDark">#2b2b2b</color>
+    <color name="colorAccent">#42464b</color>
 
     <!--Navigation-->
     <color name="colorNavigationBackground">#2c2c2c</color>
     <color name="colorNavigationIconSelect">#FFFFFF</color>
     <color name="colorNavigationIconNormal">#bfbfbf</color>
+
+
+    <color name="colorSubLightText">#c4c4c4</color>
 </resources>

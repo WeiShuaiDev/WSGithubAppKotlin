@@ -5,6 +5,7 @@ import android.view.animation.*
 import androidx.databinding.ViewDataBinding
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
+import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
 import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
@@ -51,7 +52,7 @@ class SplashActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
     private fun toDelayJump() {
         val timer: CountDownTimer = object : CountDownTimer(3000, 1000) {
             override fun onFinish() {
-                MainActivity.start(this@SplashActivity)
+                UserActivity.start(this@SplashActivity)
                 finish()
             }
 
