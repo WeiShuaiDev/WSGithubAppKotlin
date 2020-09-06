@@ -10,5 +10,8 @@
     <string name="login_password">密码</string>
     <string name="login_button">登录</string>
 
+    <string name="logcat_login_user_name_entry">用户名为空！</string>
+    <string name="logcat_login_password_entry">密码为空！</string>
+
     <string name="exit_app_tip">再次点击，退出应用程序</string>
 </resources>

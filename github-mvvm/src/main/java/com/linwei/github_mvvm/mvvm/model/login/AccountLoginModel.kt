@@ -3,9 +3,7 @@ package com.linwei.github_mvvm.mvvm.model.login
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
-import com.linwei.github_mvvm.mvvm.contract.login.OAuthLoginContract
-import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
-import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
+import io.reactivex.Observable
 import javax.inject.Inject
 
 /**
@@ -19,6 +17,18 @@ import javax.inject.Inject
  */
 class AccountLoginModel @Inject constructor(dataRepository: DataMvvmRepository) :
     BaseModel(dataRepository), AccountLoginContract.Model {
+
+    override fun requestAccountLogin(username: String, password: String) {
+
+    }
+
+    override fun requestTokenObservable(): Observable<String> {
+        return Observable.just("3")
+    }
+
+    override fun requestCodeTokenObservable(code: String): Observable<String> {
+        return Observable.just("2")
+    }
 
 
 }
