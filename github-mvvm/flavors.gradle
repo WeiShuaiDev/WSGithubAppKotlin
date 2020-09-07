@@ -10,6 +10,11 @@ android {
             resValue('string', 'app_name', 'Github App')
             buildConfigField('String', 'APP_NAME', '\"Github App\"')
 
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            buildConfigField('String', 'CLIENT_ID', properties.getProperty("CLIENT_ID"))
+            buildConfigField('String', 'CLIENT_SECRET', properties.getProperty("CLIENT_SECRET"))
+
             //Bugly配置
             buildConfigField('String', 'BUGLY_APP_ID', '\"\"')
 

@@ -11,5 +11,12 @@ package com.linwei.github_mvvm.mvvm.model.api
  */
 interface Api {
 
+    companion object {
+        const val GITHUB_BASE_URL: String = "https://github.com/"
 
+        const val GITHUB_API_BASE_URL = "https://api.github.com/"
+
+        const val GRAPHIC_HOST = "https://ghchart.rshah.org/"
+
+    }
 }

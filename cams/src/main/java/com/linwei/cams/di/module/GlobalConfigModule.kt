@@ -179,11 +179,12 @@ class GlobalConfigModule(private val mBuilder: Builder) {
         var globalHttpHandler: GlobalHttpHandler? = null
         var executorService: ExecutorService? = null
 
-        fun httpUrl(url: String?) {
+        fun httpUrl(url: String?): Builder {
             if (url.isNullOrEmpty()) {
                 throw NullPointerException("BaseUrl can not be empty")
             }
             this.baseUrl = url.toHttpUrlOrNull()
+            return this
         }
 
         fun cacheFactory(cacheFactory: Cache.Factory?): Builder {

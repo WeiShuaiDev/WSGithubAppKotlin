@@ -24,6 +24,8 @@ class AccountLoginFragment : BaseMvvmFragment<AccountLoginViewModel, FragmentAcc
     override fun provideContentViewId(): Int = R.layout.fragment_account_login
 
     override fun bindViewModel() {
+        mViewModel?.mLifecycleOwner = viewLifecycleOwner
+
         mViewDataBinding?.let {
             it.viewModel = mViewModel
             it.lifecycleOwner = viewLifecycleOwner

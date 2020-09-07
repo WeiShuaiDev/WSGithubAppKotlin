@@ -1,11 +1,11 @@
 package com.linwei.cams.http
 
+import androidx.lifecycle.LiveData
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.Retrofit
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
-import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -16,12 +16,13 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class RetrofitServiceProxyHandler<T>(private val serviceClass: Class<T>) : InvocationHandler {
-
-    @Inject
-    lateinit var mRetrofit: Retrofit
+class RetrofitServiceProxyHandler<T>(
+    private val retrofit: Retrofit,
+    private val serviceClass: Class<T>
+) : InvocationHandler {
 
     private var mRetrofitService: T? = null
+
 
     override fun invoke(proxy: Any?, method: Method?, args: Array<out Any>?): Any? {
         // 加一层 defer 由外部去控制耗时方法以及网络请求所处线程，
@@ -36,6 +37,9 @@ class RetrofitServiceProxyHandler<T>(private val serviceClass: Class<T>) : Invoc
                     return Single.defer {
                         method.invoke(create(), args) as Single<*>
                     }
+                }
+                LiveData::class.java -> {
+                    return method.invoke(create(), args) as LiveData<*>
                 }
                 else -> {
                     return method.invoke(create(), args)
@@ -60,7 +64,7 @@ class RetrofitServiceProxyHandler<T>(private val serviceClass: Class<T>) : Invoc
             if (mRetrofitService != null) {
                 return mRetrofitService
             }
-            mRetrofitService = mRetrofit.create(serviceClass)
+            mRetrofitService = retrofit.create(serviceClass)
         }
 
         return mRetrofitService

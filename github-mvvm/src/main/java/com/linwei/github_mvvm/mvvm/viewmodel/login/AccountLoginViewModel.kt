@@ -5,6 +5,8 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.*
+import com.linwei.cams.http.callback.LiveDataCallBack
+import com.linwei.cams.http.model.BaseResponse
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
@@ -25,9 +27,9 @@ class AccountLoginViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(model, application), AccountLoginContract.ViewModel {
 
-    private var prefUserName: String by pref("")
+    private var userNameStorage: String by pref("")
 
-    private var prefPassword: String by pref("")
+    private var passwordStorage: String by pref("")
 
     /**
      * 用户名
@@ -40,8 +42,8 @@ class AccountLoginViewModel @Inject constructor(
     val password = MutableLiveData<String>()
 
     init {
-        username.value = prefUserName
-        password.value = prefPassword
+        username.value = userNameStorage
+        password.value = passwordStorage
     }
 
     /**
@@ -63,8 +65,20 @@ class AccountLoginViewModel @Inject constructor(
             R.string.logcat_login_password_entry.showShort()
         }
 
-        model.requestAccountLogin(username!!, password!!)
+        mLifecycleOwner?.let {
+            model.requestTokenObservable()
+                .observe(it, object : LiveDataCallBack<String, String>() {
+                    override fun onSuccess(code: String?, data: String?) {
+                        super.onSuccess(code, data)
+                        System.out.println("提价成功! code=${code},data=${data}")
+                    }
 
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        System.out.println("提交失败！code=${code} message=${message}")
+                    }
+                })
+        }
     }
 
 }

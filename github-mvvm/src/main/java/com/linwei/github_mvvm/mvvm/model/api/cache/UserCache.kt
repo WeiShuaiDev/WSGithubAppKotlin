@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.api.service
+package com.linwei.github_mvvm.mvvm.model.api.cache
 
 /**
  * ---------------------------------------------------------------------
@@ -9,5 +9,5 @@ package com.linwei.github_mvvm.mvvm.model.api.service
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface CommonService {
+interface UserCache {
 }

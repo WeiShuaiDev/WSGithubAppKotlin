@@ -37,6 +37,10 @@ open class BaseViewModel @Inject constructor(
     @Inject
     lateinit var mStatusLiveEvent: StatusLiveEvent
 
+    /**
+     * 生命周期对象
+     */
+    var mLifecycleOwner: LifecycleOwner? = null
 
     override fun onCreate() {
 

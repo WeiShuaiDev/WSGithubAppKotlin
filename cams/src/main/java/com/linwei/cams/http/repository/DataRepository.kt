@@ -68,7 +68,7 @@ open class DataRepository @Inject constructor() : IDataRepository {
             if (retrofitService == null) {
                 retrofitService = Proxy.newProxyInstance(
                     serviceClass.classLoader, arrayOf(serviceClass),
-                    RetrofitServiceProxyHandler(serviceClass)
+                    RetrofitServiceProxyHandler(mRetrofit, serviceClass)
                 )
             }
 
