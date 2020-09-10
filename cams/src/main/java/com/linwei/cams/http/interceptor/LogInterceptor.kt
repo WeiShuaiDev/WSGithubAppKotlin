@@ -6,6 +6,7 @@ import okio.Buffer
 import timber.log.Timber
 import java.io.IOException
 import java.net.URLDecoder
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -17,7 +18,8 @@ import java.net.URLDecoder
  * 该拦截器主要处理每次请求报文、响应报文日志打印，开发者在开发过程中，方便对每次请求，进行调试。
  *-----------------------------------------------------------------------
  */
-class LogInterceptor : Interceptor {
+class LogInterceptor @Inject constructor() : Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
         val startTime: Long = System.currentTimeMillis()

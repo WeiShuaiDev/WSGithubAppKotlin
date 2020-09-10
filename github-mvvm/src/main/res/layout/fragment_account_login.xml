@@ -122,7 +122,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="20dp"
-                    android:onClick="@{viewModel::onSubmitClick}"
                     android:text="@string/login_button"
                     android:textSize="@dimen/sp_16"
                     app:animationDuration="1000"

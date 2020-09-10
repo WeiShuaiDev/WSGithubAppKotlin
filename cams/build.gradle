@@ -102,8 +102,6 @@ dependencies {
     api rootProject.ext.dependencies["glide"]
     api rootProject.ext.dependencies["glide-transformations"]
 
-    //Fastjson
-    api rootProject.ext.dependencies["fastjson"]
     //Gson
     api rootProject.ext.dependencies["gson"]
 

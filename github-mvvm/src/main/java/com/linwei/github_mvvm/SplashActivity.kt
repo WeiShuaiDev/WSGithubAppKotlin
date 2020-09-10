@@ -6,7 +6,6 @@ import androidx.databinding.ViewDataBinding
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
-import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**

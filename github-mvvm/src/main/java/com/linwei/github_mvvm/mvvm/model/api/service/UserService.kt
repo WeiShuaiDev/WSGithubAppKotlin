@@ -1,10 +1,8 @@
 package com.linwei.github_mvvm.mvvm.model.api.service
 
 import androidx.lifecycle.LiveData
-import com.linwei.cams.http.model.BaseResponse
 import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
 import com.linwei.github_mvvm.mvvm.model.bean.LoginRequestModel
-import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -24,7 +22,7 @@ interface UserService {
      * @param authRequestModel [LoginRequestModel]
      */
     @POST("authorizations")
-    fun authorizations(@Body authRequestModel: LoginRequestModel): LiveData<BaseResponse<AccessToken>>
+    fun authorizations(@Body authRequestModel: LoginRequestModel): LiveData<AccessToken>
 
     /**
      * `OAuth` 登录获取授权码

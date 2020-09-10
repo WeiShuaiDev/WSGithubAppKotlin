@@ -27,14 +27,23 @@ class LiveDataCallAdapter<R, T>(private val responseType: Type) : CallAdapter<R,
     override fun adapt(call: Call<R>): LiveData<T> {
         return object : LiveData<T>() {
             private val started = AtomicBoolean(false)
+
             @Suppress("UNCHECKED_CAST")
             override fun onActive() {
                 super.onActive()
                 if (started.compareAndSet(false, true)) {//确保执行一次
                     call.enqueue(object : Callback<R> {
                         override fun onResponse(call: Call<R>?, response: Response<R>?) {
-                            postValue(response?.body() as T)
-
+                            if (response?.isSuccessful == true) {
+                                postValue(response.body() as T)
+                            } else {
+                                val value: T = BaseResponse<R>(
+                                    response?.code().toString(),
+                                    response?.message() ?: "",
+                                    null
+                                ) as T
+                                postValue(value)
+                            }
                         }
 
                         override fun onFailure(call: Call<R>, t: Throwable) {

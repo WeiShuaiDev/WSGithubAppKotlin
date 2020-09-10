@@ -1,8 +1,7 @@
 package com.linwei.github_mvvm.mvvm.contract.login
 
 import androidx.lifecycle.LiveData
-import com.linwei.cams.http.callback.LiveDataCallBack
-import com.linwei.cams.http.model.BaseResponse
+import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
 import io.reactivex.Observable
 
 /**
@@ -45,7 +44,7 @@ interface AccountLoginContract {
         /**
          * @return [Observable]
          */
-        fun requestTokenObservable(): LiveData<String>
+        fun requestTokenObservable(): LiveData<AccessToken>
 
         /**
          * @return [Observable]

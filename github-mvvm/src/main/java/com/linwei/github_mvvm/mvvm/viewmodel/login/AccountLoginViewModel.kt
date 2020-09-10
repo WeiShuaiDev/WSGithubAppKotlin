@@ -2,14 +2,13 @@ package com.linwei.github_mvvm.mvvm.viewmodel.login
 
 import android.app.Application
 import android.view.View
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
-import com.linwei.cams.http.model.BaseResponse
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
+import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
 import com.linwei.github_mvvm.mvvm.model.login.AccountLoginModel
 import javax.inject.Inject
 
@@ -51,7 +50,6 @@ class AccountLoginViewModel @Inject constructor(
      * @param v [View]
      */
     fun onSubmitClick(v: View) {
-
         toAccountLogin(username.value, password.value)
     }
 
@@ -67,17 +65,9 @@ class AccountLoginViewModel @Inject constructor(
 
         mLifecycleOwner?.let {
             model.requestTokenObservable()
-                .observe(it, object : LiveDataCallBack<String, String>() {
-                    override fun onSuccess(code: String?, data: String?) {
-                        super.onSuccess(code, data)
-                        System.out.println("提价成功! code=${code},data=${data}")
-                    }
+                .observe(
+                    it, object : LiveDataCallBack<AccessToken, AccessToken>() {})
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        System.out.println("提交失败！code=${code} message=${message}")
-                    }
-                })
         }
     }
 

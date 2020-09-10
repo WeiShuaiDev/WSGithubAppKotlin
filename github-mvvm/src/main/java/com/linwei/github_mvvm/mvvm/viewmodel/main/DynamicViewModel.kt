@@ -3,9 +3,7 @@ package com.linwei.github_mvvm.mvvm.viewmodel.main
 import android.app.Application
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
-import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
 import com.linwei.github_mvvm.mvvm.model.main.DynamicModel
-import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
 import javax.inject.Inject
 
 /**

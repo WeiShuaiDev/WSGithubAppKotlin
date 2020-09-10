@@ -30,13 +30,16 @@ class LiveDataCallAdapterFactory : CallAdapter.Factory() {
         val observableType: Type = getParameterUpperBound(0, returnType as ParameterizedType)
         val rawType: Class<*> = getRawType(observableType)
 
-        if (rawType != BaseResponse::class.java) {
-            throw IllegalArgumentException("type must be ApiResponse")
-        }
+        //接口返回类型 [BaseResponse<*>],否则抛出 `IllegalArgumentException` 异常
+        //if (rawType != BaseResponse::class.java) {
+        //    throw IllegalArgumentException("type must be ApiResponse")
+        //}
 
-        if (observableType !is ParameterizedType) {
-            throw IllegalArgumentException("resource must be parameterized")
-        }
+        //接口传出数据必须是参数类型，否则抛出 `IllegalArgumentException` 异常
+        //if (observableType !is ParameterizedType) {
+        //    throw IllegalArgumentException("resource must be parameterized")
+        //}
+
         return LiveDataCallAdapter<Any, Any>(observableType)
     }
 

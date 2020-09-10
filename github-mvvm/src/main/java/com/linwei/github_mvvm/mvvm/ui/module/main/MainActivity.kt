@@ -1,24 +1,16 @@
 package com.linwei.github_mvvm.mvvm.ui.module.main
 
 import android.content.Context
-import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.linwei.cams.base.activity.BaseActivity
 import com.linwei.cams.ext.showShort
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
-import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------

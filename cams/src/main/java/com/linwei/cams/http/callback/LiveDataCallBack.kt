@@ -20,16 +20,20 @@ import com.linwei.cams.http.model.BaseResponse
 abstract class LiveDataCallBack<T, V> : Observer<T> {
     @Suppress("UNCHECKED_CAST")
     override fun onChanged(t: T) {
-        if (t != null && t is BaseResponse<*>) {
-            val data: BaseResponse<*> = t
-            if (!NetWorkStateCode().isExistByCode(data.code)) {
-                if (ApiStateConstant.REQUEST_SUCCESS == data.code) {
-                    onSuccess(data.code, data.result as V?)
+        if (t != null) {
+            if (t is BaseResponse<*>) {
+                val data: BaseResponse<*> = t
+                if (!NetWorkStateCode().isExistByCode(data.code)) {
+                    if (ApiStateConstant.REQUEST_SUCCESS == data.code) {
+                        onSuccess(data.code, data.result as V?)
+                    } else {
+                        onFailure(data.code, data.message)
+                    }
                 } else {
                     onFailure(data.code, data.message)
                 }
             } else {
-                onFailure(data.code, data.message)
+                onSuccess(ApiStateConstant.REQUEST_SUCCESS, t as V?)
             }
         } else {
             onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())

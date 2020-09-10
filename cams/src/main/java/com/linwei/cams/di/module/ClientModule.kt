@@ -9,6 +9,7 @@ import com.linwei.cams.http.interceptor.HttpRequestInterceptor
 import com.linwei.cams.http.interceptor.HttpResponseInterceptor
 import com.linwei.cams.http.interceptor.LogInterceptor
 import com.linwei.cams.utils.FileUtils
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import io.rx_cache2.internal.RxCache
@@ -35,8 +36,8 @@ import javax.inject.Singleton
  * @Description: 提供一些三方库客户端实例
  *-----------------------------------------------------------------------
  */
-@Module
-class ClientModule {
+@Module(includes = [ClientModule.Bindings::class])
+object ClientModule {
     /**
      * 创建 `OkHttpBuilder` 对象，并配置拦截器 [HttpRequestInterceptor] 通用拦截器,对请求发起链接超时配置
      * [connectTimeOut],流写入超时配置 [writeTimeOut],流读取超时配置 [readTimeOut],最后通过调用 [build] 方法创建 [OkHttpClient] 对象
@@ -54,6 +55,9 @@ class ClientModule {
         builder: OkHttpClient.Builder,
         configuration: OkHttpClientConfiguration?,
         interceptors: MutableList<Interceptor>,
+        @Named("HttpRequestInterceptor") httpRequestInterceptor: Interceptor,
+        @Named("HttpResponseInterceptor") httpResponseInterceptor: Interceptor,
+        @Named("LogInterceptor") logInterceptor: Interceptor,
         executorService: ExecutorService?
     ): OkHttpClient {
         return builder.also {
@@ -62,9 +66,9 @@ class ClientModule {
             it.readTimeout(HttpConstant.READ_TIME_OUT, TimeUnit.SECONDS)
 
             //通用拦截器，对请求头配置处理。
-            it.addInterceptor(HttpRequestInterceptor())
-            it.addInterceptor(HttpResponseInterceptor())
-            it.addInterceptor(LogInterceptor())
+            it.addInterceptor(httpRequestInterceptor)
+            it.addInterceptor(httpResponseInterceptor)
+            it.addInterceptor(logInterceptor)
 
             interceptors.forEach { interceptor ->
                 it.addInterceptor(interceptor)
@@ -256,4 +260,38 @@ class ClientModule {
         fun configRxCache(context: Context, builder: RxCache.Builder): RxCache
     }
 
+    @Module
+    interface Bindings {
+        /**
+         * [OkHttpClient] 请求报文拦截器
+         * @param httpRequestInterceptor  [HttpRequestInterceptor]
+         * @return [Interceptor]
+         */
+        @Singleton
+        @Named("HttpRequestInterceptor")
+        @Binds
+        fun bindHttpRequestInterceptor(httpRequestInterceptor: HttpRequestInterceptor): Interceptor
+
+
+        /**
+         * [OkHttpClient] 响应数据拦截器
+         * @param httpResponseInterceptor  [HttpResponseInterceptor]
+         * @return [Interceptor]
+         */
+        @Singleton
+        @Named("HttpResponseInterceptor")
+        @Binds
+        fun bindHttpResponseInterceptor(httpResponseInterceptor: HttpResponseInterceptor): Interceptor
+
+
+        /**
+         * [OkHttpClient] `Log` 拦截器
+         * @param logInterceptor  [LogInterceptor]
+         * @return [Interceptor]
+         */
+        @Singleton
+        @Named("LogInterceptor")
+        @Binds
+        fun bindLogInterceptor(logInterceptor: LogInterceptor): Interceptor
+    }
 }

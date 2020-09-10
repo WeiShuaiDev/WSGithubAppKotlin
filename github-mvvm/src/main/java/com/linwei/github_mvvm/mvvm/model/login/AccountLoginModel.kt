@@ -3,15 +3,12 @@ package com.linwei.github_mvvm.mvvm.model.login
 import android.util.Base64
 import androidx.lifecycle.*
 import com.linwei.cams.ext.pref
-import com.linwei.cams.http.callback.LiveDataCallBack
-import com.linwei.cams.http.config.ApiStateConstant
-import com.linwei.cams.http.model.BaseResponse
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
+import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
 import com.linwei.github_mvvm.mvvm.model.bean.LoginRequestModel
-import io.reactivex.Observable
 import javax.inject.Inject
 
 /**
@@ -77,18 +74,21 @@ class AccountLoginModel @Inject constructor(val dataRepository: DataMvvmReposito
     }
 
 
-    override fun requestTokenObservable(): LiveData<String> {
-        return userService.authorizations(LoginRequestModel.generate()).map {
-            var accessToken = ""
-            if (ApiStateConstant.REQUEST_SUCCESS == it.code) {
-                accessToken = it.result?.access_token ?: ""
-                accessTokenStorage = accessToken
-            } else {
-                clearTokenStorage()
-            }
-            accessToken
-        }
+    override fun requestTokenObservable(): LiveData<AccessToken> {
+        return dataRepository.obtainRetrofitService(UserService::class.java)
+            .authorizations(LoginRequestModel.generate())
+//            System.out.println("+++${it.string()}")
+//            var accessToken = ""
+//            if (ApiStateConstant.REQUEST_SUCCESS == it.code) {
+//                accessToken = it.result?.access_token ?: ""
+//                accessTokenStorage = accessToken
+//            } else {
+//                clearTokenStorage()
+//            }
+//            accessToken
+//        }
     }
+
 
     /**
      * 清除 `Token` 缓存信息

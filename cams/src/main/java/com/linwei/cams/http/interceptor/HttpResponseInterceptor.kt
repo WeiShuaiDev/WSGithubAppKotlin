@@ -1,11 +1,12 @@
 package com.linwei.cams.http.interceptor
 
-import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.JSONObject
+import com.google.gson.Gson
 import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.ext.showLongSafe
+import com.linwei.cams.ext.string
 import com.linwei.cams.http.GlobalHttpHandler
 import com.linwei.cams.http.config.NetWorkStateCode
+import com.linwei.cams.http.model.BaseResponse
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.Request
@@ -23,32 +24,31 @@ import javax.inject.Inject
  * 该拦截器主要处理每次响应报文，根据不同的状态码，状态信息，通过  [ToastUtils] 提示用户。
  *-----------------------------------------------------------------------
  */
-class HttpResponseInterceptor : Interceptor {
+class HttpResponseInterceptor @Inject constructor() : Interceptor {
 
     @Inject
     lateinit var mGlobalHttpHandler: GlobalHttpHandler
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
-        val response: Response = chain.proceed(request)
+        var response: Response = chain.proceed(request)
         val content: String? = response.body?.string()
         val mediaType: MediaType? = response.body?.contentType()
 
-        val result: JSONObject = JSON.parseObject(content)
-        if (result.isNotEmpty() && result.containsKey("code") && result.containsKey("message")) {
-            val code: String = result.getString("code")
-            val message: String = result.getString("message")
-            if (!isEmptyParameter(code, message)) {
-                responseCodeToast(code, message)
-            }
+        //拦截请求响应状态码，错误状态码显示 `Toast` 信息
+        val code: String = response.code.toString()
+        val message: String = response.message
+        if (!isEmptyParameter(code, message)) {
+            responseCodeToast(code, message)
         }
 
-        //提供给开发者扩展网路请求后配置
-        mGlobalHttpHandler.onHttpResultResponse(content, chain, response)
+        val httpResult: String = content ?: ""
 
-        return response.newBuilder()
-            .body((content ?: "").toResponseBody(mediaType))
-            .build()
+        //提供给开发者扩展网路请求后配置
+        response = mGlobalHttpHandler.onHttpResultResponse(httpResult, chain, response)
+
+        return response
+
     }
 
     /**
