@@ -14,6 +14,8 @@ android {
             properties.load(project.rootProject.file('local.properties').newDataInputStream())
             buildConfigField('String', 'CLIENT_ID', properties.getProperty("CLIENT_ID"))
             buildConfigField('String', 'CLIENT_SECRET', properties.getProperty("CLIENT_SECRET"))
+            buildConfigField('String', 'NOTE', properties.getProperty("NOTE"))
+            buildConfigField('String', 'NOTE_URL', properties.getProperty("NOTE_URL"))
 
             //Bugly配置
             buildConfigField('String', 'BUGLY_APP_ID', '\"\"')

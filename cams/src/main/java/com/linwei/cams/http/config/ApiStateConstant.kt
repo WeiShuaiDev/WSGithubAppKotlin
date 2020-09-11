@@ -22,3 +22,4 @@ object HttpConstant {
     const val WRITE_TIME_OUT: Long = 10
     const val READ_TIME_OUT: Long = 10
 }
+

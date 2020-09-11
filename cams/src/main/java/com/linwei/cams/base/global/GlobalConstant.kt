@@ -24,3 +24,4 @@ object CacheConstant {
 object ConfigModuleConstant {
     const val GLOBAL_CONFIG_MODULE: String = "GlobalConfigModule"
 }
+

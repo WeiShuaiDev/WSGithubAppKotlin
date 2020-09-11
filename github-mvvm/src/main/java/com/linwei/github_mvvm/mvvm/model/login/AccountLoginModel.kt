@@ -6,9 +6,13 @@ import com.linwei.cams.ext.pref
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
+import com.linwei.github_mvvm.mvvm.model.api.service.AuthService
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
-import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
-import com.linwei.github_mvvm.mvvm.model.bean.LoginRequestModel
+import com.linwei.github_mvvm.mvvm.model.bean.AuthRequestBean
+import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
+import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
 import javax.inject.Inject
 
 /**
@@ -23,33 +27,16 @@ import javax.inject.Inject
 class AccountLoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
     BaseModel(dataRepository), AccountLoginContract.Model {
 
-    /**
-     * 用户名
-     */
-    private var userNameStorage: String by pref("")
 
     /**
-     * 密码
+     *  用户权限校验服务接口
      */
-    private var passwordStorage: String by pref("")
+    private val authService: AuthService by lazy {
+        dataRepository.obtainRetrofitService(AuthService::class.java)
+    }
 
     /**
-     * 访问令牌
-     */
-    private var accessTokenStorage: String by pref("")
-
-    /**
-     * 用户密文信息
-     */
-    private var userBasicCodeStorage: String by pref("")
-
-    /**
-     * 用户信息
-     */
-    private var userInfoStorage: String by pref("")
-
-    /**
-     *  用户网络服务接口
+     *用户信息操作服务接口
      */
     private val userService: UserService by lazy {
         dataRepository.obtainRetrofitService(UserService::class.java)
@@ -59,8 +46,7 @@ class AccountLoginModel @Inject constructor(val dataRepository: DataMvvmReposito
     override fun requestAccountLogin(
         username: String,
         password: String
-    ) {
-        //清除 `Token` 信息
+    ): LiveData<AuthResponseBean> {
         clearTokenStorage()
 
         val type = "$username:$password"
@@ -68,50 +54,27 @@ class AccountLoginModel @Inject constructor(val dataRepository: DataMvvmReposito
         val userCipherTextInfo: String =
             Base64.encodeToString(type.toByteArray(), Base64.NO_WRAP).replace("\\+", "%2B")
 
-        userNameStorage = username
-        userBasicCodeStorage = userCipherTextInfo
+        //保存用户名明文、密文信息
+        userNamePref = username
+        userBasicCodePref = userCipherTextInfo
 
+        return requestCreateAuthorization()
     }
 
-
-    override fun requestTokenObservable(): LiveData<AccessToken> {
-        return dataRepository.obtainRetrofitService(UserService::class.java)
-            .authorizations(LoginRequestModel.generate())
-//            System.out.println("+++${it.string()}")
-//            var accessToken = ""
-//            if (ApiStateConstant.REQUEST_SUCCESS == it.code) {
-//                accessToken = it.result?.access_token ?: ""
-//                accessTokenStorage = accessToken
-//            } else {
-//                clearTokenStorage()
-//            }
-//            accessToken
-//        }
+    override fun requestCreateAuthorization(): LiveData<AuthResponseBean> {
+        return authService.createAuthorization(AuthRequestBean.generate())
     }
 
-
-    /**
-     * 清除 `Token` 缓存信息
-     */
-    private fun clearTokenStorage() {
-        accessTokenStorage = ""
-        userBasicCodeStorage = ""
+    override fun requestDeleteAuthorization(id: Int): LiveData<Any> {
+        return authService.deleteAuthorization(id)
     }
 
-    override fun requestCodeTokenObservable(code: String): LiveData<String> {
-        return userService.authorizationsCode(
-            LoginRequestModel.clientId,
-            LoginRequestModel.clientSecret,
-            code
-        ).map {
-            var userBasicCode = ""
-            if (it.isSuccessful) {
-                userBasicCode = it.body()?.access_token ?: ""
-                userBasicCodeStorage = userBasicCode
-            } else {
-                clearTokenStorage()
-            }
-            userBasicCode
-        }
+    override fun requestAuthenticatedUserInfo(): LiveData<UserInfoBean> {
+        return userService.fetchAuthenticatedUserInfo()
+    }
+
+    override fun clearTokenStorage() {
+        userNamePref = ""
+        userBasicCodePref = ""
     }
 }

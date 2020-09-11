@@ -33,7 +33,6 @@ class HttpResponseInterceptor @Inject constructor() : Interceptor {
         val request: Request = chain.request()
         var response: Response = chain.proceed(request)
         val content: String? = response.body?.string()
-        val mediaType: MediaType? = response.body?.contentType()
 
         //拦截请求响应状态码，错误状态码显示 `Toast` 信息
         val code: String = response.code.toString()

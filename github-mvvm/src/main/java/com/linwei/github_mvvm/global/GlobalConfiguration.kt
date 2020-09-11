@@ -3,25 +3,23 @@ package com.linwei.github_mvvm.global
 import android.app.Application
 import android.content.Context
 import androidx.fragment.app.FragmentManager
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.linwei.cams.base.global.ConfigModule
 import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.di.module.ClientModule
 import com.linwei.cams.di.module.GlobalConfigModule
-import com.linwei.cams.ext.string
 import com.linwei.cams.http.GlobalHttpHandler
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
-import com.linwei.cams.http.model.BaseResponse
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.isLoginState
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
 import com.linwei.github_mvvm.mvvm.model.api.Api
-import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 /**
  * ---------------------------------------------------------------------
@@ -46,7 +44,25 @@ class GlobalConfiguration : ConfigModule {
                     chain: Interceptor.Chain,
                     request: Request
                 ): Request {
-                    return request
+                    return request.newBuilder().apply {
+
+                        header(
+                            "accept",
+                            "application/vnd.github.v3.full+json, ${request.header("accept") ?: ""}"
+                        )
+                        //增加用户令牌信息
+                        when {
+                            request.url.pathSegments.contains("authorizations") -> {
+                                header("Authorization", userBasicCodePref)
+                            }
+                            isLoginState -> {
+                                header("Authorization", "Token $accessTokenPref")
+                            }
+                            else ->
+                                removeHeader("Authorization")
+                        }
+
+                    }.build()
                 }
 
                 override fun onHttpResultResponse(
@@ -59,6 +75,7 @@ class GlobalConfiguration : ConfigModule {
                     val code: String = response.code.toString()
                     // 请求响应状态信息
                     val message: String = response.message
+
 
                     return response.newBuilder()
                         .body(httpResult.toResponseBody(mediaType))

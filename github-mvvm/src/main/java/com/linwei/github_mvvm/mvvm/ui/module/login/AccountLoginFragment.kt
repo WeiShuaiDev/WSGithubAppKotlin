@@ -6,6 +6,7 @@ import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentAccountLoginBinding
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.viewmodel.login.AccountLoginViewModel
+import kotlinx.android.synthetic.main.fragment_account_login.*
 
 /**
  * ---------------------------------------------------------------------
@@ -39,6 +40,10 @@ class AccountLoginFragment : BaseMvvmFragment<AccountLoginViewModel, FragmentAcc
     }
 
     override fun initLayoutListener() {
+        login_submit_btn.setOnClickListener {
+            mViewModel?.toAccountLogin("", "")
+        }
+
     }
 
     override fun reloadData() {

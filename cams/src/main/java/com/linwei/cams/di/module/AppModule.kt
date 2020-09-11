@@ -122,6 +122,16 @@ object AppModule {
     }
 
     /**
+     * 创建 `DeviceManager` 单例对象,用于设备信息处理。
+     * @return 返回 `DeviceManager` 对象
+     */
+    @Singleton
+    @Provides
+    fun provideDeviceManager(): DeviceManager {
+        return DeviceManager.getInstance()
+    }
+
+    /**
      * 创建 `DiskCache` 缓存文件
      * @param cacheDir [File] 缓存文件
      * @return [File] 指定 [cacheDir] 路径,生成文件名 `DiskCache` 文件

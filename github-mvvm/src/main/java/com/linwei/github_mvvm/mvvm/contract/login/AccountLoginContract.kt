@@ -1,7 +1,8 @@
 package com.linwei.github_mvvm.mvvm.contract.login
 
 import androidx.lifecycle.LiveData
-import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
+import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
+import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
 import io.reactivex.Observable
 
 /**
@@ -32,24 +33,38 @@ interface AccountLoginContract {
     interface Model {
 
         /**
-         * 账号登录网络请求
+         * 账号密码登录网络请求
          * @param username [String] 用户名
          * @param password [String] 密码
          */
         fun requestAccountLogin(
             username: String,
             password: String
-        )
+        ): LiveData<AuthResponseBean>
 
         /**
-         * @return [Observable]
+         * 请求创建该账号认证 `Token` 令牌
+         * @return LiveData [AuthResponseBean]
          */
-        fun requestTokenObservable(): LiveData<AccessToken>
+        fun requestCreateAuthorization(): LiveData<AuthResponseBean>
 
         /**
-         * @return [Observable]
+         * 请求删除该账号认证 `Token` 令牌
+         * @param id [Int]
+         * @return  LiveData [Any]
          */
-        fun requestCodeTokenObservable(code: String): LiveData<String>
+        fun requestDeleteAuthorization(id: Int): LiveData<Any>
+
+        /**
+         * 请求用户信息
+         * @return LiveData [UserInfoBean]
+         */
+        fun requestAuthenticatedUserInfo(): LiveData<UserInfoBean>
+
+        /**
+         * 清除所有的 `Token` 令牌
+         */
+        fun clearTokenStorage()
 
     }
 

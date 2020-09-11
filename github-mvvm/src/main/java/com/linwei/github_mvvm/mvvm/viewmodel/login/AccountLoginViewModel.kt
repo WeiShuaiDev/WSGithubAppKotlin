@@ -2,13 +2,16 @@ package com.linwei.github_mvvm.mvvm.viewmodel.login
 
 import android.app.Application
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
-import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
+import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
+import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
 import com.linwei.github_mvvm.mvvm.model.login.AccountLoginModel
 import javax.inject.Inject
 
@@ -40,6 +43,20 @@ class AccountLoginViewModel @Inject constructor(
      */
     val password = MutableLiveData<String>()
 
+    /**
+     * 登录结果
+     */
+    private val _loginResult = MutableLiveData<Boolean>()
+    val loginResult: LiveData<Boolean>
+        get() = _loginResult
+
+    /**
+     * 用户信息
+     */
+    private val _userInfoBean = MutableLiveData<UserInfoBean>()
+    val userInfoBean: LiveData<UserInfoBean>
+        get() = _userInfoBean
+
     init {
         username.value = userNameStorage
         password.value = passwordStorage
@@ -64,11 +81,18 @@ class AccountLoginViewModel @Inject constructor(
         }
 
         mLifecycleOwner?.let {
-            model.requestTokenObservable()
-                .observe(
-                    it, object : LiveDataCallBack<AccessToken, AccessToken>() {})
+            model.requestAccountLogin(username!!, password!!)
+                .observe(it, object : LiveDataCallBack<AuthResponseBean, AuthResponseBean>() {
+                    override fun onSuccess(code: String?, data: AuthResponseBean?) {
+                        super.onSuccess(code, data)
+                        System.out.println("onSuccess code=$code data=$data")
+                    }
 
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        System.out.println("onFailure code=$code message=$message")
+                    }
+                })
         }
     }
-
 }

@@ -126,7 +126,7 @@ fun Any.string(vararg args: String): String {
  * @param params [Array]
  */
 fun isEmptyParameter(vararg params: String?): Boolean {
-    for (p in params)
+    for (p: String? in params)
         if (p.isNullOrEmpty() || p == "null" || p == "NULL") {
             return true
         }

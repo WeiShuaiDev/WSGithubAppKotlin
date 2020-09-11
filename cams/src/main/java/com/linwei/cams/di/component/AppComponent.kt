@@ -79,6 +79,12 @@ interface AppComponent {
     fun permissionManager(): PermissionManager
 
     /**
+     *  用于获取设备信息处理
+     * @return [DeviceManager]
+     */
+    fun deviceManager(): DeviceManager
+
+    /**
      * 网络请求对象
      * @return [Retrofit]
      */

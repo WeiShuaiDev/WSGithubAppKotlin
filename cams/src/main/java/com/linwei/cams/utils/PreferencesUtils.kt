@@ -1,6 +1,7 @@
 package com.linwei.cams.utils
 
 import android.content.Context
+import android.content.SharedPreferences
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -21,7 +22,7 @@ class PreferencesUtils<T>(
 ) :
     ReadWriteProperty<Any?, T> {
 
-    private val prefs by lazy {
+    private val prefs:SharedPreferences by lazy {
         context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
     }
 
