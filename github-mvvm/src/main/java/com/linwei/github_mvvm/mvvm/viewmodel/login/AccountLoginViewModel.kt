@@ -2,7 +2,6 @@ package com.linwei.github_mvvm.mvvm.viewmodel.login
 
 import android.app.Application
 import android.view.View
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.*
@@ -36,12 +35,12 @@ class AccountLoginViewModel @Inject constructor(
     /**
      * 用户名
      */
-    val username = MutableLiveData<String>()
+    val userNameField: MutableLiveData<String> = MutableLiveData("")
 
     /**
      * 密码
      */
-    val password = MutableLiveData<String>()
+    val passwordField: MutableLiveData<String> = MutableLiveData("")
 
     /**
      * 登录结果
@@ -50,16 +49,11 @@ class AccountLoginViewModel @Inject constructor(
     val loginResult: LiveData<Boolean>
         get() = _loginResult
 
-    /**
-     * 用户信息
-     */
-    private val _userInfoBean = MutableLiveData<UserInfoBean>()
-    val userInfoBean: LiveData<UserInfoBean>
-        get() = _userInfoBean
+
 
     init {
-        username.value = userNameStorage
-        password.value = passwordStorage
+        userNameField.value = userNameStorage
+        passwordField.value = passwordStorage
     }
 
     /**
@@ -67,32 +61,22 @@ class AccountLoginViewModel @Inject constructor(
      * @param v [View]
      */
     fun onSubmitClick(v: View) {
-        toAccountLogin(username.value, password.value)
+        toAccountLogin(userNameField.value, passwordField.value)
     }
 
     override fun toAccountLogin(username: String?, password: String?) {
-
-        if (username.isNotNullOrEmpty()) {
+        if (isEmptyParameter(username)) {
             R.string.logcat_login_user_name_entry.showShort()
+            return
         }
 
-        if (password.isNotNullOrEmpty()) {
+        if (isEmptyParameter(password)) {
             R.string.logcat_login_password_entry.showShort()
+            return
         }
 
         mLifecycleOwner?.let {
-            model.requestAccountLogin(username!!, password!!)
-                .observe(it, object : LiveDataCallBack<AuthResponseBean, AuthResponseBean>() {
-                    override fun onSuccess(code: String?, data: AuthResponseBean?) {
-                        super.onSuccess(code, data)
-                        System.out.println("onSuccess code=$code data=$data")
-                    }
-
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        System.out.println("onFailure code=$code message=$message")
-                    }
-                })
+            model.requestAccountLogin(it, username!!, password!!)
         }
     }
 }

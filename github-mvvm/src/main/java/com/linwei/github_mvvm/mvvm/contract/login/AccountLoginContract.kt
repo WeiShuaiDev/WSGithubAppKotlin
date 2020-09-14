@@ -1,5 +1,6 @@
 package com.linwei.github_mvvm.mvvm.contract.login
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
 import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
@@ -38,28 +39,29 @@ interface AccountLoginContract {
          * @param password [String] 密码
          */
         fun requestAccountLogin(
+            owner: LifecycleOwner,
             username: String,
             password: String
-        ): LiveData<AuthResponseBean>
+        )
 
         /**
          * 请求创建该账号认证 `Token` 令牌
          * @return LiveData [AuthResponseBean]
          */
-        fun requestCreateAuthorization(): LiveData<AuthResponseBean>
+        fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponseBean>
 
         /**
          * 请求删除该账号认证 `Token` 令牌
          * @param id [Int]
          * @return  LiveData [Any]
          */
-        fun requestDeleteAuthorization(id: Int): LiveData<Any>
+        fun requestDeleteAuthorization(owner: LifecycleOwner, id: Int): LiveData<Any>
 
         /**
          * 请求用户信息
          * @return LiveData [UserInfoBean]
          */
-        fun requestAuthenticatedUserInfo(): LiveData<UserInfoBean>
+        fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<UserInfoBean>
 
         /**
          * 清除所有的 `Token` 令牌

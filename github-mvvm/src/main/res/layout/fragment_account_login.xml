@@ -71,7 +71,7 @@
                         <studio.carbonylgroup.textfieldboxes.ExtendedEditText
                             android:id="@+id/login_username_input"
                             style="@style/WrapAndWrap"
-                            android:text="@={viewModel.username}" />
+                            android:text="@={viewModel.userNameField}" />
 
                     </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
@@ -104,7 +104,8 @@
                         <studio.carbonylgroup.textfieldboxes.ExtendedEditText
                             android:id="@+id/login_password_input"
                             style="@style/WrapAndWrap"
-                            android:text="@={viewModel.password}" />
+                            android:inputType="textPassword"
+                            android:text="@={viewModel.passwordField}" />
 
                     </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
@@ -122,17 +123,18 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="20dp"
+                    android:onClick="@{viewModel::onSubmitClick}"
                     android:text="@string/login_button"
                     android:textSize="@dimen/sp_16"
                     app:animationDuration="1000"
                     app:normalBackgroundColor="@color/colorPrimaryDark"
                     app:normalTextColor="@android:color/white"
+                    app:pressedBackgroundColor="@color/colorPrimaryDark"
                     app:pressedTextColor="@android:color/white"
                     app:radius="5dp"
                     app:roundsize="false"
                     app:unableBackgroundColor="@color/colorPrimaryDark"
                     app:unableTextColor="@android:color/white" />
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

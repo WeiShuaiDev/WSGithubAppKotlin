@@ -1,6 +1,4 @@
 package com.linwei.github_mvvm.mvvm.model.bean
-
-import com.google.gson.annotations.SerializedName
 import com.linwei.cams.ext.deviceManager
 import com.linwei.github_mvvm.BuildConfig
 import java.io.Serializable
@@ -8,7 +6,7 @@ import java.io.Serializable
 /**
  * 请求登录的model对象
  */
-class AuthRequestBean {
+class AuthRequestBean : Serializable {
 
     var scopes: List<String>? = null
         private set
@@ -16,46 +14,42 @@ class AuthRequestBean {
     var note: String? = null
         private set
 
-    @SerializedName("note_url")
-    var noteUrl: String? = null
+    var note_url: String? = null
         private set
 
-    @SerializedName("client_secret")
-    var clientSecret: String? = null
+    var client_secret: String? = null
         private set
 
     companion object {
         private val scopes: List<String>? =
-            listOf("user", "repo", "gist", "notifications", "admin:org")
-        const val note: String = BuildConfig.NOTE
-        const val noteUrl: String = BuildConfig.NOTE_URL
+            listOf("user", "repo", "notifications", "gist", "admin:org")
+        private const val note: String = BuildConfig.NOTE
+        private const val noteUrl: String = BuildConfig.NOTE_URL
         const val clientId: String = BuildConfig.CLIENT_ID
-        const val clientSecret: String = BuildConfig.CLIENT_SECRET
+        private const val clientSecret: String = BuildConfig.CLIENT_SECRET
 
 
         fun generate(): AuthRequestBean {
             val model = AuthRequestBean()
             model.scopes = scopes
             model.note = note
-            model.noteUrl = noteUrl
-            model.clientSecret = clientSecret
+            model.note_url = noteUrl
+            model.client_secret = clientSecret
             return model
         }
 
         /**
          * 设备Id
          */
-        val deviceId: String = deviceManager().getDeviceId()
+        private val deviceId: String = deviceManager().getDeviceId()
 
         /**
          * 指纹信息
          *
          */
         val fingerPrint: String by lazy {
-            System.out.println("clientId=${clientId} deviceId=${deviceId}")
             clientId + deviceId
         }
-
     }
 }
 

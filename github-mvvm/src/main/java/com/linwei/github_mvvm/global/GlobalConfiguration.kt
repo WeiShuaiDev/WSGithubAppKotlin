@@ -9,16 +9,13 @@ import com.linwei.cams.di.module.ClientModule
 import com.linwei.cams.di.module.GlobalConfigModule
 import com.linwei.cams.http.GlobalHttpHandler
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
-import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.isLoginState
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
 import com.linwei.github_mvvm.mvvm.model.api.Api
-import okhttp3.Interceptor
-import okhttp3.MediaType
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 /**
@@ -33,19 +30,23 @@ import retrofit2.Retrofit
 class GlobalConfiguration : ConfigModule {
 
     override fun applyOptions(context: Context, builder: GlobalConfigModule.Builder) {
-        builder.httpUrl(Api.GITHUB_BASE_URL)
+        builder.httpUrl(Api.GITHUB_API_BASE_URL)
             .retrofitConfiguration(object : ClientModule.RetrofitConfiguration {
                 override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
                     //LiveData 适配器配置
                     builder.addCallAdapterFactory(LiveDataCallAdapterFactory())
                 }
-            }).globalHttpHandler(object : GlobalHttpHandler {
+            }).okHttpClientConfiguration(object : ClientModule.OkHttpClientConfiguration {
+                override fun configOkHttp(context: Context, builder: OkHttpClient.Builder) {
+                    builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                }
+            })
+            .globalHttpHandler(object : GlobalHttpHandler {
                 override fun onHttpRequestBefore(
                     chain: Interceptor.Chain,
                     request: Request
                 ): Request {
                     return request.newBuilder().apply {
-
                         header(
                             "accept",
                             "application/vnd.github.v3.full+json, ${request.header("accept") ?: ""}"
@@ -75,7 +76,6 @@ class GlobalConfiguration : ConfigModule {
                     val code: String = response.code.toString()
                     // 请求响应状态信息
                     val message: String = response.message
-
 
                     return response.newBuilder()
                         .body(httpResult.toResponseBody(mediaType))
