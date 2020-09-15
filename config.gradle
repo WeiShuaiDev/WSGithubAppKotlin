@@ -187,7 +187,6 @@ ext {
             "mockito-core"              : "org.mockito:mockito-core:1.+",
             "timber"                    : "com.jakewharton.timber:timber:4.7.1",
             "logger"                    : "com.orhanobut:logger:2.2.0",
-            "klog"                      : "com.github.zhaokaiqiang.klog:library:${version["klogVersion"]}",
             "canary-debug"              : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
             "canary-release"            : "com.squareup.leakcanary:leakcanary-android-no-op:1.6.3",
             "umeng-analytics"           : "com.umeng.analytics:analytics:6.0.1"

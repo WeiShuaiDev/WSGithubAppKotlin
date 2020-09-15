@@ -28,6 +28,11 @@ object UserInfoStorage {
     var passwordPref: String by pref("")
 
     /**
+     * 用户密文信息
+     */
+    var userBasicCodePref: String by pref("")
+
+    /**
      * 访问令牌 `Token`
      */
     var accessTokenPref: String by pref("")
@@ -38,25 +43,22 @@ object UserInfoStorage {
     var authIDPref: String by pref("")
 
     /**
-     * 用户密文信息
-     */
-    var userBasicCodePref: String by pref("")
-
-    /**
      * 用户信息
      */
-    private var userInfoPref: String by pref("")
+    var userInfoPref: String by pref("")
 
     /**
      * 认证信息
      */
-    private var authInfoPref: String by pref("")
+    var authInfoPref: String by pref("")
+
+
 
     /**
      * 保存用户信息
      * @param userInfoBean [UserInfoBean] 用户实体类
      */
-    private fun putUserInfoPref(userInfoBean: UserInfoBean?) {
+    fun putUserInfoPref(userInfoBean: UserInfoBean?) {
         userInfoBean?.let {
             val fromBean: String? = it.fromBean()
             if (!isEmptyParameter(fromBean)) {
@@ -69,7 +71,7 @@ object UserInfoStorage {
      * 保存认证信息
      * @param authResponseBean [AuthResponseBean] 认证实体类
      */
-    private fun putAuthInfoPref(authResponseBean: AuthResponseBean?) {
+    fun putAuthInfoPref(authResponseBean: AuthResponseBean?) {
         authResponseBean?.let {
             val fromBean: String? = it.fromBean()
             if (!isEmptyParameter(fromBean)) {
@@ -82,7 +84,7 @@ object UserInfoStorage {
      * 获取用户信息
      * @return userInfoBean [UserInfoBean] 用户实体类
      */
-    private fun getUserInfoPref(): UserInfoBean? {
+    fun getUserInfoPref(): UserInfoBean? {
         if (isEmptyParameter(userInfoPref)) return null
         val toBean: Any? = userInfoPref.toBean()
         toBean?.let {
@@ -96,7 +98,7 @@ object UserInfoStorage {
      * 获取认证信息
      * @return authResponseBean [AuthResponseBean] 认证实体类
      */
-    private fun getAuthInfoPref(): AuthResponseBean? {
+    fun getAuthInfoPref(): AuthResponseBean? {
         if (isEmptyParameter(authInfoPref)) return null
         val toBean: Any? = authInfoPref.toBean()
         toBean?.let {

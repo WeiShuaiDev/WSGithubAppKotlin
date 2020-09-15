@@ -49,10 +49,11 @@ class LogInterceptor @Inject constructor() : Interceptor {
         Timber.i(requestFormat, request.method, request.url, body)
 
         //响应数据
-        val responseFormat = "|response:[%s]"
+        val responseFormat = "| Response:[%s]"
         Timber.i(responseFormat, content ?: "")
 
         Timber.i("----------Request End: %s 毫秒----------", duration)
+
         return response.newBuilder()
             .body((content ?: "").toResponseBody(mediaType))
             .build()

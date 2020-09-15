@@ -24,29 +24,34 @@ class RetrofitServiceProxyHandler<T>(
     private var mRetrofitService: T? = null
 
 
-    override fun invoke(proxy: Any?, method: Method?, args: Array<Any>): Any? {
+    override fun invoke(proxy: Any?, method: Method?, args: Array<Any>?): Any? {
+        var params: Array<Any>? = args
+        if (params == null) {
+            params = emptyArray()
+        }
+
         // 加一层 defer 由外部去控制耗时方法以及网络请求所处线程，
         method?.returnType?.let {
             when (it) {
                 Observable::class.java -> {
                     return Observable.defer {
-                        method.invoke(create(), *args) as Observable<*>
+                        method.invoke(create(), *params) as Observable<*>
                     }
                 }
                 Single::class.java -> {
                     return Single.defer {
-                        method.invoke(create(), *args) as Single<*>
+                        method.invoke(create(), *params) as Single<*>
                     }
                 }
                 LiveData::class.java -> {
-                    return method.invoke(create(), *args) as LiveData<*>
+                    return method.invoke(create(), *params) as LiveData<*>
                 }
                 else -> {
-                    return method.invoke(create(), *args)
+                    return method.invoke(create(), *params)
                 }
             }
         }
-        return method?.invoke(create(), *args)
+        return method?.invoke(create(), *params)
     }
 
 

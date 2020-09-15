@@ -2,9 +2,9 @@ package com.linwei.github_mvvm.mvvm.contract.login
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
 import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
-import io.reactivex.Observable
 
 /**
  * ---------------------------------------------------------------------
@@ -41,7 +41,8 @@ interface AccountLoginContract {
         fun requestAccountLogin(
             owner: LifecycleOwner,
             username: String,
-            password: String
+            password: String,
+            liveData: MutableLiveData<Boolean>
         )
 
         /**

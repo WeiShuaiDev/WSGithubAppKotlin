@@ -4,14 +4,17 @@ import android.util.Base64
 import androidx.lifecycle.*
 import com.linwei.cams.ext.no
 import com.linwei.cams.ext.otherwise
-import com.linwei.cams.ext.string
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authIDPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authInfoPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.putAuthInfoPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.putUserInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
 import com.linwei.github_mvvm.mvvm.model.api.service.AuthService
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
@@ -46,25 +49,22 @@ class AccountLoginModel @Inject constructor(val dataRepository: DataMvvmReposito
         dataRepository.obtainRetrofitService(UserService::class.java)
     }
 
-    /**
-     * 用户信息
-     */
-    private val _userInfoBean = MutableLiveData<UserInfoBean>()
-    val userInfoBean: LiveData<UserInfoBean>
-        get() = _userInfoBean
-
+    private var mLoginResult = MutableLiveData<Boolean>()
 
     override fun requestAccountLogin(
         owner: LifecycleOwner,
         username: String,
-        password: String
+        password: String,
+        liveData: MutableLiveData<Boolean>
     ) {
+        mLoginResult = liveData
+
         clearTokenStorage()
 
         val type = "$username:$password"
 
         val userCipherTextInfo: String =
-            "Basic " + Base64.encodeToString(type.toByteArray(), Base64.NO_WRAP)
+            Base64.encodeToString(type.toByteArray(), Base64.NO_WRAP)
                 .replace("\\+", "%2B")
 
         //保存用户名明文、密文信息
@@ -84,7 +84,10 @@ class AccountLoginModel @Inject constructor(val dataRepository: DataMvvmReposito
                         data?.let {
                             data.token.isEmpty().no {
                                 accessTokenPref = data.token
-                                authIDPref = data.id.string()
+                                authIDPref = data.id.toString()
+
+                                //保存 `AuthResponseBean` 认证信息
+                                putAuthInfoPref(data)
 
                                 //获取 `UserInfo`信息数据
                                 requestAuthenticatedUserInfo(owner)
@@ -119,15 +122,25 @@ class AccountLoginModel @Inject constructor(val dataRepository: DataMvvmReposito
                 override fun onSuccess(code: String?, data: UserInfoBean?) {
                     super.onSuccess(code, data)
                     data?.let {
-                        _userInfoBean.value = data
+                        //保存 `UserInfoBean` 用户数据
+                        putUserInfoPref(data)
+
+                        mLoginResult.value = true
                     }
+                }
+
+                override fun onFailure(code: String?, message: String?) {
+                    super.onFailure(code, message)
+                    clearTokenStorage()
+
+                    mLoginResult.value = false
                 }
             })
         }
     }
 
     override fun clearTokenStorage() {
-        userNamePref = ""
-        userBasicCodePref = ""
+        userInfoPref = ""
+        authInfoPref = ""
     }
 }

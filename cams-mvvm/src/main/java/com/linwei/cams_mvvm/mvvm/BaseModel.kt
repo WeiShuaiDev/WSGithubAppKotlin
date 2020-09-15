@@ -43,9 +43,6 @@ open class BaseModel @Inject constructor(private val dataRepository: DataMvvmRep
     override fun <T : RoomDatabase> obtainRoomDataBase(databaseClass: Class<T>): T =
         dataRepository.obtainRoomDataBase(databaseClass)
 
-
-
-
     /**
      * 清除 `RxCache` 中数据
      */

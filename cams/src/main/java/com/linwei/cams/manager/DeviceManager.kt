@@ -448,6 +448,30 @@ class DeviceManager() {
         return 0
     }
 
+    var virtualMachine: Int? = null;
+    fun checkDeviceInfo(): Boolean {
+        var result: Boolean = (Build.FINGERPRINT.startsWith("generic") // 唯一识别码
+                || Build.MODEL.contains("google_sdk") // 版本 用户最终可以见的名称
+                || Build.MODEL.toLowerCase(Locale.ROOT).contains("droid4x")
+                || Build.MODEL.contains("Emulator")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.MANUFACTURER.contains("Genymotion") // 硬件制造商
+                || Build.HARDWARE == "goldfish" || Build.HARDWARE == "vbox86" || Build.PRODUCT == "sdk" || Build.PRODUCT == "google_sdk" || Build.PRODUCT == "sdk_x86" || Build.PRODUCT == "vbox86p" || Build.BOARD.toLowerCase()
+            .contains("nox") // 主板
+                || Build.BOOTLOADER.toLowerCase(Locale.ROOT).contains("nox") // 系统启动程序版本号
+                || Build.HARDWARE.toLowerCase(Locale.ROOT).contains("nox")
+                || Build.PRODUCT.toLowerCase(Locale.ROOT).contains("nox")
+                || Build.SERIAL.toLowerCase(Locale.ROOT).contains("nox")) // 硬件序列号
+        if (result) return true
+        result =
+            result or (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith(
+                "generic"
+            ))
+        if (result) return true
+        result = result or ("google_sdk" == Build.PRODUCT)
+        return result
+    }
+
     /**
      * 检查权限
      * @param context [Context]

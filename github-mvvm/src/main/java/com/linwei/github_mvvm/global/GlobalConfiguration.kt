@@ -9,6 +9,7 @@ import com.linwei.cams.di.module.ClientModule
 import com.linwei.cams.di.module.GlobalConfigModule
 import com.linwei.cams.http.GlobalHttpHandler
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
+import com.linwei.github_mvvm.BuildConfig
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.isLoginState
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
@@ -17,6 +18,7 @@ import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import timber.log.Timber
 
 /**
  * ---------------------------------------------------------------------
@@ -38,7 +40,12 @@ class GlobalConfiguration : ConfigModule {
                 }
             }).okHttpClientConfiguration(object : ClientModule.OkHttpClientConfiguration {
                 override fun configOkHttp(context: Context, builder: OkHttpClient.Builder) {
-                    builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                    if (BuildConfig.LOG_DEBUG)
+                        builder.addInterceptor(
+                            HttpLoggingInterceptor().setLevel(
+                                HttpLoggingInterceptor.Level.BODY
+                            )
+                        )
                 }
             })
             .globalHttpHandler(object : GlobalHttpHandler {
@@ -51,10 +58,9 @@ class GlobalConfiguration : ConfigModule {
                             "accept",
                             "application/vnd.github.v3.full+json, ${request.header("accept") ?: ""}"
                         )
-                        //增加用户令牌信息
                         when {
                             request.url.pathSegments.contains("authorizations") -> {
-                                header("Authorization", userBasicCodePref)
+                                header("Authorization", "Basic $userBasicCodePref")
                             }
                             isLoginState -> {
                                 header("Authorization", "Token $accessTokenPref")

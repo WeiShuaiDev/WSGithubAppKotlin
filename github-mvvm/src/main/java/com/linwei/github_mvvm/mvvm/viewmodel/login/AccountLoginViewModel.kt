@@ -5,12 +5,11 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.*
-import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
-import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
-import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.passwordPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
 import com.linwei.github_mvvm.mvvm.model.login.AccountLoginModel
 import javax.inject.Inject
 
@@ -27,10 +26,6 @@ class AccountLoginViewModel @Inject constructor(
     val model: AccountLoginModel,
     application: Application
 ) : BaseViewModel(model, application), AccountLoginContract.ViewModel {
-
-    private var userNameStorage: String by pref("")
-
-    private var passwordStorage: String by pref("")
 
     /**
      * 用户名
@@ -50,10 +45,9 @@ class AccountLoginViewModel @Inject constructor(
         get() = _loginResult
 
 
-
     init {
-        userNameField.value = userNameStorage
-        passwordField.value = passwordStorage
+        userNameField.value = userNamePref
+        passwordField.value = passwordPref
     }
 
     /**
@@ -76,7 +70,7 @@ class AccountLoginViewModel @Inject constructor(
         }
 
         mLifecycleOwner?.let {
-            model.requestAccountLogin(it, username!!, password!!)
+            model.requestAccountLogin(it, username!!, password!!, _loginResult)
         }
     }
 }

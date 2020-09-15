@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.google.gson.Gson
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
+import com.linwei.cams.http.compat.enableTls12OnPreLollipop
 import com.linwei.cams.http.config.HttpConstant
 import com.linwei.cams.http.interceptor.HttpRequestInterceptor
 import com.linwei.cams.http.interceptor.HttpResponseInterceptor
@@ -73,6 +74,8 @@ object ClientModule {
             interceptors.forEach { interceptor ->
                 it.addInterceptor(interceptor)
             }
+
+            it.enableTls12OnPreLollipop()
 
             //配置线程池
             if (executorService != null)

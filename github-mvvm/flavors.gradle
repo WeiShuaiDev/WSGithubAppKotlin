@@ -25,7 +25,6 @@ android {
 
         online {  //线上
             buildConfigField('String', 'BASE_URL', '\"https://app.pautang724.com/borrow/\"')
-            //https://openapi.happyrin.com/borrow/
             buildConfigField('String', 'BASE_URL_H5', '\"https://h.pautang724.com/\"')
             dimension "server"
         }
