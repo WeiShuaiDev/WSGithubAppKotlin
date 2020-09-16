@@ -28,6 +28,9 @@ fun navigationPopUpTo(
     )
 }
 
+/**
+ * Navigation 退出
+ */
 fun navigationBack(view: View) {
     val controller: NavController = Navigation.findNavController(view)
     controller.popBackStack()
