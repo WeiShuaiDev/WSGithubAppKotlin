@@ -18,7 +18,6 @@ import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import timber.log.Timber
 
 /**
  * ---------------------------------------------------------------------

@@ -1,9 +1,14 @@
 package com.linwei.github_mvvm.mvvm.viewmodel.login
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.linwei.cams.ext.isEmptyParameter
+import com.linwei.cams.ext.showShort
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
+import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.OAuthLoginContract
-import com.linwei.github_mvvm.mvvm.model.login.OAuthLoginModel
+import com.linwei.github_mvvm.mvvm.model.login.LoginModel
 import javax.inject.Inject
 
 /**
@@ -16,13 +21,26 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class OAuthLoginViewModel @Inject constructor(
-    model: OAuthLoginModel,
+    val model: LoginModel,
     application: Application
 ) : BaseViewModel(model, application), OAuthLoginContract.ViewModel {
 
+    /**
+     * 登录结果
+     */
+    private val _loginResult = MutableLiveData<Boolean>()
+    val loginResult: LiveData<Boolean>
+        get() = _loginResult
 
+    override fun toOAuthLogin(code: String?) {
 
+        if (isEmptyParameter(code)) {
+            R.string.logcat_login_oauth_code.showShort()
+            return
+        }
 
-
-
+        mLifecycleOwner?.let {
+            model.requestOAuthLogin(it, code!!, _loginResult)
+        }
+    }
 }

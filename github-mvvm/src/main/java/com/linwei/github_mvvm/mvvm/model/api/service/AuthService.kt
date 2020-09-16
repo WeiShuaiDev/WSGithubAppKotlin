@@ -1,6 +1,7 @@
 package com.linwei.github_mvvm.mvvm.model.api.service
 
 import androidx.lifecycle.LiveData
+import com.linwei.github_mvvm.mvvm.model.bean.AccessTokenBean
 import com.linwei.github_mvvm.mvvm.model.bean.AuthRequestBean
 import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
 import retrofit2.http.*
@@ -30,11 +31,11 @@ interface AuthService {
     ): LiveData<AuthResponseBean>
 
     /**
+     * 删除授权
      * @param id [String]
      */
     @DELETE("/authorizations/{id}")
     fun deleteAuthorization(@Path("id") id: Int): LiveData<Any>
-
 
     /**
      * `OAuth` 登录获取授权码
@@ -43,10 +44,11 @@ interface AuthService {
      * @param code [String]
      */
     @GET("https://github.com/login/oauth/access_token")
-    fun authorizationsCode(
+    @Headers("Accept: application/json")
+    fun createCodeAuthorization(
         @Query("client_id") client_id: String,
         @Query("client_secret") client_secret: String,
         @Query("code") code: String
-    ): LiveData<AuthResponseBean>
+    ): LiveData<AccessTokenBean>
 
 }

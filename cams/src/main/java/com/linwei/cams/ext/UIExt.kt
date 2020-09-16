@@ -284,7 +284,7 @@ fun View.onClick(listener: View.OnClickListener): View {
 fun View.onClick(method: () -> Unit, message: Int = -1, vararg params: String?): View {
     setOnClickListener {
         checkClick({
-            if (isEmptyArraysParameter(params)) {
+            if (params.isNotEmpty() && isEmptyArraysParameter(params)) {
                 if (message > 0)
                     message.showShort()
             } else {

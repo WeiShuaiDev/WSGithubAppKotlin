@@ -2,12 +2,14 @@ package com.linwei.github_mvvm.mvvm.model.login
 
 import android.util.Base64
 import androidx.lifecycle.*
+import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.ext.no
 import com.linwei.cams.ext.otherwise
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
+import com.linwei.github_mvvm.mvvm.contract.login.OAuthLoginContract
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authIDPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authInfoPref
@@ -18,6 +20,7 @@ import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
 import com.linwei.github_mvvm.mvvm.model.api.service.AuthService
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
+import com.linwei.github_mvvm.mvvm.model.bean.AccessTokenBean
 import com.linwei.github_mvvm.mvvm.model.bean.AuthRequestBean
 import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
 import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
@@ -32,8 +35,8 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class AccountLoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
-    BaseModel(dataRepository), AccountLoginContract.Model {
+class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
+    BaseModel(dataRepository), AccountLoginContract.Model, OAuthLoginContract.Model {
 
     /**
      *  用户权限校验服务接口
@@ -73,6 +76,50 @@ class AccountLoginModel @Inject constructor(val dataRepository: DataMvvmReposito
 
         requestCreateAuthorization(owner)
     }
+
+    override fun requestOAuthLogin(
+        owner: LifecycleOwner,
+        code: String,
+        liveData: MutableLiveData<Boolean>
+    ) {
+        mLoginResult = liveData
+
+        clearTokenStorage()
+
+        requestCreateCodeAuthorization(owner, code)
+    }
+
+    override fun requestCreateCodeAuthorization(
+        owner: LifecycleOwner,
+        code: String
+    ): LiveData<AccessTokenBean> {
+        return authService.createCodeAuthorization(
+            AuthRequestBean.clientId,
+            AuthRequestBean.clientSecret,
+            code
+        ).apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<AccessTokenBean, AccessTokenBean>() {
+                    override fun onSuccess(code: String?, data: AccessTokenBean?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            data.access_token?.let {
+                                isEmptyParameter(it).no {
+                                    accessTokenPref = it
+                                    //获取 `UserInfo`信息数据
+                                    requestAuthenticatedUserInfo(owner)
+                                }.otherwise {
+                                    //删除用户令牌信息
+                                    clearTokenStorage()
+                                }
+                            }
+                        }
+                    }
+                })
+        }
+    }
+
 
     override fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponseBean> {
         return authService.createAuthorization(AuthRequestBean.generate()).apply {

@@ -9,10 +9,12 @@
     <string name="login_user_name">用户名</string>
     <string name="login_password">密码</string>
     <string name="login_button">登录</string>
+    <string name="login_quick">一键登录</string>
 
 
-    <string name="logcat_login_user_name_entry">用户名为空！</string>
-    <string name="logcat_login_password_entry">密码为空！</string>
+    <string name="logcat_login_user_name_entry">用户名为空!</string>
+    <string name="logcat_login_password_entry">密码为空!</string>
+    <string name="logcat_login_oauth_code">授权失败!</string>
     <string name="logcat_login_success">登录成功!</string>
     <string name="logcat_login_failed">登录失败!</string>
 

@@ -35,8 +35,10 @@ interface AccountLoginContract {
 
         /**
          * 账号密码登录网络请求
+         * @param owner [LifecycleOwner]
          * @param username [String] 用户名
          * @param password [String] 密码
+         * @param liveData [MutableLiveData]
          */
         fun requestAccountLogin(
             owner: LifecycleOwner,
@@ -47,12 +49,14 @@ interface AccountLoginContract {
 
         /**
          * 请求创建该账号认证 `Token` 令牌
+         * @param owner [LifecycleOwner]
          * @return LiveData [AuthResponseBean]
          */
         fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponseBean>
 
         /**
          * 请求删除该账号认证 `Token` 令牌
+         * @param owner [LifecycleOwner]
          * @param id [Int]
          * @return  LiveData [Any]
          */
@@ -60,6 +64,7 @@ interface AccountLoginContract {
 
         /**
          * 请求用户信息
+         * @param owner [LifecycleOwner]
          * @return LiveData [UserInfoBean]
          */
         fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<UserInfoBean>

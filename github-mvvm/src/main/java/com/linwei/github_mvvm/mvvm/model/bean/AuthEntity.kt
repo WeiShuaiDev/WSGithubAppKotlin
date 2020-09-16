@@ -1,4 +1,5 @@
 package com.linwei.github_mvvm.mvvm.model.bean
+
 import com.linwei.cams.ext.deviceManager
 import com.linwei.github_mvvm.BuildConfig
 import java.io.Serializable
@@ -26,7 +27,7 @@ class AuthRequestBean : Serializable {
         private const val note: String = BuildConfig.NOTE
         private const val noteUrl: String = BuildConfig.NOTE_URL
         const val clientId: String = BuildConfig.CLIENT_ID
-        private const val clientSecret: String = BuildConfig.CLIENT_SECRET
+        const val clientSecret: String = BuildConfig.CLIENT_SECRET
 
 
         fun generate(): AuthRequestBean {
@@ -54,7 +55,7 @@ class AuthRequestBean : Serializable {
 }
 
 /**
- * 认证数据
+ * Account 认证数据
  */
 data class AuthResponseBean(
     var id: Int,
@@ -71,3 +72,12 @@ data class AuthResponseBean(
 ) : Serializable
 
 data class AppInfo(var name: String, var url: String, var client_id: String) : Serializable
+
+/**
+ * OAuth 认证数据
+ */
+data class AccessTokenBean(
+    var access_token: String?,
+    var token_type: String?,
+    var scope: String?
+) : Serializable

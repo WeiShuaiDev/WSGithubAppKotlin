@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.ui.module.main.MainActivity">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.linwei.github_mvvm.mvvm.viewmodel.login.OAuthLoginViewModel" />
     </data>
 
-    <LinearLayout
-        style="@style/MatchAndWrap"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/MatchAndMatch"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DynamicFragment" />
+        <WebView
+            android:id="@+id/oauth_webview"
+            style="@style/MatchAndMatch" />
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/oauth_webview_loadingBar"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

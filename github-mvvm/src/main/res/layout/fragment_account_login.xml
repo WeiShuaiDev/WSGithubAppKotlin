@@ -111,6 +111,11 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
                 <com.linwei.github_mvvm.mvvm.ui.view.StateButton
                     android:id="@+id/login_submit_btn"
                     style="@style/MatchAndWrap"
@@ -131,6 +136,12 @@
                     app:unableBackgroundColor="@color/colorPrimaryDark"
                     app:unableTextColor="@android:color/white" />
 
+
+                <TextView
+                    android:id="@+id/login_quick"
+                    style="@style/WrapAndWrap"
+                    android:padding="@dimen/dp_10"
+                    android:text="@string/login_quick" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
