@@ -3,6 +3,8 @@ package com.linwei.github_mvvm.mvvm.ui.module.login
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -12,10 +14,13 @@ import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.ext.otherwise
 import com.linwei.cams.ext.showShort
 import com.linwei.cams.ext.yes
-import com.linwei.cams_mvvm.base.BaseMvvmFragment
+import com.linwei.cams.listener.OnTopBarLeftClickListener
+import com.linwei.cams_mvvm.base.BaseMvvmFragmentWithTop
+import com.linwei.cams_mvvm.base.BaseMvvmFragmentWithTopAndStatus
 import com.linwei.github_mvvm.BuildConfig
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentOauthLoginBinding
+import com.linwei.github_mvvm.ext.navigationPopUpTo
 import com.linwei.github_mvvm.mvvm.contract.login.OAuthLoginContract
 import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import com.linwei.github_mvvm.mvvm.viewmodel.login.OAuthLoginViewModel
@@ -30,7 +35,8 @@ import kotlinx.android.synthetic.main.fragment_oauth_login.*
  * @Description: `OAuth` 登陆页面
  *-----------------------------------------------------------------------
  */
-class OAuthLoginFragment : BaseMvvmFragment<OAuthLoginViewModel, FragmentOauthLoginBinding>(),
+class OAuthLoginFragment :
+    BaseMvvmFragmentWithTop<OAuthLoginViewModel, FragmentOauthLoginBinding>(),
     OAuthLoginContract.View {
 
     override fun provideContentViewId(): Int = R.layout.fragment_oauth_login
@@ -44,9 +50,26 @@ class OAuthLoginFragment : BaseMvvmFragment<OAuthLoginViewModel, FragmentOauthLo
         }
     }
 
+    override fun fetchTopBarTitle(): Int = R.string.login_authorized_title
+
+    override fun useDataBinding(): Boolean = false
+
     override fun initLayoutView(rootView: View?) {
         initWebView()
     }
+
+    override fun obtainTopBarLeftListener(): OnTopBarLeftClickListener? =
+        object : OnTopBarLeftClickListener {
+            override fun onLeftClick() {
+                navigationPopUpTo(
+                    requireView(),
+                    null,
+                    R.id.action_oauth_login_to_account_login,
+                    false
+                )
+            }
+        }
+
 
     /**
      * 初始化 `WebView`,Setting 设置
@@ -68,7 +91,8 @@ class OAuthLoginFragment : BaseMvvmFragment<OAuthLoginViewModel, FragmentOauthLo
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                oauth_webview_loadingBar.visibility = View.GONE
+                if (oauth_webview_loadingBar != null)
+                    oauth_webview_loadingBar.visibility = View.GONE
             }
 
             override fun shouldOverrideUrlLoading(
@@ -101,7 +125,13 @@ class OAuthLoginFragment : BaseMvvmFragment<OAuthLoginViewModel, FragmentOauthLo
                 R.string.logcat_login_success.showShort()
 
                 //登录成功后跳转回首页
-                MainActivity.start(mContext)
+                navigationPopUpTo(
+                    requireView(),
+                    null,
+                    R.id.action_account_login_to_main,
+                    true
+                )
+                mActivity.finish()
             }.otherwise {
                 R.string.logcat_login_failed.showShort()
             }

@@ -33,7 +33,6 @@ class OAuthLoginViewModel @Inject constructor(
         get() = _loginResult
 
     override fun toOAuthLogin(code: String?) {
-
         if (isEmptyParameter(code)) {
             R.string.logcat_login_oauth_code.showShort()
             return

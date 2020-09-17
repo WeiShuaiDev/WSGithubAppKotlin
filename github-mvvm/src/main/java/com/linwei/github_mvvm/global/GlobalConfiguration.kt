@@ -67,7 +67,6 @@ class GlobalConfiguration : ConfigModule {
                             else ->
                                 removeHeader("Authorization")
                         }
-
                     }.build()
                 }
 

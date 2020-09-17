@@ -18,7 +18,7 @@ import javax.inject.Inject
  * @Author: WeiShuai
  * @Time: 2020/8/12
  * @Contact: linwei9605@gmail.com"d
- * @Follow: https://github.com/WeiShuaiDev
+ * @Follow: https://github.com/WeiShuaiDevA
  * @Description:
  *-----------------------------------------------------------------------
  */
@@ -43,7 +43,6 @@ class AccountLoginViewModel @Inject constructor(
     private val _loginResult = MutableLiveData<Boolean>()
     val loginResult: LiveData<Boolean>
         get() = _loginResult
-
 
     init {
         userNameField.value = userNamePref

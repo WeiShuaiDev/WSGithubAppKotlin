@@ -112,8 +112,7 @@ object UserInfoStorage {
      */
     val isLoginState: Boolean
         get() {
-            if (!isEmptyParameter(accessTokenPref)) return true
-            return false
+            return !isEmptyParameter(accessTokenPref)
         }
 
 }

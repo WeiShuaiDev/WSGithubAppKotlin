@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<set xmlns:tools="http://schemas.android.com/tools"
-     xmlns:android="http://schemas.android.com/apk/res/android"
-     tools:ignore="MissingDefaultResource">
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
 
-    <translate android:fromXDelta="-100%" android:toXDelta="0%"
-               android:fromYDelta="0%" android:toYDelta="0%"
-               android:duration="200"/>
+    <translate
+        android:duration="3000"
+        android:fromXDelta="-40%p"
+        android:toXDelta="0%p" />
+
+    <alpha
+        android:duration="3000"
+        android:fromAlpha="0.85"
+        android:toAlpha="1" />
 </set>

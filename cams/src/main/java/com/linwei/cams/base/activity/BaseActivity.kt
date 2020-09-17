@@ -297,7 +297,6 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
      */
     private fun initToastBuilder() {
         mToast = ToastUtils.Builder(mContext)
-            .setBgResource(R.drawable.shape_toast_background)
             .setMessageColor(R.color.colorGlobalBlack)
             .build()
     }

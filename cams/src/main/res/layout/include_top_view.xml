@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         style="@style/MatchAndMatch"
+        android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
         <ProgressBar
@@ -21,8 +21,7 @@
             android:id="@+id/mLayoutTopView"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorGlobalWhite"
-            app:layout_constraintTop_toBottomOf="@id/mPbLoading">
+            android:background="@color/colorGlobalWhite">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,7 +63,7 @@
                     android:gravity="center"
                     android:lines="1"
                     android:textColor="@color/colorGlobalTextGray"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_18" />
 
                 <RelativeLayout
                     android:layout_width="?attr/actionBarSize"
@@ -102,15 +101,11 @@
 
         <View
             android:id="@+id/mVLine"
-            style="@style/HorizontalLine"
-            app:layout_constraintTop_toBottomOf="@id/mLayoutTopView" />
+            style="@style/HorizontalLine" />
 
         <FrameLayout
             android:id="@+id/mIncludeContent"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mVLine" />
+            style="@style/MatchAndWrap" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

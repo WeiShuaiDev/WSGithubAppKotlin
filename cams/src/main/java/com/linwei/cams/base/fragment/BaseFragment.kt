@@ -40,7 +40,8 @@ abstract class BaseFragment() : LazeLoadFragment(),
      * `Fragment` 模块 [Cache]缓存处理
      * @return [Cache]
      */
-    override fun provideCache(): Cache<String, Any> = mCacheFactory.build(CacheType.fragmentCacheType)
+    override fun provideCache(): Cache<String, Any> =
+        mCacheFactory.build(CacheType.fragmentCacheType)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -200,7 +201,6 @@ abstract class BaseFragment() : LazeLoadFragment(),
      */
     private fun initToastBuilder() {
         mToast = ToastUtils.Builder(mActivity)
-            .setBgResource(R.drawable.shape_toast_background)
             .setMessageColor(R.color.colorGlobalBlack)
             .build()
     }

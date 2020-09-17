@@ -62,8 +62,9 @@ abstract class BaseMvvmFragmentWithTopAndStatus<VM : BaseViewModel, VDB : ViewDa
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         initViewModel()      //初始化ViewModel
+        super.onViewCreated(view, savedInstanceState)
+        bindViewModel()      //绑定 ViewModel
         registerLiveEvent()  //注册事件总线
     }
 
@@ -100,8 +101,6 @@ abstract class BaseMvvmFragmentWithTopAndStatus<VM : BaseViewModel, VDB : ViewDa
         if (mViewModel != null) {
             lifecycle.addObserver(mViewModel!!)
         }
-
-        bindViewModel()
     }
 
     /**

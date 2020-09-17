@@ -60,7 +60,6 @@ abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding
 
     override fun setUpOnCreateAndSuperEnd(savedInstanceState: Bundle?) {
         super.setUpOnCreateAndSuperEnd(savedInstanceState)
-
         initViewModel() //初始化ViewModel
         registerLiveEvent()  //注册事件总线
     }

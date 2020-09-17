@@ -6,6 +6,7 @@ import com.linwei.cams.ext.onClick
 import com.linwei.cams.ext.otherwise
 import com.linwei.cams.ext.showShort
 import com.linwei.cams.ext.yes
+import com.linwei.cams.listener.OnTopBarLeftClickListener
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentAccountLoginBinding
@@ -48,7 +49,13 @@ class AccountLoginFragment : BaseMvvmFragment<AccountLoginViewModel, FragmentAcc
                 R.string.logcat_login_success.showShort()
 
                 //登录成功后跳转回首页
-                MainActivity.start(mContext)
+                navigationPopUpTo(
+                    requireView(),
+                    null,
+                    R.id.action_account_login_to_main,
+                    true
+                )
+                mActivity.finish()
             }.otherwise {
                 R.string.logcat_login_failed.showShort()
             }

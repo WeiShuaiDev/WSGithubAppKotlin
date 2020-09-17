@@ -13,6 +13,7 @@ import com.linwei.cams.ext.dp2px
 import com.linwei.cams.ext.string
 import com.linwei.cams.listener.OnTopBarLeftClickListener
 import com.linwei.cams.listener.OnTopBarRightClickListener
+import java.lang.Exception
 
 /**
  * ---------------------------------------------------------------------
@@ -30,7 +31,9 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
     private var mTopBarRightClickListener: OnTopBarRightClickListener? = null
 
     override fun withTopBarContainer(): ViewGroup? {
-        val topBarView: ViewGroup = View.inflate(mActivity, provideTopBarId(), null) as ViewGroup
+        val topBarView: ViewGroup =
+            View.inflate(mActivity, provideTopBarId(), null) as ViewGroup
+
         mTopViewHolder = TopViewHolder(topBarView)
 
         initTopBar()
@@ -75,7 +78,7 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
      * @return [ViewGroup] 返回已经增加沉浸式状态栏 [ViewGroup]
      */
     private fun markStatusView(view: View?): ViewGroup {
-        val linearLayout:LinearLayout =
+        val linearLayout: LinearLayout =
             View.inflate(mActivity, R.layout.base_content_layout, null) as LinearLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

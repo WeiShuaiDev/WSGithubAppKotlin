@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.ui.module.main.MainActivity">
+    tools:context=".mvvm.ui.module.login.UserActivity">
 
     <data>
 
@@ -62,7 +62,7 @@
                     <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
                         style="@style/MatchAndWrap"
                         app:hasClearButton="true"
-                        app:labelText="@string/login_user_name"
+                        app:labelText="@string/login_user_name_text"
                         app:panelBackgroundColor="@color/colorGlobalWhite"
                         app:primaryColor="@color/colorPrimary"
                         app:secondaryColor="@color/colorSubLightText"
@@ -95,7 +95,7 @@
                     <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
                         style="@style/MatchAndWrap"
                         app:hasClearButton="true"
-                        app:labelText="@string/login_password"
+                        app:labelText="@string/login_password_text"
                         app:panelBackgroundColor="@color/colorGlobalWhite"
                         app:primaryColor="@color/colorPrimary"
                         app:secondaryColor="@color/colorSubLightText"
@@ -141,7 +141,7 @@
                     android:id="@+id/login_quick"
                     style="@style/WrapAndWrap"
                     android:padding="@dimen/dp_10"
-                    android:text="@string/login_quick" />
+                    android:text="@string/login_quick_button" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

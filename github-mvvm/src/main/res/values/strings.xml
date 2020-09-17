@@ -6,10 +6,11 @@
     <string name="tab_mine">我的</string>
 
     <!--登录模块-->
-    <string name="login_user_name">用户名</string>
-    <string name="login_password">密码</string>
+    <string name="login_user_name_text">用户名</string>
+    <string name="login_password_text">密码</string>
+    <string name="login_authorized_title">授权登陆</string>
     <string name="login_button">登录</string>
-    <string name="login_quick">一键登录</string>
+    <string name="login_quick_button">一键登录</string>
 
 
     <string name="logcat_login_user_name_entry">用户名为空!</string>

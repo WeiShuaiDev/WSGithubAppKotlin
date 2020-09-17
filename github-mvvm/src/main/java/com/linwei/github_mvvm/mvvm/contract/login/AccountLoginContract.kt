@@ -67,7 +67,7 @@ interface AccountLoginContract {
          * @param owner [LifecycleOwner]
          * @return LiveData [UserInfoBean]
          */
-        fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<UserInfoBean>
+        fun requestAuthenticatedUserInfo(owner: LifecycleOwner):  LiveData<UserInfoBean>
 
         /**
          * 清除所有的 `Token` 令牌

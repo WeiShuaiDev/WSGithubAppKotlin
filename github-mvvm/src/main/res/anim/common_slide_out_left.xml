@@ -3,7 +3,14 @@
      xmlns:android="http://schemas.android.com/apk/res/android"
      tools:ignore="MissingDefaultResource">
 
-    <translate android:fromXDelta="0%" android:toXDelta="-100%"
-               android:fromYDelta="0%" android:toYDelta="0%"
-               android:duration="200"/>
+    <translate
+        android:duration="3000"
+        android:fromXDelta="0%p"
+        android:toXDelta="-100%p" />
+
+    <alpha
+        android:duration="3000"
+        android:fromAlpha="1"
+        android:toAlpha="0.85" />
+
 </set>

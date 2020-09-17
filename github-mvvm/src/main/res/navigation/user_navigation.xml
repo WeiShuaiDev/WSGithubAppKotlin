@@ -14,7 +14,19 @@
 
         <action
             android:id="@+id/action_account_login_to_oauth_login"
-            app:destination="@id/OAuthLoginFragment" />
+            app:destination="@id/OAuthLoginFragment"
+            app:enterAnim="@anim/common_slide_in_right"
+            app:exitAnim="@anim/common_slide_out_left"
+            app:popEnterAnim="@anim/common_slide_in_left"
+            app:popExitAnim="@anim/common_slide_out_right" />
+
+        <action
+            android:id="@+id/action_account_login_to_main"
+            app:destination="@id/MainActivity"
+            app:enterAnim="@anim/common_slide_in_right"
+            app:exitAnim="@anim/common_slide_out_left"
+            app:popEnterAnim="@anim/common_slide_in_left"
+            app:popExitAnim="@anim/common_slide_out_right" />
 
     </fragment>
 
@@ -22,6 +34,32 @@
         android:id="@+id/OAuthLoginFragment"
         android:name="com.linwei.github_mvvm.mvvm.ui.module.login.OAuthLoginFragment"
         android:label="fragment_oauth_login"
-        tools:layout="@layout/fragment_oauth_login" />
+        tools:layout="@layout/fragment_oauth_login">
+
+        <action
+            android:id="@+id/action_oauth_login_to_account_login"
+            app:destination="@id/AccountLoginFragment"
+            app:enterAnim="@anim/common_slide_in_right"
+            app:exitAnim="@anim/common_slide_out_left"
+            app:popEnterAnim="@anim/common_slide_in_left"
+            app:popExitAnim="@anim/common_slide_out_right" />
+
+        <action
+            android:id="@+id/action_account_login_to_main"
+            app:destination="@id/MainActivity"
+            app:enterAnim="@anim/common_slide_in_right"
+            app:exitAnim="@anim/common_slide_out_left"
+            app:popEnterAnim="@anim/common_slide_in_left"
+            app:popExitAnim="@anim/common_slide_out_right" />
+
+    </fragment>
+
+    <activity
+        android:id="@+id/MainActivity"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main">
+
+    </activity>
 
 </navigation>

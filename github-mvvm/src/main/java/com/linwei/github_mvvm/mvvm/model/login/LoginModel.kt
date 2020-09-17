@@ -52,7 +52,10 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
         dataRepository.obtainRetrofitService(UserService::class.java)
     }
 
-    private var mLoginResult = MutableLiveData<Boolean>()
+    /**
+     * 登录状态
+     */
+    private var mLoginResult: MutableLiveData<Boolean>? = null
 
     override fun requestAccountLogin(
         owner: LifecycleOwner,
@@ -107,6 +110,7 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
                             data.access_token?.let {
                                 isEmptyParameter(it).no {
                                     accessTokenPref = it
+
                                     //获取 `UserInfo`信息数据
                                     requestAuthenticatedUserInfo(owner)
                                 }.otherwise {
@@ -171,16 +175,14 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
                     data?.let {
                         //保存 `UserInfoBean` 用户数据
                         putUserInfoPref(data)
-
-                        mLoginResult.value = true
+                        mLoginResult?.value = true
                     }
                 }
 
                 override fun onFailure(code: String?, message: String?) {
                     super.onFailure(code, message)
                     clearTokenStorage()
-
-                    mLoginResult.value = false
+                    mLoginResult?.value = false
                 }
             })
         }
@@ -189,5 +191,7 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
     override fun clearTokenStorage() {
         userInfoPref = ""
         authInfoPref = ""
+        accessTokenPref = ""
+        authIDPref = ""
     }
 }
