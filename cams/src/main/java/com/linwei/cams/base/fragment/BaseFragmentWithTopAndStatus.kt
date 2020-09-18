@@ -120,7 +120,7 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
      * 是否使用沉浸式效果
      * @return [Boolean] `false`:不使用; `true`:使用
      */
-    protected abstract fun useImmersive(): Boolean
+    protected open fun useImmersive(): Boolean = true
 
     /**
      * 沉浸式状态栏颜色

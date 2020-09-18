@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.ui.module.main.MainActivity">
 
@@ -10,15 +11,12 @@
             type="com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mTopRoot"
         style="@style/MatchAndWrap"
-        android:orientation="vertical"
+        android:background="@android:color/transparent"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DynamicFragment" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

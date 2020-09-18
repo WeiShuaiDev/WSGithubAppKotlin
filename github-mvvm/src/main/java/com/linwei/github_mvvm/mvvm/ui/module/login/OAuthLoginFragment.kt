@@ -3,12 +3,11 @@ package com.linwei.github_mvvm.mvvm.ui.module.login
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.ext.otherwise
@@ -16,13 +15,10 @@ import com.linwei.cams.ext.showShort
 import com.linwei.cams.ext.yes
 import com.linwei.cams.listener.OnTopBarLeftClickListener
 import com.linwei.cams_mvvm.base.BaseMvvmFragmentWithTop
-import com.linwei.cams_mvvm.base.BaseMvvmFragmentWithTopAndStatus
 import com.linwei.github_mvvm.BuildConfig
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.FragmentOauthLoginBinding
 import com.linwei.github_mvvm.ext.navigationPopUpTo
 import com.linwei.github_mvvm.mvvm.contract.login.OAuthLoginContract
-import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import com.linwei.github_mvvm.mvvm.viewmodel.login.OAuthLoginViewModel
 import kotlinx.android.synthetic.main.fragment_oauth_login.*
 
@@ -36,18 +32,13 @@ import kotlinx.android.synthetic.main.fragment_oauth_login.*
  *-----------------------------------------------------------------------
  */
 class OAuthLoginFragment :
-    BaseMvvmFragmentWithTop<OAuthLoginViewModel, FragmentOauthLoginBinding>(),
+    BaseMvvmFragmentWithTop<OAuthLoginViewModel, ViewDataBinding>(),
     OAuthLoginContract.View {
 
     override fun provideContentViewId(): Int = R.layout.fragment_oauth_login
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
-
-        mViewDataBinding?.let {
-            it.viewModel = mViewModel
-            it.lifecycleOwner = viewLifecycleOwner
-        }
     }
 
     override fun fetchTopBarTitle(): Int = R.string.login_authorized_title
@@ -69,7 +60,6 @@ class OAuthLoginFragment :
                 )
             }
         }
-
 
     /**
      * 初始化 `WebView`,Setting 设置
@@ -131,7 +121,7 @@ class OAuthLoginFragment :
                     R.id.action_account_login_to_main,
                     true
                 )
-                mActivity.finish()
+                (mActivity as UserActivity).activityFinish()
             }.otherwise {
                 R.string.logcat_login_failed.showShort()
             }

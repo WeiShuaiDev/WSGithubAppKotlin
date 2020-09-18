@@ -29,7 +29,9 @@ abstract class BaseFragmentWithTop : BaseFragment() {
     private var mTopBarRightClickListener: OnTopBarRightClickListener? = null
 
     override fun withTopBarContainer(): ViewGroup? {
-        val topBarView: ViewGroup = View.inflate(mActivity, provideTopBarId(), null) as ViewGroup
+        val topBarView: ViewGroup =
+            View.inflate(mActivity, provideTopBarId(), null) as ViewGroup
+
         mTopViewHolder = TopViewHolder(topBarView)
 
         initTopBar()
@@ -63,7 +65,7 @@ abstract class BaseFragmentWithTop : BaseFragment() {
         }
     }
 
-     /**
+    /**
      * 导航栏布局 `ResId`
      * @return [Int] 布局文件Id
      */
@@ -73,7 +75,7 @@ abstract class BaseFragmentWithTop : BaseFragment() {
      * 导航栏标题 `ResId`
      * @return [Int] 字符串Id
      */
-    protected abstract fun fetchTopBarTitle():Int
+    protected abstract fun fetchTopBarTitle(): Int
 
     /**
      * 导航栏左侧点击事件

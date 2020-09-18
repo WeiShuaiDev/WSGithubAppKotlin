@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchAndMatch"
     android:orientation="vertical"
-    tools:ignore="MissingConstraints">
-
+    tools:ignore="MissingConstraints,FragmentTagUsage">
 
     <fragment
         android:id="@+id/mNavHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         style="@style/MatchAndMatch"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/user_navigation"
-        tools:ignore="MissingConstraints" />
+        app:navGraph="@navigation/user_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

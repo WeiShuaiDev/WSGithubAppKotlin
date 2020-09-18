@@ -17,7 +17,7 @@
             android:value="GlobalConfigModule" />
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".WelcomActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

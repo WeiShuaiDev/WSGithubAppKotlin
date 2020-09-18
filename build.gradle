@@ -20,7 +20,7 @@ buildscript {
         // config SafeArgs
         classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.2.2'
         classpath 'com.google.gms:google-services:4.3.3'
-//        classpath "com.alibaba:arouter-register:1.0.2"
+        //classpath "com.alibaba:arouter-register:1.0.2"
 
     }
 }

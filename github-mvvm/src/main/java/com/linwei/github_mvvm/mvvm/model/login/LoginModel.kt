@@ -124,7 +124,6 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
         }
     }
 
-
     override fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponseBean> {
         return authService.createAuthorization(AuthRequestBean.generate()).apply {
             observe(
@@ -151,7 +150,6 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
                 })
         }
     }
-
 
     override fun requestDeleteAuthorization(owner: LifecycleOwner, id: Int): LiveData<Any> {
         return authService.deleteAuthorization(id).apply {

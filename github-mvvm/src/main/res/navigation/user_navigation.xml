@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/AccountLoginFragment"
+    app:startDestination="@id/accountLoginFragment"
     tools:ignore="UnusedNavigation">
 
     <fragment
-        android:id="@+id/AccountLoginFragment"
+        android:id="@+id/accountLoginFragment"
         android:name="com.linwei.github_mvvm.mvvm.ui.module.login.AccountLoginFragment"
         android:label="fragment_account_login"
         tools:layout="@layout/fragment_account_login">
 
         <action
             android:id="@+id/action_account_login_to_oauth_login"
-            app:destination="@id/OAuthLoginFragment"
+            app:destination="@id/oAuthLoginFragment"
             app:enterAnim="@anim/common_slide_in_right"
             app:exitAnim="@anim/common_slide_out_left"
             app:popEnterAnim="@anim/common_slide_in_left"
@@ -22,7 +22,7 @@
 
         <action
             android:id="@+id/action_account_login_to_main"
-            app:destination="@id/MainActivity"
+            app:destination="@id/mainActivity"
             app:enterAnim="@anim/common_slide_in_right"
             app:exitAnim="@anim/common_slide_out_left"
             app:popEnterAnim="@anim/common_slide_in_left"
@@ -31,14 +31,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/OAuthLoginFragment"
+        android:id="@+id/oAuthLoginFragment"
         android:name="com.linwei.github_mvvm.mvvm.ui.module.login.OAuthLoginFragment"
         android:label="fragment_oauth_login"
         tools:layout="@layout/fragment_oauth_login">
 
         <action
             android:id="@+id/action_oauth_login_to_account_login"
-            app:destination="@id/AccountLoginFragment"
+            app:destination="@id/accountLoginFragment"
             app:enterAnim="@anim/common_slide_in_right"
             app:exitAnim="@anim/common_slide_out_left"
             app:popEnterAnim="@anim/common_slide_in_left"
@@ -46,7 +46,7 @@
 
         <action
             android:id="@+id/action_account_login_to_main"
-            app:destination="@id/MainActivity"
+            app:destination="@id/mainActivity"
             app:enterAnim="@anim/common_slide_in_right"
             app:exitAnim="@anim/common_slide_out_left"
             app:popEnterAnim="@anim/common_slide_in_left"
@@ -55,7 +55,7 @@
     </fragment>
 
     <activity
-        android:id="@+id/MainActivity"
+        android:id="@+id/mainActivity"
         android:name="com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main">

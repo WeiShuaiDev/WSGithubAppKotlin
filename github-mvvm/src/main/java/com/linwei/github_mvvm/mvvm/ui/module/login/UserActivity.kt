@@ -3,6 +3,9 @@ package com.linwei.github_mvvm.mvvm.ui.module.login
 import android.content.Context
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.NavHostFragment
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
@@ -19,7 +22,7 @@ import org.jetbrains.anko.startActivity
  * @Description:
  *-----------------------------------------------------------------------
  */
-class UserActivity :  BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
+class UserActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
 
     companion object {
         @JvmStatic
@@ -51,5 +54,28 @@ class UserActivity :  BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
 
     }
 
+    override fun onBackPressed() {
+        val fragment: Fragment? = supportFragmentManager.primaryNavigationFragment
+        if (fragment is NavHostFragment) {
+            if (fragment.navController.currentDestination?.id == R.id.accountLoginFragment) {
+                super.onBackPressed()
+            } else if (fragment.navController.currentDestination?.id == R.id.oAuthLoginFragment) {
+                fragment.navController.navigate(
+                    R.id.accountLoginFragment,
+                    null, NavOptions.Builder().setPopUpTo(
+                        fragment.navController.graph.id,
+                        true
+                    ).build()
+                )
+            }
+        }
+    }
+
+    /**
+     * 销毁 `Activity`,资源回收
+     */
+    fun activityFinish() {
+        this.finish()
+    }
 
 }

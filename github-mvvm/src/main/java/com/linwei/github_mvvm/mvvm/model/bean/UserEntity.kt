@@ -1,30 +1,40 @@
 package com.linwei.github_mvvm.mvvm.model.bean
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.*
 
+class UserInfoBean : Serializable {
+    var login: String? = null
+    var id: String? = null
+    var name: String? = null
 
-data class UserInfoBean(
-    var login: String,
-    var avatar_url: String,
-    var html_url: String,
-    var id: Int,
-    var type: String,
-    var site_admin: Boolean,
-    var name: String?,
-    var company: String?,
-    var blog: String?,
-    var location: String?,
-    var email: String?,
-    var bio: String?,
-    var public_repos: Int,
-    var public_gists: Int,
-    var followers: Int,
-    var following: Int,
-    var created_at: String,
-    var updated_at: String,
-    var private_gists: Int,
-    var total_private_repos: Int,
-    var owned_private_repos: Int,
-    var disk_usage: Int,
-    var collaborators: Int
-) : Serializable
+    @SerializedName("avatar_url")
+    var avatarUrl: String? = null
+
+    @SerializedName("html_url")
+    var htmlUrl: String? = null
+    var type: String? = null
+    var company: String? = null
+    var blog: String? = null
+    var location: String? = null
+    var email: String? = null
+    var bio: String? = null
+
+    var starRepos: Int? = null
+    var honorRepos: Int? = null
+
+    @SerializedName("public_repos")
+    var publicRepos: Int = 0
+
+    @SerializedName("public_gists")
+    var publicGists: Int = 0
+    var followers: Int = 0
+    var following: Int = 0
+
+    @SerializedName("created_at")
+    var createdAt: Date? = null
+
+    @SerializedName("updated_at")
+    var updatedAt: Date? = null
+}

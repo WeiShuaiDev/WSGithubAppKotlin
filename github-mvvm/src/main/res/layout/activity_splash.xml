@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mCLSplashRoot"
     style="@style/MatchAndMatch"
-    tools:context=".SplashActivity">
+    tools:context=".WelcomActivity">
 
     <ImageView
         style="@style/MatchAndMatch"

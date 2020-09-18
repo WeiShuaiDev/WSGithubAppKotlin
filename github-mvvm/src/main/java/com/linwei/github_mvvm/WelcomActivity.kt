@@ -3,9 +3,15 @@ package com.linwei.github_mvvm
 import android.os.CountDownTimer
 import android.view.animation.*
 import androidx.databinding.ViewDataBinding
+import com.linwei.cams.ext.otherwise
+import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
+import com.linwei.github_mvvm.ext.navigationPopUpTo
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.getUserInfoPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.isLoginState
 import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
+import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
@@ -17,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
  * @Description: 启动页面
  *-----------------------------------------------------------------------
  */
-class SplashActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
+class WelcomActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
     private var mAnimationSet: AnimationSet? = null
 
     override fun provideContentViewId(): Int = R.layout.activity_splash
@@ -46,13 +52,33 @@ class SplashActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
     }
 
     /**
+     * 根据当前用户状态进行跳转，未登录状态，跳转到登录页面。 登录状态，跳转到首页
+     */
+    private fun userStatusJumpLogic() {
+        isLoginState.yes {
+            //当前登录状态
+            getUserInfoPref()?.let {
+                //用户数据状态为ModelU
+
+                MainActivity.start(this)
+                return@yes
+            }
+
+            UserActivity.start(this)
+        }.otherwise {
+            //当前未登录状态
+            UserActivity.start(this)
+        }
+        this.finish()
+    }
+
+    /**
      * 延时跳转到首页
      */
     private fun toDelayJump() {
         val timer: CountDownTimer = object : CountDownTimer(3000, 1000) {
             override fun onFinish() {
-                UserActivity.start(this@SplashActivity)
-                finish()
+                userStatusJumpLogic()
             }
 
             override fun onTick(millisUntilFinished: Long) {
@@ -90,5 +116,4 @@ class SplashActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
     override fun bindViewModel() {
 
     }
-
 }

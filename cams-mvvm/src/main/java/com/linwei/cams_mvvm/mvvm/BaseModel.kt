@@ -35,6 +35,8 @@ open class BaseModel @Inject constructor(private val dataRepository: DataMvvmRep
     override fun <T> obtainRxCacheService(serviceClass: Class<T>): T =
         dataRepository.obtainRxCacheService(serviceClass)
 
+
+
     /**
      * 根据 [databaseClass] 从 `Cache` 获取 `RoomDatabase` 对象
      * @param databaseClass [Class] DAO语句 `Class` 对象

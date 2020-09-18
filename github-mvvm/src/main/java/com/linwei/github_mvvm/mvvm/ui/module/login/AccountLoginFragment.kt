@@ -6,13 +6,11 @@ import com.linwei.cams.ext.onClick
 import com.linwei.cams.ext.otherwise
 import com.linwei.cams.ext.showShort
 import com.linwei.cams.ext.yes
-import com.linwei.cams.listener.OnTopBarLeftClickListener
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentAccountLoginBinding
 import com.linwei.github_mvvm.ext.navigationPopUpTo
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
-import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import com.linwei.github_mvvm.mvvm.viewmodel.login.AccountLoginViewModel
 import kotlinx.android.synthetic.main.fragment_account_login.*
 
