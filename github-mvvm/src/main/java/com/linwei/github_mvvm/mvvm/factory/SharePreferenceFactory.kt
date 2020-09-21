@@ -4,8 +4,8 @@ import com.linwei.cams.ext.fromBean
 import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.ext.pref
 import com.linwei.cams.ext.toBean
-import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
-import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
+import com.linwei.github_mvvm.mvvm.model.bean.AuthResponse
+import com.linwei.github_mvvm.mvvm.model.bean.User
 
 /**
  * ---------------------------------------------------------------------
@@ -58,7 +58,7 @@ object UserInfoStorage {
      * 保存用户信息
      * @param userInfoBean [UserInfoBean] 用户实体类
      */
-    fun putUserInfoPref(userInfoBean: UserInfoBean?) {
+    fun putUserInfoPref(userInfoBean: User?) {
         userInfoBean?.let {
             val fromBean: String? = it.fromBean()
             if (!isEmptyParameter(fromBean)) {
@@ -71,7 +71,7 @@ object UserInfoStorage {
      * 保存认证信息
      * @param authResponseBean [AuthResponseBean] 认证实体类
      */
-    fun putAuthInfoPref(authResponseBean: AuthResponseBean?) {
+    fun putAuthInfoPref(authResponseBean: AuthResponse?) {
         authResponseBean?.let {
             val fromBean: String? = it.fromBean()
             if (!isEmptyParameter(fromBean)) {
@@ -84,11 +84,11 @@ object UserInfoStorage {
      * 获取用户信息
      * @return userInfoBean [UserInfoBean] 用户实体类
      */
-    fun getUserInfoPref(): UserInfoBean? {
+    fun getUserInfoPref(): User? {
         if (isEmptyParameter(userInfoPref)) return null
         val toBean: Any? = userInfoPref.toBean()
         toBean?.let {
-            return it as UserInfoBean
+            return it as User
         }
         return null
     }
@@ -98,11 +98,11 @@ object UserInfoStorage {
      * 获取认证信息
      * @return authResponseBean [AuthResponseBean] 认证实体类
      */
-    fun getAuthInfoPref(): AuthResponseBean? {
+    fun getAuthInfoPref(): AuthResponse? {
         if (isEmptyParameter(authInfoPref)) return null
         val toBean: Any? = authInfoPref.toBean()
         toBean?.let {
-            return it as AuthResponseBean
+            return it as AuthResponse
         }
         return null
     }

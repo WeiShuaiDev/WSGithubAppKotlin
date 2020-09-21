@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
 
-class UserInfoBean : Serializable {
+class User : Serializable {
     var login: String? = null
     var id: String? = null
     var name: String? = null

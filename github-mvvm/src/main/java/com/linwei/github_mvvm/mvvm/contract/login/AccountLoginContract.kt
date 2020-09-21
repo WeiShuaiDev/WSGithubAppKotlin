@@ -3,8 +3,8 @@ package com.linwei.github_mvvm.mvvm.contract.login
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
-import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
+import com.linwei.github_mvvm.mvvm.model.bean.AuthResponse
+import com.linwei.github_mvvm.mvvm.model.bean.User
 
 /**
  * ---------------------------------------------------------------------
@@ -52,7 +52,7 @@ interface AccountLoginContract {
          * @param owner [LifecycleOwner]
          * @return LiveData [AuthResponseBean]
          */
-        fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponseBean>
+        fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponse>
 
         /**
          * 请求删除该账号认证 `Token` 令牌
@@ -67,7 +67,7 @@ interface AccountLoginContract {
          * @param owner [LifecycleOwner]
          * @return LiveData [UserInfoBean]
          */
-        fun requestAuthenticatedUserInfo(owner: LifecycleOwner):  LiveData<UserInfoBean>
+        fun requestAuthenticatedUserInfo(owner: LifecycleOwner):  LiveData<User>
 
         /**
          * 清除所有的 `Token` 令牌

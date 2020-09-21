@@ -3,8 +3,7 @@ package com.linwei.github_mvvm.mvvm.contract.login
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.linwei.github_mvvm.mvvm.model.bean.AccessTokenBean
-import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
+import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
 
 /**
  * ---------------------------------------------------------------------
@@ -49,7 +48,7 @@ interface OAuthLoginContract {
          */
         fun requestCreateCodeAuthorization(
             owner: LifecycleOwner,
-            code: String): LiveData<AccessTokenBean>
+            code: String): LiveData<AccessToken>
     }
 
 }

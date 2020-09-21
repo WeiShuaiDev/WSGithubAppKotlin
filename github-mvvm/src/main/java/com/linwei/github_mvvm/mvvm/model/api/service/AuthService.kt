@@ -1,9 +1,7 @@
 package com.linwei.github_mvvm.mvvm.model.api.service
 
 import androidx.lifecycle.LiveData
-import com.linwei.github_mvvm.mvvm.model.bean.AccessTokenBean
-import com.linwei.github_mvvm.mvvm.model.bean.AuthRequestBean
-import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
+import com.linwei.github_mvvm.mvvm.model.bean.*
 import retrofit2.http.*
 
 /**
@@ -25,10 +23,10 @@ interface AuthService {
      */
     @PUT("/authorizations/clients/{clientId}/{fingerPrint}")
     fun createAuthorization(
-        @Body authRequestModel: AuthRequestBean,
-        @Path("clientId") clientId: String = AuthRequestBean.clientId,
-        @Path("fingerPrint") fingerPrint: String = AuthRequestBean.fingerPrint
-    ): LiveData<AuthResponseBean>
+        @Body authRequestModel: AuthRequest,
+        @Path("clientId") clientId: String = AuthRequest.clientId,
+        @Path("fingerPrint") fingerPrint: String = AuthRequest.fingerPrint
+    ): LiveData<AuthResponse>
 
     /**
      * 删除授权
@@ -49,6 +47,6 @@ interface AuthService {
         @Query("client_id") client_id: String,
         @Query("client_secret") client_secret: String,
         @Query("code") code: String
-    ): LiveData<AccessTokenBean>
+    ): LiveData<AccessToken>
 
 }

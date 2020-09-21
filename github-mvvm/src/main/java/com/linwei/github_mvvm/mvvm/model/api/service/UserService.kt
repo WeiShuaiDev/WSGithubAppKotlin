@@ -1,7 +1,7 @@
 package com.linwei.github_mvvm.mvvm.model.api.service
 
 import androidx.lifecycle.LiveData
-import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
+import com.linwei.github_mvvm.mvvm.model.bean.User
 import retrofit2.http.*
 
 /**
@@ -19,6 +19,6 @@ interface UserService {
      * 获取用户数据
      */
     @GET("/user")
-    fun fetchAuthenticatedUserInfo(): LiveData<UserInfoBean>
+    fun fetchAuthenticatedUserInfo(): LiveData<User>
 
 }

@@ -1,5 +1,6 @@
 package com.linwei.github_mvvm.mvvm.model.bean
 
+import com.google.gson.annotations.SerializedName
 import com.linwei.cams.ext.deviceManager
 import com.linwei.github_mvvm.BuildConfig
 import java.io.Serializable
@@ -7,18 +8,18 @@ import java.io.Serializable
 /**
  * 请求登录的model对象
  */
-class AuthRequestBean : Serializable {
+class AuthRequest : Serializable {
 
     var scopes: List<String>? = null
         private set
 
     var note: String? = null
         private set
-
-    var note_url: String? = null
+    @SerializedName("note_url")
+    var noteUrl: String? = null
         private set
-
-    var client_secret: String? = null
+    @SerializedName("client_secret")
+    var clientSecret: String? = null
         private set
 
     companion object {
@@ -30,12 +31,12 @@ class AuthRequestBean : Serializable {
         const val clientSecret: String = BuildConfig.CLIENT_SECRET
 
 
-        fun generate(): AuthRequestBean {
-            val model = AuthRequestBean()
+        fun generate(): AuthRequest {
+            val model = AuthRequest()
             model.scopes = scopes
             model.note = note
-            model.note_url = noteUrl
-            model.client_secret = clientSecret
+            model.noteUrl = noteUrl
+            model.clientSecret = clientSecret
             return model
         }
 
@@ -54,30 +55,8 @@ class AuthRequestBean : Serializable {
     }
 }
 
-/**
- * Account 认证数据
- */
-data class AuthResponseBean(
-    var id: Int,
-    var url: String,
-    var app: AppInfo,
-    var token: String,
-    var hashed_token: String,
-    var token_last_eight: String,
-    var note: String,
-    var note_url: String,
-    var created_at: String,
-    var updated_at: String,
-    var scopes: List<String>
-) : Serializable
 
-data class AppInfo(var name: String, var url: String, var client_id: String) : Serializable
 
-/**
- * OAuth 认证数据
- */
-data class AccessTokenBean(
-    var access_token: String?,
-    var token_type: String?,
-    var scope: String?
-) : Serializable
+
+
+

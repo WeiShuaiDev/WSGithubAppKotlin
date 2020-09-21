@@ -20,10 +20,7 @@ import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
 import com.linwei.github_mvvm.mvvm.model.api.service.AuthService
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
-import com.linwei.github_mvvm.mvvm.model.bean.AccessTokenBean
-import com.linwei.github_mvvm.mvvm.model.bean.AuthRequestBean
-import com.linwei.github_mvvm.mvvm.model.bean.AuthResponseBean
-import com.linwei.github_mvvm.mvvm.model.bean.UserInfoBean
+import com.linwei.github_mvvm.mvvm.model.bean.*
 import javax.inject.Inject
 
 /**
@@ -95,19 +92,19 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
     override fun requestCreateCodeAuthorization(
         owner: LifecycleOwner,
         code: String
-    ): LiveData<AccessTokenBean> {
+    ): LiveData<AccessToken> {
         return authService.createCodeAuthorization(
-            AuthRequestBean.clientId,
-            AuthRequestBean.clientSecret,
+            AuthRequest.clientId,
+            AuthRequest.clientSecret,
             code
         ).apply {
             observe(
                 owner,
-                object : LiveDataCallBack<AccessTokenBean, AccessTokenBean>() {
-                    override fun onSuccess(code: String?, data: AccessTokenBean?) {
+                object : LiveDataCallBack<AccessToken, AccessToken>() {
+                    override fun onSuccess(code: String?, data: AccessToken?) {
                         super.onSuccess(code, data)
                         data?.let {
-                            data.access_token?.let {
+                            data.accessToken?.let {
                                 isEmptyParameter(it).no {
                                     accessTokenPref = it
 
@@ -124,16 +121,16 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
         }
     }
 
-    override fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponseBean> {
-        return authService.createAuthorization(AuthRequestBean.generate()).apply {
+    override fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponse> {
+        return authService.createAuthorization(AuthRequest.generate()).apply {
             observe(
                 owner,
-                object : LiveDataCallBack<AuthResponseBean, AuthResponseBean>() {
-                    override fun onSuccess(code: String?, data: AuthResponseBean?) {
+                object : LiveDataCallBack<AuthResponse, AuthResponse>() {
+                    override fun onSuccess(code: String?, data: AuthResponse?) {
                         super.onSuccess(code, data)
                         data?.let {
-                            data.token.isEmpty().no {
-                                accessTokenPref = data.token
+                            data.token?.isEmpty()?.no {
+                                accessTokenPref = data.token!!
                                 authIDPref = data.id.toString()
 
                                 //保存 `AuthResponseBean` 认证信息
@@ -141,7 +138,7 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
 
                                 //获取 `UserInfo`信息数据
                                 requestAuthenticatedUserInfo(owner)
-                            }.otherwise {
+                            }?.otherwise {
                                 //删除用户令牌信息
                                 requestDeleteAuthorization(owner, data.id)
                             }
@@ -165,10 +162,10 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
         }
     }
 
-    override fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<UserInfoBean> {
+    override fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<User> {
         return userService.fetchAuthenticatedUserInfo().apply {
-            observe(owner, object : LiveDataCallBack<UserInfoBean, UserInfoBean>() {
-                override fun onSuccess(code: String?, data: UserInfoBean?) {
+            observe(owner, object : LiveDataCallBack<User, User>() {
+                override fun onSuccess(code: String?, data: User?) {
                     super.onSuccess(code, data)
                     data?.let {
                         //保存 `UserInfoBean` 用户数据
