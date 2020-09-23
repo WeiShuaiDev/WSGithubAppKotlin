@@ -21,7 +21,7 @@ interface AuthService {
      * @param clientId [String]
      * @param fingerPrint [String]
      */
-    @PUT("/authorizations/clients/{clientId}/{fingerPrint}")
+    @PUT("authorizations/clients/{clientId}/{fingerPrint}")
     fun createAuthorization(
         @Body authRequestModel: AuthRequest,
         @Path("clientId") clientId: String = AuthRequest.clientId,
@@ -32,7 +32,7 @@ interface AuthService {
      * 删除授权
      * @param id [String]
      */
-    @DELETE("/authorizations/{id}")
+    @DELETE("authorizations/{id}")
     fun deleteAuthorization(@Path("id") id: Int): LiveData<Any>
 
     /**

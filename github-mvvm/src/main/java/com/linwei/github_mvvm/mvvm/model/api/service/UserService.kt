@@ -18,7 +18,7 @@ interface UserService {
     /**
      * 获取用户数据
      */
-    @GET("/user")
-    fun fetchAuthenticatedUserInfo(): LiveData<User>
+    @GET("user")
+    fun getAuthenticatedUserInfo(): LiveData<User>
 
 }

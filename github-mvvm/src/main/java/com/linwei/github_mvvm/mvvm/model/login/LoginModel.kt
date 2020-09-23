@@ -163,7 +163,7 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
     }
 
     override fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<User> {
-        return userService.fetchAuthenticatedUserInfo().apply {
+        return userService.getAuthenticatedUserInfo().apply {
             observe(owner, object : LiveDataCallBack<User, User>() {
                 override fun onSuccess(code: String?, data: User?) {
                     super.onSuccess(code, data)

@@ -18,5 +18,7 @@ interface Api {
 
         const val GRAPHIC_HOST = "https://ghchart.rshah.org/"
 
+        const val PAGE_SIZE: Int = 30
+
     }
 }

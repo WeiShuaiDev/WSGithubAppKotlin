@@ -3,11 +3,6 @@ package com.linwei.github_mvvm.mvvm.model.bean
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-/**
- * @Author: weiyun
- * @Time: 2020/9/21
- * @Description:
- */
 class AuthResponse : Serializable {
     var id: Int = 0
     var url: String? = null
