@@ -5,10 +5,11 @@
     <color name="colorAccent">#42464b</color>
 
     <!--Navigation-->
-    <color name="colorNavigationBackground">#2c2c2c</color>
-    <color name="colorNavigationIconSelect">#FFFFFF</color>
-    <color name="colorNavigationIconNormal">#bfbfbf</color>
-
+    <color name="colorNavigationInActiveTab">#959595</color>
+    <color name="colorNavigationActiveTab">#2c2c2c</color>
 
     <color name="colorSubLightText">#c4c4c4</color>
+    <color name="colorDrawerLightText">#88FF1100</color>
+
+
 </resources>

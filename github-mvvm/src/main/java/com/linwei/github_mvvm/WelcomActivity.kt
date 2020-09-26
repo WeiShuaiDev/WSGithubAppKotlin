@@ -1,5 +1,6 @@
 package com.linwei.github_mvvm
 
+import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.animation.*
 import androidx.databinding.ViewDataBinding
@@ -30,7 +31,7 @@ class WelcomActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
 
     override fun useDataBinding(): Boolean = false
 
-    override fun initLayoutView() {
+    override fun initLayoutView(savedInstanceState: Bundle?) {
         setViewAnimation()
     }
 

@@ -111,7 +111,8 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
         }
 
         initToastBuilder()
-        initLayoutView()
+
+        initLayoutView(savedInstanceState)
         initLayoutData()
         initLayoutListener()
     }
@@ -274,7 +275,7 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
     /**
      * 初始化控件
      */
-    protected abstract fun initLayoutView();
+    protected abstract fun initLayoutView(savedInstanceState: Bundle?);
 
     /**
      * 初始化数据

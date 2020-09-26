@@ -19,7 +19,8 @@ import org.jetbrains.anko.startActivity
  * @Time: 2020/8/12
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `Activity` 登录模块,提供两种登录方式，普通登录 `AccountLoginFragment`,
+ *              OAuth登录 `OAuthLoginFragment`
  *-----------------------------------------------------------------------
  */
 class UserActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
@@ -41,7 +42,7 @@ class UserActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
     override fun provideContentViewId(): Int = R.layout.activity_user
 
 
-    override fun initLayoutView() {
+    override fun initLayoutView(savedInstanceState: Bundle?) {
     }
 
     override fun initLayoutData() {

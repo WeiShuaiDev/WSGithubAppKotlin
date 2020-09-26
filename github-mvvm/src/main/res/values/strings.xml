@@ -12,6 +12,13 @@
     <string name="login_button">登录</string>
     <string name="login_quick_button">一键登录</string>
 
+    <!--首页模块-->
+    <string name="main_feedback">用户反馈</string>
+    <string name="main_person">个人信息</string>
+    <string name="main_update">版本更新</string>
+    <string name="main_about">应用关于</string>
+    <string name="main_login_out">退出登陆</string>
+
     <string name="logcat_login_user_name_entry">用户名为空!</string>
     <string name="logcat_login_password_entry">密码为空!</string>
     <string name="logcat_login_oauth_code">授权失败!</string>

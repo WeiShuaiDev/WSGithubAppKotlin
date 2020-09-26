@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Build
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
@@ -47,7 +48,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
         const val JSFunction = "JS_FUNCTION"
     }
 
-    override fun initLayoutView() {
+    override fun initLayoutView(savedInstanceState: Bundle?) {
         mUrl = intent.getStringExtra(URL)
         mTitleStr = intent.getStringExtra(TITLE)
         mJsFunction = intent.getStringExtra(JSFunction)

@@ -7,28 +7,36 @@
     tools:context=".mvvm.ui.module.main.MainActivity"
     tools:ignore="MissingConstraints">
 
-    <FrameLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mToolBar"
+        style="@style/MatchAndWrap"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/colorGlobalWhite" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/mViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mNavHostFragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/main_navigation" />
-
-    </FrameLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/mBnvNavigation"
-        style="@style/WrapAndWrap"
-        android:background="@color/colorNavigationBackground"
-        app:itemIconTint="@color/select_main_bottom"
-        app:itemTextColor="@color/select_main_bottom"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_main" />
+    <com.linwei.github_mvvm.mvvm.ui.view.ExpandNavigationTabBar
+        android:id="@+id/mNavigationTabBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:ntb_badge_gravity="top"
+        app:ntb_badge_position="right"
+        app:ntb_badged="false"
+        app:ntb_bg_color="@color/colorPrimary"
+        app:ntb_icon_size_fraction="0.4"
+        app:ntb_inactive_color="@color/colorNavigationInActiveTab"
+        app:ntb_scaled="true"
+        app:ntb_swiped="true"
+        app:ntb_tinted="true"
+        app:ntb_title_mode="all"
+        app:ntb_title_size="13sp"
+        app:ntb_titled="true" />
 
 </LinearLayout>

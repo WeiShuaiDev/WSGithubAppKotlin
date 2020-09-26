@@ -30,7 +30,7 @@ class SplashActivity : BaseActivity(), HasAndroidInjector {
 
     override fun provideContentViewId(): Int = R.layout.activity_splash
 
-    override fun initLayoutView() {
+    override fun initLayoutView(savedInstanceState: Bundle?) {
     }
 
     override fun initLayoutData() {

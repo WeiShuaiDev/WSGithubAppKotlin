@@ -23,7 +23,7 @@ import dagger.android.AndroidInjectionModule
 @Component(
     dependencies = [MvvmComponent::class],
     modules = [AndroidInjectionModule::class, ViewModelModule::class, ActivityModule::class,
-        FragmentModule::class, ViewModelFactoryModule::class]
+        FragmentModule::class,  ViewModelFactoryModule::class]
 )
 interface GithubComponent {
 

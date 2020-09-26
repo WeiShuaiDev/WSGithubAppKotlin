@@ -1,5 +1,6 @@
 package com.linwei.cams_mvp_template.mvp.ui.activity
 
+import android.os.Bundle
 import com.linwei.cams_mvp.base.BaseMvpActivity
 import com.linwei.cams_mvp.di.component.MvpActivityComponent
 import com.linwei.cams_mvp_template.R
@@ -27,7 +28,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.View {
         mainActivityComponent.inject(this)
     }
 
-    override fun initLayoutView() {
+    override fun initLayoutView(savedInstanceState: Bundle?) {
     }
 
     override fun initLayoutData() {

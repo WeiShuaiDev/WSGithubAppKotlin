@@ -31,7 +31,7 @@ interface ActivityModule {
      */
     @ActivityScope
     @ContributesAndroidInjector
-    fun contributeLoginActivityInjector():UserActivity
+    fun contributeLoginActivityInjector(): UserActivity
 
     /**
      * [WelcomActivity] 注入 `Dagger`
