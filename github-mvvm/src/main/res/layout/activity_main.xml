@@ -12,7 +12,7 @@
         style="@style/MatchAndWrap"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        android:theme="@style/toolbarTheme"
         app:title="@string/app_name"
         app:titleTextColor="@color/colorGlobalWhite" />
 
@@ -25,7 +25,7 @@
     <com.linwei.github_mvvm.mvvm.ui.view.ExpandNavigationTabBar
         android:id="@+id/mNavigationTabBar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/dp_60"
         app:ntb_badge_gravity="top"
         app:ntb_badge_position="right"
         app:ntb_badged="false"

@@ -84,6 +84,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions{
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
     android.compileOptions.encoding = "UTF-8"
     android.applicationVariants.all { variant ->
         def outFileName
@@ -135,9 +139,6 @@ dependencies {
     ///TextFieldBoxes
     implementation "com.github.HITGIF:TextFieldBoxes:1.4.5"
 
-    ///Drawer
-    implementation "com.mikepenz:materialdrawer:7.0.0-rc03"
-
     ///DropDownMenu
     implementation "com.github.dongjunkun:DropDownMenu:1.0.4"
 
@@ -149,6 +150,9 @@ dependencies {
 
     ///BaseRecyclerViewAdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
+    ///Drawer
+    implementation "com.mikepenz:materialdrawer:7.0.0-rc03"
 
     ///Mikepenz
     implementation "com.mikepenz:iconics-core:4.0.1-b01"

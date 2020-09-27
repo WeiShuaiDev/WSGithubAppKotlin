@@ -19,6 +19,14 @@
     <string name="main_about">应用关于</string>
     <string name="main_login_out">退出登陆</string>
 
+
+    <!--用户模块-->
+    <string name="user_created_at_text">创建于</string>
+    <string name="user_stared_text">星标</string>
+    <string name="user_followers_text">粉丝</string>
+    <string name="user_followed_text">关注</string>
+    <string name="user_repository_text">仓库</string>
+
     <string name="logcat_login_user_name_entry">用户名为空!</string>
     <string name="logcat_login_password_entry">密码为空!</string>
     <string name="logcat_login_oauth_code">授权失败!</string>

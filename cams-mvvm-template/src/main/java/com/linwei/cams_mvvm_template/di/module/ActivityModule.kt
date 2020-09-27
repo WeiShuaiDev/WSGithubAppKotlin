@@ -21,7 +21,7 @@ interface ActivityModule {
 
     @ActivityScope
     @ContributesAndroidInjector
-    fun contributeMainActivity(): MainActivity
+    fun contributeMainActivityInjector(): MainActivity
 
 
     /**

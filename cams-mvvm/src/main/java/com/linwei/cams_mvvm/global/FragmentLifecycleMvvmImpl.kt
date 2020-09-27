@@ -18,7 +18,6 @@ import timber.log.Timber
  *                进而注入到 `Fragment` 整个生命周期中。
  *-----------------------------------------------------------------------
  */
-@FragmentScope
 class FragmentLifecycleMvvmImpl :
     FragmentManager.FragmentLifecycleCallbacks() {
 

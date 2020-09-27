@@ -1,5 +1,6 @@
 package com.linwei.cams_mvvm_template.mvvm.ui.module.main
 
+import android.os.Bundle
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm_template.R
 import com.linwei.cams_mvvm_template.databinding.ActivityMainBinding
@@ -26,7 +27,7 @@ class MainActivity : BaseMvvmActivity<MainViewModel, ActivityMainBinding>(), Mai
         }
     }
 
-    override fun initLayoutView() {
+    override fun initLayoutView(savedInstanceState: Bundle?) {
     }
 
     override fun initLayoutData() {

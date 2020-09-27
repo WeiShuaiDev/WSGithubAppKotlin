@@ -1,17 +1,16 @@
 package com.linwei.github_mvvm.mvvm.ui.module.main
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.net.toUri
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.linwei.cams.ext.showShort
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
@@ -49,20 +48,20 @@ class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
     /**
      * 全局数据
      */
-//    @Inject
-//    lateinit var globalModel: AppGlobalModel
+    @Inject
+    lateinit var globalModel: AppGlobalModel
 
     /**
      * fragment列表
      */
-   // @Inject
-   // lateinit var mainFragmentList: MutableList<Fragment>
+    @Inject
+    lateinit var mainFragmentList: MutableList<Fragment>
 
     /**
      * tab列表
      */
-   // @Inject
-   // lateinit var mainTabModel: MutableList<NavigationTabBar.Model>
+    @Inject
+    lateinit var mainTabModel: MutableList<NavigationTabBar.Model>
 
     companion object {
         @JvmStatic
@@ -99,7 +98,7 @@ class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
      */
     private fun initToolbar() {
         setSupportActionBar(mToolBar)
-        val actionBar = supportActionBar
+        val actionBar: ActionBar? = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setDisplayShowTitleEnabled(false)
@@ -112,18 +111,16 @@ class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
      * 初始化 `ViewPager`
      */
     private fun initViewPager() {
-//        mViewPager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
-//        mNavigationTabBar.models = mainTabModel
-//        mNavigationTabBar.setViewPager(mViewPager, 0)
-//        mViewPager.offscreenPageLimit = mainFragmentList.size
-//
-//        mNavigationTabBar.doubleTouchListener =
-//            object : ExpandNavigationTabBar.TabDoubleClickListener {
-//                override fun onDoubleClick(position: Int) {
-//                    if (position == 0) {
-//                    }
-//                }
-//            }
+        mViewPager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
+        mNavigationTabBar.models = mainTabModel
+        mNavigationTabBar.setViewPager(mViewPager, 0)
+        mViewPager.offscreenPageLimit = mainFragmentList.size
+
+        mNavigationTabBar.doubleTouchListener =
+            object : ExpandNavigationTabBar.TabDoubleClickListener {
+                override fun onDoubleClick(position: Int) {
+                }
+            }
     }
 
     /**
@@ -131,97 +128,99 @@ class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
      * @param savedInstanceState [Bundle]
      */
     private fun initMaterialDrawer(savedInstanceState: Bundle?) {
-//        mDrawer = DrawerBuilder()
-//            .withActivity(this)
-//            .withToolbar(mToolBar)
-//            .withSelectedItem(-1)
-//            .addDrawerItems(
-//                PrimaryDrawerItem().withName(R.string.main_feedback)
-//                    .withTextColorRes(R.color.colorPrimary)
-//                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
-//                        override fun onItemClick(
-//                            view: View?,
-//                            position: Int,
-//                            drawerItem: IDrawerItem<*>
-//                        ): Boolean {
-//                            unSelect(drawerItem)
-//                            return true
-//                        }
-//                    })
-//            )
-//            .addDrawerItems(
-//                PrimaryDrawerItem().withName(R.string.main_person)
-//                    .withTextColorRes(R.color.colorPrimary)
-//                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
-//                        override fun onItemClick(
-//                            view: View?,
-//                            position: Int,
-//                            drawerItem: IDrawerItem<*>
-//                        ): Boolean {
-//                            unSelect(drawerItem)
-//                            return true
-//                        }
-//                    })
-//            )
-//            .addDrawerItems(
-//                PrimaryDrawerItem().withName(R.string.main_update)
-//                    .withTextColorRes(R.color.colorPrimary)
-//                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
-//                        override fun onItemClick(
-//                            view: View?,
-//                            position: Int,
-//                            drawerItem: IDrawerItem<*>
-//                        ): Boolean {
-//                            unSelect(drawerItem)
-//                            return true
-//                        }
-//                    })
-//            )
-//            .addDrawerItems(
-//                PrimaryDrawerItem().withName(R.string.main_about)
-//                    .withTextColorRes(R.color.colorPrimary)
-//                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
-//                        override fun onItemClick(
-//                            view: View?,
-//                            position: Int,
-//                            drawerItem: IDrawerItem<*>
-//                        ): Boolean {
-//                            unSelect(drawerItem)
-//                            return true
-//                        }
-//                    })
-//            )
-//            .addDrawerItems(
-//                PrimaryDrawerItem().withName(R.string.main_login_out)
-//                    .withTextColorRes(R.color.colorDrawerLightText)
-//                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
-//                        override fun onItemClick(
-//                            view: View?,
-//                            position: Int,
-//                            drawerItem: IDrawerItem<*>
-//                        ): Boolean {
-//                            unSelect(drawerItem)
-//                            return true
-//                        }
-//                    })
-//            )
-//            .withAccountHeader(
-//                AccountHeaderBuilder()
-//                    .withActivity(this)
-//                    .addProfiles(
-//                        ProfileDrawerItem().withName(globalModel.userObservable.login)
-//                            .withSelected(false)
-//                            .withTextColorRes(R.color.white)
-//                            .withIcon(globalModel.userObservable.avatarUrl?.toUri()!!)
-//                            .withEmail(globalModel.userObservable.email ?: "")
-//                    )
-//                    .withHeaderBackground(R.color.colorPrimary)
-//                    .withTextColorRes(R.color.white)
-//                    .withSelectionListEnabled(false)
-//                    .withSavedInstance(savedInstanceState)
-//                    .withTranslucentStatusBar(true)
-//                    .build()
-//            ).build()
+        mDrawer = DrawerBuilder()
+            .withActivity(this)
+            .withToolbar(mToolBar)
+            .withSelectedItem(-1)
+            .addDrawerItems(
+                PrimaryDrawerItem().withName(R.string.main_feedback)
+                    .withTextColorRes(R.color.colorPrimary)
+                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                        override fun onItemClick(
+                            view: View?,
+                            position: Int,
+                            drawerItem: IDrawerItem<*>
+                        ): Boolean {
+                            unSelect(drawerItem)
+                            return true
+                        }
+                    })
+            )
+            .addDrawerItems(
+                PrimaryDrawerItem().withName(R.string.main_person)
+                    .withTextColorRes(R.color.colorPrimary)
+                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                        override fun onItemClick(
+                            view: View?,
+                            position: Int,
+                            drawerItem: IDrawerItem<*>
+                        ): Boolean {
+                            unSelect(drawerItem)
+                            return true
+                        }
+                    })
+            )
+            .addDrawerItems(
+                PrimaryDrawerItem().withName(R.string.main_update)
+                    .withTextColorRes(R.color.colorPrimary)
+                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                        override fun onItemClick(
+                            view: View?,
+                            position: Int,
+                            drawerItem: IDrawerItem<*>
+                        ): Boolean {
+                            unSelect(drawerItem)
+                            return true
+                        }
+                    })
+            )
+            .addDrawerItems(
+                PrimaryDrawerItem().withName(R.string.main_about)
+                    .withTextColorRes(R.color.colorPrimary)
+                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                        override fun onItemClick(
+                            view: View?,
+                            position: Int,
+                            drawerItem: IDrawerItem<*>
+                        ): Boolean {
+                            unSelect(drawerItem)
+                            return true
+                        }
+                    })
+            )
+            .addDrawerItems(
+                PrimaryDrawerItem().withName(R.string.main_login_out)
+                    .withTextColorRes(R.color.colorDrawerLightText)
+                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                        override fun onItemClick(
+                            view: View?,
+                            position: Int,
+                            drawerItem: IDrawerItem<*>
+                        ): Boolean {
+                            unSelect(drawerItem)
+                            return true
+                        }
+                    })
+            )
+            .withAccountHeader(
+                AccountHeaderBuilder()
+                    .withActivity(this)
+                    .addProfiles(
+                        ProfileDrawerItem().withName(globalModel.userObservable.login)
+                            .withSelected(false)
+                            .withTextColorRes(R.color.colorGlobalTextWhite)
+                            .withIcon(
+                                "https://www.baidu.com/img/flexible/logo/plus_logo_web.png".toUri()
+                            )
+                            .withEmail(globalModel.userObservable.email ?: "")
+                    )
+                    .withHeaderBackground(R.color.colorPrimary)
+                    .withTextColorRes(R.color.colorGlobalTextWhite)
+                    .withSelectionListEnabled(false)
+                    .withSavedInstance(savedInstanceState)
+                    .withTranslucentStatusBar(true)
+                    .build()
+            ).build()
     }
 
     /**

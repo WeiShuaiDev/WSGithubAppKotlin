@@ -1,5 +1,6 @@
 package com.linwei.github_mvvm.mvvm.model.login
 
+import android.app.Application
 import android.util.Base64
 import androidx.lifecycle.*
 import com.linwei.cams.ext.isEmptyParameter
@@ -18,9 +19,11 @@ import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.putUserInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
+import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.api.service.AuthService
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
 import com.linwei.github_mvvm.mvvm.model.bean.*
+import com.linwei.github_mvvm.mvvm.model.conversion.UserConversion
 import javax.inject.Inject
 
 /**
@@ -32,7 +35,11 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
+class LoginModel @Inject constructor(
+    val application: Application,
+    val dataRepository: DataMvvmRepository,
+    val appGlobalModel: AppGlobalModel
+) :
     BaseModel(dataRepository), AccountLoginContract.Model, OAuthLoginContract.Model {
 
     /**
@@ -168,6 +175,13 @@ class LoginModel @Inject constructor(val dataRepository: DataMvvmRepository) :
                 override fun onSuccess(code: String?, data: User?) {
                     super.onSuccess(code, data)
                     data?.let {
+                        //`User`本地数据克隆到 `ModelUIModel` 内存数据
+                        UserConversion.cloneDataFromUser(
+                            application,
+                            it,
+                            appGlobalModel.userObservable
+                        )
+
                         //保存 `UserInfoBean` 用户数据
                         putUserInfoPref(data)
                         mLoginResult?.value = true

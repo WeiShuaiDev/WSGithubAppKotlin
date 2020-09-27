@@ -15,7 +15,6 @@ import timber.log.Timber
  * @Description:
  *-----------------------------------------------------------------------
  */
-@ActivityScope
 class ActivityLifecycleImpl : Application.ActivityLifecycleCallbacks {
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {

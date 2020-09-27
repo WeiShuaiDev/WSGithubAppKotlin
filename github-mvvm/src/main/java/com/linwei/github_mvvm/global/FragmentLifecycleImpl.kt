@@ -16,7 +16,6 @@ import timber.log.Timber
  * @Description:
  *-----------------------------------------------------------------------
  */
-@FragmentScope
 class FragmentLifecycleImpl :
     FragmentManager.FragmentLifecycleCallbacks() {
 

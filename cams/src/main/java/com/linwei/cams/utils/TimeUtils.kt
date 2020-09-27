@@ -163,6 +163,19 @@ object TimeUtils {
     }
 
     /**
+     * 时间格式化
+     */
+    fun getDate(date: Date?): String {
+        if (date?.toString() == null) {
+            return ""
+        } else if (date.toString().length < 10) {
+            return date.toString()
+        }
+        return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(date)
+            .substring(0, 10)
+    }
+
+    /**
      * 毫秒时间格式化
      */
     fun getTime(date: Long): String {
@@ -208,7 +221,6 @@ object TimeUtils {
             (hour + minute).toString() + ":0" + second
         } else (hour + minute).toString() + ":" + second
     }
-
 
 
 }

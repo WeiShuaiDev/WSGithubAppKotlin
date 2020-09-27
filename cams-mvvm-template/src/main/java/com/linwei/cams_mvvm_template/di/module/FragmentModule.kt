@@ -20,7 +20,7 @@ interface FragmentModule {
 
     @FragmentScope
     @ContributesAndroidInjector
-    fun contributeLoginActivity(): LoginFragment
+    fun contributeLoginFragmentInjector(): LoginFragment
 
 
 }

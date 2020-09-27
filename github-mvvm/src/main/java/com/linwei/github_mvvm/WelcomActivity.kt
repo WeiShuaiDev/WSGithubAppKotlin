@@ -8,12 +8,14 @@ import com.linwei.cams.ext.otherwise
 import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
-import com.linwei.github_mvvm.ext.navigationPopUpTo
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.getUserInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.isLoginState
+import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
+import com.linwei.github_mvvm.mvvm.model.conversion.UserConversion
 import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
 import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -25,6 +27,13 @@ import kotlinx.android.synthetic.main.activity_splash.*
  *-----------------------------------------------------------------------
  */
 class WelcomActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
+
+    /**
+     * 全局数据
+     */
+    @Inject
+    lateinit var appGlobalModel: AppGlobalModel
+
     private var mAnimationSet: AnimationSet? = null
 
     override fun provideContentViewId(): Int = R.layout.activity_splash
@@ -59,7 +68,9 @@ class WelcomActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
         isLoginState.yes {
             //当前登录状态
             getUserInfoPref()?.let {
-                //用户数据状态为ModelU
+
+                //`User`本地数据克隆到 `ModelUIModel` 内存数据
+                UserConversion.cloneDataFromUser(this, it, appGlobalModel.userObservable)
 
                 MainActivity.start(this)
                 return@yes

@@ -3,6 +3,7 @@ package com.linwei.github_mvvm.di.module
 import com.linwei.cams.di.scope.ActivityScope
 import com.linwei.cams_mvvm.di.component.BaseActivitySubComponent
 import com.linwei.github_mvvm.WelcomActivity
+import com.linwei.github_mvvm.di.module.logic.MainModule
 import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
 import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
 import dagger.Module
@@ -19,12 +20,13 @@ import dagger.android.ContributesAndroidInjector
  */
 @Module(subcomponents = [BaseActivitySubComponent::class])
 interface ActivityModule {
+
     /**
-     * [MainActivity] 注入 `Dagger`
+     * [WelcomActivity] 注入 `Dagger`
      */
     @ActivityScope
     @ContributesAndroidInjector
-    fun contributeMainActivityInjector(): MainActivity
+    fun contributeSplashActivityInjector(): WelcomActivity
 
     /**
      * [UserActivity] 注入 `Dagger`
@@ -34,10 +36,10 @@ interface ActivityModule {
     fun contributeLoginActivityInjector(): UserActivity
 
     /**
-     * [WelcomActivity] 注入 `Dagger`
+     * [MainActivity] 注入 `Dagger`
      */
     @ActivityScope
-    @ContributesAndroidInjector
-    fun contributeSplashActivityInjector(): WelcomActivity
+    @ContributesAndroidInjector(modules = [MainModule::class])
+    fun contributeMainActivityInjector(): MainActivity
 
 }

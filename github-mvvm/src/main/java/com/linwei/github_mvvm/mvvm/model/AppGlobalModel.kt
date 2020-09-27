@@ -1,8 +1,8 @@
 package com.linwei.github_mvvm.mvvm.model
 
+import com.linwei.github_mvvm.di.scope.GithubScope
 import com.linwei.github_mvvm.mvvm.model.data.UserUIModel
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * ---------------------------------------------------------------------
@@ -13,7 +13,7 @@ import javax.inject.Singleton
  * @Description: App全局数据对象
  *-----------------------------------------------------------------------
  */
-@Singleton
+@GithubScope
 class AppGlobalModel @Inject constructor() {
     val userObservable = UserUIModel()
 }

@@ -2,9 +2,8 @@ package com.linwei.github_mvvm
 
 import com.linwei.cams_mvvm.MvvmApplication
 import com.linwei.cams_mvvm.di.component.MvvmComponent
-import com.linwei.github_mvvm.di.component.DaggerGithubComponent
 import com.linwei.github_mvvm.di.component.GithubComponent
-
+import com.linwei.github_mvvm.di.component.DaggerGithubComponent
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai

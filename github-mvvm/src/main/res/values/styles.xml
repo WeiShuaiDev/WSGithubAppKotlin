@@ -1,18 +1,22 @@
 <resources>
 
-    <style name="GithubTheme" parent="CamsAppTheme">
+    <style name="githubTheme" parent="CamsAppTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="SplashTheme" parent="GithubTheme">
+    <style name="splashTheme" parent="githubTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/colorGlobalWhite</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="toolbarTheme" parent="@style/githubTheme">
+        <item name="colorControlNormal">@color/colorGlobalWhite</item>
     </style>
 
 </resources>

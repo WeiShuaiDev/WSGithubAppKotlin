@@ -16,7 +16,6 @@ import timber.log.Timber
  *                进而注入到 `Activity` 整个生命周期中。
  *-----------------------------------------------------------------------
  */
-@ActivityScope
 class ActivityLifecycleMvvmImpl : ActivityLifecycleCallbacks {
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {

@@ -1,6 +1,4 @@
 package com.linwei.cams_mvvm_template
-
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.linwei.cams.base.activity.BaseActivity
 import dagger.android.AndroidInjection

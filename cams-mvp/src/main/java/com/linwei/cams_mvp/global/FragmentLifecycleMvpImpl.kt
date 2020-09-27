@@ -20,7 +20,6 @@ import io.reactivex.subjects.Subject
  *                进而注入到 `Fragment` 整个生命周期中。
  *-----------------------------------------------------------------------
  */
-@FragmentScope
 class FragmentLifecycleMvpImpl :
     FragmentManager.FragmentLifecycleCallbacks() {
 

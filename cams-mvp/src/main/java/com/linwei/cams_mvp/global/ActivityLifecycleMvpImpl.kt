@@ -18,7 +18,6 @@ import io.reactivex.subjects.Subject
  *                进而注入到 `Activity` 整个生命周期中。
  *-----------------------------------------------------------------------
  */
-@ActivityScope
 class ActivityLifecycleMvpImpl : ActivityLifecycleCallbacks {
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {

@@ -21,6 +21,21 @@ import dagger.android.ContributesAndroidInjector
  */
 @Module(subcomponents = [BaseFragmentSubComponent::class])
 interface FragmentModule {
+
+    /**
+     * [AccountLoginFragment] 注入 `Dagger`
+     */
+    @FragmentScope
+    @ContributesAndroidInjector
+    fun contributeAccountLoginFragmentInjector(): AccountLoginFragment
+
+    /**
+     * [OAuthLoginFragment] 注入 `Dagger`
+     */
+    @FragmentScope
+    @ContributesAndroidInjector
+    fun contributeOAuthLoginFragmentInjector(): OAuthLoginFragment
+
     /**
      * [RecommendedFragment] 注入 `Dagger`
      */
@@ -41,18 +56,4 @@ interface FragmentModule {
     @FragmentScope
     @ContributesAndroidInjector
     fun contributeMineFragmentInjector(): MineFragment
-
-    /**
-     * [AccountLoginFragment] 注入 `Dagger`
-     */
-    @FragmentScope
-    @ContributesAndroidInjector
-    fun contributeAccountLoginFragmentInjector(): AccountLoginFragment
-
-    /**
-     * [OAuthLoginFragment] 注入 `Dagger`
-     */
-    @FragmentScope
-    @ContributesAndroidInjector
-    fun contributeOAuthLoginFragmentInjector(): OAuthLoginFragment
 }

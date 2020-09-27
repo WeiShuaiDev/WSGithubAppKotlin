@@ -8,10 +8,6 @@ import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.config.LibConfig
 import com.linwei.cams.di.component.AppComponent
 import com.linwei.cams.utils.AppLanguageUtils
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------

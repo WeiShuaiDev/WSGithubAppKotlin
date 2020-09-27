@@ -69,7 +69,7 @@ fun Any.showLongSafe(vararg args: String) {
  */
 fun toastBuild(): ToastUtils {
     return ToastUtils.Builder(ctx)
-        .setBgResource(R.drawable.shape_toast_background)
+        //.setBgResource(R.drawable.shape_toast_background)
         .setMessageColor(R.color.colorGlobalBlack)
         .build()
 }

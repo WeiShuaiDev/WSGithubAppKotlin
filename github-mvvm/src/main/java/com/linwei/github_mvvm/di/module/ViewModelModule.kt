@@ -54,7 +54,6 @@ interface ViewModelModule {
     @ViewModelKey(AccountLoginViewModel::class)
     fun bindAccountLoginViewModel(viewModel: AccountLoginViewModel): ViewModel
 
-
     /**
      * [OAuthLoginViewModel] 注入 `Dagger`
      */

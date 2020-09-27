@@ -77,9 +77,9 @@ class GlobalConfiguration : ConfigModule {
                 ): Response {
                     val mediaType: MediaType? = response.body?.contentType()
                     // 请求响应状态码
-                    val code: String = response.code.toString()
+                    //val code: String = response.code.toString()
                     // 请求响应状态信息
-                    val message: String = response.message
+                    //val message: String = response.message
 
                     return response.newBuilder()
                         .body(httpResult.toResponseBody(mediaType))
