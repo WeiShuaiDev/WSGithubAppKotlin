@@ -9,7 +9,9 @@ import com.linwei.cams.di.module.ClientModule
 import com.linwei.cams.di.module.GlobalConfigModule
 import com.linwei.cams.http.GlobalHttpHandler
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
+import com.linwei.cams.utils.FileUtils
 import com.linwei.github_mvvm.BuildConfig
+import com.linwei.github_mvvm.global.interceptor.HttpCacheInterceptor
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.isLoginState
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
@@ -18,6 +20,7 @@ import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import java.io.File
 
 /**
  * ---------------------------------------------------------------------
@@ -31,7 +34,9 @@ import retrofit2.Retrofit
 class GlobalConfiguration : ConfigModule {
 
     override fun applyOptions(context: Context, builder: GlobalConfigModule.Builder) {
-        builder.httpUrl(Api.GITHUB_API_BASE_URL)
+        builder
+            .httpUrl(Api.GITHUB_API_BASE_URL)
+            .interceptors(HttpCacheInterceptor())
             .retrofitConfiguration(object : ClientModule.RetrofitConfiguration {
                 override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
                     //LiveData 适配器配置
@@ -39,12 +44,16 @@ class GlobalConfiguration : ConfigModule {
                 }
             }).okHttpClientConfiguration(object : ClientModule.OkHttpClientConfiguration {
                 override fun configOkHttp(context: Context, builder: OkHttpClient.Builder) {
-                    if (BuildConfig.LOG_DEBUG)
+                    if (BuildConfig.LOG_DEBUG) {
                         builder.addInterceptor(
                             HttpLoggingInterceptor().setLevel(
                                 HttpLoggingInterceptor.Level.BODY
                             )
                         )
+                    }
+                    //`Http` 网络请求路径
+                    val cacheFile: File = FileUtils.getCacheFile(context, "GITHUB_CACHE")
+                    builder.cache(Cache(cacheFile, Api.OKHTTP_CACHE_SIZE))
                 }
             })
             .globalHttpHandler(object : GlobalHttpHandler {

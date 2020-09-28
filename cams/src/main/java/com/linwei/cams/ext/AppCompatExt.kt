@@ -16,7 +16,6 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
 import androidx.annotation.IdRes
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

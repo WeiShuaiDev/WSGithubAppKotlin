@@ -20,5 +20,9 @@ interface Api {
 
         const val PAGE_SIZE: Int = 30
 
+        const val OKHTTP_CACHE_SIZE: Long = 1024 * 1024 * 10L
+
+        const val FORCE_NETWORK = "forceNetwork"
+
     }
 }

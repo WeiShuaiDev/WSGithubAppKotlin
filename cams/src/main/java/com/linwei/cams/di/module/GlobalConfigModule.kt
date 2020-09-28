@@ -79,7 +79,7 @@ class GlobalConfigModule(private val mBuilder: Builder) {
     @Singleton
     @Provides
     fun provideCacheDir(application: Application): File {
-        return FileUtils.getCacheFile(application)
+        return FileUtils.getCacheDirectory(application)
     }
 
     @Singleton
