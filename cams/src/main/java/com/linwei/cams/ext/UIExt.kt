@@ -1,6 +1,7 @@
 package com.linwei.cams.ext
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Build
 import android.text.SpannableString
 import android.text.Spanned
@@ -8,6 +9,8 @@ import android.text.method.LinkMovementMethod
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.util.Base64
+import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -353,7 +356,7 @@ fun TextView.setTextColorSpan(text: String, textColor: Int, startIndex: Int, end
 fun TextView.setTextSizeSpan(text: String, textSize: Float, startIndex: Int, endIndex: Int) {
     val span = SpannableString(text)
     span.setSpan(
-        AbsoluteSizeSpan(textSize.sp2px()),
+        AbsoluteSizeSpan(textSize.px.toInt()),
         startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
     )
     setText(span)
@@ -385,37 +388,36 @@ fun View.showSoftKeyboard() {
 /**
  * ---------------------------------Size---------------------------------
  */
-/**
- * DP-PX
- */
-fun Float.dp2px(): Int {
-    val scale: Float = ctx.resources.displayMetrics.density
-    return (this * scale + 0.5f).toInt()
-}
 
-/**
- * PX-DP
- */
-fun Float.px2dp(): Int {
-    val scale: Float = ctx.resources.displayMetrics.density
-    return (this / scale + 0.5f).toInt()
-}
+private val metrics: DisplayMetrics = Resources.getSystem().displayMetrics
 
-/**
- * SP-PX
- */
-fun Float.sp2px(): Int {
-    val scale: Float = ctx.resources.displayMetrics.scaledDensity
-    return (this * scale + 0.5f).toInt()
-}
+val Float.dp: Float
+    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, metrics)
 
-/**
- * PX-SP
- */
-fun Float.px2sp(): Int {
-    val scale: Float = ctx.resources.displayMetrics.scaledDensity
-    return (this / scale + 0.5f).toInt()
-}
+val Int.dp: Int
+    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), metrics).toInt()
+
+val Float.sp: Float
+    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, metrics)
+
+val Int.sp: Int
+    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this.toFloat(), metrics).toInt()
+
+val Number.px: Number
+    get() = this
+
+val Number.px2dp: Int
+    get() = (this.toFloat() / metrics.density).toInt()
+
+val Number.px2sp: Int
+    get() = (this.toFloat() / metrics.scaledDensity).toInt()
+
+val Number.dp2px: Int
+    get() = (this.toFloat() * metrics.density).toInt()
+
+val Number.sp2px: Int
+    get() = (this.toFloat() * metrics.scaledDensity).toInt()
+
 
 /**
  * 屏幕像素长度

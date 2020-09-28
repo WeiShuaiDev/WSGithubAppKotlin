@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.linwei.cams.R
 import com.linwei.cams.base.holder.TopViewHolder
 import com.linwei.cams.ext.dp2px
+import com.linwei.cams.ext.px
 import com.linwei.cams.ext.string
 import com.linwei.cams.listener.OnTopBarLeftClickListener
 import com.linwei.cams.listener.OnTopBarRightClickListener
@@ -85,7 +86,7 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
             val mStatusFillView = View(mActivity)
             var statusBarHeight: Int = fetchStatusBarHeight()
             if (statusBarHeight <= 0) {
-                statusBarHeight = 25f.dp2px()
+                statusBarHeight = 25f.px.toInt()
             }
 
             val params =

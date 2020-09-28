@@ -1,7 +1,10 @@
 package com.linwei.github_mvvm.mvvm.model.login
 
 import android.app.Application
+import android.os.Build
 import android.util.Base64
+import android.webkit.CookieManager
+import android.webkit.WebStorage
 import androidx.lifecycle.*
 import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.ext.no
@@ -39,8 +42,7 @@ class LoginModel @Inject constructor(
     val application: Application,
     val dataRepository: DataMvvmRepository,
     val appGlobalModel: AppGlobalModel
-) :
-    BaseModel(dataRepository), AccountLoginContract.Model, OAuthLoginContract.Model {
+) : BaseModel(dataRepository), AccountLoginContract.Model, OAuthLoginContract.Model {
 
     /**
      *  用户权限校验服务接口
@@ -197,10 +199,30 @@ class LoginModel @Inject constructor(
         }
     }
 
+    override fun signOut() {
+        clearTokenStorage()
+        clearCookies()
+    }
+
     override fun clearTokenStorage() {
         userInfoPref = ""
         authInfoPref = ""
+
+        userBasicCodePref = ""
         accessTokenPref = ""
         authIDPref = ""
+    }
+
+    override fun clearCookies() {
+        val cookieManager: CookieManager = CookieManager.getInstance()
+        cookieManager.setAcceptCookie(true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeAllCookies(null)
+        }
+        WebStorage.getInstance().deleteAllData()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager.getInstance().flush()
+        }
     }
 }

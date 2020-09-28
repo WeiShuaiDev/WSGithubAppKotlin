@@ -5,6 +5,7 @@ import com.linwei.cams_mvvm.di.scope.ViewModelKey
 import com.linwei.github_mvvm.mvvm.viewmodel.login.AccountLoginViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.login.OAuthLoginViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.main.MainViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.RecommendedViewModel
 import dagger.Binds
@@ -22,6 +23,15 @@ import dagger.multibindings.IntoMap
  */
 @Module
 interface ViewModelModule {
+    /**
+     * [MainViewModel] 注入 `Dagger`
+     */
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+
+
     /**
      * [RecommendedViewModel] 注入 `Dagger`
      */

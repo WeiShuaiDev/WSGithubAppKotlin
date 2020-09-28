@@ -19,7 +19,7 @@ import com.github.anzewei.parallaxbacklayout.widget.ParallaxBackLayout.LAYOUT_CO
 import com.github.nukc.stateview.StateView
 import com.linwei.cams.R
 import com.linwei.cams.config.LibConfig
-import com.linwei.cams.ext.dp2px
+import com.linwei.cams.ext.px
 import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.http.cache.CacheType
 import com.linwei.cams.listener.OnPermissionListener
@@ -140,7 +140,7 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
             val mStatusFillView = View(this)
             var statusBarHeight: Int = fetchStatusBarHeight()
             if (statusBarHeight <= 0) {
-                statusBarHeight = 25f.dp2px()
+                statusBarHeight = 25f.px.toInt()
             }
 
             val params =
@@ -175,7 +175,7 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
         val params: ViewGroup.LayoutParams = topBarView.layoutParams
         var statusBarHeight: Int = fetchStatusBarHeight()
         if (statusBarHeight <= 0) {
-            statusBarHeight = 25f.dp2px()
+            statusBarHeight = 25f.px.toInt()
         }
         params.height = statusBarHeight
         topBarView.layoutParams = params

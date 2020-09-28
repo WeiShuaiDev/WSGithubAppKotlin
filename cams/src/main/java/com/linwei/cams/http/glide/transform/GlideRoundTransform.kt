@@ -4,6 +4,7 @@ import android.graphics.*
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.linwei.cams.ext.dp2px
+import com.linwei.cams.ext.px
 
 /**
  * ---------------------------------------------------------------------
@@ -17,7 +18,7 @@ import com.linwei.cams.ext.dp2px
 class GlideRoundTransform(private var radius: Float = 5f) : CenterCrop() {
 
     init {
-        radius = radius.dp2px().toFloat()
+        radius = radius.px.toFloat()
     }
 
     override fun transform(

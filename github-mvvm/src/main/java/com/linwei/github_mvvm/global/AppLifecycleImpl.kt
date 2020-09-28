@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.widget.ImageView
 import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
@@ -11,13 +12,13 @@ import com.linwei.cams.http.glide.loader.GlideImageLoader
 import com.linwei.cams.manager.ImageLoaderManager
 import com.linwei.github_mvvm.BuildConfig
 import com.linwei.github_mvvm.R
+import com.linwei.github_mvvm.ext.loadUserHeaderImage
 import com.linwei.github_mvvm.mvvm.factory.IconFontFactory
 import com.mikepenz.iconics.Iconics
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-import java.util.logging.Logger
 
 /**
  * ---------------------------------------------------------------------
@@ -38,7 +39,7 @@ class AppLifecycleImpl : AppLifecycles {
         Timber.i("AppLifecycleImpl to onCreate!")
 
         initImageLoaderManager(application)
-        initMaterialDrawer(application)
+        initMaterialDrawer()
         initIconics(application)
         initLog()
 
@@ -46,23 +47,30 @@ class AppLifecycleImpl : AppLifecycles {
 
     /**
      * 初始化 `MaterialDrawer`
-     * @param application [Application]
      */
-    private fun initMaterialDrawer(application: Application) {
-//        DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
-//
-//            override fun placeholder(ctx: Context): Drawable {
-//                //return application.getDrawable(R.mipmap.ic_launcher)
-//            }
-//
-//            override fun placeholder(ctx: Context, tag: String?): Drawable {
-//                //return application.getDrawable(R.mipmap.ic_launcher)
-//            }
-//
-//            override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable, tag: String?) {
-//                CommonUtils.loadUserHeaderImage(imageView, uri.toString())
-//            }
-//        })
+    private fun initMaterialDrawer() {
+        DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
+
+            override fun placeholder(ctx: Context): Drawable {
+                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ctx.getDrawable(R.mipmap.ic_launcher)!!
+                } else {
+                    ctx.resources.getDrawable(R.mipmap.ic_launcher)
+                }
+            }
+
+            override fun placeholder(ctx: Context, tag: String?): Drawable {
+                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ctx.getDrawable(R.mipmap.ic_launcher)!!
+                } else {
+                    ctx.resources.getDrawable(R.mipmap.ic_launcher)
+                }
+            }
+
+            override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable, tag: String?) {
+                loadUserHeaderImage(imageView, uri.toString())
+            }
+        })
     }
 
     /**

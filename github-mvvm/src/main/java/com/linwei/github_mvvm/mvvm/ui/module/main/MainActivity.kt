@@ -15,9 +15,13 @@ import com.linwei.cams.ext.showShort
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
+import com.linwei.github_mvvm.mvvm.contract.login.MainContract
+import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.ui.adapter.FragmentPagerViewAdapter
 import com.linwei.github_mvvm.mvvm.ui.view.ExpandNavigationTabBar
+import com.linwei.github_mvvm.mvvm.viewmodel.login.AccountLoginViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.main.MainViewModel
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
@@ -38,8 +42,8 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
-    Toolbar.OnMenuItemClickListener {
+class MainActivity : BaseMvvmActivity<MainViewModel, ViewDataBinding>(),
+    Toolbar.OnMenuItemClickListener, MainContract.View {
 
     private var mPreTime: Long = 0
 
@@ -90,7 +94,7 @@ class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
     }
 
     override fun bindViewModel() {
-
+        mViewModel?.mLifecycleOwner = this
     }
 
     /**
@@ -198,6 +202,7 @@ class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
                             drawerItem: IDrawerItem<*>
                         ): Boolean {
                             unSelect(drawerItem)
+                            mViewModel?.toSignOut()
                             return true
                         }
                     })
@@ -208,9 +213,9 @@ class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
                     .addProfiles(
                         ProfileDrawerItem().withName(globalModel.userObservable.login)
                             .withSelected(false)
-                            .withTextColorRes(R.color.colorGlobalTextWhite)
+                            .withTextColorRes(R.color.colorGlobalWhite)
                             .withIcon(
-                                "https://www.baidu.com/img/flexible/logo/plus_logo_web.png".toUri()
+                                Uri.parse(globalModel.userObservable.avatarUrl)
                             )
                             .withEmail(globalModel.userObservable.email ?: "")
                     )
@@ -240,7 +245,7 @@ class MainActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_search -> {
-                "点击搜索框".showShort()
+
             }
         }
         return true

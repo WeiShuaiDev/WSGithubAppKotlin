@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.github.nukc.stateview.StateView
 import com.linwei.cams.R
 import com.linwei.cams.ext.dp2px
+import com.linwei.cams.ext.px
 import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.http.cache.CacheType
 import com.linwei.cams.utils.ToastUtils
@@ -182,7 +183,7 @@ abstract class BaseFragment() : LazeLoadFragment(),
         val params = topBarView.layoutParams
         var statusBarHeight: Int = fetchStatusBarHeight()
         if (statusBarHeight <= 0) {
-            statusBarHeight = 25f.dp2px()
+            statusBarHeight = 25f.px.toInt()
         }
         params.height = statusBarHeight
         topBarView.layoutParams = params
