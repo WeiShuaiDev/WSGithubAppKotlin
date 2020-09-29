@@ -44,9 +44,13 @@ class LogInterceptor @Inject constructor() : Interceptor {
             }
         }
 
+        val headers: String = request.headers.toMultimap().map {
+            "${it.key}:${it.value.joinToString(",")}"
+        }.joinToString(";")
+
         //请求数据
-        val requestFormat = "| Request: method：[%s] url：[%s] params：[%s]"
-        Timber.i(requestFormat, request.method, request.url, body)
+        val requestFormat = "| Request: method：[%s] url：[%s] headers：[%s] params：[%s] "
+        Timber.i(requestFormat, request.method, request.url, headers, body)
 
         //响应数据
         val responseFormat = "| Response:[%s]"

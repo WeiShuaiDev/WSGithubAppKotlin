@@ -6,9 +6,7 @@ import android.util.Base64
 import android.webkit.CookieManager
 import android.webkit.WebStorage
 import androidx.lifecycle.*
-import com.linwei.cams.ext.isEmptyParameter
-import com.linwei.cams.ext.no
-import com.linwei.cams.ext.otherwise
+import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
@@ -17,6 +15,8 @@ import com.linwei.github_mvvm.mvvm.contract.login.OAuthLoginContract
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authIDPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authInfoPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.getAuthInfoPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.getUserInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.putAuthInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.putUserInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
@@ -61,7 +61,7 @@ class LoginModel @Inject constructor(
     /**
      * 登录状态
      */
-    private var mLoginResult: MutableLiveData<Boolean>? = null
+    private var mUserResult: MutableLiveData<Boolean>? = null
 
     override fun requestAccountLogin(
         owner: LifecycleOwner,
@@ -69,7 +69,7 @@ class LoginModel @Inject constructor(
         password: String,
         liveData: MutableLiveData<Boolean>
     ) {
-        mLoginResult = liveData
+        mUserResult = liveData
 
         clearTokenStorage()
 
@@ -91,7 +91,7 @@ class LoginModel @Inject constructor(
         code: String,
         liveData: MutableLiveData<Boolean>
     ) {
-        mLoginResult = liveData
+        mUserResult = liveData
 
         clearTokenStorage()
 
@@ -113,16 +113,14 @@ class LoginModel @Inject constructor(
                     override fun onSuccess(code: String?, data: AccessToken?) {
                         super.onSuccess(code, data)
                         data?.let {
-                            data.accessToken?.let {
-                                isEmptyParameter(it).no {
-                                    accessTokenPref = it
+                            data.accessToken.isNotNullOrEmpty().yes {
+                                accessTokenPref = data.accessToken!!
 
-                                    //获取 `UserInfo`信息数据
-                                    requestAuthenticatedUserInfo(owner)
-                                }.otherwise {
-                                    //删除用户令牌信息
-                                    clearTokenStorage()
-                                }
+                                //获取 `UserInfo`信息数据
+                                requestAuthenticatedUserInfo(owner)
+                            }.otherwise {
+                                //删除用户令牌信息
+                                clearTokenStorage()
                             }
                         }
                     }
@@ -138,7 +136,7 @@ class LoginModel @Inject constructor(
                     override fun onSuccess(code: String?, data: AuthResponse?) {
                         super.onSuccess(code, data)
                         data?.let {
-                            data.token?.isEmpty()?.no {
+                            data.token.isNotNullOrEmpty().yes {
                                 accessTokenPref = data.token!!
                                 authIDPref = data.id.toString()
 
@@ -147,7 +145,7 @@ class LoginModel @Inject constructor(
 
                                 //获取 `UserInfo`信息数据
                                 requestAuthenticatedUserInfo(owner)
-                            }?.otherwise {
+                            }.otherwise {
                                 //删除用户令牌信息
                                 requestDeleteAuthorization(owner, data.id)
                             }
@@ -186,22 +184,43 @@ class LoginModel @Inject constructor(
 
                         //保存 `UserInfoBean` 用户数据
                         putUserInfoPref(data)
-                        mLoginResult?.value = true
+                        mUserResult?.value = true
                     }
                 }
 
                 override fun onFailure(code: String?, message: String?) {
                     super.onFailure(code, message)
                     clearTokenStorage()
-                    mLoginResult?.value = false
+                    mUserResult?.value = false
                 }
             })
         }
     }
 
-    override fun signOut() {
-        clearTokenStorage()
-        clearCookies()
+    override fun signOut(owner: LifecycleOwner, liveData: MutableLiveData<Boolean>) {
+        mUserResult = liveData
+
+        val authResposne: AuthResponse? = getAuthInfoPref()
+        authResposne?.let {
+            requestDeleteAuthorization(owner, it.id).observe(
+                owner,
+                object : LiveDataCallBack<Any, Any>() {
+                    override fun onSuccess(code: String?, data: Any?) {
+                        super.onSuccess(code, data)
+                        clearTokenStorage()
+                        clearCookies()
+
+                        mUserResult?.value = true
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+
+                        mUserResult?.value = false
+                    }
+                })
+
+        }
     }
 
     override fun clearTokenStorage() {

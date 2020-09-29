@@ -49,7 +49,6 @@ fun navigationBack(view: View) {
  * @param size [Point]
  */
 fun loadUserHeaderImage(imageView: ImageView, url: String, size: Point = Point(50.dp, 50.dp)) {
-    System.out.println("url=${url}")
     val option: GlideLoadOption = GlideLoadOption()
         .setDefaultImg(R.mipmap.ic_launcher)
         .setErrorImg(R.mipmap.ic_launcher)

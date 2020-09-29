@@ -72,7 +72,7 @@ interface AccountLoginContract {
         /**
          * 退出登录
          */
-        fun signOut()
+        fun signOut(owner: LifecycleOwner, liveData: MutableLiveData<Boolean>)
 
         /**
          * 清除所有的 `Token` 令牌

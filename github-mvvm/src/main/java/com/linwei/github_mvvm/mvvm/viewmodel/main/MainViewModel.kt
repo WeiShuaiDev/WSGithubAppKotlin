@@ -1,6 +1,8 @@
 package com.linwei.github_mvvm.mvvm.viewmodel.main
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.mvvm.contract.login.MainContract
@@ -22,9 +24,18 @@ class MainViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(model, application), MainContract.ViewModel {
 
+    /**
+     * 退出登录状态
+     */
+    private val _signOutResult = MutableLiveData<Boolean>()
+    val signOutResult: LiveData<Boolean>
+        get() = _signOutResult
+
     override fun toSignOut() {
         UserInfoStorage.isLoginState.yes {
-            model.signOut()
+            mLifecycleOwner?.let {
+                model.signOut(it, _signOutResult)
+            }
         }
     }
 }

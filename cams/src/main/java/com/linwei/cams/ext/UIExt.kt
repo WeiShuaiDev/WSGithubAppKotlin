@@ -94,73 +94,10 @@ fun Int.color(): Int {
         ctx.resources.getColor(this)
     }
 }
+
 /**
  * ---------------------------------String---------------------------------
  */
-/**
- * [ResId] 转换为字符串 [String]
- * @param [ResId]
- * @return [String]
- */
-fun Any.string(): String {
-    return if (this is Int) {
-        ctx.resources.getString(this)
-    } else {
-        this.toString()
-    }
-}
-
-/**
- * [ResId] 转换为字符串 [String]
- * @param [ResId] 字符串Id, [args] 字符串格式化参数
- * @return [String]
- */
-fun Any.string(vararg args: String): String {
-    return if (this is Int) {
-        ctx.resources.getString(this, *args)
-    } else {
-        this.toString()
-    }
-}
-
-
-/**
- * 判断字符串是否为空
- * @param params [Array]
- */
-fun isEmptyParameter(vararg params: String?): Boolean {
-    for (p: String? in params)
-        if (p.isNullOrEmpty() || p == "null" || p == "NULL") {
-            return true
-        }
-    return false
-}
-
-/**
- * 判断字符串数组是否为空
- */
-fun isEmptyArraysParameter(params: Array<out String?>): Boolean {
-    for (p: String? in params)
-        if (p.isNullOrEmpty() || p == "null" || p == "NULL") {
-            return true
-        }
-    return false
-}
-
-/**
- * 判断字符串是否为空
- * @param params [String]
- */
-fun String?.isNotNullOrEmpty(): Boolean {
-    this?.let {
-        if (it.isNotEmpty()) {
-            if (it.toUpperCase(Locale.getDefault()) != "NULL") {
-                return true
-            }
-        }
-    }
-    return false
-}
 
 /**
  * 至少包含大小写字母及数字中的两种
@@ -223,8 +160,8 @@ fun String.checkNamePattern(): Boolean {
 fun String.getDomain(): String {
     var j = 0
     var startIndex = 0
-    var endIndex = this.length - 1
-    for (i in this.indices) {
+    var endIndex:Int = this.length - 1
+    for (i:Int in this.indices) {
         if (this[i] == '/') {
             j++
             if (j == 2)
@@ -257,7 +194,7 @@ fun Any.fromBean(): String {
  */
 fun String.toBean(): Any? {
     try {
-        val bytes = Base64.decode(this, Base64.NO_WRAP)
+        val bytes:ByteArray = Base64.decode(this, Base64.NO_WRAP)
         return ObjectInputStream(ByteArrayInputStream(bytes)).readObject()
     } catch (e: Exception) {
         e.printStackTrace()

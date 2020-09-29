@@ -38,7 +38,7 @@ class AccountLoginViewModel @Inject constructor(
     val passwordField: MutableLiveData<String> = MutableLiveData("")
 
     /**
-     * 登录结果
+     * 登录状态
      */
     private val _loginResult = MutableLiveData<Boolean>()
     val loginResult: LiveData<Boolean>
