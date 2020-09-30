@@ -160,10 +160,8 @@ class LoginModel @Inject constructor(
             observe(owner, object : LiveDataCallBack<Any, Any>() {
                 override fun onSuccess(code: String?, data: Any?) {
                     super.onSuccess(code, data)
-                    data?.let {
-                        accessTokenPref = ""
-                        authIDPref = ""
-                    }
+                    accessTokenPref = ""
+                    authIDPref = ""
                 }
             })
         }
@@ -215,7 +213,6 @@ class LoginModel @Inject constructor(
 
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
-
                         mUserResult?.value = false
                     }
                 })

@@ -6,10 +6,7 @@ import com.linwei.github_mvvm.mvvm.model.bean.Issue
 import com.linwei.github_mvvm.mvvm.model.bean.Repository
 import com.linwei.github_mvvm.mvvm.model.bean.SearchResult
 import com.linwei.github_mvvm.mvvm.model.bean.User
-import io.reactivex.Observable
-import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
