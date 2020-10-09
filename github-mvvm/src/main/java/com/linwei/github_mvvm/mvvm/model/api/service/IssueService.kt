@@ -34,6 +34,7 @@ interface IssueService {
     @GET("repos/{owner}/{repo}/issues")
     @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
     fun getRepoIssues(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int,
@@ -53,6 +54,7 @@ interface IssueService {
     @GET("user/issues")
     @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
     fun getUserIssues(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Query("filter") filter: String,
         @Query("state") state: String,
         @Query("sort") sort: String,
@@ -68,6 +70,7 @@ interface IssueService {
     @GET("repos/{owner}/{repo}/issues/{issueNumber}")
     @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
     fun getIssueInfo(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Path("issueNumber") issueNumber: Int
@@ -82,6 +85,7 @@ interface IssueService {
     @GET("repos/{owner}/{repo}/issues/{issueNumber}/timeline")
     @Headers("Accept: application/vnd.github.mockingbird-preview")
     fun getIssueTimeline(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Path("issueNumber") issueNumber: Int,
@@ -98,6 +102,7 @@ interface IssueService {
     @GET("repos/{owner}/{repo}/issues/{issueNumber}/comments")
     @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
     fun getIssueComments(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Path("issueNumber") issueNumber: Int,
@@ -114,6 +119,7 @@ interface IssueService {
     @GET("repos/{owner}/{repo}/issues/{issueNumber}/events")
     @Headers("Accept: application/vnd.github.html")
     fun getIssueEvents(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Path("issueNumber") issueNumber: Int,

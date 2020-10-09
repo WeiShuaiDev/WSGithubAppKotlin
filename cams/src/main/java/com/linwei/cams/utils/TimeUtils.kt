@@ -1,6 +1,8 @@
 package com.linwei.cams.utils
 
 import android.annotation.SuppressLint
+import com.linwei.cams.R
+import com.linwei.cams.ext.string
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -173,6 +175,38 @@ object TimeUtils {
         }
         return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(date)
             .substring(0, 10)
+    }
+
+    private const val MILLIS_LIMIT = 1000.0
+
+    private const val SECONDS_LIMIT = 60 * MILLIS_LIMIT
+
+    private const val MINUTES_LIMIT = 60 * SECONDS_LIMIT
+
+    private const val HOURS_LIMIT = 24 * MINUTES_LIMIT
+
+    private const val DAYS_LIMIT = 30 * HOURS_LIMIT
+
+    /**
+     * 获取时间格式化
+     */
+    fun getNewsTime(date: Date?): String {
+        if (date == null) {
+            return ""
+        }
+        val subTime: Long = Date().time - date.time
+        return when {
+            subTime < MILLIS_LIMIT -> R.string.justNow.string()
+            subTime < SECONDS_LIMIT -> Math.round(subTime / MILLIS_LIMIT)
+                .toString() + " " + R.string.secondAgo.string()
+            subTime < MINUTES_LIMIT -> Math.round(subTime / SECONDS_LIMIT)
+                .toString() + " " + R.string.minutesAgo.string()
+            subTime < HOURS_LIMIT -> Math.round(subTime / MINUTES_LIMIT)
+                .toString() + " " + R.string.hoursAgo.string()
+            subTime < DAYS_LIMIT -> Math.round(subTime / HOURS_LIMIT)
+                .toString() + " " + R.string.daysAgo.string()
+            else -> getDate(date)
+        }
     }
 
     /**

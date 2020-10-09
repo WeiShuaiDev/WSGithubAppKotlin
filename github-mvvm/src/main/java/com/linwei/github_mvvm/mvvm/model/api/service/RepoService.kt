@@ -29,6 +29,7 @@ interface RepoService {
      */
     @GET("users/{user}/repos")
     fun getUserRepository100StatusDao(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
         @Query("page") page: Int,
         @Query("sort") sort: String = "pushed",
@@ -45,6 +46,7 @@ interface RepoService {
      */
     @GET("users/{user}/starred")
     fun getStarredRepos(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
         @Query("page") page: Int,
         @Query("sort") sort: String = "updated",
@@ -60,6 +62,7 @@ interface RepoService {
      */
     @GET("user/repos")
     fun getUserRepos(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Query("page") page: Int,
         @Query("type") type: String,
         @Query("sort") sort: String,
@@ -75,6 +78,7 @@ interface RepoService {
      */
     @GET("users/{user}/repos")
     fun getUserPublicRepos(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
         @Query("page") page: Int,
         @Query("sort") sort: String = "pushed",
@@ -153,6 +157,7 @@ interface RepoService {
     @GET
     @Headers("Accept: application/vnd.github.html")
     fun getFileAsHtmlStream(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Url url: String
     ): LiveData<ResponseBody>
 
@@ -162,6 +167,7 @@ interface RepoService {
     @GET
     @Headers("Accept: application/vnd.github.VERSION.raw")
     fun getFileAsStream(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Url url: String
     ): LiveData<ResponseBody>
 
@@ -206,6 +212,7 @@ interface RepoService {
      */
     @GET("repos/{owner}/{repo}/stargazers")
     fun getStargazers(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path(value = "owner") owner: String,
         @Path(value = "repo") repo: String,
         @Query("page") page: Int
@@ -218,6 +225,7 @@ interface RepoService {
      */
     @GET("repos/{owner}/{repo}/subscribers")
     fun getWatchers(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int
@@ -229,6 +237,7 @@ interface RepoService {
      */
     @GET("repos/{owner}/{repo}")
     fun getRepoInfo(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String
     ): LiveData<Repository>
@@ -251,6 +260,7 @@ interface RepoService {
      */
     @GET("repos/{owner}/{repo}/forks")
     fun getForks(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int,
@@ -266,6 +276,7 @@ interface RepoService {
      */
     @GET("networks/{owner}/{repo}/events")
     fun getRepoEvent(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int,
@@ -281,6 +292,7 @@ interface RepoService {
     @GET("repos/{owner}/{repo}/releases")
     @Headers("Accept: application/vnd.github.html")
     fun getReleases(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int,
@@ -295,6 +307,7 @@ interface RepoService {
      */
     @GET("repos/{owner}/{repo}/releases")
     fun getReleasesNotHtml(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int,
@@ -309,6 +322,7 @@ interface RepoService {
     @GET("repos/{owner}/{repo}/releases/tags/{tag}")
     @Headers("Accept: application/vnd.github.html")
     fun getReleaseByTagName(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Path("tag") tag: String
@@ -335,6 +349,7 @@ interface RepoService {
     @GET("https://guoshuyu.cn/github/trend/list")
     @Headers("Content-Type: text/plain;charset=utf-8")
     fun getTrendDataAPI(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Header("api-token") apiToken: String,
         @Query("since") since: String,
         @Query("languageType") languageType: String
@@ -348,6 +363,7 @@ interface RepoService {
     @GET("repos/{owner}/{repo}/readme")
     @Headers("Content-Type: text/plain;charset=utf-8", "Accept: application/vnd.github.html")
     fun getReadmeHtml(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("ref") branch: String = "master"

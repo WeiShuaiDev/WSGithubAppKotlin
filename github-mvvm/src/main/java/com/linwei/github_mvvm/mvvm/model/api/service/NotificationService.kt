@@ -18,6 +18,7 @@ interface NotificationService {
      */
     @GET("notifications")
     fun getNotification(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Query("all") all: Boolean,
         @Query("participating") participating: Boolean,
         @Query("page") page: Int,
@@ -30,6 +31,7 @@ interface NotificationService {
      */
     @GET("notifications")
     fun getNotificationUnRead(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
     ): LiveData<ArrayList<Notification>>

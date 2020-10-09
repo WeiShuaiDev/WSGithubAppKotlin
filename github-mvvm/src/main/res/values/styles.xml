@@ -6,6 +6,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--启动页样式-->
     <style name="splashTheme" parent="githubTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -15,8 +16,16 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <!--Toolbar样式-->
     <style name="toolbarTheme" parent="@style/githubTheme">
         <item name="colorControlNormal">@color/colorGlobalWhite</item>
+    </style>
+
+    <!--Card 白色样式-->
+    <style name="whiteCardTheme" parent="MatchAndWrap">
+        <item name="android:background">@color/colorGlobalWhite</item>
+        <item name="android:layout_margin">@dimen/dp_5</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
 </resources>

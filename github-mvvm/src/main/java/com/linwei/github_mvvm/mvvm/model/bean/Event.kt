@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName
 import java.util.Date
 
 class Event {
-
-
     var id: String? = null
     var type: String? = null
     var actor: User? = null

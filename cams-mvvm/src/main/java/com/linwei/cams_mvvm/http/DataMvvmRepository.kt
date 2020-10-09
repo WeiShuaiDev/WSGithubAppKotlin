@@ -43,8 +43,7 @@ class DataMvvmRepository @Inject constructor() : DataRepository(), IDataMvvmRepo
                 Room.databaseBuilder(
                     mApplication, databaseClass, GlobalConstant.ROOM_DATABASE_NAME
                 )
-            //通过Dagger2扩展进来
-
+            //TODO 通过Dagger2扩展进来
 
             roomDatabase = builder.build()
 

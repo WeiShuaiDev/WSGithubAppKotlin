@@ -34,7 +34,7 @@ interface AccountLoginContract {
     interface Model {
 
         /**
-         * 账号密码登录网络请求
+         * 请求账号密码登录网络
          * @param owner [LifecycleOwner]
          * @param username [String] 用户名
          * @param password [String] 密码

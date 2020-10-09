@@ -6,6 +6,7 @@ import com.linwei.github_mvvm.mvvm.model.bean.CommitsComparison
 import com.linwei.github_mvvm.mvvm.model.bean.RepoCommit
 import com.linwei.github_mvvm.mvvm.model.bean.RepoCommitExt
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.ArrayList
@@ -29,6 +30,7 @@ interface CommitService {
      */
     @GET("repos/{owner}/{repo}/commits")
     fun getRepoCommits(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         //SHA or branch to start listing commits from. Default: the repository’s default branch (usually master).
@@ -44,6 +46,7 @@ interface CommitService {
      */
     @GET("repos/{owner}/{repo}/commits/{sha}")
     fun getCommitInfo(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Path("sha") sha: String
@@ -58,6 +61,7 @@ interface CommitService {
      */
     @GET("repos/{owner}/{repo}/commits/{ref}/comments")
     fun getCommitComments(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int,
@@ -73,6 +77,7 @@ interface CommitService {
      */
     @GET("repos/{owner}/{repo}/compare/{before}...{head}")
     fun compareTwoCommits(
+        @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Path("before") before: String,

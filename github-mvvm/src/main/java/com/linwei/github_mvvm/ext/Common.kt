@@ -10,7 +10,9 @@ import androidx.navigation.Navigation
 import com.linwei.cams.ext.dp
 import com.linwei.cams.http.glide.GlideLoadOption
 import com.linwei.cams.manager.ImageLoaderManager
+import com.linwei.cams.utils.TimeUtils.getDate
 import com.linwei.github_mvvm.R
+import java.util.*
 
 
 /**
@@ -57,4 +59,6 @@ fun loadUserHeaderImage(imageView: ImageView, url: String, size: Point = Point(5
         .setUri(url)
     ImageLoaderManager.sInstance.imageLoader().loadImage(option, imageView, null)
 }
+
+
 

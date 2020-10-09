@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#2b2b2b</color>
     <color name="colorAccent">#42464b</color>
 
+    <color name="textColorPrimary">#313335</color>
+    <color name="textColorSecondary">#959595</color>
+
     <!--Navigation-->
     <color name="colorNavigationInActiveTab">#959595</color>
     <color name="colorNavigationActiveTab">#2c2c2c</color>
@@ -11,5 +14,6 @@
     <color name="colorSubLightText">#c4c4c4</color>
     <color name="colorDrawerLightText">#88FF1100</color>
 
+    <color name="colorWebDraculaBg">#282a36</color>
 
 </resources>

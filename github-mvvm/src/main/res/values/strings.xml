@@ -19,6 +19,13 @@
     <string name="main_about">应用关于</string>
     <string name="main_login_out">退出登陆</string>
 
+    <string name="notifyType">类型</string>
+    <string name="notifyStatus">状态</string>
+    <string name="unread">未读</string>
+    <string name="readed">已读</string>
+
+    <string name="created_at">创建于</string>
+    <string name="forked_at">Forked from</string>
 
     <!--用户模块-->
     <string name="user_created_at_text">创建于</string>

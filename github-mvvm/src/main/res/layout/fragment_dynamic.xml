@@ -17,6 +17,10 @@
         android:background="@android:color/transparent"
         tools:ignore="MissingConstraints">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            style="@style/MatchAndMatch" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

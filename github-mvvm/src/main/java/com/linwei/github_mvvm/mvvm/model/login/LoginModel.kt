@@ -168,7 +168,7 @@ class LoginModel @Inject constructor(
     }
 
     override fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<User> {
-        return userService.getAuthenticatedUserInfo().apply {
+        return userService.getAuthenticatedUserInfo(true).apply {
             observe(owner, object : LiveDataCallBack<User, User>() {
                 override fun onSuccess(code: String?, data: User?) {
                     super.onSuccess(code, data)

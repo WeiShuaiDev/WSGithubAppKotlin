@@ -14,4 +14,10 @@
     <string name="continues">继续</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+
+    <string name="secondAgo">秒前</string>
+    <string name="daysAgo">天前</string>
+    <string name="hoursAgo">小时前</string>
+    <string name="minutesAgo">分钟前</string>
+    <string name="justNow">刚刚</string>
 </resources>
