@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
+import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
+import java.util.ArrayList
 
 /**
  * ---------------------------------------------------------------------
@@ -32,7 +34,18 @@ interface DynamicContract {
 
     interface Model {
         /**
-         * 请求用户接收到的事件数据
+         * 请求网络用户接收到的事件数据
+         * @param owner [LifecycleOwner]
+         * @param page [Int]
+         * @param liveData [MutableLiveData]
+         */
+        fun httpReceivedEvent(
+            owner: LifecycleOwner,
+            page: Int
+        ): LiveData<List<Event>>
+
+        /**
+         * 获取用户接收到的事件数据
          * @param owner [LifecycleOwner]
          * @param page [Int]
          * @param liveData [MutableLiveData]
@@ -40,8 +53,19 @@ interface DynamicContract {
         fun requestReceivedEvent(
             owner: LifecycleOwner,
             page: Int,
-            liveData: MutableLiveData<Event>
+            liveData: MutableLiveData<List<EventUIModel>>
+        )
+
+        /**
+         * 查询数据库用户接收到的事件数据
+         * @param owner [LifecycleOwner]
+         * @param id [Int]
+         * @param liveData [MutableLiveData]
+         */
+        fun queryReceivedEvent(
+            owner: LifecycleOwner,
+            id: Int,
+            liveData: MutableLiveData<List<EventUIModel>>
         )
     }
-
 }

@@ -67,3 +67,15 @@ fun String?.isNotNullOrEmpty(): Boolean {
     return false
 }
 
+/**
+ * 判断集合是否为空，数据为0
+ */
+fun List<Any>?.isNotNullOrSize(): Boolean {
+    this?.let {
+        if (it.isNotEmpty()) {
+            return true
+        }
+    }
+    return false
+}
+

@@ -3,7 +3,7 @@ package com.linwei.github_mvvm.mvvm.model.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.linwei.github_mvvm.mvvm.model.db.dao.UserDao
-import com.linwei.github_mvvm.mvvm.model.db.entity.EventEntity
+import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
@@ -13,7 +13,7 @@ import com.linwei.github_mvvm.mvvm.model.db.entity.EventEntity
  * @Description:
  *-----------------------------------------------------------------------
  */
-@Database(entities = [EventEntity::class], version = 1, exportSchema = false)
+@Database(entities = [ReceivedEventEntity::class], version = 1, exportSchema = false)
 abstract class LocalDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.model.bean.Event
+import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
 import com.linwei.github_mvvm.mvvm.model.main.DynamicModel
 import javax.inject.Inject
 
@@ -23,8 +24,8 @@ class DynamicViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(model, application), DynamicContract.ViewModel {
 
-    private val _eventUiModel = MutableLiveData<Event>()
-    val eventUiModel: LiveData<Event>
+    private val _eventUiModel = MutableLiveData<List<EventUIModel>>()
+    val eventUiModel: LiveData<List<EventUIModel>>
         get() = _eventUiModel
 
     override fun toReceivedEvent(page: Int) {

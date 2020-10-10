@@ -12,5 +12,5 @@ package com.linwei.cams_mvvm
 
 object GlobalConstant {
     //Room DataBase 标识
-    const val ROOM_DATABASE_NAME: String = "cams_room.db"
+    const val ROOM_DATABASE_NAME: String = "cams_room"
 }

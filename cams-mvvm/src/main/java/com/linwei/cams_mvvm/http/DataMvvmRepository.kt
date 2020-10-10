@@ -2,6 +2,7 @@ package com.linwei.cams_mvvm.http
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.linwei.cams.http.cache.Cache
 import com.linwei.cams.http.cache.CacheType
 import com.linwei.cams.http.repository.DataRepository
@@ -38,13 +39,16 @@ class DataMvvmRepository @Inject constructor() : DataRepository(), IDataMvvmRepo
             mDataBaseCache.get(
                 databaseClass.canonicalName ?: databaseClass.simpleName
             )
+
         if (roomDatabase == null) {
             val builder: RoomDatabase.Builder<T> =
                 Room.databaseBuilder(
                     mApplication, databaseClass, GlobalConstant.ROOM_DATABASE_NAME
                 )
+            builder.allowMainThreadQueries() //允许在主线程中查询
             //TODO 通过Dagger2扩展进来
-
+            builder.addCallback(object : RoomDatabase.Callback() {
+            })
             roomDatabase = builder.build()
 
             //保存 `RoomDataBase` 对象到 `Cache` 中

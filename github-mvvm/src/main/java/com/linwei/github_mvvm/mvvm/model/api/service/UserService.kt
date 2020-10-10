@@ -134,7 +134,7 @@ interface UserService {
         @Path("user") user: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<Event>>
+    ): LiveData<List<Event>>
 
     /**
      * 列出用户已收到的事件
