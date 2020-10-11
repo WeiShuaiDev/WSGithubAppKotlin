@@ -10,6 +10,7 @@ import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentDynamicBinding
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
+import com.linwei.github_mvvm.utils.GsonUtils
 
 /**
  * ---------------------------------------------------------------------
@@ -39,11 +40,12 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
     }
 
     override fun initLayoutData() {
+        showLoading()
         mViewModel?.eventUiModel?.observe(viewLifecycleOwner, Observer {
             it.isNotNullOrSize().yes {
-                System.out.println("++数据不为空${it.size}")
-            }.otherwise {
-                System.out.println("++数据为空！")
+                it.forEach {
+                    System.out.println("数据${GsonUtils.toJsonString(it)}")
+                }
             }
         })
     }

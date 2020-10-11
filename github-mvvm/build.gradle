@@ -84,7 +84,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions{
+    kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
@@ -157,6 +157,7 @@ dependencies {
     ///Drawer
     implementation "com.mikepenz:materialdrawer:7.0.0-rc03"
 
+    //本地存储数据调试工具
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     ///Mikepenz

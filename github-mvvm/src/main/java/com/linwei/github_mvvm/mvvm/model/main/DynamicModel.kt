@@ -2,7 +2,6 @@ package com.linwei.github_mvvm.mvvm.model.main
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.isNotNullOrEmpty
 import com.linwei.cams.ext.no
 import com.linwei.cams.http.callback.LiveDataCallBack
@@ -18,6 +17,7 @@ import com.linwei.github_mvvm.mvvm.model.db.LocalDatabase
 import com.linwei.github_mvvm.mvvm.model.db.dao.UserDao
 import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
 import com.linwei.github_mvvm.utils.GsonUtils
+import timber.log.Timber
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -52,34 +52,7 @@ class DynamicModel @Inject constructor(
     override fun requestReceivedEvent(
         owner: LifecycleOwner,
         page: Int,
-        liveData: MutableLiveData<List<EventUIModel>>
-    ) {
-        httpReceivedEvent(owner, page).observe(owner,
-            object : LiveDataCallBack<List<Event>, List<Event>>() {
-                override fun onSuccess(code: String?, data: List<Event>?) {
-                    super.onSuccess(code, data)
-                    data?.let {
-                        val eventUIList = ArrayList<EventUIModel>()
-                        it.apply {
-                            for (event: Event in it) {
-                                eventUIList.add(EventConversion.eventToEventUIModel(event))
-                            }
-                        }
-                        liveData.value = eventUIList
-                    }
-                }
-
-                override fun onFailure(code: String?, message: String?) {
-                    super.onFailure(code, message)
-                    //获取数据库中接收事件数据。
-                    queryReceivedEvent(owner, 0, liveData)
-                }
-            })
-    }
-
-    override fun httpReceivedEvent(
-        owner: LifecycleOwner,
-        page: Int
+        observer: LiveDataCallBack<List<EventUIModel>, List<EventUIModel>>
     ): LiveData<List<Event>> {
         val name: String? = appGlobalModel.userObservable.login
         name.isNotNullOrEmpty().no { return@no }
@@ -97,7 +70,25 @@ class DynamicModel @Inject constructor(
                                 data = GsonUtils.toJsonString(it)
                             )
                             userDao.insertReceivedEvent(entity)
+
+                            val eventUIList = ArrayList<EventUIModel>()
+                            it.apply {
+                                for (event: Event in it) {
+                                    eventUIList.add(EventConversion.eventToEventUIModel(event))
+                                }
+                            }
+                            observer.onSuccess(code, eventUIList)
+
+                            Timber.i(" request Http EventUIModel Data Success~")
                         }
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        //获取数据库中接收事件数据
+                        queryReceivedEvent(owner, 0, observer)
+
+                        Timber.i(" request Http EventUIModel Data Failed~")
                     }
                 })
         }
@@ -106,26 +97,32 @@ class DynamicModel @Inject constructor(
     override fun queryReceivedEvent(
         owner: LifecycleOwner,
         id: Int,
-        liveData: MutableLiveData<List<EventUIModel>>
-    ) {
-        userDao.queryReceivedEvent(id).observe(owner,
-            object :
-                LiveDataCallBack<ReceivedEventEntity, ReceivedEventEntity>() {
-                override fun onSuccess(code: String?, data: ReceivedEventEntity?) {
-                    super.onSuccess(code, data)
-                    data?.let {
-                        val eventUIList = ArrayList<EventUIModel>()
-                         GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java).forEach {
-                             eventUIList.add(EventConversion.eventToEventUIModel(it))
-                         }
-                        liveData.value = eventUIList
-                    }
-                }
+        observer: LiveDataCallBack<List<EventUIModel>, List<EventUIModel>>
+    ): LiveData<ReceivedEventEntity> {
+        return userDao.queryReceivedEvent(id).apply {
+            observe(owner,
+                object :
+                    LiveDataCallBack<ReceivedEventEntity, ReceivedEventEntity>() {
+                    override fun onSuccess(code: String?, data: ReceivedEventEntity?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            val eventUIList = ArrayList<EventUIModel>()
+                            GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java).forEach {
+                                eventUIList.add(EventConversion.eventToEventUIModel(it))
+                            }
+                            observer.onSuccess(code, eventUIList)
 
-                override fun onFailure(code: String?, message: String?) {
-                    super.onFailure(code, message)
-                    liveData.value = null
-                }
-            })
+                            Timber.i(" request DB EventUIModel Data Success~")
+                        }
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+
+                        Timber.i(" request DB EventUIModel Data failed~")
+                    }
+                })
+        }
     }
 }

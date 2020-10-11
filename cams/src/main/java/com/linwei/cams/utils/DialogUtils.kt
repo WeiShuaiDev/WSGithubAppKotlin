@@ -37,7 +37,7 @@ object DialogUtils {
     ): Dialog {
         val view: View = LayoutInflater.from(context).inflate(layout, null)
         val dialog = CustomDialog(context, view, theme)
-        dialog.setCancelable(false)
+        dialog.setCancelable(true)
         listener?.onCreatedView(dialog, ItemViewHolder(view))
         setDialogWindow(dialog.window)
         return dialog

@@ -14,7 +14,8 @@ import com.linwei.cams.http.model.StatusCode.Companion.SUCCESS
  * @Time: 2020/7/15
  * @Contact linwei9605@gmail.com
  * @Follow https://github.com/WeiShuaiDev
- * @Description: 定义四种网络请求状态，[LOADING] 加载中; [SUCCESS] 成功; [FAILURE] 失败; [ERROR] 错误
+ * @Description: 定义四种网络请求状态，[START] 开始；[LOADING] 加载中; [SUCCESS] 成功;
+ * [FAILURE] 失败; [ERROR] 错误； [END] 结束；
  *-----------------------------------------------------------------------
  */
 
