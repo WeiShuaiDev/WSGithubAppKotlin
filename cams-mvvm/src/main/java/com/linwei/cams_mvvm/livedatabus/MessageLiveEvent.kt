@@ -17,20 +17,20 @@ class MessageLiveEvent : LiveDataEvent<Message>() {
 
     fun observe(owner: LifecycleOwner, observer: MessageLiveObserver) {
         super.observe(owner, Observer {
-            if (it.obj != null)
+//            if (it.obj != null)
                 observer.onNewMessage(it)
         })
     }
 
     fun observeForever(observer: MessageLiveObserver) {
         super.observeForever {
-            if (it.obj != null)
+//            if (it.obj != null)
                 observer.onNewMessage(it)
         }
     }
 
     interface MessageLiveObserver {
-        fun onNewMessage(message: Message)
+        fun onNewMessage(message: Message?)
     }
 
 }

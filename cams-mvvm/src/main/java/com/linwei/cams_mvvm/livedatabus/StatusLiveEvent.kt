@@ -19,20 +19,20 @@ class StatusLiveEvent : LiveDataEvent<@StatusCode Int>() {
 
     fun observe(owner: LifecycleOwner, observer: StatusLiveObserver) {
         super.observe(owner, Observer {
-            if (it != null)
+//            if (it != null)
                 observer.onStatusChanges(it)
         })
     }
 
     fun observeForever(observer: StatusLiveObserver) {
         super.observeForever {
-            if (it != null)
+//            if (it != null)
                 observer.onStatusChanges(it)
         }
     }
 
     interface StatusLiveObserver {
-        fun onStatusChanges(@StatusCode status: Int)
+        fun onStatusChanges(@StatusCode status: Int?)
     }
 
 }

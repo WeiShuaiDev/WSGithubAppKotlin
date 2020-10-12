@@ -1,5 +1,4 @@
 package com.linwei.cams.base.fragment
-
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -70,7 +69,6 @@ open class LazeLoadFragment : Fragment() {
                     onFragmentFirstVisible()
                     isFirstEnter = false
                 }
-                onFragmentVisibleChange(true)
                 isFragmentVisible = true
             }
         }

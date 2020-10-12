@@ -3,9 +3,10 @@ package com.linwei.github_mvvm.mvvm.ui.module.main
 import android.view.View
 import androidx.lifecycle.Observer
 import com.linwei.cams.ext.isNotNullOrSize
-import com.linwei.cams.ext.otherwise
 import com.linwei.cams.ext.yes
+import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
+import com.linwei.cams_mvvm.livedatabus.StatusLiveEvent
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentDynamicBinding
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
@@ -27,8 +28,6 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
     override fun provideContentViewId(): Int = R.layout.fragment_dynamic
 
     override fun bindViewModel() {
-        mViewModel?.mLifecycleOwner = viewLifecycleOwner
-
         mViewDataBinding?.let {
             it.viewModel = mViewModel
             it.lifecycleOwner = viewLifecycleOwner
@@ -40,14 +39,14 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
     }
 
     override fun initLayoutData() {
-        showLoading()
         mViewModel?.eventUiModel?.observe(viewLifecycleOwner, Observer {
             it.isNotNullOrSize().yes {
                 it.forEach {
-                    System.out.println("数据${GsonUtils.toJsonString(it)}")
+
                 }
             }
         })
+
     }
 
     override fun initLayoutListener() {

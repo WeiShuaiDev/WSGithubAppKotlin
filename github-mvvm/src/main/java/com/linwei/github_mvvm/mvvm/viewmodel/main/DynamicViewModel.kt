@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams.http.model.StatusCode
+import com.linwei.cams_mvvm.livedatabus.StatusLiveEvent
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.model.bean.Event
@@ -32,6 +33,7 @@ class DynamicViewModel @Inject constructor(
     private val _eventUiModel = MutableLiveData<List<EventUIModel>>()
     val eventUiModel: LiveData<List<EventUIModel>>
         get() = _eventUiModel
+
 
     override fun toReceivedEvent(page: Int) {
         postUpdateStatus(StatusCode.LOADING)

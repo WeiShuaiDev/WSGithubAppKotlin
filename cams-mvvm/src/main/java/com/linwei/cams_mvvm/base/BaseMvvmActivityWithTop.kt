@@ -101,18 +101,22 @@ abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding
      */
     private fun registerLiveEvent() {
         mViewModel?.fetchStatusLiveEvent()?.observe(this,
-            Observer<@StatusCode Int> {
-                it?.let {
-                    if (it > 0) {
-                        receiveStatusLiveEvent(it)
+            object : StatusLiveEvent.StatusLiveObserver {
+                override fun onStatusChanges(status: Int?) {
+                    status?.let {
+                        if (status > 0) {
+                            receiveStatusLiveEvent(it)
+                        }
                     }
                 }
             })
 
         mViewModel?.fetchMessageLiveEvent()?.observe(this,
-            Observer<Message> {
-                it?.let {
-                    receiveMessageLiveEvent(it)
+            object : MessageLiveEvent.MessageLiveObserver {
+                override fun onNewMessage(message: Message?) {
+                    message?.let {
+                        receiveMessageLiveEvent(message)
+                    }
                 }
             })
     }

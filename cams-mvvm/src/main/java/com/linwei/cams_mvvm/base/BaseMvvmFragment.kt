@@ -63,8 +63,8 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initViewModel()      //初始化 ViewModel
         super.onViewCreated(view, savedInstanceState)
+
         bindViewModel()      //绑定 ViewModel
-        registerLiveEvent()  //注册事件总线
     }
 
     override fun bindingContentView(
@@ -101,6 +101,10 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
         if (mViewModel != null) {
             lifecycle.addObserver(mViewModel!!)
         }
+
+        mViewModel?.mLifecycleOwner = viewLifecycleOwner
+
+        registerLiveEvent()  //注册事件总线
     }
 
     /**
@@ -108,18 +112,22 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
      */
     private fun registerLiveEvent() {
         mViewModel?.fetchStatusLiveEvent()?.observe(this,
-            Observer<@StatusCode Int> {
-                it?.let {
-                    if (it > 0) {
-                        receiveStatusLiveEvent(it)
+            object : StatusLiveEvent.StatusLiveObserver {
+                override fun onStatusChanges(status: Int?) {
+                    status?.let {
+                        if (status > 0) {
+                            receiveStatusLiveEvent(it)
+                        }
                     }
                 }
             })
 
         mViewModel?.fetchMessageLiveEvent()?.observe(this,
-            Observer<Message> {
-                it?.let {
-                    receiveMessageLiveEvent(it)
+            object : MessageLiveEvent.MessageLiveObserver {
+                override fun onNewMessage(message: Message?) {
+                    message?.let {
+                        receiveMessageLiveEvent(message)
+                    }
                 }
             })
     }

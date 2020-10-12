@@ -27,9 +27,9 @@ open class LiveDataEvent<T> : MutableLiveData<T>() {
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         super.observe(owner, Observer {
-            if (mPending.compareAndSet(true, false)) {
+//            if (mPending.compareAndSet(true, false)) {
                 observer.onChanged(it)
-            }
+//            }
         })
     }
 
@@ -41,9 +41,9 @@ open class LiveDataEvent<T> : MutableLiveData<T>() {
     @MainThread
     override fun observeForever(observer: Observer<in T>) {
         super.observeForever {
-            if (mPending.compareAndSet(true, false)) {
+//            if (mPending.compareAndSet(true, false)) {
                 observer.onChanged(it)
-            }
+//            }
         }
     }
 
