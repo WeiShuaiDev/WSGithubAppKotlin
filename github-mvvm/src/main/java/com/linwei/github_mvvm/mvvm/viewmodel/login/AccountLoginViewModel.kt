@@ -5,6 +5,8 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.*
+import com.linwei.cams.http.callback.LiveDataCallBack
+import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
@@ -69,7 +71,25 @@ class AccountLoginViewModel @Inject constructor(
         }
 
         mLifecycleOwner?.let {
-            model.requestAccountLogin(it, username!!, password!!, _loginResult)
+            postUpdateStatus(StatusCode.LOADING)
+
+            model.requestAccountLogin(
+                it,
+                username!!,
+                password!!,
+                object : LiveDataCallBack<Boolean, Boolean>() {
+                    override fun onSuccess(code: String?, data: Boolean?) {
+                        super.onSuccess(code, data)
+                        postUpdateStatus(StatusCode.SUCCESS)
+                        _loginResult.value = true
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        postUpdateStatus(StatusCode.FAILURE)
+                        _loginResult.value = false
+                    }
+                })
         }
     }
 }

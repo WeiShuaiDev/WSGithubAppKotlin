@@ -201,8 +201,8 @@ class MainActivity : BaseMvvmActivity<MainViewModel, ViewDataBinding>(),
                             position: Int,
                             drawerItem: IDrawerItem<*>
                         ): Boolean {
-                            unSelect(drawerItem)
                             mViewModel?.toSignOut()
+                            unSelect(drawerItem)
                             return true
                         }
                     })

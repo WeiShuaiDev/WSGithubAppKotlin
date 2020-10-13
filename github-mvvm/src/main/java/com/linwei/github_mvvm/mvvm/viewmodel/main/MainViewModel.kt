@@ -1,12 +1,9 @@
 package com.linwei.github_mvvm.mvvm.viewmodel.main
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
+import com.linwei.github_mvvm.ext.jumpUserActivity
 import com.linwei.github_mvvm.mvvm.contract.login.MainContract
-import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage
 import com.linwei.github_mvvm.mvvm.model.login.LoginModel
 import javax.inject.Inject
 
@@ -24,18 +21,11 @@ class MainViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(model, application), MainContract.ViewModel {
 
-    /**
-     * 退出登录状态
-     */
-    private val _signOutResult = MutableLiveData<Boolean>()
-    val signOutResult: LiveData<Boolean>
-        get() = _signOutResult
-
     override fun toSignOut() {
-        UserInfoStorage.isLoginState.yes {
-            mLifecycleOwner?.let {
-                model.signOut(it, _signOutResult)
-            }
-        }
+        //删除用户信息，退出登录
+        model.signOut()
+
+        //跳转到登录页面
+        jumpUserActivity()
     }
 }

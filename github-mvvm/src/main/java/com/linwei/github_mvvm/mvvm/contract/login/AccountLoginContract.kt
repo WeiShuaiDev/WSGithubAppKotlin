@@ -3,8 +3,10 @@ package com.linwei.github_mvvm.mvvm.contract.login
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.github_mvvm.mvvm.model.bean.AuthResponse
 import com.linwei.github_mvvm.mvvm.model.bean.User
+import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
 
 /**
  * ---------------------------------------------------------------------
@@ -44,7 +46,7 @@ interface AccountLoginContract {
             owner: LifecycleOwner,
             username: String,
             password: String,
-            liveData: MutableLiveData<Boolean>
+            observer: LiveDataCallBack<Boolean, Boolean>
         )
 
         /**
@@ -67,12 +69,14 @@ interface AccountLoginContract {
          * @param owner [LifecycleOwner]
          * @return LiveData [UserInfoBean]
          */
-        fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<User>
+        fun requestAuthenticatedUserInfo(
+            owner: LifecycleOwner
+        ): LiveData<User>
 
         /**
          * 退出登录
          */
-        fun signOut(owner: LifecycleOwner, liveData: MutableLiveData<Boolean>)
+        fun signOut()
 
         /**
          * 清除所有的 `Token` 令牌

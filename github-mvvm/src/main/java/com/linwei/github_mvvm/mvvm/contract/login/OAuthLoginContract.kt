@@ -3,7 +3,9 @@ package com.linwei.github_mvvm.mvvm.contract.login
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.github_mvvm.mvvm.model.bean.AccessToken
+import com.linwei.github_mvvm.mvvm.model.bean.User
 
 /**
  * ---------------------------------------------------------------------
@@ -38,7 +40,7 @@ interface OAuthLoginContract {
         fun requestOAuthLogin(
             owner: LifecycleOwner,
             code: String,
-            liveData: MutableLiveData<Boolean>
+            observer: LiveDataCallBack<Boolean, Boolean>
         )
 
         /**

@@ -34,11 +34,10 @@ class DynamicViewModel @Inject constructor(
     val eventUiModel: LiveData<List<EventUIModel>>
         get() = _eventUiModel
 
-
     override fun toReceivedEvent(page: Int) {
-        postUpdateStatus(StatusCode.LOADING)
-
         mLifecycleOwner?.let {
+            postUpdateStatus(StatusCode.LOADING)
+
             model.requestReceivedEvent(
                 it,
                 page,

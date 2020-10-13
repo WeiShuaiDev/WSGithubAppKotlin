@@ -1,5 +1,6 @@
 package com.linwei.github_mvvm.ext
 
+import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.view.View
@@ -7,11 +8,13 @@ import android.widget.ImageView
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
+import com.linwei.cams.ext.ctx
 import com.linwei.cams.ext.dp
 import com.linwei.cams.http.glide.GlideLoadOption
 import com.linwei.cams.manager.ImageLoaderManager
 import com.linwei.cams.utils.TimeUtils.getDate
 import com.linwei.github_mvvm.R
+import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
 import java.util.*
 
 
@@ -59,6 +62,14 @@ fun loadUserHeaderImage(imageView: ImageView, url: String, size: Point = Point(5
         .setUri(url)
     ImageLoaderManager.sInstance.imageLoader().loadImage(option, imageView, null)
 }
+
+/**
+ * 重新在新的任务栈中，启动 [UserActivity]
+ */
+fun jumpUserActivity() {
+    ctx.startActivity(Intent(ctx, UserActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+}
+
 
 
 

@@ -15,8 +15,6 @@ import com.linwei.github_mvvm.mvvm.contract.login.OAuthLoginContract
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authIDPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authInfoPref
-import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.getAuthInfoPref
-import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.getUserInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.putAuthInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.putUserInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
@@ -58,18 +56,16 @@ class LoginModel @Inject constructor(
         dataRepository.obtainRetrofitService(UserService::class.java)
     }
 
-    /**
-     * 登录状态
-     */
-    private var mUserResult: MutableLiveData<Boolean>? = null
+
+    private var mResultCallBack: LiveDataCallBack<Boolean, Boolean>? = null
 
     override fun requestAccountLogin(
         owner: LifecycleOwner,
         username: String,
         password: String,
-        liveData: MutableLiveData<Boolean>
+        observer: LiveDataCallBack<Boolean, Boolean>
     ) {
-        mUserResult = liveData
+        mResultCallBack = observer
 
         clearTokenStorage()
 
@@ -89,9 +85,9 @@ class LoginModel @Inject constructor(
     override fun requestOAuthLogin(
         owner: LifecycleOwner,
         code: String,
-        liveData: MutableLiveData<Boolean>
+        observer: LiveDataCallBack<Boolean, Boolean>
     ) {
-        mUserResult = liveData
+        mResultCallBack = observer
 
         clearTokenStorage()
 
@@ -127,6 +123,7 @@ class LoginModel @Inject constructor(
                 })
         }
     }
+
 
     override fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponse> {
         return authService.createAuthorization(AuthRequest.generate()).apply {
@@ -182,42 +179,24 @@ class LoginModel @Inject constructor(
 
                         //保存 `UserInfoBean` 用户数据
                         putUserInfoPref(data)
-                        mUserResult?.value = true
+                        mResultCallBack?.onSuccess(code, true)
                     }
                 }
 
                 override fun onFailure(code: String?, message: String?) {
                     super.onFailure(code, message)
                     clearTokenStorage()
-                    mUserResult?.value = false
+                    mResultCallBack?.onFailure(code, message)
                 }
             })
         }
     }
 
-    override fun signOut(owner: LifecycleOwner, liveData: MutableLiveData<Boolean>) {
-        mUserResult = liveData
+    override fun signOut() {
+        clearTokenStorage()
+        clearCookies()
 
-        val authResposne: AuthResponse? = getAuthInfoPref()
-        authResposne?.let {
-            requestDeleteAuthorization(owner, it.id).observe(
-                owner,
-                object : LiveDataCallBack<Any, Any>() {
-                    override fun onSuccess(code: String?, data: Any?) {
-                        super.onSuccess(code, data)
-                        clearTokenStorage()
-                        clearCookies()
 
-                        mUserResult?.value = true
-                    }
-
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        mUserResult?.value = false
-                    }
-                })
-
-        }
     }
 
     override fun clearTokenStorage() {
