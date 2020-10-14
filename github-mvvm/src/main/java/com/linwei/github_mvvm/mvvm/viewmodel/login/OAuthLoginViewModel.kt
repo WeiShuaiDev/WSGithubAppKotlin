@@ -41,18 +41,20 @@ class OAuthLoginViewModel @Inject constructor(
         }
 
         mLifecycleOwner?.let {
-            postUpdateStatus(StatusCode.LOADING)
+            postUpdateStatus(StatusCode.START)
 
             model.requestOAuthLogin(it, code!!, object : LiveDataCallBack<Boolean, Boolean>() {
                 override fun onSuccess(code: String?, data: Boolean?) {
                     super.onSuccess(code, data)
-                    postUpdateStatus(StatusCode.SUCCESS)
+                    postUpdateStatus(StatusCode.END)
                     _loginResult.value = true
                 }
 
                 override fun onFailure(code: String?, message: String?) {
                     super.onFailure(code, message)
-                    postUpdateStatus(StatusCode.FAILURE)
+                    postUpdateStatus(StatusCode.END)
+                    postMessage(obj = message)
+
                     _loginResult.value = false
                 }
             })

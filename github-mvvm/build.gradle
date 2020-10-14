@@ -128,8 +128,8 @@ dependencies {
     kapt rootProject.ext.dependencies["dagger2-compiler"]
     kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
-    //Room
-    kapt rootProject.ext.dependencies["room-compiler"]
+    ///Room
+    //kapt rootProject.ext.dependencies["room-compiler"]
 
     ///ARouter
     //implementation rootProject.ext.dependencies["arouter-api"]
@@ -157,7 +157,7 @@ dependencies {
     ///Drawer
     implementation "com.mikepenz:materialdrawer:7.0.0-rc03"
 
-    //本地存储数据调试工具
+    ///本地存储数据调试工具
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     ///Mikepenz
@@ -184,7 +184,7 @@ dependencies {
 
     implementation project(path: ':cams-mvvm')
 
-    //test
+    ///test
     implementation rootProject.ext.dependencies["appcompat"]
     implementation rootProject.ext.dependencies["constraintlayout"]
     testImplementation rootProject.ext.dependencies["junit"]

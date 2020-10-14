@@ -1,8 +1,6 @@
 package com.linwei.cams.http.callback
 
 import androidx.lifecycle.Observer
-import com.linwei.cams.R
-import com.linwei.cams.ext.string
 import com.linwei.cams.http.config.ApiStateConstant
 import com.linwei.cams.http.config.NetWorkStateCode
 import com.linwei.cams.http.model.BaseResponse

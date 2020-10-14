@@ -69,7 +69,7 @@ class DynamicModel @Inject constructor(
                                 id = 0,
                                 data = GsonUtils.toJsonString(it)
                             )
-                            userDao.insertReceivedEvent(entity)
+                            //userDao.insertReceivedEvent(entity)
 
                             val eventUIList = ArrayList<EventUIModel>()
                             it.apply {
@@ -86,8 +86,7 @@ class DynamicModel @Inject constructor(
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
                         //获取数据库中接收事件数据
-                        queryReceivedEvent(owner, 0, observer)
-
+                        //queryReceivedEvent(owner, 0, observer)
                         Timber.i(" request Http EventUIModel Data Failed~")
                     }
                 })

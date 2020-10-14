@@ -10,6 +10,8 @@ import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.*
+import com.github.nukc.stateview.StateView
+import com.github.nukc.stateview.StateView.*
 import com.linwei.cams.R
 import com.linwei.cams.ext.jumpIntent
 import java.io.UnsupportedEncodingException
@@ -305,7 +307,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
     protected open fun isPostMethod(): Boolean = true
 
     override fun initLayoutData() {
-        mStateView.showLoading()
+        mStateView?.showLoading()
         mIsFirstLoad = true
         if (isPostMethod()) {
             if (!TextUtils.isEmpty(mPostData)) {
@@ -322,21 +324,25 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
     }
 
     override fun initLayoutListener() {
-        mStateView.setOnRetryClickListener { mWebView.reload() }
+        mStateView?.onRetryClickListener = object : OnRetryClickListener {
+            override fun onRetryClick() {
+                mWebView.reload()
+            }
+        }
     }
 
     /**
      * [WebView] 加载完成，通过 [mStateView] 显示加载完成内容。
      */
     private fun loadWebViewFinished() {
-        mStateView.showContent()
+        mStateView?.showContent()
     }
 
     /**
      * [WebView] 加载失败，通过 [mStateView] 显示重新加载。
      */
     private fun loadWebViewError() {
-        mStateView.showRetry()
+        mStateView?.showRetry()
     }
 
 

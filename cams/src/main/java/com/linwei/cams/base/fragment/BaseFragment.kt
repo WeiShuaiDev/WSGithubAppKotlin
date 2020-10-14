@@ -29,7 +29,7 @@ abstract class BaseFragment() : LazeLoadFragment(),
     protected lateinit var mActivity: Activity
     protected lateinit var mContext: Context
 
-    protected lateinit var mStateView: StateView  //用于显示加载中、网络异常，空布局、内容布局
+    protected var mStateView: StateView? = null  //用于显示加载中、网络异常，空布局、内容布局
     private var mRootView: View? = null
     protected var mToast: ToastUtils? = null
 
@@ -84,10 +84,7 @@ abstract class BaseFragment() : LazeLoadFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (useStateView()) {
-            mStateView = obtainStateViewRoot()?.let { StateView.inject(it) }!!
-            mStateView.setLoadingResource(R.layout.page_loading)
-            mStateView.setEmptyResource(R.layout.page_empty)
-            mStateView.setRetryResource(R.layout.page_error)
+            mStateView = obtainStateViewRoot()?.let { StateView.inject(it) }
         }
         initToastBuilder()
         initLayoutView(mRootView)

@@ -56,7 +56,6 @@ class LoginModel @Inject constructor(
         dataRepository.obtainRetrofitService(UserService::class.java)
     }
 
-
     private var mResultCallBack: LiveDataCallBack<Boolean, Boolean>? = null
 
     override fun requestAccountLogin(
@@ -120,6 +119,11 @@ class LoginModel @Inject constructor(
                             }
                         }
                     }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        mResultCallBack?.onFailure(code, message)
+                    }
                 })
         }
     }
@@ -148,6 +152,11 @@ class LoginModel @Inject constructor(
                             }
                         }
                     }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        mResultCallBack?.onFailure(code, message)
+                    }
                 })
         }
     }
@@ -159,6 +168,11 @@ class LoginModel @Inject constructor(
                     super.onSuccess(code, data)
                     accessTokenPref = ""
                     authIDPref = ""
+                }
+
+                override fun onFailure(code: String?, message: String?) {
+                    super.onFailure(code, message)
+                    mResultCallBack?.onFailure(code, message)
                 }
             })
         }
@@ -195,8 +209,6 @@ class LoginModel @Inject constructor(
     override fun signOut() {
         clearTokenStorage()
         clearCookies()
-
-
     }
 
     override fun clearTokenStorage() {

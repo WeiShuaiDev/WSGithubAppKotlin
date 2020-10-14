@@ -112,7 +112,7 @@ open class BaseViewModel @Inject constructor(
      * @param what [Int]  消息编号
      * @param  obj [Any] 消息数据
      */
-    fun postMessage(what: Int, obj: Any) {
+    fun postMessage(what: Int = 0, obj: Any?) {
         val message: Message = Message.obtain()
         message.what = what
         message.obj = obj

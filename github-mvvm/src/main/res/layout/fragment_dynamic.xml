@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.ui.module.main.MainActivity">
 
@@ -12,15 +11,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mTopRoot"
-        style="@style/MatchAndWrap"
+        android:id="@+id/mContentRoot"
+        style="@style/MatchAndMatch"
         android:background="@android:color/transparent"
         tools:ignore="MissingConstraints">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
+            android:id="@+id/mRecyclerview"
             style="@style/MatchAndMatch" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

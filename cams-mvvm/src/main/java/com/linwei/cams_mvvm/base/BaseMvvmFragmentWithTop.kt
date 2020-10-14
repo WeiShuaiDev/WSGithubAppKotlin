@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import com.linwei.cams.di.component.AppComponent
@@ -86,6 +85,18 @@ abstract class BaseMvvmFragmentWithTop<VM : BaseViewModel, VDB : ViewDataBinding
      */
     open fun useDataBinding(): Boolean = true
 
+    /**
+     * 是否使用状态页面
+     * @return [Boolean] `false`:不使用; `true`:使用
+     */
+    override fun useStateView(): Boolean = true
+
+    /**
+     * `DataBinding` 绑定 [DataBindingComponent]
+     */
+    //open fun bindingComponent(): DataBindingComponent? = null
+
+
     override fun setupFragmentComponent(appComponent: AppComponent?) {
     }
 
@@ -145,7 +156,24 @@ abstract class BaseMvvmFragmentWithTop<VM : BaseViewModel, VDB : ViewDataBinding
      */
     protected open fun receiveStatusLiveEvent(code: @StatusCode Int) {
         when (code) {
-            StatusCode.LOADING -> showLoading()
+            StatusCode.START -> {
+                showLoading()
+            }
+            StatusCode.LOADING -> {
+                mStateView?.showLoading()
+            }
+            StatusCode.SUCCESS -> {
+                mStateView?.showContent()
+            }
+            StatusCode.FAILURE -> {
+                mStateView?.showEmpty()
+            }
+            StatusCode.ERROR -> {
+                mStateView?.showRetry()
+            }
+            StatusCode.END -> {
+                hideLoading()
+            }
             else -> hideLoading()
         }
     }

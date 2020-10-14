@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,7 +13,6 @@
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         style="@style/whiteCardTheme">
 
         <RelativeLayout
@@ -20,23 +20,25 @@
             android:padding="@dimen/dp_10">
 
             <ImageView
-                android:id="@+id/event_user_img"
+                android:id="@+id/mEventUserImg"
                 android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"/>
+                android:layout_height="@dimen/dp_30"
+                app:userHeaderUrl="@{eventUIModel.image}"
+                tools:ignore="ContentDescription" />
 
             <TextView
-                android:id="@+id/event_user_name"
+                android:id="@+id/mEventUserName"
                 style="@style/WrapAndWrap"
-                android:layout_alignBaseline="@+id/event_user_img"
+                android:layout_alignBaseline="@+id/mEventUserImg"
                 android:layout_marginStart="@dimen/dp_10"
-                android:layout_toEndOf="@+id/event_user_img"
+                android:layout_toEndOf="@+id/mEventUserImg"
                 android:singleLine="true"
                 android:text="@{eventUIModel.username}"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/sp_14" />
 
             <TextView
-                android:id="@+id/event_time"
+                android:id="@+id/mEventTime"
                 style="@style/WrapAndWrap"
                 android:layout_alignParentEnd="true"
                 android:singleLine="true"
@@ -45,9 +47,9 @@
                 android:textSize="@dimen/sp_14" />
 
             <TextView
-                android:id="@+id/event_action"
+                android:id="@+id/mEventAction"
                 style="@style/WrapAndWrap"
-                android:layout_below="@+id/event_user_img"
+                android:layout_below="@+id/mEventUserImg"
                 android:layout_margin="@dimen/dp_5"
                 android:text="@{eventUIModel.action}"
                 android:textColor="@color/textColorPrimary"
@@ -55,15 +57,16 @@
 
 
             <TextView
-                android:id="@+id/event_des"
+                android:id="@+id/mEventDes"
                 style="@style/WrapAndWrap"
-                android:layout_below="@+id/event_action"
+                android:layout_below="@+id/mEventAction"
                 android:layout_margin="@dimen/dp_5"
                 android:maxLines="3"
                 android:text="@{eventUIModel.des}"
                 android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/sp_14"
                 android:visibility="@{eventUIModel.des.length() > 0 ? View.VISIBLE : View.GONE}" />
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </layout>

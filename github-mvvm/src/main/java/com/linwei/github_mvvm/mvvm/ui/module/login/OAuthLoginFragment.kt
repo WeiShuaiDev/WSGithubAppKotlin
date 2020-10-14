@@ -66,7 +66,7 @@ class OAuthLoginFragment :
      */
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
-        val settings: WebSettings? = oauth_webview.settings
+        val settings: WebSettings? = mOauthWebview.settings
         settings?.javaScriptEnabled = true
         settings?.loadWithOverviewMode = true
         settings?.builtInZoomControls = false
@@ -81,8 +81,8 @@ class OAuthLoginFragment :
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                if (oauth_webview_loadingBar != null)
-                    oauth_webview_loadingBar.visibility = View.GONE
+                if (mOauthWebViewLoadingBar != null)
+                    mOauthWebViewLoadingBar.visibility = View.GONE
             }
 
             override fun shouldOverrideUrlLoading(
@@ -100,13 +100,13 @@ class OAuthLoginFragment :
             }
         }
 
-        oauth_webview.webViewClient = webViewClient
+        mOauthWebview.webViewClient = webViewClient
 
         val url: String = "https://github.com/login/oauth/authorize?" +
                 "client_id=${BuildConfig.CLIENT_ID}&" +
                 "state=app&redirect_uri=gsygithubapp://authed";
 
-        oauth_webview.loadUrl(url)
+        mOauthWebview.loadUrl(url)
     }
 
     override fun initLayoutData() {

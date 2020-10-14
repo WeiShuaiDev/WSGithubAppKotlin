@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchAndMatch"
+    android:background="@color/colorGlobalWhite">
+
+    <ProgressBar
+        android:id="@+id/mProgress"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/progress_circle_loading"
+        android:maxWidth="@dimen/dp_60"
+        android:maxHeight="@dimen/dp_60"
+        android:minWidth="@dimen/dp_25"
+        android:minHeight="@dimen/dp_25" />
+
+    <TextView
+        style="@style/tv_16_style"
+        android:layout_below="@id/mProgress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/loading" />
+
+</RelativeLayout>

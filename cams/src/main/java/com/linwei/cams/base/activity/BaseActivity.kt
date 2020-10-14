@@ -44,7 +44,7 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
     protected lateinit var mContext: Context
     protected var mToast: ToastUtils? = null
 
-    protected lateinit var mStateView: StateView
+    protected var mStateView: StateView? = null
     protected lateinit var mPermissionListener: OnPermissionListener
 
     @Inject
@@ -86,10 +86,7 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
         setContentView(bindingContentView(savedInstanceState, contentView) ?: contentView)
 
         if (useStateView()) {
-            mStateView = obtainStateViewRoot()?.let { StateView.inject(it) }!!
-            mStateView.setLoadingResource(R.layout.page_loading)
-            mStateView.setEmptyResource(R.layout.page_empty)
-            mStateView.setRetryResource(R.layout.page_error)
+            mStateView = obtainStateViewRoot()?.let { StateView.inject(it) }
         }
 
         if (enableSlideClose()) {

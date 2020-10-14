@@ -57,7 +57,6 @@ class DataMvvmRepository @Inject constructor() : DataRepository(), IDataMvvmRepo
                 roomDatabase
             )
         }
-
         return roomDatabase as T
     }
 }

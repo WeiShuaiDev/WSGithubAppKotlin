@@ -22,7 +22,6 @@ class FragmentPagerViewAdapter(
         return fragmentList.size
     }
 
-
     override fun getItem(position: Int): Fragment {
         return fragmentList[position]
     }

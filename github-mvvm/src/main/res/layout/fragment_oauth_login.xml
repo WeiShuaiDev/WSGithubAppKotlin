@@ -8,11 +8,11 @@
     tools:ignore="MissingConstraints">
 
     <WebView
-        android:id="@+id/oauth_webview"
+        android:id="@+id/mOauthWebview"
         style="@style/MatchAndMatch" />
 
     <ProgressBar
-        android:id="@+id/oauth_webview_loadingBar"
+        android:id="@+id/mOauthWebViewLoadingBar"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
         app:layout_constraintBottom_toBottomOf="parent"

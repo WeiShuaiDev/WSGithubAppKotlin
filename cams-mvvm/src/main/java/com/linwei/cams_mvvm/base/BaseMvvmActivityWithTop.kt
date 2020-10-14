@@ -6,7 +6,6 @@ import android.os.Message
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import com.linwei.cams.base.activity.BaseActivityWithTop
@@ -36,7 +35,8 @@ import javax.inject.Inject
  * @Description:  `MVVM`架构 `Activity` 导航栏基类
  *-----------------------------------------------------------------------
  */
-abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding> : BaseActivityWithTop(),
+abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding> :
+    BaseActivityWithTop(),
     HasAndroidInjector, ILoading,
     IView<VM> {
 
@@ -72,10 +72,22 @@ abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding
     }
 
     /**
-     * 是否使用 `Databinding` 布局
+     * 是否使用 `DataBinding` 布局
      * @return [Boolean] true:使用；false:不使用
      */
     open fun useDataBinding(): Boolean = true
+
+
+    /**
+     * 是否使用状态页面
+     * @return [Boolean] `false`:不使用; `true`:使用
+     */
+    override fun useStateView(): Boolean = true
+
+    /**
+     * `DataBinding` 绑定 [DataBindingComponent]
+     */
+    //open fun bindingComponent(): DataBindingComponent? = null
 
     override fun setUpActivityComponent(appComponent: AppComponent?) {
     }
@@ -137,7 +149,24 @@ abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding
      */
     protected open fun receiveStatusLiveEvent(code: @StatusCode Int) {
         when (code) {
-            StatusCode.LOADING -> showLoading()
+            StatusCode.START -> {
+                showLoading()
+            }
+            StatusCode.LOADING -> {
+                mStateView?.showLoading()
+            }
+            StatusCode.SUCCESS -> {
+                mStateView?.showContent()
+            }
+            StatusCode.FAILURE -> {
+                mStateView?.showEmpty()
+            }
+            StatusCode.ERROR -> {
+                mStateView?.showRetry()
+            }
+            StatusCode.END -> {
+                hideLoading()
+            }
             else -> hideLoading()
         }
     }
