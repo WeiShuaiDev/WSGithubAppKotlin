@@ -2,8 +2,9 @@ package com.linwei.github_mvvm.mvvm.model.bean
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class CommitGitInfo {
+class CommitGitInfo : Serializable {
 
     var message: String? = null
     var url: String? = null

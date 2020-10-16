@@ -1,10 +1,11 @@
 package com.linwei.github_mvvm.mvvm.model.bean
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 import java.util.Date
 
-class Event {
+class Event : Serializable {
     var id: String? = null
     var type: String? = null
     var actor: User? = null

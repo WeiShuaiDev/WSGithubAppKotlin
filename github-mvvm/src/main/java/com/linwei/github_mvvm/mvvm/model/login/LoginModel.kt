@@ -56,13 +56,13 @@ class LoginModel @Inject constructor(
         dataRepository.obtainRetrofitService(UserService::class.java)
     }
 
-    private var mResultCallBack: LiveDataCallBack<Boolean, Boolean>? = null
+    private var mResultCallBack: LiveDataCallBack<Boolean>? = null
 
     override fun requestAccountLogin(
         owner: LifecycleOwner,
         username: String,
         password: String,
-        observer: LiveDataCallBack<Boolean, Boolean>
+        observer: LiveDataCallBack<Boolean>
     ) {
         mResultCallBack = observer
 
@@ -84,7 +84,7 @@ class LoginModel @Inject constructor(
     override fun requestOAuthLogin(
         owner: LifecycleOwner,
         code: String,
-        observer: LiveDataCallBack<Boolean, Boolean>
+        observer: LiveDataCallBack<Boolean>
     ) {
         mResultCallBack = observer
 
@@ -104,7 +104,7 @@ class LoginModel @Inject constructor(
         ).apply {
             observe(
                 owner,
-                object : LiveDataCallBack<AccessToken, AccessToken>() {
+                object : LiveDataCallBack<AccessToken>() {
                     override fun onSuccess(code: String?, data: AccessToken?) {
                         super.onSuccess(code, data)
                         data?.let {
@@ -133,7 +133,7 @@ class LoginModel @Inject constructor(
         return authService.createAuthorization(AuthRequest.generate()).apply {
             observe(
                 owner,
-                object : LiveDataCallBack<AuthResponse, AuthResponse>() {
+                object : LiveDataCallBack<AuthResponse>() {
                     override fun onSuccess(code: String?, data: AuthResponse?) {
                         super.onSuccess(code, data)
                         data?.let {
@@ -163,7 +163,7 @@ class LoginModel @Inject constructor(
 
     override fun requestDeleteAuthorization(owner: LifecycleOwner, id: Int): LiveData<Any> {
         return authService.deleteAuthorization(id).apply {
-            observe(owner, object : LiveDataCallBack<Any, Any>() {
+            observe(owner, object : LiveDataCallBack<Any>() {
                 override fun onSuccess(code: String?, data: Any?) {
                     super.onSuccess(code, data)
                     accessTokenPref = ""
@@ -180,7 +180,7 @@ class LoginModel @Inject constructor(
 
     override fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<User> {
         return userService.getAuthenticatedUserInfo(true).apply {
-            observe(owner, object : LiveDataCallBack<User, User>() {
+            observe(owner, object : LiveDataCallBack<User>() {
                 override fun onSuccess(code: String?, data: User?) {
                     super.onSuccess(code, data)
                     data?.let {

@@ -2,11 +2,15 @@ package com.linwei.github_mvvm.global
 
 import android.app.Application
 import android.content.Context
+import android.net.Uri
 import androidx.fragment.app.FragmentManager
 import com.linwei.cams.base.global.ConfigModule
 import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.di.module.ClientModule
 import com.linwei.cams.di.module.GlobalConfigModule
+import com.linwei.cams.ext.isNotNullOrEmpty
+import com.linwei.cams.ext.otherwise
+import com.linwei.cams.ext.yes
 import com.linwei.cams.http.GlobalHttpHandler
 import com.linwei.cams.http.adapter.LiveDataCallAdapterFactory
 import com.linwei.cams.utils.FileUtils
@@ -16,6 +20,8 @@ import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.isLoginState
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
 import com.linwei.github_mvvm.mvvm.model.api.Api
+import com.linwei.github_mvvm.mvvm.model.bean.Page
+import com.linwei.github_mvvm.utils.GsonUtils
 import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -85,17 +91,49 @@ class GlobalConfiguration : ConfigModule {
                     response: Response
                 ): Response {
                     val mediaType: MediaType? = response.body?.contentType()
-                    // 请求响应状态码
-                    //val code: String = response.code.toString()
-                    // 请求响应状态信息
-                    //val message: String = response.message
+                    //获取请求分页数据
+                    val linkStr: String? = response.header("Link", "")
 
-                    return response.newBuilder()
-                        .body(httpResult.toResponseBody(mediaType))
-                        .build()
+                    val page = Page<Any>()
+
+                    linkStr.isNotNullOrEmpty().yes {
+                        val links: List<String> = linkStr!!.split(",")
+                        links.forEach {
+                            when {
+                                it.contains("prev") -> {
+                                    page.prev = parseNumber(it)
+                                }
+                                it.contains("next") -> {
+                                    page.next = parseNumber(it)
+                                }
+                                it.contains("last") -> {
+                                    page.last = parseNumber(it)
+                                }
+                                it.contains("first") -> {
+                                    page.first = parseNumber(it)
+                                }
+                            }
+                        }
+                        if (GsonUtils.isJsonArrayData(httpResult)) {
+                            page.result =
+                                GsonUtils.parserJsonToArrayBeans(httpResult, Any::class.java)
+                        } else {
+                            page.result = GsonUtils.parserJsonToBean(httpResult, Any::class.java)
+                        }
+
+                        return response.newBuilder()
+                            .body(GsonUtils.toJsonString(page).toResponseBody(mediaType))
+                            .build()
+
+                    }.otherwise {
+                        return response.newBuilder()
+                            .body(httpResult.toResponseBody(mediaType))
+                            .build()
+                    }
                 }
             })
     }
+
 
     override fun injectAppLifecycle(context: Context, lifecycles: MutableList<AppLifecycles>) {
         lifecycles.add(AppLifecycleImpl())
@@ -113,5 +151,27 @@ class GlobalConfiguration : ConfigModule {
         lifecycles: MutableList<FragmentManager.FragmentLifecycleCallbacks>
     ) {
         lifecycles.add(FragmentLifecycleImpl())
+    }
+
+    /**
+     * 解析 [item] 字符串数据，获取分页页码信息 [Int]
+     * @param item [String]
+     * @return [Int]
+     */
+    private fun parseNumber(item: String?): Int {
+        if (item == null) {
+            return -1
+        }
+        val startFlag = "<"
+        val endFlag = ">"
+        val startIndex: Int = item.indexOf(startFlag)
+        val endStart: Int = item.indexOf(endFlag)
+        if (startIndex < 0 || endStart < 0) {
+            return -1
+        }
+        val startStart: Int = startIndex + startFlag.length
+        val url: String = item.substring(startStart, endStart)
+        val value: String? = Uri.parse(url).getQueryParameter("page")
+        return value?.toInt() ?: -1
     }
 }

@@ -3,12 +3,11 @@ package com.linwei.github_mvvm.mvvm.contract.main
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.github_mvvm.mvvm.model.bean.Event
+import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
 import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
-import java.util.ArrayList
 
 /**
  * ---------------------------------------------------------------------
@@ -45,8 +44,8 @@ interface DynamicContract {
         fun requestReceivedEvent(
             owner: LifecycleOwner,
             page: Int,
-            observer: LiveDataCallBack<List<EventUIModel>, List<EventUIModel>>
-        ): LiveData<List<Event>>
+            observer: LiveDataCallBack<Page<List<Event>>>
+        ): LiveData<Page<List<Event>>>
 
         /**
          * 查询数据库用户接收到的事件数据
@@ -57,7 +56,7 @@ interface DynamicContract {
         fun queryReceivedEvent(
             owner: LifecycleOwner,
             id: Int,
-            observer: LiveDataCallBack<List<EventUIModel>, List<EventUIModel>>
+            observer: LiveDataCallBack<Page<List<Event>>>
         ): LiveData<ReceivedEventEntity>
     }
 }

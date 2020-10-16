@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import com.chad.library.adapter.base.module.LoadMoreModuleConfig.defLoadMoreView
 import com.linwei.cams.base.delegate.AppDelegate
 import com.linwei.cams.base.lifecycle.AppLifecycles
 import com.linwei.cams.http.glide.loader.GlideImageLoader
@@ -14,11 +16,13 @@ import com.linwei.github_mvvm.BuildConfig
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.ext.loadUserHeaderImage
 import com.linwei.github_mvvm.mvvm.factory.IconFontFactory
+import com.linwei.github_mvvm.mvvm.ui.view.RvLoadMoreView
 import com.mikepenz.iconics.Iconics
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import timber.log.Timber
 import timber.log.Timber.DebugTree
+
 
 /**
  * ---------------------------------------------------------------------
@@ -37,12 +41,16 @@ class AppLifecycleImpl : AppLifecycles {
 
     override fun onCreate(application: Application, appDelegate: AppDelegate?) {
         Timber.i("AppLifecycleImpl to onCreate!")
-
+        //ImageLoaderManager 初始化
         initImageLoaderManager(application)
+        //MaterialDrawer 初始化
         initMaterialDrawer()
+        //Iconics 初始化
         initIconics(application)
+        //Timber 初始化
         initLog()
-
+        //RecyclerView 配置初始化
+        initRVConfig()
     }
 
     /**
@@ -52,19 +60,11 @@ class AppLifecycleImpl : AppLifecycles {
         DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
 
             override fun placeholder(ctx: Context): Drawable {
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ctx.getDrawable(R.mipmap.ic_launcher)!!
-                } else {
-                    ctx.resources.getDrawable(R.mipmap.ic_launcher)
-                }
+                return ContextCompat.getDrawable(ctx, R.mipmap.ic_launcher)!!
             }
 
             override fun placeholder(ctx: Context, tag: String?): Drawable {
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ctx.getDrawable(R.mipmap.ic_launcher)!!
-                } else {
-                    ctx.resources.getDrawable(R.mipmap.ic_launcher)
-                }
+                return ContextCompat.getDrawable(ctx, R.mipmap.ic_launcher)!!
             }
 
             override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable, tag: String?) {
@@ -75,7 +75,7 @@ class AppLifecycleImpl : AppLifecycles {
 
     /**
      * 初始化图片加载框架
-     *
+     * @param application [Application]
      */
     private fun initImageLoaderManager(application: Application) {
         ImageLoaderManager.initialize(GlideImageLoader(application))
@@ -100,6 +100,14 @@ class AppLifecycleImpl : AppLifecycles {
     private fun initIconics(application: Application) {
         Iconics.init(application)
         Iconics.registerFont(IconFontFactory)
+    }
+
+    /**
+     * 初始化 `RecyclerView`
+     */
+    private fun initRVConfig() {
+        // 在 Application 中配置全局自定义的 LoadMoreView
+        defLoadMoreView = RvLoadMoreView()
     }
 
     override fun onTerminate(application: Application) {

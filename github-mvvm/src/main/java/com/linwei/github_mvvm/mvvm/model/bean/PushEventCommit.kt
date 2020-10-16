@@ -1,6 +1,8 @@
 package com.linwei.github_mvvm.mvvm.model.bean
 
-class PushEventCommit {
+import java.io.Serializable
+
+class PushEventCommit : Serializable {
 
     var sha: String? = null
     //email&name

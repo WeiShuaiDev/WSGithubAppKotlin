@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchAndMatch"
+    tools:ignore="MissingDefaultResource">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:gravity="center"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            style="@style/WrapAndWrap"
+            app:indicatorColor="@color/colorPrimary"
+            app:indicatorName="SquareSpinIndicator" />
+
+        <TextView
+            style="@style/tv_14_style"
+            android:text="@string/refreshing" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

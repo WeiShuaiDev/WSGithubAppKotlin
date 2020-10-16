@@ -2,11 +2,12 @@ package com.linwei.github_mvvm.mvvm.model.bean
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 import java.util.ArrayList
 
 
-class EventPayload {
+class EventPayload : Serializable {
 
     //PushEvent
     @SerializedName("push_id")

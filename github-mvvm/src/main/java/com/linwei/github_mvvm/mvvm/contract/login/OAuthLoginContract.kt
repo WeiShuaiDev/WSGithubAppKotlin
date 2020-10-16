@@ -40,7 +40,7 @@ interface OAuthLoginContract {
         fun requestOAuthLogin(
             owner: LifecycleOwner,
             code: String,
-            observer: LiveDataCallBack<Boolean, Boolean>
+            observer: LiveDataCallBack<Boolean>
         )
 
         /**

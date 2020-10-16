@@ -2,9 +2,7 @@ package com.linwei.github_mvvm.mvvm.model.api.service
 
 import androidx.lifecycle.LiveData
 import com.linwei.github_mvvm.mvvm.model.api.Api
-import com.linwei.github_mvvm.mvvm.model.bean.Event
-import com.linwei.github_mvvm.mvvm.model.bean.User
-import com.linwei.github_mvvm.mvvm.model.bean.UserInfoRequestModel
+import com.linwei.github_mvvm.mvvm.model.bean.*
 import okhttp3.ResponseBody
 import retrofit2.http.*
 import java.util.ArrayList
@@ -134,7 +132,7 @@ interface UserService {
         @Path("user") user: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<List<Event>>
+    ): LiveData<Page<List<Event>>>
 
     /**
      * 列出用户已收到的事件

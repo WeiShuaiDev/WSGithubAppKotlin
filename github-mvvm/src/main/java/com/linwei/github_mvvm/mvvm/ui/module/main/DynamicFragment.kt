@@ -58,10 +58,14 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
      */
     private fun initReceivedEventRV() {
         mReceivedEventAdapter = ReceivedEventAdapter(mutableListOf())
+        mReceivedEventAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+        mReceivedEventAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
         mRecyclerview.apply {
             layoutManager = LinearLayoutManager(mContext)
             adapter = mReceivedEventAdapter
         }
+
+
     }
 
     override fun initLayoutListener() {
@@ -73,6 +77,16 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
 
         mReceivedEventAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
             Timber.i("ReceivedEvent position${position}")
+        }
+
+        mReceivedEventAdapter.loadMoreModule.setOnLoadMoreListener {
+            System.out.println("加载更多数据~~")
+        }
+
+        mReceivedEventAdapter.upFetchModule.setOnUpFetchListener {
+            System.out.println("刷新更多数据~~")
+            mReceivedEventAdapter.loadMoreModule.isEnableLoadMore = false
+
         }
     }
 

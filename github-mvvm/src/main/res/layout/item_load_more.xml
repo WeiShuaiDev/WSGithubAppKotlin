@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_60"
+    tools:ignore="MissingDefaultResource">
+
+    <LinearLayout
+        android:id="@+id/load_more_loading_view"
+        style="@style/MatchAndMatch"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            style="@style/WrapAndWrap"
+            app:indicatorColor="@color/colorPrimary"
+            app:indicatorName="PacmanIndicator" />
+
+        <TextView
+            style="@style/tv_14_style"
+            android:text="@string/loading" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/load_more_load_fail_view"
+        style="@style/MatchAndMatch"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_prompt"
+            style="@style/tv_14_style"
+            android:layout_gravity="center"
+            android:text="@string/brvah_load_failed" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/load_more_load_complete_view"
+        style="@style/MatchAndMatch"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/tv_14_style"
+            android:layout_gravity="center"
+            android:text="戳我，还有更多惊喜内容👇" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/load_more_load_end_view"
+        style="@style/MatchAndMatch"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/tv_14_style"
+            android:layout_gravity="center"
+            android:text="@string/brvah_load_end" />
+    </FrameLayout>
+
+</FrameLayout>

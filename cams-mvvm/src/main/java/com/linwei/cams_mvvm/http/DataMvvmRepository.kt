@@ -39,7 +39,6 @@ class DataMvvmRepository @Inject constructor() : DataRepository(), IDataMvvmRepo
             mDataBaseCache.get(
                 databaseClass.canonicalName ?: databaseClass.simpleName
             )
-
         if (roomDatabase == null) {
             val builder: RoomDatabase.Builder<T> =
                 Room.databaseBuilder(

@@ -46,7 +46,7 @@ interface AccountLoginContract {
             owner: LifecycleOwner,
             username: String,
             password: String,
-            observer: LiveDataCallBack<Boolean, Boolean>
+            observer: LiveDataCallBack<Boolean>
         )
 
         /**

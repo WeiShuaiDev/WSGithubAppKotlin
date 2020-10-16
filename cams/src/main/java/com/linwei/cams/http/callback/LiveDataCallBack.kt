@@ -15,27 +15,23 @@ import com.linwei.cams.http.model.BaseResponse
  *              通过使用 `LiveDataCallBack` 回调接口，处理网络请求。
  *-----------------------------------------------------------------------
  */
-abstract class LiveDataCallBack<T, V> : Observer<T> {
+abstract class LiveDataCallBack<T> : Observer<T> {
     @Suppress("UNCHECKED_CAST")
     override fun onChanged(t: T) {
-        //if (t != null) {
-            if (t is BaseResponse<*>) {
-                val data: BaseResponse<*> = t
-                if (!NetWorkStateCode().isExistByCode(data.code)) {
-                    if (ApiStateConstant.REQUEST_SUCCESS == data.code) {
-                        onSuccess(data.code, data.result as V?)
-                    } else {
-                        onFailure(data.code, data.message)
-                    }
+        if (t is BaseResponse<*>) {
+            val data: BaseResponse<*> = t
+            if (!NetWorkStateCode().isExistByCode(data.code)) {
+                if (ApiStateConstant.REQUEST_SUCCESS == data.code) {
+                    onSuccess(data.code, t)
                 } else {
                     onFailure(data.code, data.message)
                 }
             } else {
-                onSuccess(ApiStateConstant.REQUEST_SUCCESS, t as V?)
+                onFailure(data.code, data.message)
             }
-        //} else {
-        //    onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
-        //}
+        } else {
+            onSuccess(ApiStateConstant.REQUEST_SUCCESS, t)
+        }
     }
 
 
@@ -44,7 +40,7 @@ abstract class LiveDataCallBack<T, V> : Observer<T> {
      * @param code [String] 成功状态码
      * @param data [V] 响应数据
      */
-    open fun onSuccess(code: String?, data: V?) {
+    open fun onSuccess(code: String?, data: T?) {
 
     }
 

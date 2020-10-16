@@ -170,10 +170,10 @@ ext {
             //StateView
             "stateview"                 : "com.github.nukc.stateview:kotlin:${version["stateviewVersion"]}",
             "stateview_animation"       : "com.github.nukc.stateview:animations:1.0.2",
+            //ParallaxBackLayout
             "parallaxbacklayout"        : "com.github.anzewei:parallaxbacklayout:${version["parallaxbacklayoutVersion"]}",
             //Animation
             "avi"                       : "com.wang.avi:library:${version["aviVersion"]}",
-
 
             /**
              * ---------------------------------------------Test------------------------------------

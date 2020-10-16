@@ -3,6 +3,8 @@ package com.linwei.github_mvvm.mvvm.ui.adapter
 import android.animation.Animator
 import androidx.databinding.DataBindingUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
+import com.chad.library.adapter.base.module.UpFetchModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.LayoutEventItemBinding
@@ -19,7 +21,8 @@ import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
  *-----------------------------------------------------------------------
  */
 class ReceivedEventAdapter(data: MutableList<EventUIModel>) :
-    BaseQuickAdapter<EventUIModel, BaseViewHolder>(R.layout.layout_event_item, data) {
+    BaseQuickAdapter<EventUIModel, BaseViewHolder>(R.layout.layout_event_item, data),
+    LoadMoreModule, UpFetchModule {
 
     companion object {
         private const val COUNT: Int = 10

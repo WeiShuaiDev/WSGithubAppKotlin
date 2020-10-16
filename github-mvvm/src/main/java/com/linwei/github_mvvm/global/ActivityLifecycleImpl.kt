@@ -23,7 +23,6 @@ class ActivityLifecycleImpl : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         Timber.i("ActivityLifecycleImpl to onActivityCreated!")
-
     }
 
     override fun onActivityResumed(activity: Activity) {

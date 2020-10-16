@@ -10,8 +10,12 @@ import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
+import com.linwei.github_mvvm.mvvm.model.bean.Event
+import com.linwei.github_mvvm.mvvm.model.bean.Page
+import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
 import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
 import com.linwei.github_mvvm.mvvm.model.main.DynamicModel
+import java.util.ArrayList
 import javax.inject.Inject
 
 /**
@@ -35,18 +39,31 @@ class DynamicViewModel @Inject constructor(
     val eventUiModel: LiveData<List<EventUIModel>>
         get() = _eventUiModel
 
+    private var _next: Int = -1
+
     override fun toReceivedEvent(page: Int) {
         mLifecycleOwner?.let {
             postUpdateStatus(StatusCode.LOADING)
+
             model.requestReceivedEvent(
                 it,
                 page,
-                object : LiveDataCallBack<List<EventUIModel>, List<EventUIModel>>() {
-                    override fun onSuccess(code: String?, data: List<EventUIModel>?) {
+                object : LiveDataCallBack<Page<List<Event>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<Event>>?) {
                         super.onSuccess(code, data)
-                        data.isNotNullOrSize().yes {
+
+                        val eventUIList = ArrayList<EventUIModel>()
+                        data?.apply {
+                            result?.let {
+                                for (event: Event in it) {
+                                    eventUIList.add(EventConversion.eventToEventUIModel(event))
+                                }
+                            }
+                        }
+
+                        eventUIList.isNotNullOrSize().yes {
                             postUpdateStatus(StatusCode.SUCCESS)
-                            _eventUiModel.value = data
+                            _eventUiModel.value = eventUIList
                         }.otherwise {
                             postUpdateStatus(StatusCode.FAILURE)
                         }
@@ -54,8 +71,9 @@ class DynamicViewModel @Inject constructor(
 
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
-                        postUpdateStatus(StatusCode.ERROR)
                         _eventUiModel.value = null
+
+                        postUpdateStatus(StatusCode.ERROR)
                     }
                 })
         }

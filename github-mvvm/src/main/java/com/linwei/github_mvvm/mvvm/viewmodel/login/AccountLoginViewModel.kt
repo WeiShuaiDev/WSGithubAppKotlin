@@ -77,7 +77,7 @@ class AccountLoginViewModel @Inject constructor(
                 it,
                 username!!,
                 password!!,
-                object : LiveDataCallBack<Boolean, Boolean>() {
+                object : LiveDataCallBack<Boolean>() {
                     override fun onSuccess(code: String?, data: Boolean?) {
                         super.onSuccess(code, data)
                         postUpdateStatus(StatusCode.END)

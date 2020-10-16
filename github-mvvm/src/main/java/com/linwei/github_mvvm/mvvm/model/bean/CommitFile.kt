@@ -2,9 +2,10 @@ package com.linwei.github_mvvm.mvvm.model.bean
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
-class CommitFile {
+class CommitFile : Serializable {
 
     var sha: String? = null
     @SerializedName("filename")

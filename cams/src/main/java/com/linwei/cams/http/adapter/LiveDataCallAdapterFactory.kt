@@ -1,7 +1,6 @@
 package com.linwei.cams.http.adapter
 
 import androidx.lifecycle.LiveData
-import com.linwei.cams.http.model.BaseResponse
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
@@ -26,6 +25,7 @@ class LiveDataCallAdapterFactory : CallAdapter.Factory() {
     ): CallAdapter<*, *>? {
 
         if (getRawType(returnType) != LiveData::class.java) return null
+
         //获取响应返回值泛型信息，并对类型进行判断
         val observableType: Type = getParameterUpperBound(0, returnType as ParameterizedType)
         val rawType: Class<*> = getRawType(observableType)

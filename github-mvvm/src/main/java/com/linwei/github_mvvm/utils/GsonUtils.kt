@@ -5,6 +5,9 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
 import com.linwei.cams.ext.isNotNullOrEmpty
+import org.json.JSONArray
+import org.json.JSONObject
+import org.json.JSONTokener
 import java.util.*
 
 /**
@@ -66,6 +69,19 @@ object GsonUtils {
             throw RuntimeException("parserJsonToArrayBean is not object")
         }
         return Gson().fromJson(jsonElement, clazzBean)
+    }
+
+    /**
+     * @param jsonString [String] Json数据
+     * @return  [Boolean] true：JsonArray数据； false:JsonObject数据
+     */
+    fun isJsonArrayData(jsonString: String?): Boolean {
+        val type: Any = JSONTokener(jsonString).nextValue()
+        return if (type is JSONArray) {
+            true
+        } else if (type is JSONObject) {
+            false
+        } else false
     }
 
 

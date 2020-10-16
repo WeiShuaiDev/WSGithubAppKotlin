@@ -1,6 +1,8 @@
 package com.linwei.github_mvvm.mvvm.model.bean
 
-class TrendingRepoModel {
+import java.io.Serializable
+
+class TrendingRepoModel: Serializable {
     var fullName: String = ""
     var url: String = ""
     var description: String = ""
