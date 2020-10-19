@@ -37,7 +37,7 @@ import javax.inject.Inject
  * @Description:普通基类 [BaseActivity]
  *-----------------------------------------------------------------------
  */
-abstract class BaseActivity() : AppCompatActivity(), IActivity {
+abstract class BaseActivity : AppCompatActivity(), IActivity {
     private var currentActivity: Activity? = null
     private var activities: MutableList<Activity> = mutableListOf()  //对所有activity进行管理
 
@@ -272,17 +272,17 @@ abstract class BaseActivity() : AppCompatActivity(), IActivity {
     /**
      * 初始化控件
      */
-    protected abstract fun initLayoutView(savedInstanceState: Bundle?);
+    protected abstract fun initLayoutView(savedInstanceState: Bundle?)
 
     /**
      * 初始化数据
      */
-    protected abstract fun initLayoutData();
+    protected abstract fun initLayoutData()
 
     /**
      * 初始化事件
      */
-    protected abstract fun initLayoutListener();
+    protected abstract fun initLayoutListener()
 
     /**
      * 界面内容布局 `ResId`

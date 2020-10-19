@@ -6,11 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.github.nukc.stateview.StateView
 import com.linwei.cams.ext.isNotNullOrSize
+import com.linwei.cams.ext.otherwise
 import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentDynamicBinding
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
+import com.linwei.github_mvvm.mvvm.model.bean.Event
+import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.ui.adapter.ReceivedEventAdapter
 import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
 import kotlinx.android.synthetic.main.fragment_dynamic.*
@@ -34,6 +37,10 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
 
     override fun provideContentViewId(): Int = R.layout.fragment_dynamic
 
+    private var mPage: Page<List<Event>>? = null
+
+    private var mPageCode: Int = 1
+
     override fun bindViewModel() {
         mViewDataBinding?.let {
             it.viewModel = mViewModel
@@ -46,9 +53,28 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
     }
 
     override fun initLayoutData() {
-        mViewModel?.eventUiModel?.observe(viewLifecycleOwner, Observer {
-            it.isNotNullOrSize().yes {
-                mReceivedEventAdapter.setNewInstance(it.toMutableList())
+        mViewModel?.page?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                mPage = it
+                mPageCode = it.next
+                it.result.isNotNullOrSize().yes {
+
+                    if (it.prev == -1) {
+                        mReceivedEventAdapter.setNewInstance(
+                            mViewModel?.eventConversionByEventUIModel(it)
+                        )
+                    } else {
+                        mReceivedEventAdapter.addData(mViewModel?.eventConversionByEventUIModel(it)!!)
+                    }
+
+                    (it.next == it.last).yes {
+                        mReceivedEventAdapter.loadMoreModule.loadMoreEnd()
+                    }.otherwise {
+                        mReceivedEventAdapter.loadMoreModule.loadMoreComplete()
+                    }
+                }
+                if (mSwipeLayout.isRefreshing)
+                    mSwipeLayout.isRefreshing = false
             }
         })
     }
@@ -64,37 +90,41 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
             layoutManager = LinearLayoutManager(mContext)
             adapter = mReceivedEventAdapter
         }
-
-
     }
 
     override fun initLayoutListener() {
         mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
             override fun onRetryClick() {
-                mViewModel?.toReceivedEvent(1)
+                mPageCode = 1
+                reloadData()
             }
         }
 
         mReceivedEventAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
             Timber.i("ReceivedEvent position${position}")
+
         }
 
         mReceivedEventAdapter.loadMoreModule.setOnLoadMoreListener {
-            System.out.println("加载更多数据~~")
+            Timber.i("ReceivedEvent 加载更多数据~~")
+            mViewModel?.toReceivedEvent(mPageCode)
         }
 
-        mReceivedEventAdapter.upFetchModule.setOnUpFetchListener {
-            System.out.println("刷新更多数据~~")
+        mSwipeLayout.setOnRefreshListener {
+            Timber.i("ReceivedEvent 刷新更多数据~~")
             mReceivedEventAdapter.loadMoreModule.isEnableLoadMore = false
-
+            mPageCode = 1
+            mViewModel?.toReceivedEvent(mPageCode)
         }
     }
 
     override fun reloadData() {
-        mViewModel?.toReceivedEvent(1)
+        mSwipeLayout.isRefreshing = true
+        mViewModel?.toReceivedEvent(mPageCode)
     }
 
     override fun loadData() {
-        mViewModel?.toReceivedEvent(1)
+        mSwipeLayout.isRefreshing = true
+        mViewModel?.toReceivedEvent(mPageCode)
     }
 }

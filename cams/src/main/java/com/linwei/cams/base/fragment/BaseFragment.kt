@@ -24,7 +24,7 @@ import javax.inject.Inject
  * @Description: 普通基类 [BaseFragment]
  *-----------------------------------------------------------------------
  */
-abstract class BaseFragment() : LazeLoadFragment(),
+abstract class BaseFragment : LazeLoadFragment(),
     IFragment {
     protected lateinit var mActivity: Activity
     protected lateinit var mContext: Context

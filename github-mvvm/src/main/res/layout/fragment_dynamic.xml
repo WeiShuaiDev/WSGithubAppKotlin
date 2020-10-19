@@ -4,7 +4,6 @@
     tools:context=".mvvm.ui.module.main.MainActivity">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel" />
@@ -16,9 +15,16 @@
         android:background="@android:color/transparent"
         tools:ignore="MissingConstraints">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mRecyclerview"
-            style="@style/MatchAndMatch" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/mSwipeLayout"
+            style="@style/MatchAndMatch"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerview"
+                style="@style/MatchAndMatch" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

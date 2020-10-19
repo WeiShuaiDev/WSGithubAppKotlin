@@ -15,7 +15,7 @@
         <com.wang.avi.AVLoadingIndicatorView
             style="@style/WrapAndWrap"
             app:indicatorColor="@color/colorPrimary"
-            app:indicatorName="PacmanIndicator" />
+            app:indicatorName="SquareSpinIndicator" />
 
         <TextView
             style="@style/tv_14_style"

@@ -35,16 +35,12 @@ class DynamicViewModel @Inject constructor(
     /**
      * 接收事件数据
      */
-    private val _eventUiModel = MutableLiveData<List<EventUIModel>>()
-    val eventUiModel: LiveData<List<EventUIModel>>
-        get() = _eventUiModel
-
-    private var _next: Int = -1
+    private val _page = MutableLiveData<Page<List<Event>>>()
+    val page: LiveData<Page<List<Event>>>
+        get() = _page
 
     override fun toReceivedEvent(page: Int) {
         mLifecycleOwner?.let {
-            postUpdateStatus(StatusCode.LOADING)
-
             model.requestReceivedEvent(
                 it,
                 page,
@@ -52,30 +48,39 @@ class DynamicViewModel @Inject constructor(
                     override fun onSuccess(code: String?, data: Page<List<Event>>?) {
                         super.onSuccess(code, data)
 
-                        val eventUIList = ArrayList<EventUIModel>()
-                        data?.apply {
-                            result?.let {
-                                for (event: Event in it) {
-                                    eventUIList.add(EventConversion.eventToEventUIModel(event))
-                                }
-                            }
-                        }
+                        data?.result.isNotNullOrSize().yes {
+                            _page.value = data!!
 
-                        eventUIList.isNotNullOrSize().yes {
                             postUpdateStatus(StatusCode.SUCCESS)
-                            _eventUiModel.value = eventUIList
                         }.otherwise {
+                            _page.value = null
+
                             postUpdateStatus(StatusCode.FAILURE)
                         }
                     }
 
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
-                        _eventUiModel.value = null
+                        _page.value = null
 
                         postUpdateStatus(StatusCode.ERROR)
                     }
                 })
         }
+    }
+
+    /**
+     * 进行数据转换 'Event' ->'EventUIModel'
+     */
+    fun eventConversionByEventUIModel(page: Page<List<Event>>?): MutableList<EventUIModel> {
+        val eventUIList: MutableList<EventUIModel> = mutableListOf()
+        page?.apply {
+            result?.let {
+                for (event: Event in it) {
+                    eventUIList.add(EventConversion.eventToEventUIModel(event))
+                }
+            }
+        }
+        return eventUIList
     }
 }

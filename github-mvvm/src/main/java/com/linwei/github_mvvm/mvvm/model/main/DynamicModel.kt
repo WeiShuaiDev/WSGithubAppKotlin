@@ -83,7 +83,7 @@ class DynamicModel @Inject constructor(
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
                         //获取数据库中接收事件数据
-                        queryReceivedEvent(owner, 0, observer)
+                        //queryReceivedEvent(owner, 0, observer)
                         Timber.i(" request Http EventUIModel Data Failed~")
                     }
                 })
