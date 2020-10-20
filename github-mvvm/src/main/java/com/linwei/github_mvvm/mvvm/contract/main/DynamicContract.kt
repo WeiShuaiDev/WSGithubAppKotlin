@@ -20,9 +20,7 @@ import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
  */
 interface DynamicContract {
 
-    interface View {
-
-    }
+    interface View
 
     interface ViewModel {
         /**
@@ -39,7 +37,7 @@ interface DynamicContract {
          * 获取用户接收到的事件数据
          * @param owner [LifecycleOwner]
          * @param page [Int]
-         * @param liveData [MutableLiveData]
+         * @param observer [MutableLiveData]
          */
         fun requestReceivedEvent(
             owner: LifecycleOwner,
@@ -51,7 +49,7 @@ interface DynamicContract {
          * 查询数据库用户接收到的事件数据
          * @param owner [LifecycleOwner]
          * @param id [Int]
-         * @param liveData [MutableLiveData]
+         * @param observer [MutableLiveData]
          */
         fun queryReceivedEvent(
             owner: LifecycleOwner,

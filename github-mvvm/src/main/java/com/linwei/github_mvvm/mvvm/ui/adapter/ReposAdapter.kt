@@ -8,8 +8,10 @@ import com.chad.library.adapter.base.module.UpFetchModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.LayoutItemEventBinding
+import com.linwei.github_mvvm.databinding.LayoutItemReposBinding
 import com.linwei.github_mvvm.ext.GithubDataBindingComponent
 import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
+import com.linwei.github_mvvm.mvvm.model.data.ReposUIModel
 
 /**
  * ---------------------------------------------------------------------
@@ -20,25 +22,24 @@ import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class ReceivedEventAdapter(data: MutableList<EventUIModel>) :
-    BaseQuickAdapter<EventUIModel, BaseViewHolder>(R.layout.layout_item_event, data),
-    LoadMoreModule {
+class ReposAdapter(data: MutableList<ReposUIModel>) :
+    BaseQuickAdapter<ReposUIModel, BaseViewHolder>(R.layout.layout_item_repos, data) {
 
     companion object {
         private const val COUNT: Int = 10
     }
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
-        DataBindingUtil.bind<LayoutItemEventBinding>(
+        DataBindingUtil.bind<LayoutItemReposBinding>(
             viewHolder.itemView,
             GithubDataBindingComponent()
         )
     }
 
-    override fun convert(holder: BaseViewHolder, item: EventUIModel) {
-        val binding: LayoutItemEventBinding? = DataBindingUtil.getBinding(holder.itemView)
+    override fun convert(holder: BaseViewHolder, item: ReposUIModel) {
+        val binding: LayoutItemReposBinding? = DataBindingUtil.getBinding(holder.itemView)
         if (binding != null) {
-            binding.eventUIModel = item
+            binding.reposUIModel = item
             binding.executePendingBindings()
         }
     }

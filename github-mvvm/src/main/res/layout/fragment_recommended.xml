@@ -5,20 +5,43 @@
     tools:context=".mvvm.ui.module.main.MainActivity">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.linwei.github_mvvm.mvvm.viewmodel.main.RecommendedViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mContentRoot"
         style="@style/MatchAndMatch"
-        android:orientation="vertical"
+        android:background="@android:color/transparent"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="RecommendedFragment" />
+        <com.yyydjk.library.DropDownMenu
+            android:id="@+id/mRecommendedDropMenu"
+            style="@style/MatchAndMatch"
+            app:dddividerColor="@color/colorDropDividerColor"
+            app:ddmaskColor="@color/colorDropMaskColor"
+            app:ddmenuBackgroundColor="@color/colorPrimary"
+            app:ddmenuMenuHeightPercent="0.5"
+            app:ddmenuSelectedIcon="@mipmap/icon_arrow_dropup"
+            app:ddmenuTextSize="@dimen/sp_16"
+            app:ddmenuUnselectedIcon="@mipmap/icon_arrow_dropdown"
+            app:ddtextSelectedColor="@color/colorDropTextSelected"
+            app:ddtextUnselectedColor="@color/colorDropTextUnselected"
+            app:ddunderlineColor="@color/colorDropUnderLine" />
 
-    </LinearLayout>
+<!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--            android:id="@+id/mSwipeLayout"-->
+<!--            style="@style/MatchAndMatch"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/mRecyclerview"-->
+<!--                style="@style/MatchAndMatch" />-->
+
+<!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

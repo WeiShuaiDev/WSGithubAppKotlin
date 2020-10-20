@@ -1,8 +1,21 @@
 package com.linwei.github_mvvm.mvvm.model.main
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
+import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
+import com.linwei.github_mvvm.mvvm.model.api.Api
+import com.linwei.github_mvvm.mvvm.model.api.service.RepoService
+import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
+import com.linwei.github_mvvm.mvvm.model.db.LocalDatabase
+import com.linwei.github_mvvm.mvvm.model.db.dao.ReposDao
+import com.linwei.github_mvvm.mvvm.model.db.dao.UserDao
+import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
+import com.linwei.github_mvvm.utils.GsonUtils
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -14,8 +27,61 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class RecommendedModel @Inject constructor(dataRepository: DataMvvmRepository) :
-    BaseModel(dataRepository), RecommendedContract.Model {
+class RecommendedModel @Inject constructor(
+    dataRepository: DataMvvmRepository,
+    private val appGlobalModel: AppGlobalModel
+) : BaseModel(dataRepository), RecommendedContract.Model {
 
+    /**
+     *  仓库服务接口
+     */
+    private val repoService: RepoService by lazy {
+        dataRepository.obtainRetrofitService(RepoService::class.java)
+    }
 
+    /**
+     * 仓库服务接口
+     */
+    private val reposDao: ReposDao by lazy {
+        dataRepository.obtainRoomDataBase(LocalDatabase::class.java).reposDao()
+    }
+
+    override fun requestTrendData(
+        owner: LifecycleOwner,
+        languageType: String,
+        since: String,
+        observer: LiveDataCallBack<List<TrendingRepoModel>>
+    ): LiveData<List<TrendingRepoModel>> {
+
+        return repoService.getTrendDataAPI(true, Api.API_TOKEN, since, languageType).apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<List<TrendingRepoModel>>() {
+                    override fun onSuccess(code: String?, data: List<TrendingRepoModel>?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            //保存接收事件数据到数据库中
+//                            if (page == 1) {
+//                                val entity = ReceivedEventEntity(
+//                                    id = 0,
+//                                    data = GsonUtils.toJsonString(it)
+//                                )
+                                //userDao.insertReceivedEvent(entity)
+//                            }
+
+                            observer.onSuccess(code, data)
+
+                            Timber.i(" request Http getTrendDataAPI Data Success~")
+                        }
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        //获取数据库中接收事件数据
+                        //queryReceivedEvent(owner, 0, observer)
+                        Timber.i(" request Http getTrendDataAPI Data Failed~")
+                    }
+                })
+        }
+    }
 }

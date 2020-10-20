@@ -18,6 +18,8 @@ interface Api {
 
         const val GRAPHIC_HOST = "https://ghchart.rshah.org/"
 
+        const val API_TOKEN = "4d65e2a5626103f92a71867d7b49fea0"
+
         const val PAGE_SIZE: Int = 30
 
         const val OKHTTP_CACHE_SIZE: Long = 1024 * 1024 * 10L

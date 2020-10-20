@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchAndMatch"
+    android:background="@color/colorGlobalWhite"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/mDefaultDropText"
+        style="@style/MatchAndWrap"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_25"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_25"
+        android:paddingBottom="@dimen/dp_10" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorGlobalGray" />
+
+</LinearLayout>

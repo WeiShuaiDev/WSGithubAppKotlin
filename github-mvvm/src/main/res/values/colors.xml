@@ -7,13 +7,23 @@
     <color name="textColorPrimary">#313335</color>
     <color name="textColorSecondary">#959595</color>
 
-    <!--Navigation-->
+    <color name="colorSubText">#959595</color>
+    <color name="colorSubLightText">#c4c4c4</color>
+
+    <!--DynamicFragment-->
     <color name="colorNavigationInActiveTab">#959595</color>
     <color name="colorNavigationActiveTab">#2c2c2c</color>
 
-    <color name="colorSubLightText">#c4c4c4</color>
     <color name="colorDrawerLightText">#88FF1100</color>
 
-    <color name="colorWebDraculaBg">#282a36</color>
+    <!--RecommendedFragment-->
+    <color name="colorDropDividerColor">#cccccc</color>
+    <color name="colorDropMaskColor">#88000000</color>
+    <color name="colorDropTextSelected">#ffffff</color>
+    <color name="colorDropTextUnselected">#959595</color>
+    <color name="colorDropUnderLine">#c4c4c4</color>
+
+    <color name="colorDropItemText">#959595</color>
+
 
 </resources>

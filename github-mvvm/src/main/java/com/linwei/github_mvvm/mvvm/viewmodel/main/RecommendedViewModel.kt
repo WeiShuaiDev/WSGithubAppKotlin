@@ -1,8 +1,24 @@
 package com.linwei.github_mvvm.mvvm.viewmodel.main
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import com.linwei.cams.ext.isNotNullOrSize
+import com.linwei.cams.ext.otherwise
+import com.linwei.cams.ext.yes
+import com.linwei.cams.http.callback.LiveDataCallBack
+import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
+import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
+import com.linwei.github_mvvm.mvvm.model.bean.Event
+import com.linwei.github_mvvm.mvvm.model.bean.Page
+import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
+import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
+import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
+import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
+import com.linwei.github_mvvm.mvvm.model.data.ReposUIModel
 import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
 import javax.inject.Inject
 
@@ -16,9 +32,75 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class RecommendedViewModel @Inject constructor(
-    model: RecommendedModel,
+    val model: RecommendedModel,
     application: Application
 ) : BaseViewModel(model, application), RecommendedContract.ViewModel {
 
+    val sortData: List<List<String>> = listOf(
+        application.resources.getStringArray(R.array.trend_language).toList(),
+        application.resources.getStringArray(R.array.trend_since).toList()
+    )
 
+    val sortValue: List<List<String>> = listOf(
+        application.resources.getStringArray(R.array.trend_language_data).toList(),
+        application.resources.getStringArray(R.array.trend_since_data).toList()
+    )
+
+    val sortType: ArrayList<String> = arrayListOf(sortValue[0][0], sortValue[1][0])
+
+    /**
+     * 接收趋势数据
+     */
+    private val _reposUIModel = MutableLiveData<List<ReposUIModel>>()
+    val reposUIModel: LiveData<List<ReposUIModel>>
+        get() = _reposUIModel
+
+
+    override fun toTrendData() {
+        mLifecycleOwner?.let {
+            model.requestTrendData(
+                it,
+                sortType[0],
+                sortType[1],
+                object : LiveDataCallBack<List<TrendingRepoModel>>() {
+
+                    override fun onSuccess(code: String?, data: List<TrendingRepoModel>?) {
+                        super.onSuccess(code, data)
+
+                        data?.let {
+                            it.isNotNullOrSize().yes {
+                                _reposUIModel.value = trendConversionByReposUIModel(it)
+
+                                postUpdateStatus(StatusCode.SUCCESS)
+                            }.otherwise {
+                                _reposUIModel.value = null
+
+                                postUpdateStatus(StatusCode.FAILURE)
+                            }
+                        }
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        _reposUIModel.value = null
+
+                        postUpdateStatus(StatusCode.ERROR)
+
+                    }
+                })
+        }
+    }
+
+    /**
+     * 进行数据转换 'Trend' ->'ReposUIModel'
+     */
+    fun trendConversionByReposUIModel(list: List<TrendingRepoModel>?): MutableList<ReposUIModel> {
+        val reposUIModel: MutableList<ReposUIModel> = mutableListOf()
+        list?.let {
+            for (trend: TrendingRepoModel in it) {
+                reposUIModel.add(ReposConversion.trendToReposUIModel(trend))
+            }
+        }
+        return reposUIModel
+    }
 }

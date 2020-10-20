@@ -10,7 +10,7 @@ import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
  * @Time: 2020/9/30
  * @Contact: linwei9605@gmail.com"d
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: 用户数据库
  *-----------------------------------------------------------------------
  */
 @Dao

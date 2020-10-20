@@ -102,16 +102,13 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
 
         mReceivedEventAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
             Timber.i("ReceivedEvent position${position}")
-
         }
 
         mReceivedEventAdapter.loadMoreModule.setOnLoadMoreListener {
-            Timber.i("ReceivedEvent 加载更多数据~~")
             mViewModel?.toReceivedEvent(mPageCode)
         }
 
         mSwipeLayout.setOnRefreshListener {
-            Timber.i("ReceivedEvent 刷新更多数据~~")
             mReceivedEventAdapter.loadMoreModule.isEnableLoadMore = false
             mPageCode = 1
             mViewModel?.toReceivedEvent(mPageCode)

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="trend_since">
+        <item>今日</item>
+        <item>本周</item>
+        <item>本月</item>
+    </array>
+    <array name="trend_since_data">
+        <item>daily</item>
+        <item>weekly</item>
+        <item>monthly</item>
+    </array>
+    <array name="trend_language">
+        <item>全部</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Dart</item>
+        <item>Objective-C</item>
+        <item>Swift</item>
+        <item>JavaScript</item>
+        <item>PHP</item>
+        <item>Go</item>
+        <item>C++</item>
+        <item>C</item>
+        <item>HTML</item>
+        <item>CSS</item>
+    </array>
+    <array name="trend_language_data">
+        <item></item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Dart</item>
+        <item>Objective-C</item>
+        <item>Swift</item>
+        <item>JavaScript</item>
+        <item>PHP</item>
+        <item>Go</item>
+        <item>C++</item>
+        <item>C</item>
+        <item>HTML</item>
+        <item>CSS</item>
+    </array>
+</resources>

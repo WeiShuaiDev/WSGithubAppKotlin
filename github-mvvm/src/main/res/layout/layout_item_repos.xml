@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.Html" />
+
+        <variable
+            name="reposUIModel"
+            type="com.linwei.github_mvvm.mvvm.model.data.ReposUIModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/whiteCardTheme">
+
+        <RelativeLayout
+            style="@style/MatchAndWrap"
+            android:padding="@dimen/dp_10">
+
+            <ImageView
+                android:id="@+id/mReposUserImg"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                app:userHeaderUrl="@{reposUIModel.ownerPic}"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/mReposName"
+                style="@style/WrapAndWrap"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toEndOf="@+id/mReposUserImg"
+                android:singleLine="true"
+                android:text="@{reposUIModel.repositoryName}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/mReposOwner"
+                style="@style/WrapAndWrap"
+                android:layout_below="@id/mReposName"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toEndOf="@+id/mReposUserImg"
+                android:singleLine="true"
+                android:text="@{`{APP-REPOS_ITEM_USER}\n`+reposUIModel.ownerName}"
+                android:textColor="@color/colorSubText"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/mReposLanguage"
+                style="@style/WrapAndWrap"
+                android:layout_alignParentEnd="true"
+                android:singleLine="true"
+                android:text="@{reposUIModel.repositoryType}"
+                android:textColor="@color/colorSubText"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/mReposDes"
+                style="@style/WrapAndWrap"
+                android:layout_below="@+id/mReposUserImg"
+                android:layout_marginStart="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_5"
+                android:maxLines="3"
+                android:text="@{Html.fromHtml(reposUIModel.repositoryDes)}"
+                android:textColor="@color/colorSubText"
+                android:textSize="@dimen/sp_16" />
+
+            <LinearLayout
+                style="@style/MatchAndWrap"
+                android:layout_below="@id/mReposDes"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="2"
+                    android:text="@{`{APP-REPOS_ITEM_STAR}\n`+reposUIModel.repositoryStar}"
+                    android:textColor="@color/colorSubLightText"
+                    android:textSize="@dimen/sp_16" />
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:maxLines="@{reposUIModel.hideWatchIcon ? 2 : 1}"
+                    android:text="@{`{APP-REPOS_ITEM_FORK}\n`+reposUIModel.repositoryFork}"
+                    android:textColor="@color/colorSubLightText"
+                    android:textSize="@dimen/sp_16" />
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="@{`{APP-REPOS_ITEM_WATCH}\n`+reposUIModel.repositoryWatch}"
+                    android:textColor="@color/colorSubLightText"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

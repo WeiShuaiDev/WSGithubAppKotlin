@@ -1,6 +1,5 @@
 package com.linwei.github_mvvm.mvvm.ui.view
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.loadmore.BaseLoadMoreView
@@ -40,6 +39,6 @@ class RvLoadMoreView : BaseLoadMoreView() {
 
     override fun getRootView(parent: ViewGroup): View {
         // 整个 LoadMore 布局
-        return parent.getItemView(R.layout.item_load_more)
+        return parent.getItemView(R.layout.layout_item_load_more)
     }
 }
