@@ -16,12 +16,12 @@
         tools:ignore="MissingConstraints">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/mSwipeLayout"
+            android:id="@+id/mDynamicSwipe"
             style="@style/MatchAndMatch"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mRecyclerview"
+                android:id="@+id/mDynamicRecycler"
                 style="@style/MatchAndMatch" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

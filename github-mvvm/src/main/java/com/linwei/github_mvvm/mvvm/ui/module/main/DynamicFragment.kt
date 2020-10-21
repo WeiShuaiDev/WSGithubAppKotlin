@@ -73,8 +73,8 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
                         mReceivedEventAdapter.loadMoreModule.loadMoreComplete()
                     }
                 }
-                if (mSwipeLayout.isRefreshing)
-                    mSwipeLayout.isRefreshing = false
+                if (mDynamicSwipe.isRefreshing)
+                    mDynamicSwipe.isRefreshing = false
             }
         })
     }
@@ -86,7 +86,7 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
         mReceivedEventAdapter = ReceivedEventAdapter(mutableListOf())
         mReceivedEventAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
         mReceivedEventAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
-        mRecyclerview.apply {
+        mDynamicRecycler.apply {
             layoutManager = LinearLayoutManager(mContext)
             adapter = mReceivedEventAdapter
         }
@@ -108,7 +108,7 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
             mViewModel?.toReceivedEvent(mPageCode)
         }
 
-        mSwipeLayout.setOnRefreshListener {
+        mDynamicSwipe.setOnRefreshListener {
             mReceivedEventAdapter.loadMoreModule.isEnableLoadMore = false
             mPageCode = 1
             mViewModel?.toReceivedEvent(mPageCode)
@@ -116,12 +116,12 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
     }
 
     override fun reloadData() {
-        mSwipeLayout.isRefreshing = true
+        mDynamicSwipe.isRefreshing = true
         mViewModel?.toReceivedEvent(mPageCode)
     }
 
     override fun loadData() {
-        mSwipeLayout.isRefreshing = true
+        mDynamicSwipe.isRefreshing = true
         mViewModel?.toReceivedEvent(mPageCode)
     }
 }

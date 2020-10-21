@@ -36,9 +36,9 @@ class RecommendedFragment : BaseMvvmFragment<RecommendedViewModel, FragmentRecom
 
     private lateinit var mReposAdapter: ReposAdapter
 
-    private lateinit var mRecyclerview: RecyclerView
+    private lateinit var mRecommendedRecycler: RecyclerView
 
-    private lateinit var mSwipeLayout: SwipeRefreshLayout
+    private lateinit var mRecommendedSwipe: SwipeRefreshLayout
 
     override fun provideContentViewId(): Int = R.layout.fragment_recommended
 
@@ -58,16 +58,16 @@ class RecommendedFragment : BaseMvvmFragment<RecommendedViewModel, FragmentRecom
      * 初始化接收事件列表适配器
      */
     private fun initReceivedEventRV() {
-        mSwipeLayout = SwipeRefreshLayout(mContext)
-        mRecyclerview = RecyclerView(mContext)
+        mRecommendedSwipe = SwipeRefreshLayout(mContext)
+        mRecommendedRecycler = RecyclerView(mContext)
 
-        mSwipeLayout.layoutParams = ViewGroup.LayoutParams(
+        mRecommendedRecycler.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
 
-        mSwipeLayout.addView(
-            mRecyclerview,
+        mRecommendedSwipe.addView(
+            mRecommendedRecycler,
             ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -75,7 +75,7 @@ class RecommendedFragment : BaseMvvmFragment<RecommendedViewModel, FragmentRecom
         )
 
         mReposAdapter = ReposAdapter(mutableListOf())
-        mRecyclerview.apply {
+        mRecommendedRecycler.apply {
             layoutManager = LinearLayoutManager(mContext)
             adapter = mReposAdapter
         }
@@ -117,7 +117,7 @@ class RecommendedFragment : BaseMvvmFragment<RecommendedViewModel, FragmentRecom
             mRecommendedDropMenu.setDropDownMenu(
                 dropMap.keys.toList(),
                 dropMap.values.toList(),
-                mSwipeLayout
+                mRecommendedSwipe
             )
         }
     }
@@ -129,8 +129,8 @@ class RecommendedFragment : BaseMvvmFragment<RecommendedViewModel, FragmentRecom
                     mReposAdapter.setNewInstance(it.toMutableList())
                 }
 
-                if (mSwipeLayout.isRefreshing)
-                    mSwipeLayout.isRefreshing = false
+                if (mRecommendedSwipe.isRefreshing)
+                    mRecommendedSwipe.isRefreshing = false
             }
         })
 
@@ -141,18 +141,18 @@ class RecommendedFragment : BaseMvvmFragment<RecommendedViewModel, FragmentRecom
             Timber.i("Trend position${position}")
         }
 
-        mSwipeLayout.setOnRefreshListener {
+        mRecommendedSwipe.setOnRefreshListener {
             mViewModel?.toTrendData()
         }
     }
 
     override fun reloadData() {
-        mSwipeLayout.isRefreshing = true
+        mRecommendedSwipe.isRefreshing = true
         mViewModel?.toTrendData()
     }
 
     override fun loadData() {
-        mSwipeLayout.isRefreshing = true
+        mRecommendedSwipe.isRefreshing = true
         mViewModel?.toTrendData()
     }
 }

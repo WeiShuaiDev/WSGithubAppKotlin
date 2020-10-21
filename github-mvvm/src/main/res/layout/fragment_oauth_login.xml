@@ -2,22 +2,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:avl="http://schemas.android.com/apk/res-auto"
     style="@style/MatchAndMatch"
     android:orientation="vertical"
     tools:context=".mvvm.ui.module.login.UserActivity"
     tools:ignore="MissingConstraints">
 
     <WebView
-        android:id="@+id/mOauthWebview"
+        android:id="@+id/mOauthWebView"
         style="@style/MatchAndMatch" />
 
-    <ProgressBar
-        android:id="@+id/mOauthWebViewLoadingBar"
-        android:layout_width="@dimen/dp_40"
-        android:layout_height="@dimen/dp_40"
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/mOAuthLoading"
+        style="@style/WrapAndWrap"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        avl:indicatorColor="@color/colorPrimary"
+        avl:indicatorName="BallScaleMultipleIndicator" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

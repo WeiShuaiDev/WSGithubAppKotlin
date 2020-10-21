@@ -6,20 +6,49 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
-            name="viewModel"
+            name="globalModel"
+            type="com.linwei.github_mvvm.mvvm.model.AppGlobalModel" />
+
+        <variable
+            name="mineViewModel"
             type="com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel" />
+
     </data>
 
-    <LinearLayout
-        style="@style/MatchAndMatch"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+    <RelativeLayout style="@style/MatchAndMatch">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MineFragment" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mMineRecycler"
+            style="@style/MatchAndMatch" />
 
-    </LinearLayout>
+        <RelativeLayout
+            style="@style/WrapAndWrap"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/BtnMineFocus"
+                style="@style/WrapAndWrap"
+                android:background="@color/colorPrimary"
+                android:shadowColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_23"
+                app:backgroundTint="@color/colorPrimary"
+                app:elevation="@dimen/dp_5"
+                app:rippleColor="@color/primary_light"
+                tools:ignore="ContentDescription" />
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="@dimen/dp_10"
+                app:iiv_color="@color/colorGlobalWhite" />
+
+        </RelativeLayout>
+    </RelativeLayout>
 </layout>

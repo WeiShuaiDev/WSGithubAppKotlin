@@ -31,17 +31,6 @@
             app:ddtextUnselectedColor="@color/colorDropTextUnselected"
             app:ddunderlineColor="@color/colorDropUnderLine" />
 
-<!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--            android:id="@+id/mSwipeLayout"-->
-<!--            style="@style/MatchAndMatch"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/mRecyclerview"-->
-<!--                style="@style/MatchAndMatch" />-->
-
-<!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -5,7 +5,9 @@ import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentMineBinding
 import com.linwei.github_mvvm.mvvm.contract.main.MineContract
+import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -18,11 +20,15 @@ import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
  */
 class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), MineContract.View {
 
+    @Inject
+    lateinit var mAppGlobalModel: AppGlobalModel
+
     override fun provideContentViewId(): Int = R.layout.fragment_mine
 
     override fun bindViewModel() {
         mViewDataBinding?.let {
-            it.viewModel = mViewModel
+            it.mineViewModel = mViewModel
+            it.globalModel = mAppGlobalModel
             it.lifecycleOwner = viewLifecycleOwner
         }
     }
@@ -32,15 +38,18 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
     }
 
     override fun initLayoutData() {
+
     }
 
     override fun initLayoutListener() {
+
     }
 
     override fun reloadData() {
+
     }
 
     override fun loadData() {
-    }
 
+    }
 }

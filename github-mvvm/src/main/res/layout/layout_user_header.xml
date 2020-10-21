@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="userUIModel"
+            type="com.linwei.github_mvvm.mvvm.model.data.UserUIModel" />
+
+        <variable
+            name="mineViewModel"
+            type="com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel" />
+
+    </data>
+
+    <RelativeLayout style="@style/MatchAndWrap">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mMineHeaderCard"
+            style="@style/MatchAndWrap"
+            android:background="@drawable/shape_bottom_radius"
+            android:elevation="@dimen/dp_10"
+            android:padding="@dimen/dp_10">
+
+            <ImageView
+                android:id="@+id/mMineHeaderImage"
+                android:layout_width="@dimen/dp_90"
+                android:layout_height="@dimen/dp_90"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:userHeaderSize="@{100}"
+                app:userHeaderUrl="@{userUIModel.avatarUrl}"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/mUserHeaderName"
+                style="@style/WrapAndWrap"
+                android:layout_marginStart="@dimen/dp_10"
+                android:text="@{userUIModel.login}"
+                android:textColor="@color/colorGlobalWhite"
+                android:textSize="@dimen/sp_23"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/mMineHeaderImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/mMineHeaderOtherName"
+                style="@style/WrapAndWrap"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_3"
+                android:text="@{userUIModel.name}"
+                android:textColor="@color/colorSubLightText"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintStart_toEndOf="@id/mMineHeaderImage"
+                app:layout_constraintTop_toBottomOf="@id/mUserHeaderName" />
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/mMineHeaderCompany"
+                style="@style/WrapAndWrap"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_3"
+                android:text="@{`{APP_USER_ITEM_COMPANY} `+userUIModel.company}"
+                android:textColor="@color/colorSubLightText"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintStart_toEndOf="@id/mMineHeaderImage"
+                app:layout_constraintTop_toBottomOf="@id/mMineHeaderOtherName" />
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/mMineHeaderLocation"
+                style="@style/WrapAndWrap"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_3"
+                android:text="@{`{APP_USER_ITEM_LOCATION} `+userUIModel.location}"
+                android:textColor="@color/colorSubLightText"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintStart_toEndOf="@id/mMineHeaderImage"
+                app:layout_constraintTop_toBottomOf="@id/mMineHeaderCompany" />
+
+            <TextView
+                android:id="@+id/mMineHeaderNotify"
+                style="@style/WrapAndWrap"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="{APP-USER_NOTIFY}"
+                android:textColor="@color/colorSubLightText"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintStart_toEndOf="@id/mUserHeaderName"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/mMineHeaderLink"
+                style="@style/WrapAndWrap"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:autoLink="all"
+                android:text="@{`{GSY_USER_ITEM_LINK} `+userUIModel.blog}"
+                android:textColor="@color/colorSubLightText"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mMineHeaderLocation" />
+
+            <TextView
+                android:id="@+id/mMineHeaderDes"
+                style="@style/WrapAndWrap"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="@{userUIModel.bioDes}"
+                android:textColor="@color/colorSubLightText"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mMineHeaderLink" />
+
+            <View
+                android:id="@+id/mMineHeaderActionHorizontalLine"
+                style="@style/HorizontalLine"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintTop_toBottomOf="@id/mMineHeaderDes"
+                tools:ignore="MissingConstraints" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mMineHeaderActionHorizontalLine"
+                app:layout_constraintWidth_percent="1">
+
+                <TextView
+                    android:id="@+id/mMineHeaderRepos"
+                    style="@style/verticalItemTextTheme"
+                    android:background="@drawable/select_primary_light_bg"
+                    android:onClick="@{mineViewModel::onTabIconClick}"
+                    android:text="@{userUIModel.publicRepos}" />
+
+                <View style="@style/VerticalLine" />
+
+                <TextView
+                    android:id="@+id/mMineHeaderFan"
+                    style="@style/verticalItemTextTheme"
+                    android:background="@drawable/select_primary_light_bg"
+                    android:onClick="@{mineViewModel::onTabIconClick}"
+                    android:text="@{userUIModel.followers}" />
+
+                <View style="@style/VerticalLine" />
+
+                <TextView
+                    android:id="@+id/mMineHeaderFocus"
+                    style="@style/verticalItemTextTheme"
+                    android:background="@drawable/select_primary_light_bg"
+                    android:onClick="@{mineViewModel::onTabIconClick}"
+                    android:text="@{userUIModel.following}" />
+
+                <View style="@style/VerticalLine" />
+
+                <TextView
+                    android:id="@+id/mMineHeaderStar"
+                    style="@style/verticalItemTextTheme"
+                    android:background="@drawable/select_primary_light_bg"
+                    android:onClick="@{mineViewModel::onTabIconClick}"
+                    android:text="@{userUIModel.starRepos}" />
+
+                <View style="@style/VerticalLine" />
+
+                <TextView
+                    android:id="@+id/user_header_honor"
+                    style="@style/verticalItemTextTheme"
+                    android:background="@drawable/select_primary_light_bg"
+                    android:onClick="@{mineViewModel::onTabIconClick}"
+                    android:text="@{userUIModel.honorRepos}" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            style="@style/whiteCardTheme"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_140"
+            android:layout_below="@+id/mMineHeaderCard"
+            android:visibility="@{`Organization`.equals(userUIModel.type) ? View.GONE : View.VISIBLE}">
+
+<!--            <com.linwei.github_mvvm.mvvm.ui.view.TouchSlideWebViewContainer-->
+<!--                android:id="@+id/mMineHeaderState"-->
+<!--                style="@style/MatchAndMatch"-->
+<!--                android:layout_margin="@dimen/dp_10"-->
+<!--                app:webViewUrl="@{userUIModel.actionUrl}" />-->
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</layout>

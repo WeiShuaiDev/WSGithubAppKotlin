@@ -10,7 +10,6 @@ import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.*
-import com.github.nukc.stateview.StateView
 import com.github.nukc.stateview.StateView.*
 import com.linwei.cams.R
 import com.linwei.cams.ext.jumpIntent
@@ -237,10 +236,6 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
                 return super.shouldOverrideUrlLoading(view, url)
             }
 
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-            }
-
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
 
@@ -292,8 +287,8 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
         }
         builder.setOnKeyListener { dialog, keyCode, event ->
             if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                handler?.cancel();
-                dialog.dismiss();
+                handler?.cancel()
+                dialog.dismiss()
             }
             false
         }

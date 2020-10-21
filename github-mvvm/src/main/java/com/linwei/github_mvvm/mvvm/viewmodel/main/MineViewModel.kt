@@ -1,6 +1,7 @@
 package com.linwei.github_mvvm.mvvm.viewmodel.main
 
 import android.app.Application
+import android.view.View
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.mvvm.contract.main.MineContract
 import com.linwei.github_mvvm.mvvm.model.main.MineModel
@@ -20,5 +21,9 @@ class MineViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(model, application), MineContract.ViewModel {
 
+
+    fun onTabIconClick(v: View?) {
+
+    }
 
 }
