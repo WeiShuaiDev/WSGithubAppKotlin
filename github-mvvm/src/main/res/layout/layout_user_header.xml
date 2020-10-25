@@ -9,7 +9,7 @@
 
         <variable
             name="userUIModel"
-            type="com.linwei.github_mvvm.mvvm.model.data.UserUIModel" />
+            type="com.linwei.github_mvvm.mvvm.model.ui.UserUIModel" />
 
         <variable
             name="mineViewModel"
@@ -20,14 +20,14 @@
     <RelativeLayout style="@style/MatchAndWrap">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mMineHeaderCard"
+            android:id="@+id/mine_header_card"
             style="@style/MatchAndWrap"
             android:background="@drawable/shape_bottom_radius"
             android:elevation="@dimen/dp_10"
             android:padding="@dimen/dp_10">
 
             <ImageView
-                android:id="@+id/mMineHeaderImage"
+                android:id="@+id/mine_header_image"
                 android:layout_width="@dimen/dp_90"
                 android:layout_height="@dimen/dp_90"
                 android:src="@mipmap/ic_launcher"
@@ -38,74 +38,74 @@
                 tools:ignore="ContentDescription" />
 
             <TextView
-                android:id="@+id/mUserHeaderName"
+                android:id="@+id/mine_user_header_name"
                 style="@style/WrapAndWrap"
                 android:layout_marginStart="@dimen/dp_10"
                 android:text="@{userUIModel.login}"
                 android:textColor="@color/colorGlobalWhite"
                 android:textSize="@dimen/sp_23"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/mMineHeaderImage"
+                app:layout_constraintStart_toEndOf="@id/mine_header_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/mMineHeaderOtherName"
+                android:id="@+id/mine_header_other_name"
                 style="@style/WrapAndWrap"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_3"
                 android:text="@{userUIModel.name}"
                 android:textColor="@color/colorSubLightText"
                 android:textSize="@dimen/sp_14"
-                app:layout_constraintStart_toEndOf="@id/mMineHeaderImage"
-                app:layout_constraintTop_toBottomOf="@id/mUserHeaderName" />
+                app:layout_constraintStart_toEndOf="@id/mine_header_image"
+                app:layout_constraintTop_toBottomOf="@id/mine_user_header_name" />
 
             <com.mikepenz.iconics.view.IconicsTextView
-                android:id="@+id/mMineHeaderCompany"
+                android:id="@+id/mine_header_company"
                 style="@style/WrapAndWrap"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_3"
                 android:text="@{`{APP_USER_ITEM_COMPANY} `+userUIModel.company}"
                 android:textColor="@color/colorSubLightText"
                 android:textSize="@dimen/sp_14"
-                app:layout_constraintStart_toEndOf="@id/mMineHeaderImage"
-                app:layout_constraintTop_toBottomOf="@id/mMineHeaderOtherName" />
+                app:layout_constraintStart_toEndOf="@id/mine_header_image"
+                app:layout_constraintTop_toBottomOf="@id/mine_header_other_name" />
 
             <com.mikepenz.iconics.view.IconicsTextView
-                android:id="@+id/mMineHeaderLocation"
+                android:id="@+id/mine_header_location"
                 style="@style/WrapAndWrap"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_3"
                 android:text="@{`{APP_USER_ITEM_LOCATION} `+userUIModel.location}"
                 android:textColor="@color/colorSubLightText"
                 android:textSize="@dimen/sp_14"
-                app:layout_constraintStart_toEndOf="@id/mMineHeaderImage"
-                app:layout_constraintTop_toBottomOf="@id/mMineHeaderCompany" />
+                app:layout_constraintStart_toEndOf="@id/mine_header_image"
+                app:layout_constraintTop_toBottomOf="@id/mine_header_company" />
 
             <TextView
-                android:id="@+id/mMineHeaderNotify"
+                android:id="@+id/mine_header_notify"
                 style="@style/WrapAndWrap"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_8"
                 android:text="{APP-USER_NOTIFY}"
                 android:textColor="@color/colorSubLightText"
                 android:textSize="@dimen/sp_14"
-                app:layout_constraintStart_toEndOf="@id/mUserHeaderName"
+                app:layout_constraintStart_toEndOf="@id/mine_user_header_name"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.mikepenz.iconics.view.IconicsTextView
-                android:id="@+id/mMineHeaderLink"
+                android:id="@+id/mine_header_link"
                 style="@style/WrapAndWrap"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:autoLink="all"
-                android:text="@{`{GSY_USER_ITEM_LINK} `+userUIModel.blog}"
+                android:text="@{`{APP_USER_ITEM_LINK} `+userUIModel.blog}"
                 android:textColor="@color/colorSubLightText"
                 android:textSize="@dimen/sp_14"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mMineHeaderLocation" />
+                app:layout_constraintTop_toBottomOf="@id/mine_header_location" />
 
             <TextView
-                android:id="@+id/mMineHeaderDes"
+                android:id="@+id/mine_header_des"
                 style="@style/WrapAndWrap"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_8"
@@ -113,15 +113,14 @@
                 android:textColor="@color/colorSubLightText"
                 android:textSize="@dimen/sp_14"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mMineHeaderLink" />
+                app:layout_constraintTop_toBottomOf="@id/mine_header_link" />
 
             <View
-                android:id="@+id/mMineHeaderActionHorizontalLine"
+                android:id="@+id/mine_header_action_horizontal_line"
                 style="@style/HorizontalLine"
                 android:layout_marginTop="@dimen/dp_10"
-                app:layout_constraintTop_toBottomOf="@id/mMineHeaderDes"
+                app:layout_constraintTop_toBottomOf="@id/mine_header_des"
                 tools:ignore="MissingConstraints" />
-
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -131,11 +130,11 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mMineHeaderActionHorizontalLine"
+                app:layout_constraintTop_toBottomOf="@id/mine_header_action_horizontal_line"
                 app:layout_constraintWidth_percent="1">
 
                 <TextView
-                    android:id="@+id/mMineHeaderRepos"
+                    android:id="@+id/mine_header_repos"
                     style="@style/verticalItemTextTheme"
                     android:background="@drawable/select_primary_light_bg"
                     android:onClick="@{mineViewModel::onTabIconClick}"
@@ -144,7 +143,7 @@
                 <View style="@style/VerticalLine" />
 
                 <TextView
-                    android:id="@+id/mMineHeaderFan"
+                    android:id="@+id/mine_header_fan"
                     style="@style/verticalItemTextTheme"
                     android:background="@drawable/select_primary_light_bg"
                     android:onClick="@{mineViewModel::onTabIconClick}"
@@ -153,7 +152,7 @@
                 <View style="@style/VerticalLine" />
 
                 <TextView
-                    android:id="@+id/mMineHeaderFocus"
+                    android:id="@+id/mine_header_focus"
                     style="@style/verticalItemTextTheme"
                     android:background="@drawable/select_primary_light_bg"
                     android:onClick="@{mineViewModel::onTabIconClick}"
@@ -162,7 +161,7 @@
                 <View style="@style/VerticalLine" />
 
                 <TextView
-                    android:id="@+id/mMineHeaderStar"
+                    android:id="@+id/mine_header_star"
                     style="@style/verticalItemTextTheme"
                     android:background="@drawable/select_primary_light_bg"
                     android:onClick="@{mineViewModel::onTabIconClick}"
@@ -171,7 +170,7 @@
                 <View style="@style/VerticalLine" />
 
                 <TextView
-                    android:id="@+id/user_header_honor"
+                    android:id="@+id/mine_header_honor"
                     style="@style/verticalItemTextTheme"
                     android:background="@drawable/select_primary_light_bg"
                     android:onClick="@{mineViewModel::onTabIconClick}"
@@ -184,14 +183,14 @@
             style="@style/whiteCardTheme"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_140"
-            android:layout_below="@+id/mMineHeaderCard"
+            android:layout_below="@+id/mine_header_card"
             android:visibility="@{`Organization`.equals(userUIModel.type) ? View.GONE : View.VISIBLE}">
 
-<!--            <com.linwei.github_mvvm.mvvm.ui.view.TouchSlideWebViewContainer-->
-<!--                android:id="@+id/mMineHeaderState"-->
-<!--                style="@style/MatchAndMatch"-->
-<!--                android:layout_margin="@dimen/dp_10"-->
-<!--                app:webViewUrl="@{userUIModel.actionUrl}" />-->
+            <com.linwei.github_mvvm.mvvm.ui.view.TouchSlideWebViewContainer
+                android:id="@+id/mine_header_state"
+                style="@style/MatchAndMatch"
+                android:layout_margin="@dimen/dp_10"
+                app:webViewUrl="@{userUIModel.actionUrl}" />
 
         </androidx.cardview.widget.CardView>
     </RelativeLayout>

@@ -1,11 +1,11 @@
-package com.linwei.github_mvvm.mvvm.model.db
+package com.linwei.github_mvvm.mvvm.model.repository.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.linwei.github_mvvm.mvvm.model.db.dao.ReposDao
-import com.linwei.github_mvvm.mvvm.model.db.dao.UserDao
-import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
-import com.linwei.github_mvvm.mvvm.model.db.entity.TrendEntity
+import com.linwei.github_mvvm.mvvm.model.repository.db.dao.ReposDao
+import com.linwei.github_mvvm.mvvm.model.repository.db.dao.UserDao
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.TrendEntity
 
 /**
  * ---------------------------------------------------------------------

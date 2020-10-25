@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.data
+package com.linwei.github_mvvm.mvvm.model.ui
 
 import com.linwei.github_mvvm.BR
 import androidx.databinding.BaseObservable
@@ -17,7 +17,7 @@ import java.util.*
 class UserUIModel : BaseObservable() {
     var login: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(
@@ -26,7 +26,7 @@ class UserUIModel : BaseObservable() {
         }
     var id: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.id)
@@ -34,7 +34,7 @@ class UserUIModel : BaseObservable() {
 
     var name: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.name)
@@ -42,7 +42,7 @@ class UserUIModel : BaseObservable() {
 
     var avatarUrl: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.avatarUrl)
@@ -50,7 +50,7 @@ class UserUIModel : BaseObservable() {
 
     var htmlUrl: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.htmlUrl)
@@ -58,7 +58,7 @@ class UserUIModel : BaseObservable() {
 
     var type: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.type)
@@ -66,7 +66,7 @@ class UserUIModel : BaseObservable() {
 
     var company: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.company)
@@ -74,7 +74,7 @@ class UserUIModel : BaseObservable() {
 
     var blog: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.blog)
@@ -82,7 +82,7 @@ class UserUIModel : BaseObservable() {
 
     var location: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.location)
@@ -90,7 +90,7 @@ class UserUIModel : BaseObservable() {
 
     var email: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.name)
@@ -98,7 +98,7 @@ class UserUIModel : BaseObservable() {
 
     var bio: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.bio)
@@ -107,7 +107,7 @@ class UserUIModel : BaseObservable() {
 
     var bioDes: String? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.bioDes)
@@ -115,7 +115,7 @@ class UserUIModel : BaseObservable() {
 
     var starRepos: String = ""
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.starRepos)
@@ -123,7 +123,7 @@ class UserUIModel : BaseObservable() {
 
     var honorRepos: String = ""
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.honorRepos)
@@ -131,7 +131,7 @@ class UserUIModel : BaseObservable() {
 
     var publicRepos: String = ""
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.publicRepos)
@@ -139,7 +139,7 @@ class UserUIModel : BaseObservable() {
 
     var publicGists: Int = 0
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.publicGists)
@@ -147,7 +147,7 @@ class UserUIModel : BaseObservable() {
 
     var followers: String = ""
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.followers)
@@ -155,7 +155,7 @@ class UserUIModel : BaseObservable() {
 
     var following: String = ""
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.following)
@@ -163,7 +163,7 @@ class UserUIModel : BaseObservable() {
 
     var createdAt: Date? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.createdAt)
@@ -171,7 +171,7 @@ class UserUIModel : BaseObservable() {
 
     var updatedAt: Date? = null
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.updatedAt)
@@ -179,7 +179,7 @@ class UserUIModel : BaseObservable() {
 
     var actionUrl: String = ""
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.actionUrl)

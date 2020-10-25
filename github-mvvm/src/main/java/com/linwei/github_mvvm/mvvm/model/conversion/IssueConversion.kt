@@ -3,7 +3,7 @@ package com.linwei.github_mvvm.mvvm.model.conversion
 import com.linwei.cams.utils.TimeUtils
 import com.linwei.github_mvvm.mvvm.model.bean.Issue
 import com.linwei.github_mvvm.mvvm.model.bean.IssueEvent
-import com.linwei.github_mvvm.mvvm.model.data.IssueUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.IssueUIModel
 
 /**
  * Issue相关实体转换

@@ -6,9 +6,9 @@ import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Notification
 import com.linwei.github_mvvm.mvvm.model.bean.RepoCommit
-import com.linwei.github_mvvm.mvvm.model.data.CommitUIModel
-import com.linwei.github_mvvm.mvvm.model.data.EventUIAction
-import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.CommitUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.EventUIAction
+import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
 
 /**
  * 事件相关实体转换

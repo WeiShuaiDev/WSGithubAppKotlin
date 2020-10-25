@@ -3,7 +3,6 @@ package com.linwei.github_mvvm.mvvm.viewmodel.main
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.linwei.cams.ext.isNotNullOrSize
 import com.linwei.cams.ext.otherwise
 import com.linwei.cams.ext.yes
@@ -12,14 +11,10 @@ import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
-import com.linwei.github_mvvm.mvvm.model.bean.Event
-import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
-import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
 import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
-import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
-import com.linwei.github_mvvm.mvvm.model.data.ReposUIModel
-import com.linwei.github_mvvm.mvvm.model.main.RecommendedModel
+import com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel
+import com.linwei.github_mvvm.mvvm.model.repository.service.RecommendedModel
 import javax.inject.Inject
 
 /**

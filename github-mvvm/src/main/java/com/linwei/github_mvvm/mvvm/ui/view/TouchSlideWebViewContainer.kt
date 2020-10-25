@@ -34,16 +34,16 @@ class TouchSlideWebViewContainer : RelativeLayout {
         defStyleAttr
     )
 
-    private val mWebView: TouchSlideWebView = TouchSlideWebView(context)
+    val webView: TouchSlideWebView = TouchSlideWebView(context)
 
     private val mAvi: AVLoadingIndicatorView
 
     init {
-        mWebView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGlobalWhite))
+        webView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGlobalWhite))
         var layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
         layoutParams.addRule(CENTER_IN_PARENT)
 
-        val settings: WebSettings? = mWebView.settings
+        val settings: WebSettings? = webView.settings
         settings?.javaScriptEnabled = true
         settings?.loadWithOverviewMode = true
         settings?.builtInZoomControls = false
@@ -52,7 +52,7 @@ class TouchSlideWebViewContainer : RelativeLayout {
         settings?.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
         settings?.setAppCacheEnabled(true)
 
-        addView(mWebView, layoutParams)
+        addView(webView, layoutParams)
 
         mAvi = AVLoadingIndicatorView(context)
         layoutParams = LayoutParams(90.dp, 90.dp)
@@ -81,16 +81,16 @@ class TouchSlideWebViewContainer : RelativeLayout {
             }
         }
 
-        mWebView.webViewClient = webViewClient
+        webView.webViewClient = webViewClient
 
-        mWebView.addJavascriptInterface(JsCallback(), "GSYWebView")
+        webView.addJavascriptInterface(JsCallback(), "GSYWebView")
     }
 
     internal inner class JsCallback {
 
         @JavascriptInterface
         fun requestEvent(request: Boolean) {
-            mWebView.requestIntercept = request
+            webView.requestIntercept = request
         }
     }
 }

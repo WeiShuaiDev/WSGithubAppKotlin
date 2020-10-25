@@ -1,8 +1,8 @@
-package com.linwei.github_mvvm.mvvm.model.db.dao
+package com.linwei.github_mvvm.mvvm.model.repository.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.linwei.github_mvvm.mvvm.model.db.entity.TrendEntity
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.TrendEntity
 
 /**
  * ---------------------------------------------------------------------

@@ -8,7 +8,7 @@
 
         <variable
             name="eventUIModel"
-            type="com.linwei.github_mvvm.mvvm.model.data.EventUIModel" />
+            type="com.linwei.github_mvvm.mvvm.model.ui.EventUIModel" />
 
     </data>
 

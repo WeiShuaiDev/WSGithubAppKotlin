@@ -9,7 +9,7 @@
 
         <variable
             name="reposUIModel"
-            type="com.linwei.github_mvvm.mvvm.model.data.ReposUIModel" />
+            type="com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel" />
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"

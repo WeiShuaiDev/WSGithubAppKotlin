@@ -7,8 +7,9 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.LayoutEventItemBinding
+import com.linwei.github_mvvm.databinding.LayoutUserItemBinding
 import com.linwei.github_mvvm.ext.GithubDataBindingComponent
-import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.UserUIModel
 
 /**
  * ---------------------------------------------------------------------
@@ -19,8 +20,8 @@ import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class ReceivedEventAdapter(data: MutableList<EventUIModel>) :
-    BaseQuickAdapter<EventUIModel, BaseViewHolder>(R.layout.layout_event_item, data),
+class UserInfoAdapter(data: MutableList<UserUIModel>) :
+    BaseQuickAdapter<UserUIModel, BaseViewHolder>(R.layout.layout_user_item, data),
     LoadMoreModule {
 
     companion object {
@@ -28,16 +29,16 @@ class ReceivedEventAdapter(data: MutableList<EventUIModel>) :
     }
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
-        DataBindingUtil.bind<LayoutEventItemBinding>(
+        DataBindingUtil.bind<LayoutUserItemBinding>(
             viewHolder.itemView,
             GithubDataBindingComponent()
         )
     }
 
-    override fun convert(holder: BaseViewHolder, item: EventUIModel) {
-        val binding: LayoutEventItemBinding? = DataBindingUtil.getBinding(holder.itemView)
+    override fun convert(holder: BaseViewHolder, item: UserUIModel) {
+        val binding: LayoutUserItemBinding? = DataBindingUtil.getBinding(holder.itemView)
         if (binding != null) {
-            binding.eventUIModel = item
+            binding.userUIModel = item
             binding.executePendingBindings()
         }
     }

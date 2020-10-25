@@ -4,7 +4,7 @@ import android.app.Application
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.ext.jumpUserActivity
 import com.linwei.github_mvvm.mvvm.contract.login.MainContract
-import com.linwei.github_mvvm.mvvm.model.login.LoginModel
+import com.linwei.github_mvvm.mvvm.model.repository.service.LoginModel
 import javax.inject.Inject
 
 /**

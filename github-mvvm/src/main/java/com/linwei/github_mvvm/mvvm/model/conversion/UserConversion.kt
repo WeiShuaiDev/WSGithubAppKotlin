@@ -8,7 +8,7 @@ import com.linwei.cams.utils.TimeUtils
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.model.api.Api
 import com.linwei.github_mvvm.mvvm.model.bean.User
-import com.linwei.github_mvvm.mvvm.model.data.UserUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.UserUIModel
 
 /**
  * ---------------------------------------------------------------------

@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.main
+package com.linwei.github_mvvm.mvvm.model.repository.service
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -12,14 +12,11 @@ import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
-import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
-import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
-import com.linwei.github_mvvm.mvvm.model.db.LocalDatabase
-import com.linwei.github_mvvm.mvvm.model.db.dao.UserDao
-import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
+import com.linwei.github_mvvm.mvvm.model.repository.db.LocalDatabase
+import com.linwei.github_mvvm.mvvm.model.repository.db.dao.UserDao
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
 import com.linwei.github_mvvm.utils.GsonUtils
 import timber.log.Timber
-import java.util.ArrayList
 import javax.inject.Inject
 
 /**

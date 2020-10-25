@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingComponent
 import com.linwei.cams.ext.dp
+import com.linwei.github_mvvm.mvvm.ui.view.TouchSlideWebViewContainer
 
 //import com.mikepenz.iconics.IconicsDrawable
 //import com.mikepenz.iconics.view.IconicsImageView
@@ -35,22 +36,22 @@ class DataBindingExpand {
         fun loadImage(view: ImageView, url: String?, size: Int = 50) {
             loadUserHeaderImage(view, url ?: "", Point(size.dp, size.dp))
         }
-//
-//        /**
-//         * webView url加载拓展
-//         */
-//        @BindingAdapter("webViewUrl")
-//        fun webViewUrl(view: GSYWebViewContainer?, url: String?) {
-//            view?.apply {
-//                webView.isVerticalScrollBarEnabled = false
-//                webView.loadUrl(url)
-//            }
-//
-//        }
-//
-//        /**
-//         * markdown数据处理显示
-//         */
+
+        /**
+         * webView url加载拓展
+         */
+        @BindingAdapter("webViewUrl")
+        fun webViewUrl(view: TouchSlideWebViewContainer?, url: String?) {
+            view?.apply {
+                webView.isVerticalScrollBarEnabled = false
+                webView.loadUrl(url)
+            }
+
+        }
+
+        /**
+         * markdown数据处理显示
+         */
 //        @BindingAdapter("markdownText", "style", requireAll = false)
 //        fun markdownText(view: TextView?, text: String?, style: String? = "default") {
 //            view?.apply {

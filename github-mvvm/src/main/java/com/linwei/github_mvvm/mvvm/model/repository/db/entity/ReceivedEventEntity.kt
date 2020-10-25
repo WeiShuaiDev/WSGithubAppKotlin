@@ -1,13 +1,9 @@
-package com.linwei.github_mvvm.mvvm.model.db.entity
+package com.linwei.github_mvvm.mvvm.model.repository.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.linwei.github_mvvm.mvvm.model.bean.EventPayload
-import com.linwei.github_mvvm.mvvm.model.bean.Repository
-import com.linwei.github_mvvm.mvvm.model.bean.User
-import java.util.*
 
 /**
  * ---------------------------------------------------------------------

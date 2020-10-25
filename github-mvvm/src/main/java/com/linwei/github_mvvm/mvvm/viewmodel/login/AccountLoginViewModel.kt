@@ -12,7 +12,7 @@ import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.passwordPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
-import com.linwei.github_mvvm.mvvm.model.login.LoginModel
+import com.linwei.github_mvvm.mvvm.model.repository.service.LoginModel
 import javax.inject.Inject
 
 /**

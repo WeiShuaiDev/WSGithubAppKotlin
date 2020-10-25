@@ -6,8 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
-import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
-import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
 
 /**
  * ---------------------------------------------------------------------

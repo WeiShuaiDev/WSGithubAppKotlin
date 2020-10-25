@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.data
+package com.linwei.github_mvvm.mvvm.model.ui
 
 /**
  * 事件相关UI实体

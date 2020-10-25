@@ -3,15 +3,11 @@ package com.linwei.github_mvvm.mvvm.ui.adapter
 import android.animation.Animator
 import androidx.databinding.DataBindingUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.module.LoadMoreModule
-import com.chad.library.adapter.base.module.UpFetchModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.LayoutItemEventBinding
-import com.linwei.github_mvvm.databinding.LayoutItemReposBinding
+import com.linwei.github_mvvm.databinding.LayoutReposItemBinding
 import com.linwei.github_mvvm.ext.GithubDataBindingComponent
-import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
-import com.linwei.github_mvvm.mvvm.model.data.ReposUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel
 
 /**
  * ---------------------------------------------------------------------
@@ -23,21 +19,21 @@ import com.linwei.github_mvvm.mvvm.model.data.ReposUIModel
  *-----------------------------------------------------------------------
  */
 class ReposAdapter(data: MutableList<ReposUIModel>) :
-    BaseQuickAdapter<ReposUIModel, BaseViewHolder>(R.layout.layout_item_repos, data) {
+    BaseQuickAdapter<ReposUIModel, BaseViewHolder>(R.layout.layout_repos_item, data) {
 
     companion object {
         private const val COUNT: Int = 10
     }
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
-        DataBindingUtil.bind<LayoutItemReposBinding>(
+        DataBindingUtil.bind<LayoutReposItemBinding>(
             viewHolder.itemView,
             GithubDataBindingComponent()
         )
     }
 
     override fun convert(holder: BaseViewHolder, item: ReposUIModel) {
-        val binding: LayoutItemReposBinding? = DataBindingUtil.getBinding(holder.itemView)
+        val binding: LayoutReposItemBinding? = DataBindingUtil.getBinding(holder.itemView)
         if (binding != null) {
             binding.reposUIModel = item
             binding.executePendingBindings()

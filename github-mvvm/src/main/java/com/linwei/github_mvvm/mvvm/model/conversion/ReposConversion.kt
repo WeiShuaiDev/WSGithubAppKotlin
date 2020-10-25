@@ -4,9 +4,9 @@ import android.content.Context
 import com.linwei.cams.utils.TimeUtils
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.model.bean.*
-import com.linwei.github_mvvm.mvvm.model.data.FileUIModel
-import com.linwei.github_mvvm.mvvm.model.data.PushUIModel
-import com.linwei.github_mvvm.mvvm.model.data.ReposUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.FileUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.PushUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel
 
 
 /**

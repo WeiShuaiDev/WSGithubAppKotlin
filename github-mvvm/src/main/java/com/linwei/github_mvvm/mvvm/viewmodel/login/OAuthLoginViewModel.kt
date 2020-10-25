@@ -10,7 +10,7 @@ import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.OAuthLoginContract
-import com.linwei.github_mvvm.mvvm.model.login.LoginModel
+import com.linwei.github_mvvm.mvvm.model.repository.service.LoginModel
 import javax.inject.Inject
 
 /**

@@ -1,7 +1,7 @@
 package com.linwei.github_mvvm.mvvm.model
 
 import com.linwei.github_mvvm.di.scope.GithubScope
-import com.linwei.github_mvvm.mvvm.model.data.UserUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.UserUIModel
 import javax.inject.Inject
 
 /**

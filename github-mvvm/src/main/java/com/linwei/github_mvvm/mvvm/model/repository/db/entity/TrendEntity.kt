@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.db.entity
+package com.linwei.github_mvvm.mvvm.model.repository.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

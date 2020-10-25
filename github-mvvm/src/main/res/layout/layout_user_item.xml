@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="userUIModel"
+            type="com.linwei.github_mvvm.mvvm.model.ui.UserUIModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/whiteCardTheme">
+
+        <RelativeLayout
+            style="@style/MatchAndWrap"
+            android:padding="@dimen/dp_10">
+
+            <ImageView
+                android:id="@+id/mUserItemUserImg"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                app:userHeaderUrl="@{userUIModel.avatarUrl}"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/mUserItemUserName"
+                style="@style/WrapAndWrap"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toEndOf="@+id/mUserItemUserImg"
+                android:singleLine="true"
+                android:text="@{userUIModel.login}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/mUserItemUserOtherName"
+                style="@style/WrapAndWrap"
+                android:layout_below="@+id/mUserItemUserName"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toEndOf="@+id/mUserItemUserImg"
+                android:singleLine="true"
+                android:text="@{`{APP-REPOS_ITEM_USER}\n`+userUIModel.name}"
+                android:textColor="@color/colorSubText"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

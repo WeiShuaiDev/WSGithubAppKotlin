@@ -3,8 +3,9 @@ package com.linwei.github_mvvm.mvvm.viewmodel.main
 import android.app.Application
 import android.view.View
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
+import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.main.MineContract
-import com.linwei.github_mvvm.mvvm.model.main.MineModel
+import com.linwei.github_mvvm.mvvm.model.repository.service.MineModel
 import javax.inject.Inject
 
 /**
@@ -22,8 +23,30 @@ class MineViewModel @Inject constructor(
 ) : BaseViewModel(model, application), MineContract.ViewModel {
 
 
+
+
+
     fun onTabIconClick(v: View?) {
+        when (v?.id) {
+            R.id.mine_header_repos -> {  //仓库
 
+            }
+
+            R.id.mine_header_fan -> {   //粉丝
+
+            }
+
+            R.id.mine_header_focus -> {   //关注
+
+            }
+
+            R.id.mine_header_star -> {   //星标
+
+            }
+
+            R.id.mine_header_honor -> {
+
+            }
+        }
     }
-
 }

@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.main
+package com.linwei.github_mvvm.mvvm.model.repository.service
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -10,11 +10,8 @@ import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.api.Api
 import com.linwei.github_mvvm.mvvm.model.api.service.RepoService
 import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
-import com.linwei.github_mvvm.mvvm.model.db.LocalDatabase
-import com.linwei.github_mvvm.mvvm.model.db.dao.ReposDao
-import com.linwei.github_mvvm.mvvm.model.db.dao.UserDao
-import com.linwei.github_mvvm.mvvm.model.db.entity.ReceivedEventEntity
-import com.linwei.github_mvvm.utils.GsonUtils
+import com.linwei.github_mvvm.mvvm.model.repository.db.LocalDatabase
+import com.linwei.github_mvvm.mvvm.model.repository.db.dao.ReposDao
 import timber.log.Timber
 import javax.inject.Inject
 

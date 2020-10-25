@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.data
+package com.linwei.github_mvvm.mvvm.model.ui
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.linwei.github_mvvm.BR
@@ -6,49 +6,49 @@ import com.linwei.github_mvvm.BR
 class PushUIModel : BaseObservable() {
     var pushUserName: String = "---"
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.pushUserName)
         }
     var pushImage: String = "---"
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.pushImage)
         }
     var pushEditCount: String = ""
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.pushEditCount)
         }
     var pushAddCount: String = "---"
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.pushAddCount)
         }
     var pushReduceCount: String = "---"
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.pushReduceCount)
         }
     var pushTime: String = "---"
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.pushTime)
         }
     var pushDes: String = "---"
         @Bindable
-        get() = field
+        get
         set(value) {
             field = value
             notifyPropertyChanged(BR.pushDes)

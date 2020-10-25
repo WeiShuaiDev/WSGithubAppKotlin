@@ -20,9 +20,16 @@
 
     <RelativeLayout style="@style/MatchAndMatch">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mMineRecycler"
-            style="@style/MatchAndMatch" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/mMineSwipe"
+            style="@style/MatchAndMatch"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mMineRecycler"
+                style="@style/MatchAndMatch" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <RelativeLayout
             style="@style/WrapAndWrap"
@@ -32,7 +39,7 @@
             android:layout_marginBottom="@dimen/dp_10">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/BtnMineFocus"
+                android:id="@+id/mBtnMineFocus"
                 style="@style/WrapAndWrap"
                 android:background="@color/colorPrimary"
                 android:shadowColor="@color/colorPrimary"

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.github_mvvm.mvvm.model.bean.AuthResponse
 import com.linwei.github_mvvm.mvvm.model.bean.User
-import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
 
 /**
  * ---------------------------------------------------------------------
@@ -19,9 +18,7 @@ import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
  */
 interface AccountLoginContract {
 
-    interface View {
-
-    }
+    interface View
 
     interface ViewModel {
         /**

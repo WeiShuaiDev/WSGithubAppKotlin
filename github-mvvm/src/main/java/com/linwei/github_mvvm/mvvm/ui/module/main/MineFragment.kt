@@ -1,12 +1,21 @@
 package com.linwei.github_mvvm.mvvm.ui.module.main
 
 import android.view.View
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.github.nukc.stateview.StateView
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentMineBinding
+import com.linwei.github_mvvm.databinding.LayoutUserHeaderBinding
+import com.linwei.github_mvvm.ext.GithubDataBindingComponent
 import com.linwei.github_mvvm.mvvm.contract.main.MineContract
 import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
+import com.linwei.github_mvvm.mvvm.ui.adapter.UserInfoAdapter
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
+import kotlinx.android.synthetic.main.fragment_mine.*
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -23,6 +32,8 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
     @Inject
     lateinit var mAppGlobalModel: AppGlobalModel
 
+    private lateinit var mUserInfoAdapter: UserInfoAdapter
+
     override fun provideContentViewId(): Int = R.layout.fragment_mine
 
     override fun bindViewModel() {
@@ -34,7 +45,30 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
     }
 
     override fun initLayoutView(rootView: View?) {
+        initUserInfoRV()
+    }
 
+    /**
+     * 初始化用户信息列表适配器
+     */
+    private fun initUserInfoRV() {
+        mUserInfoAdapter = UserInfoAdapter(mutableListOf())
+        mUserInfoAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+        mUserInfoAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
+
+        //RecyclerView add header view
+        val binding: LayoutUserHeaderBinding = DataBindingUtil.inflate(
+            layoutInflater, R.layout.layout_user_header,
+            null, false, GithubDataBindingComponent()
+        )
+        binding.userUIModel = mAppGlobalModel.userObservable
+        binding.mineViewModel = mViewModel
+        mUserInfoAdapter.addHeaderView(binding.root)
+
+        mMineRecycler.apply {
+            layoutManager = LinearLayoutManager(mContext)
+            adapter = mUserInfoAdapter
+        }
     }
 
     override fun initLayoutData() {
@@ -42,14 +76,29 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
     }
 
     override fun initLayoutListener() {
+        mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
+            override fun onRetryClick() {
+            }
+        }
 
+        mUserInfoAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
+            Timber.i("UserInfo position${position}")
+        }
+
+        mUserInfoAdapter.loadMoreModule.setOnLoadMoreListener {
+
+        }
+
+        mMineSwipe.setOnRefreshListener {
+            mUserInfoAdapter.loadMoreModule.isEnableLoadMore = false
+        }
     }
 
     override fun reloadData() {
-
+        mMineSwipe.isRefreshing = true
     }
 
     override fun loadData() {
-
+        mMineSwipe.isRefreshing = true
     }
 }

@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.main
+package com.linwei.github_mvvm.mvvm.model.repository.service
 
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
@@ -15,7 +15,4 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class MineModel @Inject constructor(dataRepository: DataMvvmRepository) :
-    BaseModel(dataRepository), MineContract.Model {
-
-
-}
+    BaseModel(dataRepository), MineContract.Model

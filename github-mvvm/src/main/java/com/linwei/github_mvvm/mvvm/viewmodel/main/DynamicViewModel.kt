@@ -13,9 +13,8 @@ import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
-import com.linwei.github_mvvm.mvvm.model.data.EventUIModel
-import com.linwei.github_mvvm.mvvm.model.main.DynamicModel
-import java.util.ArrayList
+import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
+import com.linwei.github_mvvm.mvvm.model.repository.service.DynamicModel
 import javax.inject.Inject
 
 /**

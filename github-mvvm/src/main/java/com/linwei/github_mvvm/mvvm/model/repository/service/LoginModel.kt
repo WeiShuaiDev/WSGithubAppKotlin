@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.login
+package com.linwei.github_mvvm.mvvm.model.repository.service
 
 import android.app.Application
 import android.os.Build
