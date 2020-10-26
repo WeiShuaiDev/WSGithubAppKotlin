@@ -37,9 +37,9 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class LoginModel @Inject constructor(
-    val application: Application,
-    val dataRepository: DataMvvmRepository,
-    val appGlobalModel: AppGlobalModel
+    private val application: Application,
+    private val appGlobalModel: AppGlobalModel,
+    dataRepository: DataMvvmRepository
 ) : BaseModel(dataRepository), AccountLoginContract.Model, OAuthLoginContract.Model {
 
     /**

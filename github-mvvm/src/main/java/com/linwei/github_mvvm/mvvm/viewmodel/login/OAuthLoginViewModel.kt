@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.ext.showShort
+import com.linwei.cams.ext.string
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
@@ -36,7 +37,7 @@ class OAuthLoginViewModel @Inject constructor(
 
     override fun toOAuthLogin(code: String?) {
         if (isEmptyParameter(code)) {
-            R.string.logcat_login_oauth_code.showShort()
+            postMessage(obj = R.string.logcat_login_oauth_code.string())
             return
         }
 

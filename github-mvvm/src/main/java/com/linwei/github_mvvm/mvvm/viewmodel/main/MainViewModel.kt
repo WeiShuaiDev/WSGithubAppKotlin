@@ -17,7 +17,7 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class MainViewModel @Inject constructor(
-    val model: LoginModel,
+    private val model: LoginModel,
     application: Application
 ) : BaseViewModel(model, application), MainContract.ViewModel {
 

@@ -11,6 +11,8 @@ import com.linwei.github_mvvm.mvvm.model.api.service.RepoService
 import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
 import com.linwei.github_mvvm.mvvm.model.repository.db.LocalDatabase
 import com.linwei.github_mvvm.mvvm.model.repository.db.dao.ReposDao
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
+import com.linwei.github_mvvm.utils.GsonUtils
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -55,14 +57,11 @@ class RecommendedModel @Inject constructor(
                     override fun onSuccess(code: String?, data: List<TrendingRepoModel>?) {
                         super.onSuccess(code, data)
                         data?.let {
-                            //保存接收事件数据到数据库中
-//                            if (page == 1) {
-//                                val entity = ReceivedEventEntity(
-//                                    id = 0,
-//                                    data = GsonUtils.toJsonString(it)
-//                                )
-                                //userDao.insertReceivedEvent(entity)
-//                            }
+                            val entity = ReceivedEventEntity(
+                                id = 0,
+                                data = GsonUtils.toJsonString(it)
+                            )
+                            //userDao.insertReceivedEvent(entity)
 
                             observer.onSuccess(code, data)
 
@@ -72,7 +71,6 @@ class RecommendedModel @Inject constructor(
 
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
-                        //获取数据库中接收事件数据
                         //queryReceivedEvent(owner, 0, observer)
                         Timber.i(" request Http getTrendDataAPI Data Failed~")
                     }

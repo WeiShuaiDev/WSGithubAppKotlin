@@ -16,6 +16,7 @@ import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.ui.adapter.UserInfoAdapter
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
 import kotlinx.android.synthetic.main.fragment_mine.*
+import kotlinx.android.synthetic.main.layout_user_header.view.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -34,6 +35,8 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
     lateinit var mAppGlobalModel: AppGlobalModel
 
     private lateinit var mUserInfoAdapter: UserInfoAdapter
+
+    private lateinit var mLayoutUserHeaderBinding: LayoutUserHeaderBinding
 
     override fun provideContentViewId(): Int = R.layout.fragment_mine
 
@@ -58,15 +61,15 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
         mUserInfoAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
 
         //RecyclerView add header view
-        val binding: LayoutUserHeaderBinding = DataBindingUtil.inflate(
+        mLayoutUserHeaderBinding = DataBindingUtil.inflate(
             layoutInflater, R.layout.layout_user_header,
             null, false, GithubDataBindingComponent()
         )
-        binding.userUIModel = mAppGlobalModel.userObservable
-        binding.mineViewModel = mViewModel
-        mUserInfoAdapter.addHeaderView(binding.root)
+        mLayoutUserHeaderBinding.userUIModel = mAppGlobalModel.userObservable
+        mLayoutUserHeaderBinding.mineViewModel = mViewModel
+        mUserInfoAdapter.addHeaderView(mLayoutUserHeaderBinding.root)
 
-        mMineRecycler.apply {
+        mine_recycler.apply {
             layoutManager = LinearLayoutManager(mContext)
             adapter = mUserInfoAdapter
         }
@@ -74,14 +77,20 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
 
     override fun initLayoutData() {
         mViewModel?.notifyColor?.observe(viewLifecycleOwner, Observer {
-
+            mLayoutUserHeaderBinding.root.mine_header_notify.setTextColor(it)
         })
     }
 
     override fun initLayoutListener() {
         mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
             override fun onRetryClick() {
+
             }
+        }
+
+        //用户通知事件信息事件
+        mLayoutUserHeaderBinding.root.mine_header_notify.setOnClickListener {
+
         }
 
         mUserInfoAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
@@ -92,16 +101,16 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
 
         }
 
-        mMineSwipe.setOnRefreshListener {
+        mine_swipe_refresh.setOnRefreshListener {
             mUserInfoAdapter.loadMoreModule.isEnableLoadMore = false
         }
     }
 
     override fun reloadData() {
-        mMineSwipe.isRefreshing = true
+        mine_swipe_refresh.isRefreshing = true
     }
 
     override fun loadData() {
-        mMineSwipe.isRefreshing = true
+        mine_swipe_refresh.isRefreshing = true
     }
 }

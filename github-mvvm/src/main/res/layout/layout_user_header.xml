@@ -81,7 +81,7 @@
                 app:layout_constraintStart_toEndOf="@id/mine_header_image"
                 app:layout_constraintTop_toBottomOf="@id/mine_header_company" />
 
-            <TextView
+            <com.mikepenz.iconics.view.IconicsTextView
                 android:id="@+id/mine_header_notify"
                 style="@style/WrapAndWrap"
                 android:layout_marginStart="@dimen/dp_16"

@@ -28,7 +28,7 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class RecommendedViewModel @Inject constructor(
-    val model: RecommendedModel,
+    private val model: RecommendedModel,
     application: Application
 ) : BaseViewModel(model, application), RecommendedContract.ViewModel {
 

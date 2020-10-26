@@ -4,9 +4,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.linwei.cams.ext.isNotNullOrEmpty
 import com.linwei.cams.ext.no
+import com.linwei.cams.ext.string
 import com.linwei.cams.http.callback.LiveDataCallBack
+import com.linwei.cams.http.config.ApiStateConstant
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
+import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
@@ -29,8 +32,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class DynamicModel @Inject constructor(
-    dataRepository: DataMvvmRepository,
-    private val appGlobalModel: AppGlobalModel
+    private val appGlobalModel: AppGlobalModel,
+    dataRepository: DataMvvmRepository
 ) : BaseModel(dataRepository), DynamicContract.Model {
 
     /**
@@ -53,7 +56,9 @@ class DynamicModel @Inject constructor(
         observer: LiveDataCallBack<Page<List<Event>>>
     ): LiveData<Page<List<Event>>> {
         val name: String? = appGlobalModel.userObservable.login
-        name.isNotNullOrEmpty().no { return@no }
+        name.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no }
 
         return userService.getNewsEvent(true, name!!, page).apply {
             observe(
@@ -62,7 +67,6 @@ class DynamicModel @Inject constructor(
                     override fun onSuccess(code: String?, data: Page<List<Event>>?) {
                         super.onSuccess(code, data)
                         data?.let {
-                            //保存接收事件数据到数据库中
                             if (page == 1) {
                                 val entity = ReceivedEventEntity(
                                     id = 0,
@@ -79,7 +83,6 @@ class DynamicModel @Inject constructor(
 
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
-                        //获取数据库中接收事件数据
                         //queryReceivedEvent(owner, 0, observer)
                         Timber.i(" request Http EventUIModel Data Failed~")
                     }

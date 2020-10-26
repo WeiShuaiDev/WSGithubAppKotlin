@@ -61,12 +61,12 @@ class AccountLoginViewModel @Inject constructor(
 
     override fun toAccountLogin(username: String?, password: String?) {
         if (isEmptyParameter(username)) {
-            R.string.logcat_login_user_name_entry.showShort()
+            postMessage(obj = R.string.logcat_login_user_name_entry.string())
             return
         }
 
         if (isEmptyParameter(password)) {
-            R.string.logcat_login_password_entry.showShort()
+            postMessage(obj = R.string.logcat_login_password_entry.string())
             return
         }
 

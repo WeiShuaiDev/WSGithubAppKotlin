@@ -14,9 +14,11 @@ import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.main.MineContract
+import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Notification
 import com.linwei.github_mvvm.mvvm.model.bean.Page
+import com.linwei.github_mvvm.mvvm.model.bean.User
 import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
 import com.linwei.github_mvvm.mvvm.model.repository.service.MineModel
 import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
@@ -32,7 +34,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class MineViewModel @Inject constructor(
-    val model: MineModel,
+    private val model: MineModel,
+    private val appGlobalModel: AppGlobalModel,
     application: Application
 ) : BaseViewModel(model, application), MineContract.ViewModel {
 
@@ -42,6 +45,84 @@ class MineViewModel @Inject constructor(
     private val _notifyColor = MutableLiveData<Int>()
     val notifyColor: LiveData<Int>
         get() = _notifyColor
+
+    /**
+     * 用户关注数据
+     */
+    private val _pageByOrgMember = MutableLiveData<Page<List<User>>>()
+    val pageByOrgMember: LiveData<Page<List<User>>>
+        get() = _pageByOrgMember
+
+    /**
+     * 用户产生数据
+     */
+    private val _pageByUserEvents = MutableLiveData<Page<List<Event>>>()
+    val pageByUserEvents: LiveData<Page<List<Event>>>
+        get() = _pageByUserEvents
+
+    override fun loadDataByRefresh() {
+        TODO("Not yet implemented")
+    }
+
+    override fun loadDataByLoadMore(page: Int) {
+        (appGlobalModel.userObservable.type == "Organization").yes {
+            toOrgMembers(page)
+        }.otherwise {
+            toUserEvents(page)
+        }
+    }
+
+    override fun toOrgMembers(page: Int) {
+        mLifecycleOwner?.let {
+            model.requestOrgMembers(
+                it, page,
+                object : LiveDataCallBack<Page<List<User>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<User>>?) {
+                        super.onSuccess(code, data)
+
+                        data?.result.isNotNullOrSize().yes {
+                            _pageByOrgMember.value = data
+
+                            postUpdateStatus(StatusCode.SUCCESS)
+                        }.otherwise {
+                            postUpdateStatus(StatusCode.FAILURE)
+                        }
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        postUpdateStatus(StatusCode.ERROR)
+                    }
+                })
+        }
+    }
+
+    override fun toUserEvents(page: Int) {
+        mLifecycleOwner?.let {
+            model.requestUserEvents(
+                it, page,
+                object : LiveDataCallBack<Page<List<Event>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<Event>>?) {
+                        super.onSuccess(code, data)
+
+                        data?.result.isNotNullOrSize().yes {
+                            _pageByUserEvents.value = data
+
+                            postUpdateStatus(StatusCode.SUCCESS)
+                        }.otherwise {
+
+                            postUpdateStatus(StatusCode.FAILURE)
+                        }
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        postUpdateStatus(StatusCode.ERROR)
+                    }
+                })
+        }
+    }
+
 
     override fun toNotifyData() {
         mLifecycleOwner?.let {
@@ -73,7 +154,10 @@ class MineViewModel @Inject constructor(
         }
     }
 
-
+    /**
+     * `Tab` 点击事件
+     * @param v [View]
+     */
     fun onTabIconClick(v: View?) {
         when (v?.id) {
             R.id.mine_header_repos -> {  //仓库
@@ -92,10 +176,9 @@ class MineViewModel @Inject constructor(
 
             }
 
-            R.id.mine_header_honor -> {
+            R.id.mine_header_honor -> {  //荣誉
 
             }
         }
     }
-
 }
