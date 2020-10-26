@@ -95,6 +95,11 @@ fun Int.color(): Int {
     }
 }
 
+fun Int.compatColor(): Int {
+    return ContextCompat.getColor(ctx, this)
+}
+
+
 /**
  * ---------------------------------String---------------------------------
  */
@@ -160,8 +165,8 @@ fun String.checkNamePattern(): Boolean {
 fun String.getDomain(): String {
     var j = 0
     var startIndex = 0
-    var endIndex:Int = this.length - 1
-    for (i:Int in this.indices) {
+    var endIndex: Int = this.length - 1
+    for (i: Int in this.indices) {
         if (this[i] == '/') {
             j++
             if (j == 2)
@@ -194,7 +199,7 @@ fun Any.fromBean(): String {
  */
 fun String.toBean(): Any? {
     try {
-        val bytes:ByteArray = Base64.decode(this, Base64.NO_WRAP)
+        val bytes: ByteArray = Base64.decode(this, Base64.NO_WRAP)
         return ObjectInputStream(ByteArrayInputStream(bytes)).readObject()
     } catch (e: Exception) {
         e.printStackTrace()

@@ -6,7 +6,6 @@ import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
-import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.api.Api
 import com.linwei.github_mvvm.mvvm.model.api.service.RepoService
 import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
@@ -25,8 +24,7 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class RecommendedModel @Inject constructor(
-    dataRepository: DataMvvmRepository,
-    private val appGlobalModel: AppGlobalModel
+    dataRepository: DataMvvmRepository
 ) : BaseModel(dataRepository), RecommendedContract.Model {
 
     /**

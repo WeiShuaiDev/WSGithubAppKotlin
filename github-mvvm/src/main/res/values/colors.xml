@@ -27,5 +27,8 @@
 
     <color name="colorDropItemText">#959595</color>
 
+    <!--MineFragment-->
+    <color name="colorNotifyActiveText">#267aff</color>
+    <color name="colorNotifyNormalText">#959595</color>
 
 </resources>

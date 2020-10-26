@@ -28,6 +28,15 @@ fun Any.string(vararg args: String): String {
     }
 }
 
+/**
+ * [ResId] 转换为字符串数组 [String]
+ * @param [ResId]
+ * @return [Array]
+ */
+fun Int.stringArray(): Array<String> {
+    return ctx.resources.getStringArray(this)
+}
+
 
 /**
  * 判断字符串是否为空

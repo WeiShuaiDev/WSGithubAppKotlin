@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.isNotNullOrSize
 import com.linwei.cams.ext.otherwise
+import com.linwei.cams.ext.stringArray
 import com.linwei.cams.ext.yes
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams.http.model.StatusCode
@@ -32,13 +33,13 @@ class RecommendedViewModel @Inject constructor(
 ) : BaseViewModel(model, application), RecommendedContract.ViewModel {
 
     val sortData: List<List<String>> = listOf(
-        application.resources.getStringArray(R.array.trend_language).toList(),
-        application.resources.getStringArray(R.array.trend_since).toList()
+        R.array.trend_language.stringArray().toList(),
+        R.array.trend_since.stringArray().toList()
     )
 
     val sortValue: List<List<String>> = listOf(
-        application.resources.getStringArray(R.array.trend_language_data).toList(),
-        application.resources.getStringArray(R.array.trend_since_data).toList()
+        R.array.trend_language_data.stringArray().toList(),
+        R.array.trend_since_data.stringArray().toList()
     )
 
     val sortType: ArrayList<String> = arrayListOf(sortValue[0][0], sortValue[1][0])

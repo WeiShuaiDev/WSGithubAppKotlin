@@ -2,6 +2,7 @@ package com.linwei.github_mvvm.mvvm.ui.module.main
 
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.github.nukc.stateview.StateView
@@ -72,7 +73,9 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
     }
 
     override fun initLayoutData() {
+        mViewModel?.notifyColor?.observe(viewLifecycleOwner, Observer {
 
+        })
     }
 
     override fun initLayoutListener() {
