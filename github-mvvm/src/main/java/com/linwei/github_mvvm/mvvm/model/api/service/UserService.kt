@@ -22,7 +22,7 @@ interface UserService {
      * 获取用户数据
      */
     @GET("user")
-    fun getAuthenticatedUserInfo(@Header("forceNetWork") forceNetWork: Boolean): LiveData<User>
+    fun getPersonInfo(@Header("forceNetWork") forceNetWork: Boolean): LiveData<User>
 
     /**
      * 获取用户数据
@@ -155,7 +155,7 @@ interface UserService {
     fun getUserOrgs(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String
-    ): LiveData<ArrayList<User>>
+    ): LiveData<List<User>>
 
 
 }

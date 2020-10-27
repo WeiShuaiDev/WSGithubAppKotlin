@@ -34,8 +34,7 @@ interface RepoService {
         @Query("page") page: Int,
         @Query("sort") sort: String = "pushed",
         @Query("per_page") per_page: Int = 100
-    ): LiveData<ArrayList<Repository>>
-
+    ): LiveData<Page<List<Repository>>>
 
     /**
      * 标记为星际状态，仓库数据
@@ -51,7 +50,7 @@ interface RepoService {
         @Query("page") page: Int,
         @Query("sort") sort: String = "updated",
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<Repository>>
+    ): LiveData<Page<List<Repository>>>
 
     /**
      * @param page [Int]

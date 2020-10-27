@@ -6,6 +6,7 @@ import android.util.Base64
 import android.webkit.CookieManager
 import android.webkit.WebStorage
 import androidx.lifecycle.*
+import androidx.lifecycle.Transformations.switchMap
 import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.http.DataMvvmRepository
@@ -37,9 +38,9 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class LoginModel @Inject constructor(
-    private val application: Application,
-    private val appGlobalModel: AppGlobalModel,
-    dataRepository: DataMvvmRepository
+        private val application: Application,
+        private val appGlobalModel: AppGlobalModel,
+        dataRepository: DataMvvmRepository
 ) : BaseModel(dataRepository), AccountLoginContract.Model, OAuthLoginContract.Model {
 
     /**
@@ -59,10 +60,10 @@ class LoginModel @Inject constructor(
     private var mResultCallBack: LiveDataCallBack<Boolean>? = null
 
     override fun requestAccountLogin(
-        owner: LifecycleOwner,
-        username: String,
-        password: String,
-        observer: LiveDataCallBack<Boolean>
+            owner: LifecycleOwner,
+            username: String,
+            password: String,
+            observer: LiveDataCallBack<Boolean>
     ) {
         mResultCallBack = observer
 
@@ -71,8 +72,8 @@ class LoginModel @Inject constructor(
         val type = "$username:$password"
 
         val userCipherTextInfo: String =
-            Base64.encodeToString(type.toByteArray(), Base64.NO_WRAP)
-                .replace("\\+", "%2B")
+                Base64.encodeToString(type.toByteArray(), Base64.NO_WRAP)
+                        .replace("\\+", "%2B")
 
         //保存用户名明文、密文信息
         userNamePref = username
@@ -82,9 +83,9 @@ class LoginModel @Inject constructor(
     }
 
     override fun requestOAuthLogin(
-        owner: LifecycleOwner,
-        code: String,
-        observer: LiveDataCallBack<Boolean>
+            owner: LifecycleOwner,
+            code: String,
+            observer: LiveDataCallBack<Boolean>
     ) {
         mResultCallBack = observer
 
@@ -94,37 +95,37 @@ class LoginModel @Inject constructor(
     }
 
     override fun requestCreateCodeAuthorization(
-        owner: LifecycleOwner,
-        code: String
+            owner: LifecycleOwner,
+            code: String
     ): LiveData<AccessToken> {
         return authService.createCodeAuthorization(
-            AuthRequest.clientId,
-            AuthRequest.clientSecret,
-            code
+                AuthRequest.clientId,
+                AuthRequest.clientSecret,
+                code
         ).apply {
             observe(
-                owner,
-                object : LiveDataCallBack<AccessToken>() {
-                    override fun onSuccess(code: String?, data: AccessToken?) {
-                        super.onSuccess(code, data)
-                        data?.let {
-                            data.accessToken.isNotNullOrEmpty().yes {
-                                accessTokenPref = data.accessToken!!
+                    owner,
+                    object : LiveDataCallBack<AccessToken>() {
+                        override fun onSuccess(code: String?, data: AccessToken?) {
+                            super.onSuccess(code, data)
+                            data?.let {
+                                data.accessToken.isNotNullOrEmpty().yes {
+                                    accessTokenPref = data.accessToken!!
 
-                                //获取 `UserInfo`信息数据
-                                requestAuthenticatedUserInfo(owner)
-                            }.otherwise {
-                                //删除用户令牌信息
-                                clearTokenStorage()
+                                    //获取 `UserInfo`信息数据
+                                    requestAuthenticatedUserInfo(owner)
+                                }.otherwise {
+                                    //删除用户令牌信息
+                                    clearTokenStorage()
+                                }
                             }
                         }
-                    }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        mResultCallBack?.onFailure(code, message)
-                    }
-                })
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            mResultCallBack?.onFailure(code, message)
+                        }
+                    })
         }
     }
 
@@ -132,32 +133,32 @@ class LoginModel @Inject constructor(
     override fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponse> {
         return authService.createAuthorization(AuthRequest.generate()).apply {
             observe(
-                owner,
-                object : LiveDataCallBack<AuthResponse>() {
-                    override fun onSuccess(code: String?, data: AuthResponse?) {
-                        super.onSuccess(code, data)
-                        data?.let {
-                            data.token.isNotNullOrEmpty().yes {
-                                accessTokenPref = data.token!!
-                                authIDPref = data.id.toString()
+                    owner,
+                    object : LiveDataCallBack<AuthResponse>() {
+                        override fun onSuccess(code: String?, data: AuthResponse?) {
+                            super.onSuccess(code, data)
+                            data?.let {
+                                data.token.isNotNullOrEmpty().yes {
+                                    accessTokenPref = data.token!!
+                                    authIDPref = data.id.toString()
 
-                                //保存 `AuthResponseBean` 认证信息
-                                putAuthInfoPref(data)
+                                    //保存 `AuthResponseBean` 认证信息
+                                    putAuthInfoPref(data)
 
-                                //获取 `UserInfo`信息数据
-                                requestAuthenticatedUserInfo(owner)
-                            }.otherwise {
-                                //删除用户令牌信息
-                                requestDeleteAuthorization(owner, data.id)
+                                    //获取 `UserInfo`信息数据
+                                    requestAuthenticatedUserInfo(owner)
+                                }.otherwise {
+                                    //删除用户令牌信息
+                                    requestDeleteAuthorization(owner, data.id)
+                                }
                             }
                         }
-                    }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        mResultCallBack?.onFailure(code, message)
-                    }
-                })
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            mResultCallBack?.onFailure(code, message)
+                        }
+                    })
         }
     }
 
@@ -178,17 +179,53 @@ class LoginModel @Inject constructor(
         }
     }
 
-    override fun requestAuthenticatedUserInfo(owner: LifecycleOwner): LiveData<User> {
-        return userService.getAuthenticatedUserInfo(true).apply {
+    override fun requestAuthenticatedUserInfo(owner: LifecycleOwner, name: String?): LiveData<User> {
+        return name.isNotNullOrEmpty().yes {
+            requestUser(owner, name!!)
+        }.otherwise {
+            requestPersonInfo(owner)
+        }
+    }
+
+    override fun requestPersonInfo(owner: LifecycleOwner): LiveData<User> {
+        return userService.getPersonInfo(true).apply {
             observe(owner, object : LiveDataCallBack<User>() {
                 override fun onSuccess(code: String?, data: User?) {
                     super.onSuccess(code, data)
                     data?.let {
                         //`User`本地数据克隆到 `ModelUIModel` 内存数据
                         UserConversion.cloneDataFromUser(
-                            application,
-                            it,
-                            appGlobalModel.userObservable
+                                application,
+                                it,
+                                appGlobalModel.userObservable
+                        )
+
+                        //保存 `UserInfoBean` 用户数据
+                        putUserInfoPref(data)
+                        mResultCallBack?.onSuccess(code, true)
+                    }
+                }
+
+                override fun onFailure(code: String?, message: String?) {
+                    super.onFailure(code, message)
+                    clearTokenStorage()
+                    mResultCallBack?.onFailure(code, message)
+                }
+            })
+        }
+    }
+
+    override fun requestUser(owner: LifecycleOwner, name: String): LiveData<User> {
+        return userService.getUser(true, name).apply {
+            observe(owner, object : LiveDataCallBack<User>() {
+                override fun onSuccess(code: String?, data: User?) {
+                    super.onSuccess(code, data)
+                    data?.let {
+                        //`User`本地数据克隆到 `ModelUIModel` 内存数据
+                        UserConversion.cloneDataFromUser(
+                                application,
+                                it,
+                                appGlobalModel.userObservable
                         )
 
                         //保存 `UserInfoBean` 用户数据

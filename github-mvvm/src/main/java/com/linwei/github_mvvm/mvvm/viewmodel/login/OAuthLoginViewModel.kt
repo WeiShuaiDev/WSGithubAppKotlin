@@ -3,6 +3,7 @@ package com.linwei.github_mvvm.mvvm.viewmodel.login
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.ext.showShort
 import com.linwei.cams.ext.string
@@ -24,8 +25,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class OAuthLoginViewModel @Inject constructor(
-    val model: LoginModel,
-    application: Application
+        val model: LoginModel,
+        application: Application
 ) : BaseViewModel(model, application), OAuthLoginContract.ViewModel {
 
     /**

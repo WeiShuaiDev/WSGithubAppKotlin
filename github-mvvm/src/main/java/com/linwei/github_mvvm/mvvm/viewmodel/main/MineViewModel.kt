@@ -34,9 +34,9 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class MineViewModel @Inject constructor(
-    private val model: MineModel,
-    private val appGlobalModel: AppGlobalModel,
-    application: Application
+        private val model: MineModel,
+        private val appGlobalModel: AppGlobalModel,
+        application: Application
 ) : BaseViewModel(model, application), MineContract.ViewModel {
 
     /**
@@ -61,7 +61,9 @@ class MineViewModel @Inject constructor(
         get() = _pageByUserEvents
 
     override fun loadDataByRefresh() {
-        TODO("Not yet implemented")
+
+
+
     }
 
     override fun loadDataByLoadMore(page: Int) {
@@ -75,51 +77,51 @@ class MineViewModel @Inject constructor(
     override fun toOrgMembers(page: Int) {
         mLifecycleOwner?.let {
             model.requestOrgMembers(
-                it, page,
-                object : LiveDataCallBack<Page<List<User>>>() {
-                    override fun onSuccess(code: String?, data: Page<List<User>>?) {
-                        super.onSuccess(code, data)
+                    it, page,
+                    object : LiveDataCallBack<Page<List<User>>>() {
+                        override fun onSuccess(code: String?, data: Page<List<User>>?) {
+                            super.onSuccess(code, data)
 
-                        data?.result.isNotNullOrSize().yes {
-                            _pageByOrgMember.value = data
+                            data?.result.isNotNullOrSize().yes {
+                                _pageByOrgMember.value = data
 
-                            postUpdateStatus(StatusCode.SUCCESS)
-                        }.otherwise {
-                            postUpdateStatus(StatusCode.FAILURE)
+                                postUpdateStatus(StatusCode.SUCCESS)
+                            }.otherwise {
+                                postUpdateStatus(StatusCode.FAILURE)
+                            }
                         }
-                    }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        postUpdateStatus(StatusCode.ERROR)
-                    }
-                })
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            postUpdateStatus(StatusCode.ERROR)
+                        }
+                    })
         }
     }
 
     override fun toUserEvents(page: Int) {
         mLifecycleOwner?.let {
             model.requestUserEvents(
-                it, page,
-                object : LiveDataCallBack<Page<List<Event>>>() {
-                    override fun onSuccess(code: String?, data: Page<List<Event>>?) {
-                        super.onSuccess(code, data)
+                    it, page,
+                    object : LiveDataCallBack<Page<List<Event>>>() {
+                        override fun onSuccess(code: String?, data: Page<List<Event>>?) {
+                            super.onSuccess(code, data)
 
-                        data?.result.isNotNullOrSize().yes {
-                            _pageByUserEvents.value = data
+                            data?.result.isNotNullOrSize().yes {
+                                _pageByUserEvents.value = data
 
-                            postUpdateStatus(StatusCode.SUCCESS)
-                        }.otherwise {
+                                postUpdateStatus(StatusCode.SUCCESS)
+                            }.otherwise {
 
-                            postUpdateStatus(StatusCode.FAILURE)
+                                postUpdateStatus(StatusCode.FAILURE)
+                            }
                         }
-                    }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        postUpdateStatus(StatusCode.ERROR)
-                    }
-                })
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            postUpdateStatus(StatusCode.ERROR)
+                        }
+                    })
         }
     }
 
@@ -127,30 +129,30 @@ class MineViewModel @Inject constructor(
     override fun toNotifyData() {
         mLifecycleOwner?.let {
             model.requestNotify(
-                it, null, null,
-                1,
-                object : LiveDataCallBack<Page<List<Notification>>>() {
-                    override fun onSuccess(code: String?, data: Page<List<Notification>>?) {
-                        super.onSuccess(code, data)
+                    it, null, null,
+                    1,
+                    object : LiveDataCallBack<Page<List<Notification>>>() {
+                        override fun onSuccess(code: String?, data: Page<List<Notification>>?) {
+                            super.onSuccess(code, data)
 
-                        data?.result.isNotNullOrSize().yes {
-                            _notifyColor.value = R.color.colorNotifyActiveText.color()
+                            data?.result.isNotNullOrSize().yes {
+                                _notifyColor.value = R.color.colorNotifyActiveText.color()
 
-                            postUpdateStatus(StatusCode.SUCCESS)
-                        }.otherwise {
+                                postUpdateStatus(StatusCode.SUCCESS)
+                            }.otherwise {
+                                _notifyColor.value = R.color.colorNotifyNormalText.color()
+
+                                postUpdateStatus(StatusCode.FAILURE)
+                            }
+                        }
+
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
                             _notifyColor.value = R.color.colorNotifyNormalText.color()
 
-                            postUpdateStatus(StatusCode.FAILURE)
+                            postUpdateStatus(StatusCode.ERROR)
                         }
-                    }
-
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        _notifyColor.value = R.color.colorNotifyNormalText.color()
-
-                        postUpdateStatus(StatusCode.ERROR)
-                    }
-                })
+                    })
         }
     }
 

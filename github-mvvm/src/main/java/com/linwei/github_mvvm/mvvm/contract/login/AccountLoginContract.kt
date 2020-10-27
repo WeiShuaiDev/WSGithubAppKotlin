@@ -40,16 +40,16 @@ interface AccountLoginContract {
          * @param liveData [MutableLiveData]
          */
         fun requestAccountLogin(
-            owner: LifecycleOwner,
-            username: String,
-            password: String,
-            observer: LiveDataCallBack<Boolean>
+                owner: LifecycleOwner,
+                username: String,
+                password: String,
+                observer: LiveDataCallBack<Boolean>
         )
 
         /**
          * 请求创建该账号认证 `Token` 令牌
          * @param owner [LifecycleOwner]
-         * @return LiveData [AuthResponseBean]
+         * @return LiveData [LiveData]
          */
         fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponse>
 
@@ -57,18 +57,30 @@ interface AccountLoginContract {
          * 请求删除该账号认证 `Token` 令牌
          * @param owner [LifecycleOwner]
          * @param id [Int]
-         * @return  LiveData [Any]
+         * @return  LiveData [LiveData]
          */
         fun requestDeleteAuthorization(owner: LifecycleOwner, id: Int): LiveData<Any>
+
+
+        /**
+         * @param owner [LifecycleOwner]
+         * @return LiveData [LiveData]
+         */
+        fun requestAuthenticatedUserInfo(owner: LifecycleOwner, name: String? = ""): LiveData<User>
 
         /**
          * 请求用户信息
          * @param owner [LifecycleOwner]
-         * @return LiveData [UserInfoBean]
+         * @return LiveData [LiveData]
          */
-        fun requestAuthenticatedUserInfo(
-            owner: LifecycleOwner
-        ): LiveData<User>
+        fun requestPersonInfo(owner: LifecycleOwner): LiveData<User>
+
+        /**
+         * 请求第三方用户信息
+         * @param owner [LifecycleOwner]
+         * @param liveData [LiveData]
+         */
+        fun requestUser(owner: LifecycleOwner, name: String = ""): LiveData<User>
 
         /**
          * 退出登录

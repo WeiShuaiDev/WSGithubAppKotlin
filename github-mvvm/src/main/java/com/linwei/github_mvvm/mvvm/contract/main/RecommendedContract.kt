@@ -6,7 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
+import com.linwei.github_mvvm.mvvm.model.bean.Repository
 import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
+import retrofit2.http.Header
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * ---------------------------------------------------------------------
@@ -37,14 +41,51 @@ interface RecommendedContract {
          * @param owner [LifecycleOwner]
          * @param languageType [String]
          * @param since [String]
-         * @param liveData [MutableLiveData]
+         * @param observer [LiveDataCallBack]
+         * @return  [TrendingRepoModel]
          */
         fun requestTrendData(
-            owner: LifecycleOwner,
-            languageType: String,
-            since: String,
-            observer: LiveDataCallBack<List<TrendingRepoModel>>
+                owner: LifecycleOwner,
+                languageType: String,
+                since: String,
+                observer: LiveDataCallBack<List<TrendingRepoModel>>
         ): LiveData<List<TrendingRepoModel>>
+
+        /**
+         * @param owner [LifecycleOwner]
+         * @param forceNetWork [Boolean]
+         * @param page [Int]
+         * @param sort [String]
+         * @param per_page [Int]
+         * @param observer [LiveDataCallBack]
+         * @return  [Repository]
+         */
+        fun requestUserRepository100StatusDao(
+                owner: LifecycleOwner,
+                forceNetWork: Boolean,
+                page: Int,
+                sort: String,
+                per_page: Int,
+                observer: LiveDataCallBack<Page<List<Repository>>>
+        ): LiveData<Page<List<Repository>>>
+
+        /**
+         * @param owner [LifecycleOwner]
+         * @param forceNetWork [Boolean]
+         * @param page [Int]
+         * @param sort [String]
+         * @param per_page [Int]
+         * @param observer [LiveDataCallBack]
+         * @return  [Repository]
+         */
+        fun requestGetStarredRepos(
+                owner: LifecycleOwner,
+                forceNetWork: Boolean,
+                page: Int,
+                sort: String,
+                per_page: Int,
+                observer: LiveDataCallBack<Page<List<Repository>>>
+        ): LiveData<Page<List<Repository>>>
     }
 
 }

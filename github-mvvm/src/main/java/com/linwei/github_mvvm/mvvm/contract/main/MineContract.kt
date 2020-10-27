@@ -52,7 +52,6 @@ interface MineContract {
     }
 
     interface Model {
-
         /**
          * 网络请求关注数据
          * @param owner [LifecycleOwner]
@@ -60,9 +59,9 @@ interface MineContract {
          * @param liveData [MutableLiveData]
          */
         fun requestOrgMembers(
-            owner: LifecycleOwner,
-            page: Int,
-            observer: LiveDataCallBack<Page<List<User>>>
+                owner: LifecycleOwner,
+                page: Int,
+                observer: LiveDataCallBack<Page<List<User>>>
         ): LiveData<Page<List<User>>>
 
         /**
@@ -72,9 +71,9 @@ interface MineContract {
          * @param liveData [MutableLiveData]
          */
         fun queryOrgMembers(
-            owner: LifecycleOwner,
-            org: String,
-            observer: LiveDataCallBack<Page<List<User>>>
+                owner: LifecycleOwner,
+                org: String,
+                observer: LiveDataCallBack<Page<List<User>>>
         ): LiveData<OrgMemberEntity>
 
         /**
@@ -84,9 +83,9 @@ interface MineContract {
          * @param liveData [MutableLiveData]
          */
         fun requestUserEvents(
-            owner: LifecycleOwner,
-            page: Int,
-            observer: LiveDataCallBack<Page<List<Event>>>
+                owner: LifecycleOwner,
+                page: Int,
+                observer: LiveDataCallBack<Page<List<Event>>>
         ): LiveData<Page<List<Event>>>
 
         /**
@@ -96,9 +95,9 @@ interface MineContract {
          * @param liveData [MutableLiveData]
          */
         fun queryUserEvents(
-            owner: LifecycleOwner,
-            name: String,
-            observer: LiveDataCallBack<Page<List<Event>>>
+                owner: LifecycleOwner,
+                name: String,
+                observer: LiveDataCallBack<Page<List<Event>>>
         ): LiveData<UserEventEntity>
 
 
@@ -111,11 +110,11 @@ interface MineContract {
          * @param liveData [MutableLiveData]
          */
         fun requestNotify(
-            owner: LifecycleOwner,
-            all: Boolean?,
-            participating: Boolean?,
-            page: Int,
-            observer: LiveDataCallBack<Page<List<Notification>>>
+                owner: LifecycleOwner,
+                all: Boolean?,
+                participating: Boolean?,
+                page: Int,
+                observer: LiveDataCallBack<Page<List<Notification>>>
         ): LiveData<Page<List<Notification>>>
     }
 }

@@ -37,10 +37,11 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class MineModel @Inject constructor(
-    private val appGlobalModel: AppGlobalModel,
-    dataRepository: DataMvvmRepository
+        private val appGlobalModel: AppGlobalModel,
+        private val loginModel: LoginModel,
+        dataRepository: DataMvvmRepository
 ) :
-    BaseModel(dataRepository), MineContract.Model {
+        BaseModel(dataRepository), MineContract.Model {
 
     /**
      *  通知服务接口
@@ -63,151 +64,152 @@ class MineModel @Inject constructor(
         dataRepository.obtainRoomDataBase(LocalDatabase::class.java).userDao()
     }
 
+
     override fun requestOrgMembers(
-        owner: LifecycleOwner,
-        page: Int,
-        observer: LiveDataCallBack<Page<List<User>>>
+            owner: LifecycleOwner,
+            page: Int,
+            observer: LiveDataCallBack<Page<List<User>>>
     ): LiveData<Page<List<User>>> {
         val org: String? = appGlobalModel.userObservable.login
 
         return userService.getOrgMembers(true, org ?: "", page).apply {
             observe(
-                owner,
-                object : LiveDataCallBack<Page<List<User>>>() {
-                    override fun onSuccess(code: String?, data: Page<List<User>>?) {
-                        super.onSuccess(code, data)
-                        data?.let {
-                            if (page == 1) {
-                                val entity = OrgMemberEntity(
-                                    org = org,
-                                    data = GsonUtils.toJsonString(it)
-                                )
-                                //userDao.insertOrgMember(entity)
+                    owner,
+                    object : LiveDataCallBack<Page<List<User>>>() {
+                        override fun onSuccess(code: String?, data: Page<List<User>>?) {
+                            super.onSuccess(code, data)
+                            data?.let {
+                                if (page == 1) {
+                                    val entity = OrgMemberEntity(
+                                            org = org,
+                                            data = GsonUtils.toJsonString(it)
+                                    )
+                                    //userDao.insertOrgMember(entity)
+                                }
+
+                                observer.onSuccess(code, data)
+
+                                Timber.i(" request Http=\"orgs/{org}/members\"  Data Success~")
                             }
-
-                            observer.onSuccess(code, data)
-
-                            Timber.i(" request Http=\"orgs/{org}/members\"  Data Success~")
                         }
-                    }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        //queryOrgMembers(owner, org?:"", observer)
-                        Timber.i(" request Http=\"orgs/{org}/members\" Data Failed~")
-                    }
-                })
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            //queryOrgMembers(owner, org?:"", observer)
+                            Timber.i(" request Http=\"orgs/{org}/members\" Data Failed~")
+                        }
+                    })
         }
     }
 
 
     override fun queryOrgMembers(
-        owner: LifecycleOwner,
-        org: String,
-        observer: LiveDataCallBack<Page<List<User>>>
+            owner: LifecycleOwner,
+            org: String,
+            observer: LiveDataCallBack<Page<List<User>>>
     ): LiveData<OrgMemberEntity> {
         return userDao.queryOrgMember(org).apply {
             observe(owner,
-                object :
-                    LiveDataCallBack<OrgMemberEntity>() {
-                    override fun onSuccess(code: String?, data: OrgMemberEntity?) {
-                        super.onSuccess(code, data)
-                        data?.let {
-                            val page = Page<List<User>>()
-                            page.result =
-                                GsonUtils.parserJsonToArrayBeans(it.data, User::class.java)
+                    object :
+                            LiveDataCallBack<OrgMemberEntity>() {
+                        override fun onSuccess(code: String?, data: OrgMemberEntity?) {
+                            super.onSuccess(code, data)
+                            data?.let {
+                                val page = Page<List<User>>()
+                                page.result =
+                                        GsonUtils.parserJsonToArrayBeans(it.data, User::class.java)
 
-                            observer.onSuccess(code, page)
+                                observer.onSuccess(code, page)
 
-                            Timber.i(" request DB=\"orgs/{org}/members\" Data Success~")
+                                Timber.i(" request DB=\"orgs/{org}/members\" Data Success~")
+                            }
                         }
-                    }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        observer.onFailure(code, message)
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            observer.onFailure(code, message)
 
-                        Timber.i(" request DB=\"orgs/{org}/members\" Data failed~")
-                    }
-                })
+                            Timber.i(" request DB=\"orgs/{org}/members\" Data failed~")
+                        }
+                    })
         }
     }
 
     override fun requestUserEvents(
-        owner: LifecycleOwner,
-        page: Int,
-        observer: LiveDataCallBack<Page<List<Event>>>
+            owner: LifecycleOwner,
+            page: Int,
+            observer: LiveDataCallBack<Page<List<Event>>>
     ): LiveData<Page<List<Event>>> {
         val user: String? = appGlobalModel.userObservable.login
 
         return userService.getUserEvents(true, user ?: "", page).apply {
             observe(
-                owner,
-                object : LiveDataCallBack<Page<List<Event>>>() {
-                    override fun onSuccess(code: String?, data: Page<List<Event>>?) {
-                        super.onSuccess(code, data)
-                        data?.let {
-                            if (page == 1) {
-                                val entity = UserEventEntity(
-                                    userName = user,
-                                    data = GsonUtils.toJsonString(it)
-                                )
-                                //userDao.insertUserEvent(entity)
+                    owner,
+                    object : LiveDataCallBack<Page<List<Event>>>() {
+                        override fun onSuccess(code: String?, data: Page<List<Event>>?) {
+                            super.onSuccess(code, data)
+                            data?.let {
+                                if (page == 1) {
+                                    val entity = UserEventEntity(
+                                            userName = user,
+                                            data = GsonUtils.toJsonString(it)
+                                    )
+                                    //userDao.insertUserEvent(entity)
+                                }
+
+                                observer.onSuccess(code, data)
+
+                                Timber.i(" request Http=\"users/{user}/events\" Data Success~")
                             }
-
-                            observer.onSuccess(code, data)
-
-                            Timber.i(" request Http=\"users/{user}/events\" Data Success~")
                         }
-                    }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        //queryUserEvents(owner, user?:"", observer)
-                        Timber.i(" request Http=\"users/{user}/events\" Data Failed~")
-                    }
-                })
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            //queryUserEvents(owner, user?:"", observer)
+                            Timber.i(" request Http=\"users/{user}/events\" Data Failed~")
+                        }
+                    })
         }
     }
 
     override fun queryUserEvents(
-        owner: LifecycleOwner,
-        name: String,
-        observer: LiveDataCallBack<Page<List<Event>>>
+            owner: LifecycleOwner,
+            name: String,
+            observer: LiveDataCallBack<Page<List<Event>>>
     ): LiveData<UserEventEntity> {
         return userDao.queryUserEvent(name).apply {
             observe(owner,
-                object :
-                    LiveDataCallBack<UserEventEntity>() {
-                    override fun onSuccess(code: String?, data: UserEventEntity?) {
-                        super.onSuccess(code, data)
-                        data?.let {
-                            val page = Page<List<Event>>()
-                            page.result =
-                                GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java)
+                    object :
+                            LiveDataCallBack<UserEventEntity>() {
+                        override fun onSuccess(code: String?, data: UserEventEntity?) {
+                            super.onSuccess(code, data)
+                            data?.let {
+                                val page = Page<List<Event>>()
+                                page.result =
+                                        GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java)
 
-                            observer.onSuccess(code, page)
+                                observer.onSuccess(code, page)
 
-                            Timber.i(" request DB=\"users/{user}/events\" Data Success~")
+                                Timber.i(" request DB=\"users/{user}/events\" Data Success~")
+                            }
                         }
-                    }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        observer.onFailure(code, message)
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            observer.onFailure(code, message)
 
-                        Timber.i(" request DB=\"users/{user}/events\" Data failed~")
-                    }
-                })
+                            Timber.i(" request DB=\"users/{user}/events\" Data failed~")
+                        }
+                    })
         }
     }
 
     override fun requestNotify(
-        owner: LifecycleOwner,
-        all: Boolean?,
-        participating: Boolean?,
-        page: Int,
-        observer: LiveDataCallBack<Page<List<Notification>>>
+            owner: LifecycleOwner,
+            all: Boolean?,
+            participating: Boolean?,
+            page: Int,
+            observer: LiveDataCallBack<Page<List<Notification>>>
     ): LiveData<Page<List<Notification>>> {
 
         return if (all == null || participating == null) {
@@ -216,22 +218,22 @@ class MineModel @Inject constructor(
             notificationService.getNotification(true, all, participating, page)
         }.apply {
             observe(
-                owner,
-                object : LiveDataCallBack<Page<List<Notification>>>() {
-                    override fun onSuccess(code: String?, data: Page<List<Notification>>?) {
-                        super.onSuccess(code, data)
-                        data?.let {
-                            observer.onSuccess(code, data)
-                            Timber.i(" request Http=\"notifications\" Data success~")
+                    owner,
+                    object : LiveDataCallBack<Page<List<Notification>>>() {
+                        override fun onSuccess(code: String?, data: Page<List<Notification>>?) {
+                            super.onSuccess(code, data)
+                            data?.let {
+                                observer.onSuccess(code, data)
+                                Timber.i(" request Http=\"notifications\" Data success~")
+                            }
                         }
-                    }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        observer.onFailure(code, message)
-                        Timber.i(" request Http=\"notifications\" Data Failed~")
-                    }
-                })
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            observer.onFailure(code, message)
+                            Timber.i(" request Http=\"notifications\" Data Failed~")
+                        }
+                    })
         }
     }
 }
