@@ -37,20 +37,11 @@ interface OAuthLoginContract {
          * @param code [String] 校验码
          * @param liveData [MutableLiveData]
          */
-        fun requestOAuthLogin(
-            owner: LifecycleOwner,
-            code: String,
-            observer: LiveDataCallBack<Boolean>
+        fun obtainOAuthLogin(
+                owner: LifecycleOwner,
+                code: String,
+                observer: LiveDataCallBack<User>
         )
-
-        /**
-         * 请求创建该账号标识码 `Code`
-         * @param owner [LifecycleOwner]
-         * @return LiveData [AuthResponseBean]
-         */
-        fun requestCreateCodeAuthorization(
-            owner: LifecycleOwner,
-            code: String): LiveData<AccessToken>
     }
 
 }

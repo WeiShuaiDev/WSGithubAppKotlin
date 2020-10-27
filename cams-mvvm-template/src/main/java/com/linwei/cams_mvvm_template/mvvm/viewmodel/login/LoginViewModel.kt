@@ -16,9 +16,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class LoginViewModel @Inject constructor(
-    model: LoginModel,
-    application: Application
+        model: LoginModel,
+        application: Application
 ) : BaseViewModel(model, application), LoginContract.ViewModel {
-
 
 }

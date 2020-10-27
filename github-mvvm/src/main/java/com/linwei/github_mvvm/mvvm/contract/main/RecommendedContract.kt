@@ -44,48 +44,12 @@ interface RecommendedContract {
          * @param observer [LiveDataCallBack]
          * @return  [TrendingRepoModel]
          */
-        fun requestTrendData(
+        fun obtainTrendData(
                 owner: LifecycleOwner,
                 languageType: String,
                 since: String,
                 observer: LiveDataCallBack<List<TrendingRepoModel>>
-        ): LiveData<List<TrendingRepoModel>>
-
-        /**
-         * @param owner [LifecycleOwner]
-         * @param forceNetWork [Boolean]
-         * @param page [Int]
-         * @param sort [String]
-         * @param per_page [Int]
-         * @param observer [LiveDataCallBack]
-         * @return  [Repository]
-         */
-        fun requestUserRepository100StatusDao(
-                owner: LifecycleOwner,
-                forceNetWork: Boolean,
-                page: Int,
-                sort: String,
-                per_page: Int,
-                observer: LiveDataCallBack<Page<List<Repository>>>
-        ): LiveData<Page<List<Repository>>>
-
-        /**
-         * @param owner [LifecycleOwner]
-         * @param forceNetWork [Boolean]
-         * @param page [Int]
-         * @param sort [String]
-         * @param per_page [Int]
-         * @param observer [LiveDataCallBack]
-         * @return  [Repository]
-         */
-        fun requestGetStarredRepos(
-                owner: LifecycleOwner,
-                forceNetWork: Boolean,
-                page: Int,
-                sort: String,
-                per_page: Int,
-                observer: LiveDataCallBack<Page<List<Repository>>>
-        ): LiveData<Page<List<Repository>>>
+        )
     }
 
 }

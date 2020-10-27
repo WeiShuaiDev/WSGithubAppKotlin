@@ -12,7 +12,8 @@ import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.passwordPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
-import com.linwei.github_mvvm.mvvm.model.repository.service.LoginModel
+import com.linwei.github_mvvm.mvvm.model.bean.User
+import com.linwei.github_mvvm.mvvm.model.repository.LoginModel
 import javax.inject.Inject
 
 /**
@@ -25,8 +26,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class AccountLoginViewModel @Inject constructor(
-    val model: LoginModel,
-    application: Application
+        val model: LoginModel,
+        application: Application
 ) : BaseViewModel(model, application), AccountLoginContract.ViewModel {
 
     /**
@@ -73,12 +74,12 @@ class AccountLoginViewModel @Inject constructor(
         mLifecycleOwner?.let {
             postUpdateStatus(StatusCode.START)
 
-            model.requestAccountLogin(
+            model.obtainAccountLogin(
                 it,
                 username!!,
                 password!!,
-                object : LiveDataCallBack<Boolean>() {
-                    override fun onSuccess(code: String?, data: Boolean?) {
+                object : LiveDataCallBack<User>() {
+                    override fun onSuccess(code: String?, data: User?) {
                         super.onSuccess(code, data)
                         postUpdateStatus(StatusCode.END)
 

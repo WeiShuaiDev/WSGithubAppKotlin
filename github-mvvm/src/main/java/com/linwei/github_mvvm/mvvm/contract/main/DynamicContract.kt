@@ -38,22 +38,11 @@ interface DynamicContract {
          * @param page [Int]
          * @param observer [MutableLiveData]
          */
-        fun requestReceivedEvent(
+        fun obtainReceivedEvent(
             owner: LifecycleOwner,
             page: Int,
             observer: LiveDataCallBack<Page<List<Event>>>
-        ): LiveData<Page<List<Event>>>
+        )
 
-        /**
-         * 查询数据库用户接收到的事件数据
-         * @param owner [LifecycleOwner]
-         * @param id [Int]
-         * @param observer [MutableLiveData]
-         */
-        fun queryReceivedEvent(
-            owner: LifecycleOwner,
-            id: Int,
-            observer: LiveDataCallBack<Page<List<Event>>>
-        ): LiveData<ReceivedEventEntity>
     }
 }

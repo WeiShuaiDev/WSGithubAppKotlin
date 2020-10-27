@@ -18,7 +18,7 @@ import java.util.ArrayList
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface RepoService {
+interface ReposService {
 
     /**
      * 用户仓库数据

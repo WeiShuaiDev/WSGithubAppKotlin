@@ -1,22 +1,32 @@
 package com.linwei.github_mvvm.mvvm.model.repository.service
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import com.linwei.cams.ext.isNotNullOrEmpty
-import com.linwei.cams.ext.no
-import com.linwei.cams.ext.string
+import android.app.Application
+import android.os.Build
+import android.util.Base64
+import android.webkit.CookieManager
+import android.webkit.WebStorage
+import androidx.lifecycle.*
+import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams.http.config.ApiStateConstant
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.accessTokenPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authIDPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.authInfoPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.putAuthInfoPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.putUserInfoPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userBasicCodePref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userInfoPref
+import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
 import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.api.Api
-import com.linwei.github_mvvm.mvvm.model.api.service.RepoService
-import com.linwei.github_mvvm.mvvm.model.bean.Page
-import com.linwei.github_mvvm.mvvm.model.bean.Repository
-import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
+import com.linwei.github_mvvm.mvvm.model.api.service.AuthService
+import com.linwei.github_mvvm.mvvm.model.api.service.ReposService
+import com.linwei.github_mvvm.mvvm.model.api.service.UserService
+import com.linwei.github_mvvm.mvvm.model.bean.*
+import com.linwei.github_mvvm.mvvm.model.conversion.UserConversion
 import com.linwei.github_mvvm.mvvm.model.repository.db.LocalDatabase
 import com.linwei.github_mvvm.mvvm.model.repository.db.dao.ReposDao
 import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
@@ -27,22 +37,23 @@ import javax.inject.Inject
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/8/12
+ * @Time: 2020/10/27
  * @Contact: linwei9605@gmail.com"d
  * @Follow: https://github.com/WeiShuaiDev
  * @Description:
  *-----------------------------------------------------------------------
  */
-class RecommendedModel @Inject constructor(
+open class ReposRepository @Inject constructor(
+        private val application: Application,
         private val appGlobalModel: AppGlobalModel,
         dataRepository: DataMvvmRepository
-) : BaseModel(dataRepository), RecommendedContract.Model {
+) : BaseModel(dataRepository) {
 
     /**
      *  仓库服务接口
      */
-    private val repoService: RepoService by lazy {
-        dataRepository.obtainRetrofitService(RepoService::class.java)
+    private val reposService: ReposService by lazy {
+        dataRepository.obtainRetrofitService(ReposService::class.java)
     }
 
     /**
@@ -52,14 +63,14 @@ class RecommendedModel @Inject constructor(
         dataRepository.obtainRoomDataBase(LocalDatabase::class.java).reposDao()
     }
 
-    override fun requestTrendData(
+    fun requestTrendData(
             owner: LifecycleOwner,
             languageType: String,
             since: String,
             observer: LiveDataCallBack<List<TrendingRepoModel>>
     ): LiveData<List<TrendingRepoModel>> {
 
-        return repoService.getTrendDataAPI(true, Api.API_TOKEN, since, languageType).apply {
+        return reposService.getTrendDataAPI(true, Api.API_TOKEN, since, languageType).apply {
             observe(
                     owner,
                     object : LiveDataCallBack<List<TrendingRepoModel>>() {
@@ -71,25 +82,21 @@ class RecommendedModel @Inject constructor(
                                         data = GsonUtils.toJsonString(it)
                                 )
                                 //userDao.insertReceivedEvent(entity)
-
-                                observer.onSuccess(code, data)
-
-                                Timber.i(" request Http=\"/trend/list\" Data Success~")
                             }
+                            observer.onSuccess(code, data)
                         }
 
                         override fun onFailure(code: String?, message: String?) {
                             super.onFailure(code, message)
-                            //queryReceivedEvent(owner, 0, observer)
-                            Timber.i(" request Http=\"/trend/list\" Data Failed~")
+                            observer.onFailure(code, message)
                         }
                     })
         }
     }
 
-    override fun requestUserRepository100StatusDao(
+
+    fun requestUserRepository100StatusDao(
             owner: LifecycleOwner,
-            forceNetWork: Boolean,
             page: Int,
             sort: String,
             per_page: Int,
@@ -101,34 +108,27 @@ class RecommendedModel @Inject constructor(
             return@no
         }
 
-        return repoService.getUserRepository100StatusDao(true, name!!, page, sort, per_page).apply {
+        return reposService.getUserRepository100StatusDao(true, name!!, page, sort, per_page).apply {
             observe(
                     owner,
                     object : LiveDataCallBack<Page<List<Repository>>>() {
                         override fun onSuccess(code: String?, data: Page<List<Repository>>?) {
                             super.onSuccess(code, data)
-                            data?.let {
-
-                                observer.onSuccess(code, data)
-
-                                Timber.i(" request Http=\"users/{user}/repos\" Data Success~")
-                            }
+                            observer.onSuccess(code, data)
                         }
 
                         override fun onFailure(code: String?, message: String?) {
                             super.onFailure(code, message)
 
                             observer.onFailure(code, message)
-                            Timber.i(" request Http=\"users/{user}/repos\" Data Failed~")
                         }
                     })
         }
 
     }
 
-    override fun requestGetStarredRepos(
+    private fun requestGetStarredRepos(
             owner: LifecycleOwner,
-            forceNetWork: Boolean,
             page: Int,
             sort: String,
             per_page: Int,
@@ -140,25 +140,18 @@ class RecommendedModel @Inject constructor(
             return@no
         }
 
-        return repoService.getStarredRepos(true, name!!, page, sort, per_page).apply {
+        return reposService.getStarredRepos(true, name!!, page, sort, per_page).apply {
             observe(
                     owner,
                     object : LiveDataCallBack<Page<List<Repository>>>() {
                         override fun onSuccess(code: String?, data: Page<List<Repository>>?) {
                             super.onSuccess(code, data)
-                            data?.let {
-
-                                observer.onSuccess(code, data)
-
-                                Timber.i(" request Http=\"users/{user}/starred\" Data Success~")
-                            }
+                            observer.onSuccess(code, data)
                         }
 
                         override fun onFailure(code: String?, message: String?) {
                             super.onFailure(code, message)
-
                             observer.onFailure(code, message)
-                            Timber.i(" request Http=\"users/{user}/starred\" Data Failed~")
                         }
                     })
         }

@@ -39,64 +39,11 @@ interface AccountLoginContract {
          * @param password [String] 密码
          * @param liveData [MutableLiveData]
          */
-        fun requestAccountLogin(
+        fun obtainAccountLogin(
                 owner: LifecycleOwner,
                 username: String,
                 password: String,
-                observer: LiveDataCallBack<Boolean>
+                observer: LiveDataCallBack<User>
         )
-
-        /**
-         * 请求创建该账号认证 `Token` 令牌
-         * @param owner [LifecycleOwner]
-         * @return LiveData [LiveData]
-         */
-        fun requestCreateAuthorization(owner: LifecycleOwner): LiveData<AuthResponse>
-
-        /**
-         * 请求删除该账号认证 `Token` 令牌
-         * @param owner [LifecycleOwner]
-         * @param id [Int]
-         * @return  LiveData [LiveData]
-         */
-        fun requestDeleteAuthorization(owner: LifecycleOwner, id: Int): LiveData<Any>
-
-
-        /**
-         * @param owner [LifecycleOwner]
-         * @return LiveData [LiveData]
-         */
-        fun requestAuthenticatedUserInfo(owner: LifecycleOwner, name: String? = ""): LiveData<User>
-
-        /**
-         * 请求用户信息
-         * @param owner [LifecycleOwner]
-         * @return LiveData [LiveData]
-         */
-        fun requestPersonInfo(owner: LifecycleOwner): LiveData<User>
-
-        /**
-         * 请求第三方用户信息
-         * @param owner [LifecycleOwner]
-         * @param liveData [LiveData]
-         */
-        fun requestUser(owner: LifecycleOwner, name: String = ""): LiveData<User>
-
-        /**
-         * 退出登录
-         */
-        fun signOut()
-
-        /**
-         * 清除所有的 `Token` 令牌
-         */
-        fun clearTokenStorage()
-
-        /**
-         * 清除 `Cookies`
-         */
-        fun clearCookies()
-
     }
-
 }

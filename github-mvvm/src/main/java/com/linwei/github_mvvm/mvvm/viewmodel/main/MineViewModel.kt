@@ -2,7 +2,6 @@ package com.linwei.github_mvvm.mvvm.viewmodel.main
 
 import android.app.Application
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.color
@@ -19,9 +18,7 @@ import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Notification
 import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.bean.User
-import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
-import com.linwei.github_mvvm.mvvm.model.repository.service.MineModel
-import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
+import com.linwei.github_mvvm.mvvm.model.repository.MineModel
 import javax.inject.Inject
 
 /**
@@ -76,7 +73,7 @@ class MineViewModel @Inject constructor(
 
     override fun toOrgMembers(page: Int) {
         mLifecycleOwner?.let {
-            model.requestOrgMembers(
+            model.obtainOrgMembers(
                     it, page,
                     object : LiveDataCallBack<Page<List<User>>>() {
                         override fun onSuccess(code: String?, data: Page<List<User>>?) {
@@ -101,7 +98,7 @@ class MineViewModel @Inject constructor(
 
     override fun toUserEvents(page: Int) {
         mLifecycleOwner?.let {
-            model.requestUserEvents(
+            model.obtainUserEvents(
                     it, page,
                     object : LiveDataCallBack<Page<List<Event>>>() {
                         override fun onSuccess(code: String?, data: Page<List<Event>>?) {
@@ -128,7 +125,7 @@ class MineViewModel @Inject constructor(
 
     override fun toNotifyData() {
         mLifecycleOwner?.let {
-            model.requestNotify(
+            model.obtainNotify(
                     it, null, null,
                     1,
                     object : LiveDataCallBack<Page<List<Notification>>>() {

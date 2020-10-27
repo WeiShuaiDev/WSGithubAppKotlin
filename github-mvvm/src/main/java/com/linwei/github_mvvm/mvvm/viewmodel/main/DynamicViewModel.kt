@@ -7,14 +7,12 @@ import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
-import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
-import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
 import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
-import com.linwei.github_mvvm.mvvm.model.repository.service.DynamicModel
+import com.linwei.github_mvvm.mvvm.model.repository.DynamicModel
 import javax.inject.Inject
 
 /**
@@ -27,8 +25,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class DynamicViewModel @Inject constructor(
-    private val model: DynamicModel,
-    application: Application
+        private val model: DynamicModel,
+        application: Application
 ) : BaseViewModel(model, application), DynamicContract.ViewModel {
 
     /**
@@ -40,7 +38,7 @@ class DynamicViewModel @Inject constructor(
 
     override fun toReceivedEvent(page: Int) {
         mLifecycleOwner?.let {
-            model.requestReceivedEvent(
+            model.obtainReceivedEvent(
                 it,
                 page,
                 object : LiveDataCallBack<Page<List<Event>>>() {

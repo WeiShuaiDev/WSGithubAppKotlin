@@ -20,10 +20,10 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 open class BaseViewModel @Inject constructor(
-    private val model: BaseModel,
-    application: Application
+        private val model: BaseModel,
+        application: Application
 ) : AndroidViewModel(application),
-    IViewModel {
+        IViewModel {
 
     /**
      * [MessageLiveEvent] 消息事件总线

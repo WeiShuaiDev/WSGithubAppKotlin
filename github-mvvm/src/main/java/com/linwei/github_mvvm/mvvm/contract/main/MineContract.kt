@@ -58,23 +58,11 @@ interface MineContract {
          * @param page [Int]
          * @param liveData [MutableLiveData]
          */
-        fun requestOrgMembers(
+        fun obtainOrgMembers(
                 owner: LifecycleOwner,
                 page: Int,
                 observer: LiveDataCallBack<Page<List<User>>>
-        ): LiveData<Page<List<User>>>
-
-        /**
-         * 数据库查询关注数据
-         * @param owner [LifecycleOwner]
-         * @param org [String]
-         * @param liveData [MutableLiveData]
-         */
-        fun queryOrgMembers(
-                owner: LifecycleOwner,
-                org: String,
-                observer: LiveDataCallBack<Page<List<User>>>
-        ): LiveData<OrgMemberEntity>
+        )
 
         /**
          * 网络请求产生事件数据
@@ -82,24 +70,11 @@ interface MineContract {
          * @param page [Int]
          * @param liveData [MutableLiveData]
          */
-        fun requestUserEvents(
+        fun obtainUserEvents(
                 owner: LifecycleOwner,
                 page: Int,
                 observer: LiveDataCallBack<Page<List<Event>>>
-        ): LiveData<Page<List<Event>>>
-
-        /**
-         * 数据库查询关注数据
-         * @param owner [LifecycleOwner]
-         * @param org [String]
-         * @param liveData [MutableLiveData]
-         */
-        fun queryUserEvents(
-                owner: LifecycleOwner,
-                name: String,
-                observer: LiveDataCallBack<Page<List<Event>>>
-        ): LiveData<UserEventEntity>
-
+        )
 
         /**
          * 网络请求通知数据
@@ -109,12 +84,12 @@ interface MineContract {
          * @param page [Int]
          * @param liveData [MutableLiveData]
          */
-        fun requestNotify(
+        fun obtainNotify(
                 owner: LifecycleOwner,
                 all: Boolean?,
                 participating: Boolean?,
                 page: Int,
                 observer: LiveDataCallBack<Page<List<Notification>>>
-        ): LiveData<Page<List<Notification>>>
+        )
     }
 }

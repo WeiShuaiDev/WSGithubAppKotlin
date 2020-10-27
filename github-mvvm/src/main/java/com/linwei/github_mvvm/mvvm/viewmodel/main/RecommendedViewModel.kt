@@ -15,7 +15,7 @@ import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
 import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
 import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
 import com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel
-import com.linwei.github_mvvm.mvvm.model.repository.service.RecommendedModel
+import com.linwei.github_mvvm.mvvm.model.repository.RecommendedModel
 import javax.inject.Inject
 
 /**
@@ -28,8 +28,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class RecommendedViewModel @Inject constructor(
-    private val model: RecommendedModel,
-    application: Application
+        private val model: RecommendedModel,
+        application: Application
 ) : BaseViewModel(model, application), RecommendedContract.ViewModel {
 
     val sortData: List<List<String>> = listOf(
@@ -54,7 +54,7 @@ class RecommendedViewModel @Inject constructor(
 
     override fun toTrendData() {
         mLifecycleOwner?.let {
-            model.requestTrendData(
+            model.obtainTrendData(
                 it,
                 sortType[0],
                 sortType[1],
