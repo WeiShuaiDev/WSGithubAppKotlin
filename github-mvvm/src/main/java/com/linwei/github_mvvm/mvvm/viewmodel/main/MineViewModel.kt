@@ -18,7 +18,11 @@ import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Notification
 import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.bean.User
+import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
+import com.linwei.github_mvvm.mvvm.model.conversion.UserConversion
 import com.linwei.github_mvvm.mvvm.model.repository.MineModel
+import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.UserUIModel
 import javax.inject.Inject
 
 /**
@@ -64,6 +68,7 @@ class MineViewModel @Inject constructor(
     }
 
     override fun loadDataByLoadMore(page: Int) {
+        System.out.println("type${appGlobalModel.userObservable.type}")
         (appGlobalModel.userObservable.type == "Organization").yes {
             toOrgMembers(page)
         }.otherwise {
@@ -179,5 +184,36 @@ class MineViewModel @Inject constructor(
 
             }
         }
+    }
+
+
+    /**
+     * 进行数据转换 'User' ->'UserUIModel'
+     */
+    fun userConversionByUserUIModel(page: Page<List<User>>?): MutableList<UserUIModel> {
+        val userUIList: MutableList<UserUIModel> = mutableListOf()
+        page?.apply {
+            result?.let {
+                for (user: User in it) {
+                    userUIList.add(UserConversion.userToUserUIModel(user))
+                }
+            }
+        }
+        return userUIList
+    }
+
+    /**
+     * 进行数据转换 'Event' ->'EventUIModel'
+     */
+    fun eventConversionByEventUIModel(page: Page<List<Event>>?): MutableList<EventUIModel> {
+        val eventUIList: MutableList<EventUIModel> = mutableListOf()
+        page?.apply {
+            result?.let {
+                for (event: Event in it) {
+                    eventUIList.add(EventConversion.eventToEventUIModel(event))
+                }
+            }
+        }
+        return eventUIList
     }
 }

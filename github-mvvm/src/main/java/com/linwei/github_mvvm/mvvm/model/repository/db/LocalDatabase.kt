@@ -2,6 +2,7 @@ package com.linwei.github_mvvm.mvvm.model.repository.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.linwei.github_mvvm.mvvm.model.repository.db.dao.IssueDao
 import com.linwei.github_mvvm.mvvm.model.repository.db.dao.ReposDao
 import com.linwei.github_mvvm.mvvm.model.repository.db.dao.UserDao
 import com.linwei.github_mvvm.mvvm.model.repository.db.entity.OrgMemberEntity
@@ -35,5 +36,9 @@ abstract class LocalDatabase : RoomDatabase() {
      */
     abstract fun reposDao(): ReposDao
 
+    /**
+     * 问题数据库
+     */
+    abstract fun issueDao(): IssueDao
 
 }

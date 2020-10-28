@@ -6,6 +6,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.github.nukc.stateview.StateView
+import com.linwei.cams.ext.isNotNullOrSize
+import com.linwei.cams.ext.otherwise
+import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentMineBinding
@@ -13,7 +16,9 @@ import com.linwei.github_mvvm.databinding.LayoutUserHeaderBinding
 import com.linwei.github_mvvm.ext.GithubDataBindingComponent
 import com.linwei.github_mvvm.mvvm.contract.main.MineContract
 import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
-import com.linwei.github_mvvm.mvvm.ui.adapter.UserInfoAdapter
+import com.linwei.github_mvvm.mvvm.model.bean.Event
+import com.linwei.github_mvvm.mvvm.model.bean.Page
+import com.linwei.github_mvvm.mvvm.ui.adapter.EventInfoAdapter
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
 import kotlinx.android.synthetic.main.fragment_mine.*
 import kotlinx.android.synthetic.main.layout_user_header.view.*
@@ -34,11 +39,15 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
     @Inject
     lateinit var mAppGlobalModel: AppGlobalModel
 
-    private lateinit var mUserInfoAdapter: UserInfoAdapter
+    private lateinit var mEventInfoAdapter: EventInfoAdapter
 
     private lateinit var mLayoutUserHeaderBinding: LayoutUserHeaderBinding
 
     override fun provideContentViewId(): Int = R.layout.fragment_mine
+
+    private var mPage: Page<List<Event>>? = null
+
+    private var mPageCode: Int = 1
 
     override fun bindViewModel() {
         mViewDataBinding?.let {
@@ -56,28 +65,58 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
      * 初始化用户信息列表适配器
      */
     private fun initUserInfoRV() {
-        mUserInfoAdapter = UserInfoAdapter(mutableListOf())
-        mUserInfoAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
-        mUserInfoAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
+        mEventInfoAdapter = EventInfoAdapter(mutableListOf())
+
+        mEventInfoAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+        mEventInfoAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
 
         //RecyclerView add header view
         mLayoutUserHeaderBinding = DataBindingUtil.inflate(
-            layoutInflater, R.layout.layout_user_header,
-            null, false, GithubDataBindingComponent()
+                layoutInflater, R.layout.layout_user_header,
+                null, false, GithubDataBindingComponent()
         )
         mLayoutUserHeaderBinding.userUIModel = mAppGlobalModel.userObservable
         mLayoutUserHeaderBinding.mineViewModel = mViewModel
-        mUserInfoAdapter.addHeaderView(mLayoutUserHeaderBinding.root)
+        mEventInfoAdapter.addHeaderView(mLayoutUserHeaderBinding.root)
 
         mine_recycler.apply {
             layoutManager = LinearLayoutManager(mContext)
-            adapter = mUserInfoAdapter
+            adapter = mEventInfoAdapter
         }
     }
 
     override fun initLayoutData() {
         mViewModel?.notifyColor?.observe(viewLifecycleOwner, Observer {
             mLayoutUserHeaderBinding.root.mine_header_notify.setTextColor(it)
+        })
+
+        mViewModel?.pageByOrgMember?.observe(viewLifecycleOwner, Observer {
+
+        })
+
+        mViewModel?.pageByUserEvents?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                mPage = it
+                mPageCode = it.next
+                it.result.isNotNullOrSize().yes {
+
+                    if (it.prev == -1) {
+                        mEventInfoAdapter.setNewInstance(
+                                mViewModel?.eventConversionByEventUIModel(it)
+                        )
+                    } else {
+                        mEventInfoAdapter.addData(mViewModel?.eventConversionByEventUIModel(it)!!)
+                    }
+
+                    (it.next == it.last).yes {
+                        mEventInfoAdapter.loadMoreModule.loadMoreEnd()
+                    }.otherwise {
+                        mEventInfoAdapter.loadMoreModule.loadMoreComplete()
+                    }
+                }
+                if (mine_swipe_refresh.isRefreshing)
+                    mine_swipe_refresh.isRefreshing = false
+            }
         })
     }
 
@@ -93,24 +132,26 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
 
         }
 
-        mUserInfoAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
+        mEventInfoAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
             Timber.i("UserInfo position${position}")
         }
 
-        mUserInfoAdapter.loadMoreModule.setOnLoadMoreListener {
+        mEventInfoAdapter.loadMoreModule.setOnLoadMoreListener {
 
         }
 
         mine_swipe_refresh.setOnRefreshListener {
-            mUserInfoAdapter.loadMoreModule.isEnableLoadMore = false
+            mEventInfoAdapter.loadMoreModule.isEnableLoadMore = false
         }
     }
 
     override fun reloadData() {
         mine_swipe_refresh.isRefreshing = true
+        mViewModel?.loadDataByLoadMore(mPageCode)
     }
 
     override fun loadData() {
         mine_swipe_refresh.isRefreshing = true
+        mViewModel?.loadDataByLoadMore(mPageCode)
     }
 }

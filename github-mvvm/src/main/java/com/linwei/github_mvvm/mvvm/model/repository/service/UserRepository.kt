@@ -22,7 +22,7 @@ import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userInfoPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
 import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.api.service.AuthService
-import com.linwei.github_mvvm.mvvm.model.api.service.ReposService
+import com.linwei.github_mvvm.mvvm.model.api.service.NotificationService
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
 import com.linwei.github_mvvm.mvvm.model.bean.*
 import com.linwei.github_mvvm.mvvm.model.conversion.UserConversion
@@ -32,7 +32,6 @@ import com.linwei.github_mvvm.mvvm.model.repository.db.entity.OrgMemberEntity
 import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
 import com.linwei.github_mvvm.mvvm.model.repository.db.entity.UserEventEntity
 import com.linwei.github_mvvm.utils.GsonUtils
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -69,6 +68,13 @@ open class UserRepository @Inject constructor(
      */
     private val userDao: UserDao by lazy {
         dataRepository.obtainRoomDataBase(LocalDatabase::class.java).userDao()
+    }
+
+    /**
+     * 通知数据库接口
+     */
+    private val notificationService: NotificationService by lazy {
+        dataRepository.obtainRetrofitService(NotificationService::class.java)
     }
 
     fun requestAccountLogin(
@@ -431,7 +437,37 @@ open class UserRepository @Inject constructor(
         }
     }
 
-     fun signOut() {
+    fun requestNotify(
+        owner: LifecycleOwner,
+        all: Boolean?,
+        participating: Boolean?,
+        page: Int,
+        observer: LiveDataCallBack<Page<List<Notification>>>
+    ): LiveData<Page<List<Notification>>> {
+
+        return if (all == null || participating == null) {
+            notificationService.getNotificationUnRead(true, page)
+        } else {
+            notificationService.getNotification(true, all, participating, page)
+        }.apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<Page<List<Notification>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<Notification>>?) {
+                        super.onSuccess(code, data)
+                        observer.onSuccess(code, data)
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+
+    fun signOut() {
         clearTokenStorage()
         clearCookies()
     }

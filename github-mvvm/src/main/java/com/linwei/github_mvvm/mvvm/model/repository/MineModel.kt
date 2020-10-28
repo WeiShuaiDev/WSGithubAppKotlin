@@ -1,23 +1,13 @@
 package com.linwei.github_mvvm.mvvm.model.repository
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.main.MineContract
-import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
-import com.linwei.github_mvvm.mvvm.model.api.service.NotificationService
-import com.linwei.github_mvvm.mvvm.model.api.service.UserService
 import com.linwei.github_mvvm.mvvm.model.bean.*
-import com.linwei.github_mvvm.mvvm.model.repository.db.LocalDatabase
-import com.linwei.github_mvvm.mvvm.model.repository.db.dao.UserDao
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.OrgMemberEntity
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.UserEventEntity
-import com.linwei.github_mvvm.mvvm.model.repository.service.NotificationRepository
+import com.linwei.github_mvvm.mvvm.model.repository.service.SearchRepository
 import com.linwei.github_mvvm.mvvm.model.repository.service.UserRepository
-import com.linwei.github_mvvm.utils.GsonUtils
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -30,9 +20,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class MineModel @Inject constructor(
-        private val userRepository: UserRepository,
-        private val notificationRepository: NotificationRepository,
-        dataRepository: DataMvvmRepository
+    private val userRepository: UserRepository,
+    dataRepository: DataMvvmRepository
 ) : BaseModel(dataRepository), MineContract.Model {
 
     override fun obtainOrgMembers(
@@ -78,7 +67,7 @@ class MineModel @Inject constructor(
             page: Int,
             observer: LiveDataCallBack<Page<List<Notification>>>
     ) {
-        notificationRepository.requestNotify(owner, all, participating, page, object : LiveDataCallBack<Page<List<Notification>>>() {
+        userRepository.requestNotify(owner, all, participating, page, object : LiveDataCallBack<Page<List<Notification>>>() {
             override fun onSuccess(code: String?, data: Page<List<Notification>>?) {
                 super.onSuccess(code, data)
                 observer.onSuccess(code, data)
