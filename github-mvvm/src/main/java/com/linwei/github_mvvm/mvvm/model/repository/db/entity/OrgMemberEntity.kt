@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName
 data class OrgMemberEntity(
     @ColumnInfo(name = "org")
     @SerializedName("org")
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     var org: String? = null,
 
     @ColumnInfo(name = "data")

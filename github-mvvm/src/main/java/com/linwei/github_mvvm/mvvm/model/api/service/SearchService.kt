@@ -2,10 +2,7 @@ package com.linwei.github_mvvm.mvvm.model.api.service
 
 import androidx.lifecycle.LiveData
 import com.linwei.github_mvvm.mvvm.model.api.Api
-import com.linwei.github_mvvm.mvvm.model.bean.Issue
-import com.linwei.github_mvvm.mvvm.model.bean.Repository
-import com.linwei.github_mvvm.mvvm.model.bean.SearchResult
-import com.linwei.github_mvvm.mvvm.model.bean.User
+import com.linwei.github_mvvm.mvvm.model.bean.*
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -23,9 +20,9 @@ import retrofit2.http.Query
 interface SearchService {
 
     /**
-     * @param query [String]
-     * @param sort [String]
-     * @param order [String]
+     * @param query [String] 关键字
+     * @param sort [String]  搜索排序依据，比如best_match
+     * @param order [String]  排序
      * @param page [Int]
      * @param per_page [Int]
      */
@@ -36,7 +33,7 @@ interface SearchService {
         @Query("order") order: String = "desc",
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<SearchResult<User>>
+    ): LiveData<Page<SearchResult<User>>>
 
     /**
      * @param query [String]
@@ -52,7 +49,7 @@ interface SearchService {
         @Query("order") order: String = "desc",
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<SearchResult<Repository>>
+    ): LiveData<Page<SearchResult<Repository>>>
 
     /**
      * @param query [String]
@@ -66,6 +63,6 @@ interface SearchService {
         @Query(value = "q", encoded = true) query: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<SearchResult<Issue>>
+    ): LiveData<Page<SearchResult<Issue>>>
 
 }

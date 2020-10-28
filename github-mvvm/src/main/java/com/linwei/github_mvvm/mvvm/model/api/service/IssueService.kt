@@ -5,9 +5,8 @@ import com.linwei.github_mvvm.mvvm.model.api.Api
 import com.linwei.github_mvvm.mvvm.model.bean.CommentRequestModel
 import com.linwei.github_mvvm.mvvm.model.bean.Issue
 import com.linwei.github_mvvm.mvvm.model.bean.IssueEvent
-import io.reactivex.Observable
+import com.linwei.github_mvvm.mvvm.model.bean.Page
 import okhttp3.ResponseBody
-import retrofit2.Response
 import retrofit2.http.*
 import java.util.ArrayList
 
@@ -90,7 +89,7 @@ interface IssueService {
         @Path("repo") repo: String,
         @Path("issueNumber") issueNumber: Int,
         @Query("page") page: Int
-    ): LiveData<ArrayList<IssueEvent>>
+    ): LiveData<Page<List<IssueEvent>>>
 
     /**
      * @param owner [String]
@@ -108,7 +107,7 @@ interface IssueService {
         @Path("issueNumber") issueNumber: Int,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<IssueEvent>>
+    ): LiveData<Page<List<IssueEvent>>>
 
     /**
      * @param owner [String]
