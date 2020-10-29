@@ -44,9 +44,9 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 open class UserRepository @Inject constructor(
-        private val application: Application,
-        private val appGlobalModel: AppGlobalModel,
-        dataRepository: DataMvvmRepository
+    private val application: Application,
+    private val appGlobalModel: AppGlobalModel,
+    dataRepository: DataMvvmRepository
 ) : BaseModel(dataRepository) {
 
     /**
@@ -78,16 +78,17 @@ open class UserRepository @Inject constructor(
     }
 
     fun requestAccountLogin(
-            owner: LifecycleOwner, username: String,
-            password: String, observer: LiveDataCallBack<AuthResponse>) {
+        owner: LifecycleOwner, username: String,
+        password: String, observer: LiveDataCallBack<AuthResponse>
+    ) {
 
         clearTokenStorage()
 
         val type = "$username:$password"
 
         val userCipherTextInfo: String =
-                Base64.encodeToString(type.toByteArray(), Base64.NO_WRAP)
-                        .replace("\\+", "%2B")
+            Base64.encodeToString(type.toByteArray(), Base64.NO_WRAP)
+                .replace("\\+", "%2B")
 
         //保存用户名明文、密文信息
         userNamePref = username
@@ -97,7 +98,8 @@ open class UserRepository @Inject constructor(
     }
 
     fun requestOAuthLogin(
-            owner: LifecycleOwner, code: String, observer: LiveDataCallBack<AccessToken>) {
+        owner: LifecycleOwner, code: String, observer: LiveDataCallBack<AccessToken>
+    ) {
 
         clearTokenStorage()
 
@@ -105,76 +107,79 @@ open class UserRepository @Inject constructor(
     }
 
     private fun requestCreateCodeAuthorization(
-            owner: LifecycleOwner,
-            code: String,
-            observer: LiveDataCallBack<AccessToken>
+        owner: LifecycleOwner,
+        code: String,
+        observer: LiveDataCallBack<AccessToken>
     ): LiveData<AccessToken> {
         return authService.createCodeAuthorization(
-                AuthRequest.clientId,
-                AuthRequest.clientSecret,
-                code
+            client_id = AuthRequest.clientId,
+            client_secret = AuthRequest.clientSecret,
+            code = code
         ).apply {
             observe(
-                    owner,
-                    object : LiveDataCallBack<AccessToken>() {
-                        override fun onSuccess(code: String?, data: AccessToken?) {
-                            super.onSuccess(code, data)
-                            data?.let {
-                                data.accessToken.isNotNullOrEmpty().yes {
-                                    accessTokenPref = data.accessToken!!
+                owner,
+                object : LiveDataCallBack<AccessToken>() {
+                    override fun onSuccess(code: String?, data: AccessToken?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            data.accessToken.isNotNullOrEmpty().yes {
+                                accessTokenPref = data.accessToken!!
 
-                                    observer.onSuccess(code, data)
-                                }.otherwise {
-                                    //删除用户令牌信息
-                                    clearTokenStorage()
-                                    observer.onFailure(code, R.string.unknown_error.string())
-                                }
+                                observer.onSuccess(code, data)
+                            }.otherwise {
+                                //删除用户令牌信息
+                                clearTokenStorage()
+                                observer.onFailure(code, R.string.unknown_error.string())
                             }
                         }
+                    }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            observer.onFailure(code, message)
-                        }
-                    })
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
         }
     }
 
-    private fun requestCreateAuthorization(owner: LifecycleOwner, observer: LiveDataCallBack<AuthResponse>): LiveData<AuthResponse> {
-        return authService.createAuthorization(AuthRequest.generate()).apply {
+    private fun requestCreateAuthorization(
+        owner: LifecycleOwner,
+        observer: LiveDataCallBack<AuthResponse>
+    ): LiveData<AuthResponse> {
+        return authService.createAuthorization(authRequestModel = AuthRequest.generate()).apply {
             observe(
-                    owner,
-                    object : LiveDataCallBack<AuthResponse>() {
-                        override fun onSuccess(code: String?, data: AuthResponse?) {
-                            super.onSuccess(code, data)
-                            data?.let {
-                                data.token.isNotNullOrEmpty().yes {
-                                    accessTokenPref = data.token!!
-                                    authIDPref = data.id.toString()
+                owner,
+                object : LiveDataCallBack<AuthResponse>() {
+                    override fun onSuccess(code: String?, data: AuthResponse?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            data.token.isNotNullOrEmpty().yes {
+                                accessTokenPref = data.token!!
+                                authIDPref = data.id.toString()
 
-                                    //保存 `AuthResponseBean` 认证信息
-                                    putAuthInfoPref(data)
+                                //保存 `AuthResponseBean` 认证信息
+                                putAuthInfoPref(data)
 
-                                    observer.onSuccess(code, data)
-                                }.otherwise {
-                                    //删除用户令牌信息
-                                    requestDeleteAuthorization(owner, data.id)
+                                observer.onSuccess(code, data)
+                            }.otherwise {
+                                //删除用户令牌信息
+                                requestDeleteAuthorization(owner, data.id)
 
-                                    observer.onFailure(code, R.string.unknown_error.string())
-                                }
+                                observer.onFailure(code, R.string.unknown_error.string())
                             }
                         }
+                    }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            observer.onFailure(code, message)
-                        }
-                    })
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
         }
     }
 
     private fun requestDeleteAuthorization(owner: LifecycleOwner, id: Int): LiveData<Any> {
-        return authService.deleteAuthorization(id).apply {
+        return authService.deleteAuthorization(id = id).apply {
             observe(owner, object : LiveDataCallBack<Any>() {
                 override fun onSuccess(code: String?, data: Any?) {
                     super.onSuccess(code, data)
@@ -185,25 +190,32 @@ open class UserRepository @Inject constructor(
         }
     }
 
-    fun requestAuthenticatedUserInfo(owner: LifecycleOwner, name: String?, observer: LiveDataCallBack<User>): LiveData<User> {
+    fun requestAuthenticatedUserInfo(
+        owner: LifecycleOwner,
+        name: String?,
+        observer: LiveDataCallBack<User>
+    ): LiveData<User> {
         return name.isNotNullOrEmpty().yes {
-            requestUser(owner, name!!, observer)
+            requestUser(owner = owner, name = name!!, observer = observer)
         }.otherwise {
-            requestPersonInfo(owner, observer)
+            requestPersonInfo(owner = owner, observer = observer)
         }
     }
 
-    private fun requestPersonInfo(owner: LifecycleOwner, observer: LiveDataCallBack<User>): LiveData<User> {
-        return userService.getPersonInfo(true).apply {
+    private fun requestPersonInfo(
+        owner: LifecycleOwner,
+        observer: LiveDataCallBack<User>
+    ): LiveData<User> {
+        return userService.getPersonInfo(forceNetWork = true).apply {
             observe(owner, object : LiveDataCallBack<User>() {
                 override fun onSuccess(code: String?, data: User?) {
                     super.onSuccess(code, data)
                     data?.let {
                         //`User`本地数据克隆到 `ModelUIModel` 内存数据
                         UserConversion.cloneDataFromUser(
-                                application,
-                                it,
-                                appGlobalModel.userObservable
+                            application,
+                            it,
+                            appGlobalModel.userObservable
                         )
 
                         //保存 `UserInfoBean` 用户数据
@@ -222,17 +234,21 @@ open class UserRepository @Inject constructor(
         }
     }
 
-    private fun requestUser(owner: LifecycleOwner, name: String, observer: LiveDataCallBack<User>): LiveData<User> {
-        return userService.getUser(true, name).apply {
+    private fun requestUser(
+        owner: LifecycleOwner,
+        name: String,
+        observer: LiveDataCallBack<User>
+    ): LiveData<User> {
+        return userService.getUser(forceNetWork = true, user = name).apply {
             observe(owner, object : LiveDataCallBack<User>() {
                 override fun onSuccess(code: String?, data: User?) {
                     super.onSuccess(code, data)
                     data?.let {
                         //`User`本地数据克隆到 `ModelUIModel` 内存数据
                         UserConversion.cloneDataFromUser(
-                                application,
-                                it,
-                                appGlobalModel.userObservable
+                            application,
+                            it,
+                            appGlobalModel.userObservable
                         )
 
                         //保存 `UserInfoBean` 用户数据
@@ -251,9 +267,9 @@ open class UserRepository @Inject constructor(
     }
 
     fun requestReceivedEvent(
-            owner: LifecycleOwner,
-            page: Int,
-            observer: LiveDataCallBack<Page<List<Event>>>
+        owner: LifecycleOwner,
+        page: Int,
+        observer: LiveDataCallBack<Page<List<Event>>>
     ): LiveData<Page<List<Event>>> {
         val name: String? = appGlobalModel.userObservable.login
         name.isNotNullOrEmpty().no {
@@ -261,131 +277,132 @@ open class UserRepository @Inject constructor(
             return@no
         }
 
-        return userService.getNewsEvent(true, name!!, page).apply {
+        return userService.getNewsEvent(forceNetWork = true, user = name!!, page = page).apply {
             observe(
-                    owner,
-                    object : LiveDataCallBack<Page<List<Event>>>() {
-                        override fun onSuccess(code: String?, data: Page<List<Event>>?) {
-                            super.onSuccess(code, data)
-                            data?.let {
-                                if (page == 1) {
-                                    val entity = ReceivedEventEntity(
-                                            id = 0,
-                                            data = GsonUtils.toJsonString(it)
-                                    )
-                                    //userDao.insertReceivedEvent(entity)
-                                }
+                owner,
+                object : LiveDataCallBack<Page<List<Event>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<Event>>?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            if (page == 1) {
+                                val entity = ReceivedEventEntity(
+                                    id = 0,
+                                    data = GsonUtils.toJsonString(it)
+                                )
+                                //userDao.insertReceivedEvent(entity)
                             }
-                            observer.onSuccess(code, data)
                         }
+                        observer.onSuccess(code, data)
+                    }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            observer.onFailure(code, message)
-                        }
-                    })
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
         }
     }
 
     fun queryReceivedEvent(
-            owner: LifecycleOwner,
-            id: Int,
-            observer: LiveDataCallBack<Page<List<Event>>>
+        owner: LifecycleOwner,
+        id: Int,
+        observer: LiveDataCallBack<Page<List<Event>>>
     ): LiveData<ReceivedEventEntity> {
-        return userDao.queryReceivedEvent(id).apply {
+        return userDao.queryReceivedEvent(id = id).apply {
             observe(owner,
-                    object :
-                            LiveDataCallBack<ReceivedEventEntity>() {
-                        override fun onSuccess(code: String?, data: ReceivedEventEntity?) {
-                            super.onSuccess(code, data)
-                            data?.let {
-                                val page = Page<List<Event>>()
-                                page.result =
-                                        GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java)
+                object :
+                    LiveDataCallBack<ReceivedEventEntity>() {
+                    override fun onSuccess(code: String?, data: ReceivedEventEntity?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            val page = Page<List<Event>>()
+                            page.result =
+                                GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java)
 
-                                observer.onSuccess(code, page)
-                            }
-
+                            observer.onSuccess(code, page)
                         }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            observer.onFailure(code, message)
-                        }
-                    })
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
         }
     }
 
     fun requestOrgMembers(
-            owner: LifecycleOwner,
-            page: Int,
-            observer: LiveDataCallBack<Page<List<User>>>
+        owner: LifecycleOwner,
+        page: Int,
+        observer: LiveDataCallBack<Page<List<User>>>
     ): LiveData<Page<List<User>>> {
         val org: String? = appGlobalModel.userObservable.login
 
-        return userService.getOrgMembers(true, org ?: "", page).apply {
+        return userService.getOrgMembers(forceNetWork = true, org = org ?: "", page = page).apply {
             observe(
-                    owner,
-                    object : LiveDataCallBack<Page<List<User>>>() {
-                        override fun onSuccess(code: String?, data: Page<List<User>>?) {
-                            super.onSuccess(code, data)
-                            data?.let {
-                                if (page == 1) {
-                                    val entity = OrgMemberEntity(
-                                            org = org,
-                                            data = GsonUtils.toJsonString(it)
-                                    )
-                                    //userDao.insertOrgMember(entity)
-                                }
+                owner,
+                object : LiveDataCallBack<Page<List<User>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<User>>?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            if (page == 1) {
+                                val entity = OrgMemberEntity(
+                                    org = org,
+                                    data = GsonUtils.toJsonString(it)
+                                )
+                                //userDao.insertOrgMember(entity)
                             }
-                            observer.onSuccess(code, data)
                         }
+                        observer.onSuccess(code, data)
+                    }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            observer.onFailure(code, message)
-                        }
-                    })
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
         }
     }
 
     fun queryOrgMembers(
-            owner: LifecycleOwner,
-            org: String,
-            observer: LiveDataCallBack<Page<List<User>>>
+        owner: LifecycleOwner,
+        org: String,
+        observer: LiveDataCallBack<Page<List<User>>>
     ): LiveData<OrgMemberEntity> {
-        return userDao.queryOrgMember(org).apply {
+        return userDao.queryOrgMember(org = org).apply {
             observe(owner,
-                    object :
-                            LiveDataCallBack<OrgMemberEntity>() {
-                        override fun onSuccess(code: String?, data: OrgMemberEntity?) {
-                            super.onSuccess(code, data)
-                            data?.let {
-                                val page = Page<List<User>>()
-                                page.result =
-                                        GsonUtils.parserJsonToArrayBeans(it.data, User::class.java)
+                object :
+                    LiveDataCallBack<OrgMemberEntity>() {
+                    override fun onSuccess(code: String?, data: OrgMemberEntity?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            val page = Page<List<User>>()
+                            page.result =
+                                GsonUtils.parserJsonToArrayBeans(it.data, User::class.java)
 
-                                observer.onSuccess(code, page)
-                            }
+                            observer.onSuccess(code, page)
                         }
+                    }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            observer.onFailure(code, message)
-                        }
-                    })
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
         }
     }
 
     fun requestUserEvents(
-            owner: LifecycleOwner,
-            page: Int,
-            observer: LiveDataCallBack<Page<List<Event>>>
+        owner: LifecycleOwner,
+        page: Int,
+        observer: LiveDataCallBack<Page<List<Event>>>
     ): LiveData<Page<List<Event>>> {
         val user: String? = appGlobalModel.userObservable.login
 
-        return userService.getUserEvents(true, user ?: "", page).apply {
-            observe(
+        return userService.getUserEvents(forceNetWork = true, user = user ?: "", page = page)
+            .apply {
+                observe(
                     owner,
                     object : LiveDataCallBack<Page<List<Event>>>() {
                         override fun onSuccess(code: String?, data: Page<List<Event>>?) {
@@ -393,8 +410,8 @@ open class UserRepository @Inject constructor(
                             data?.let {
                                 if (page == 1) {
                                     val entity = UserEventEntity(
-                                            userName = user,
-                                            data = GsonUtils.toJsonString(it)
+                                        userName = user,
+                                        data = GsonUtils.toJsonString(it)
                                     )
                                     //userDao.insertUserEvent(entity)
                                 }
@@ -404,36 +421,36 @@ open class UserRepository @Inject constructor(
 
                         override fun onFailure(code: String?, message: String?) {
                             super.onFailure(code, message)
-                            observer.onFailure(code,message)
-                        }
-                    })
-        }
-    }
-
-     fun queryUserEvents(
-            owner: LifecycleOwner,
-            name: String,
-            observer: LiveDataCallBack<Page<List<Event>>>
-    ): LiveData<UserEventEntity> {
-        return userDao.queryUserEvent(name).apply {
-            observe(owner,
-                    object :
-                            LiveDataCallBack<UserEventEntity>() {
-                        override fun onSuccess(code: String?, data: UserEventEntity?) {
-                            super.onSuccess(code, data)
-                            data?.let {
-                                val page = Page<List<Event>>()
-                                page.result =
-                                        GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java)
-                                observer.onSuccess(code, page)
-                            }
-                        }
-
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
                             observer.onFailure(code, message)
                         }
                     })
+            }
+    }
+
+    fun queryUserEvents(
+        owner: LifecycleOwner,
+        name: String,
+        observer: LiveDataCallBack<Page<List<Event>>>
+    ): LiveData<UserEventEntity> {
+        return userDao.queryUserEvent(userName = name).apply {
+            observe(owner,
+                object :
+                    LiveDataCallBack<UserEventEntity>() {
+                    override fun onSuccess(code: String?, data: UserEventEntity?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            val page = Page<List<Event>>()
+                            page.result =
+                                GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java)
+                            observer.onSuccess(code, page)
+                        }
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
         }
     }
 
@@ -446,9 +463,14 @@ open class UserRepository @Inject constructor(
     ): LiveData<Page<List<Notification>>> {
 
         return if (all == null || participating == null) {
-            notificationService.getNotificationUnRead(true, page)
+            notificationService.getNotificationUnRead(forceNetWork = true, page = page)
         } else {
-            notificationService.getNotification(true, all, participating, page)
+            notificationService.getNotification(
+                forceNetWork = true,
+                all = all,
+                participating = participating,
+                page = page
+            )
         }.apply {
             observe(
                 owner,

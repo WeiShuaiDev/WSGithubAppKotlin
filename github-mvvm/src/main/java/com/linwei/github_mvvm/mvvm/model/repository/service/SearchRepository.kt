@@ -115,7 +115,7 @@ open class SearchRepository @Inject constructor(
         page: Int, observer: LiveDataCallBack<Page<SearchResult<Issue>>>
     ): LiveData<Page<SearchResult<Issue>>> {
 
-        return searchService.searchIssues(true, query = query, page = page)
+        return searchService.searchIssues(forceNetWork = true, query = query, page = page)
             .apply {
                 observe(
                     owner,

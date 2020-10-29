@@ -30,7 +30,7 @@ interface RecommendedContract {
         /**
          * 获取趋势数据
          */
-        fun toTrendData()
+        fun toTrend()
 
     }
 
@@ -44,7 +44,7 @@ interface RecommendedContract {
          * @param observer [LiveDataCallBack]
          * @return  [TrendingRepoModel]
          */
-        fun obtainTrendData(
+        fun obtainTrend(
                 owner: LifecycleOwner,
                 languageType: String,
                 since: String,

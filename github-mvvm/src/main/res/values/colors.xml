@@ -12,6 +12,9 @@
     <color name="colorSubText">#959595</color>
     <color name="colorSubLightText">#c4c4c4</color>
 
+    <color name="webDraculaBackgroundColor">#282a36</color>
+    <color name="miWhite">#ececec</color>
+
     <!--DynamicFragment-->
     <color name="colorNavigationInActiveTab">#959595</color>
     <color name="colorNavigationActiveTab">#2c2c2c</color>

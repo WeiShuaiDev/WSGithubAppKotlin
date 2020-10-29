@@ -35,13 +35,13 @@ class RecommendedModel @Inject constructor(
         dataRepository: DataMvvmRepository
 ) : BaseModel(dataRepository), RecommendedContract.Model {
 
-    override fun obtainTrendData(
+    override fun obtainTrend(
             owner: LifecycleOwner,
             languageType: String,
             since: String,
             observer: LiveDataCallBack<List<TrendingRepoModel>>
     ) {
-        reposRepository.requestTrendData(owner, languageType, since, object : LiveDataCallBack<List<TrendingRepoModel>>() {
+        reposRepository.requestTrend(owner, languageType, since, object : LiveDataCallBack<List<TrendingRepoModel>>() {
             override fun onSuccess(code: String?, data: List<TrendingRepoModel>?) {
                 super.onSuccess(code, data)
                 observer.onSuccess(code, data)

@@ -68,7 +68,12 @@ open class IssueRepository @Inject constructor(
             observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
             return@no
         }
-        return issueService.getIssueInfo(true, userName!!, reposName, number).apply {
+        return issueService.getIssueInfo(
+            forceNetWork = true,
+            owner = userName!!,
+            repo = reposName,
+            issueNumber = number
+        ).apply {
             observe(
                 owner,
                 object : LiveDataCallBack<Issue>() {
@@ -161,7 +166,10 @@ open class IssueRepository @Inject constructor(
             observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
             return@no
         }
-        return issueService.getIssueComments(true, userName!!, reposName, number, page, per_page)
+        return issueService.getIssueComments(
+            forceNetWork = true, owner = userName!!, repo = reposName,
+            issueNumber = number, page = page, per_page = per_page
+        )
             .apply {
                 observe(
                     owner,
@@ -255,7 +263,12 @@ open class IssueRepository @Inject constructor(
             observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
             return@no
         }
-        return issueService.editIssue(userName!!, reposName, number, issue)
+        return issueService.editIssue(
+            owner = userName!!,
+            repo = reposName,
+            issueNumber = number,
+            body = issue
+        )
             .apply {
                 observe(
                     owner,
@@ -292,7 +305,7 @@ open class IssueRepository @Inject constructor(
             observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
             return@no
         }
-        return issueService.createIssue(userName!!, reposName, issue)
+        return issueService.createIssue(owner = userName!!, repo = reposName, body = issue)
             .apply {
                 observe(
                     owner,
@@ -331,7 +344,12 @@ open class IssueRepository @Inject constructor(
             observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
             return@no
         }
-        return issueService.addComment(userName!!, reposName, number, commentRequestModel)
+        return issueService.addComment(
+            owner = userName!!,
+            repo = reposName,
+            issueNumber = number,
+            body = commentRequestModel
+        )
             .apply {
                 observe(
                     owner,
@@ -373,9 +391,9 @@ open class IssueRepository @Inject constructor(
         }
 
         return if (lock) {
-            issueService.lockIssue(userName!!, reposName, number)
+            issueService.lockIssue(owner = userName!!, repo = reposName, issueNumber = number)
         } else {
-            issueService.unLockIssue(userName!!, reposName, number)
+            issueService.unLockIssue(owner = userName!!, repo = reposName, issueNumber = number)
         }.apply {
             observe(
                 owner,
@@ -414,7 +432,12 @@ open class IssueRepository @Inject constructor(
             observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
             return@no
         }
-        return issueService.editComment(userName!!, reposName, commentId, commentRequestModel)
+        return issueService.editComment(
+            owner = userName!!,
+            repo = reposName,
+            commentId = commentId,
+            body = commentRequestModel
+        )
             .apply {
                 observe(
                     owner,
@@ -451,7 +474,11 @@ open class IssueRepository @Inject constructor(
             observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
             return@no
         }
-        return issueService.deleteComment(userName!!, reposName, commentId)
+        return issueService.deleteComment(
+            owner = userName!!,
+            repo = reposName,
+            commentId = commentId
+        )
             .apply {
                 observe(
                     owner,

@@ -2,6 +2,7 @@ package com.linwei.github_mvvm.mvvm.model.repository.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.RepositoryDetailReadmeEntity
 import com.linwei.github_mvvm.mvvm.model.repository.db.entity.TrendEntity
 
 /**
@@ -16,26 +17,56 @@ import com.linwei.github_mvvm.mvvm.model.repository.db.entity.TrendEntity
 interface ReposDao {
 
     /**
+     *  ==================================================================
      * 查询趋势数据
      */
     @Query("SELECT * FROM trend where language_type=:languageType and since=:since")
-    fun queryReceivedEvent(languageType: String, since: String): LiveData<TrendEntity>
+    fun queryTrend(languageType: String, since: String): LiveData<TrendEntity>
 
     /**
      * 增加趋势数据
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertReceivedEvent(vararg entity: TrendEntity?)
+    fun insertTrend(vararg entity: TrendEntity?)
 
     /**
      * 更新趋势数据
      */
     @Update
-    fun updateReceivedEvent(vararg entity: TrendEntity?): Int
+    fun updateTrend(vararg entity: TrendEntity?): Int
 
     /**
      * 删除趋势数据
      */
     @Delete
-    fun deleteReceivedEvent(vararg entity: TrendEntity?)
+    fun deleteTrend(vararg entity: TrendEntity?)
+
+
+    /**
+     *  ==================================================================
+     * 查询ReadMe数据
+     */
+    @Query("SELECT * FROM repository_detail_readme where full_name=:fullName and branch=:branch")
+    fun queryRepositoryDetailReadme(
+        fullName: String,
+        branch: String
+    ): LiveData<RepositoryDetailReadmeEntity>
+
+    /**
+     * 增加ReadMe数据
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertRepositoryDetailReadme(vararg entity: RepositoryDetailReadmeEntity?)
+
+    /**
+     * 更新ReadMe数据
+     */
+    @Update
+    fun updateRepositoryDetailReadme(vararg entity: RepositoryDetailReadmeEntity?): Int
+
+    /**
+     * 删除ReadMe数据
+     */
+    @Delete
+    fun deleteRepositoryDetailReadme(vararg entity: RepositoryDetailReadmeEntity?)
 }

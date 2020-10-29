@@ -18,6 +18,7 @@ import com.linwei.github_mvvm.mvvm.model.repository.db.entity.UserEventEntity
 @Dao
 interface UserDao {
     /**
+     * ==================================================================
      * 查询接收事件数据
      */
     @Query("SELECT * FROM received_event where id=:id")
@@ -43,6 +44,7 @@ interface UserDao {
 
 
     /**
+     * ==================================================================
      * 查询关注数据
      */
     @Query("SELECT * FROM org_member where org=:org")
@@ -67,6 +69,7 @@ interface UserDao {
     fun deleteOrgMember(vararg entity: OrgMemberEntity?)
 
     /**
+     * ==================================================================
      * 查询产生事件数据
      */
     @Query("SELECT * FROM user_event where user_name=:userName")

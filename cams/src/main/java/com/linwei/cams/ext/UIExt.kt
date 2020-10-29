@@ -2,6 +2,7 @@ package com.linwei.cams.ext
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
 import android.text.SpannableString
 import android.text.Spanned
@@ -95,8 +96,26 @@ fun Int.color(): Int {
     }
 }
 
+/**
+ * ResId颜色转换
+ * @return color [Int]
+ */
 fun Int.compatColor(): Int {
     return ContextCompat.getColor(ctx, this)
+}
+
+/**
+ * 拓展颜色转String
+ * @return color 十六进制 [String]
+ */
+fun Int.colorIdToString(): String {
+    val stringBuffer = StringBuffer()
+    val color: Int = ContextCompat.getColor(ctx, this)
+    stringBuffer.append("#")
+    stringBuffer.append(Integer.toHexString(Color.red(color)))
+    stringBuffer.append(Integer.toHexString(Color.green(color)))
+    stringBuffer.append(Integer.toHexString(Color.blue(color)))
+    return stringBuffer.toString()
 }
 
 

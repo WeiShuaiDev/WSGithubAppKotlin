@@ -7,6 +7,7 @@ import com.linwei.github_mvvm.mvvm.model.bean.*
 import com.linwei.github_mvvm.mvvm.model.ui.FileUIModel
 import com.linwei.github_mvvm.mvvm.model.ui.PushUIModel
 import com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel
+import com.linwei.github_mvvm.utils.HtmlUtils
 
 
 /**
@@ -44,7 +45,7 @@ object ReposConversion {
         reposUIModel.repositoryLicense = repository?.license?.name ?: ""
 
 
-        val createStr = if (repository != null && repository.fork)
+        val createStr:String = if (repository != null && repository.fork)
             context.getString(R.string.forked_at) + (repository.parent?.name ?: "") + "\n"
         else
             context.getString(R.string.created_at) + TimeUtils.getDate(repository?.createdAt) + "\n"
@@ -103,15 +104,15 @@ object ReposConversion {
 
     fun repoCommitToFileUIModel(context: Context, commit: CommitFile): FileUIModel {
         val fileUIModel = FileUIModel()
-        val filename = commit.fileName ?: ""
-        val nameSplit = filename.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val filename:String = commit.fileName ?: ""
+        val nameSplit:Array<String> = filename.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         fileUIModel.title = nameSplit[nameSplit.size - 1]
         fileUIModel.dir = filename
         fileUIModel.icon = "{GSY-REPOS_ITEM_FILE}"
 
-        //val html = HtmlUtils.generateCode2HTml(context, HtmlUtils.parseDiffSource(commit.patch
-        //        ?: "", false), R.color.colorWebDraculaBg, "")
-        fileUIModel.patch = ""
+        val html:String = HtmlUtils.generateCode2HTml(context, HtmlUtils.parseDiffSource(commit.patch
+                ?: "", false), R.color.webDraculaBackgroundColor, "")
+        fileUIModel.patch = html
         return fileUIModel
     }
 }

@@ -51,10 +51,9 @@ class RecommendedViewModel @Inject constructor(
     val reposUIModel: LiveData<List<ReposUIModel>>
         get() = _reposUIModel
 
-
-    override fun toTrendData() {
+    override fun toTrend() {
         mLifecycleOwner?.let {
-            model.obtainTrendData(
+            model.obtainTrend(
                 it,
                 sortType[0],
                 sortType[1],
