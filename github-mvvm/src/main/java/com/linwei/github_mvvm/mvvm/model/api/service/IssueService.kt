@@ -41,7 +41,7 @@ interface IssueService {
         @Query("sort") sort: String = "created",
         @Query("direction") direction: String = "desc",
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<Issue>>
+    ): LiveData<Page<List<Issue>>>
 
     /**
      * @param filter [String]

@@ -1,6 +1,8 @@
 package com.linwei.github_mvvm.ext
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.graphics.Point
 import android.os.Bundle
 import android.view.View
@@ -16,6 +18,7 @@ import com.linwei.cams.utils.TimeUtils.getDate
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
 import java.util.*
+import java.util.regex.Pattern
 
 
 /**
@@ -68,6 +71,47 @@ fun loadUserHeaderImage(imageView: ImageView, url: String, size: Point = Point(5
  */
 fun jumpUserActivity() {
     ctx.startActivity(Intent(ctx, UserActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+}
+
+/**
+ * 拓展获取版本号
+ */
+fun Context.getVersionName(): String {
+    val manager:PackageInfo = packageManager.getPackageInfo(packageName, 0)
+    return manager.versionName
+}
+
+/**
+ * 拓展String版本号对比
+ */
+fun String.compareVersion(v2: String?): String? {
+    if (v2 == null || v2.isEmpty()) return null
+    val regEx = "[^0-9]"
+    val p:Pattern = Pattern.compile(regEx)
+    var s1: String = p.matcher(this).replaceAll("").trim()
+    var s2: String = p.matcher(v2).replaceAll("").trim()
+
+    val cha: Int = s1.length - s2.length
+    val buffer = StringBuffer()
+    var i = 0
+    while (i < Math.abs(cha)) {
+        buffer.append("0")
+        ++i
+    }
+
+    if (cha > 0) {
+        buffer.insert(0, s2)
+        s2 = buffer.toString()
+    } else if (cha < 0) {
+        buffer.insert(0, s1)
+        s1 = buffer.toString()
+    }
+
+    val s1Int:Int = s1.toInt()
+    val s2Int:Int = s2.toInt()
+
+    return if (s1Int > s2Int) this
+    else v2
 }
 
 

@@ -2,9 +2,15 @@ package com.linwei.github_mvvm.mvvm.model.repository.service
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import com.linwei.cams.ext.isNotNullOrEmpty
+import com.linwei.cams.ext.no
+import com.linwei.cams.ext.string
 import com.linwei.cams.http.callback.LiveDataCallBack
+import com.linwei.cams.http.config.ApiStateConstant
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
+import com.linwei.github_mvvm.R
+import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.api.service.SearchService
 import com.linwei.github_mvvm.mvvm.model.bean.*
 import javax.inject.Inject
@@ -19,6 +25,7 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 open class SearchRepository @Inject constructor(
+    val appGlobalModel: AppGlobalModel,
     dataRepository: DataMvvmRepository
 ) : BaseModel(dataRepository) {
 
@@ -103,19 +110,33 @@ open class SearchRepository @Inject constructor(
     }
 
     /**
-     * 搜索问题
+     * 搜索仓库相关的issue
      * @param owner [LifecycleOwner]
+     * @param reposName [String]
+     * @param status [String]
      * @param query [String] 关键字
      * @param page [Int]
      * @return  [LiveDataCallBack]
      */
     fun requestSearchIssues(
         owner: LifecycleOwner,
+        reposName: String,
+        status: String,
         query: String,
         page: Int, observer: LiveDataCallBack<Page<SearchResult<Issue>>>
     ): LiveData<Page<SearchResult<Issue>>> {
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
 
-        return searchService.searchIssues(forceNetWork = true, query = query, page = page)
+        val q: String = if (status == "all") {
+            "$query+repo:$userName/$reposName"
+        } else {
+            "$query+repo:$userName/$reposName+state:$status"
+        }
+        return searchService.searchIssues(forceNetWork = true, query = q, page = page)
             .apply {
                 observe(
                     owner,

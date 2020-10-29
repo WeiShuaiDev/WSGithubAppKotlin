@@ -67,9 +67,10 @@ interface ReposService {
         @Query("sort") sort: String,
         @Query("direction") direction: String,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<Repository>>
+    ): LiveData<List<Repository>>
 
     /**
+     * 获取用户的仓库数据
      * @param user [String]
      * @param page [Int]
      * @param sort [String]
@@ -82,7 +83,7 @@ interface ReposService {
         @Query("page") page: Int,
         @Query("sort") sort: String = "pushed",
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<Repository>>
+    ): LiveData<Page<List<Repository>>>
 
     /**
      * 检查当前仓库是否标记为 `Star`
@@ -182,7 +183,7 @@ interface ReposService {
         @Path("repo") repo: String,
         @Path("path", encoded = true) path: String,
         @Query("ref") branch: String = "master"
-    ): LiveData<ArrayList<FileModel>>
+    ): LiveData<List<FileModel>>
 
     /**
      * @param owner [String]
@@ -192,7 +193,7 @@ interface ReposService {
     fun getBranches(
         @Path("owner") owner: String,
         @Path("repo") repo: String
-    ): LiveData<ArrayList<Branch>>
+    ): LiveData<List<Branch>>
 
     /**
      * @param owner [String]
@@ -202,7 +203,7 @@ interface ReposService {
     fun getTags(
         @Path("owner") owner: String,
         @Path("repo") repo: String
-    ): LiveData<ArrayList<Branch>>
+    ): LiveData<List<Branch>>
 
     /**
      * @param owner [String]
@@ -215,7 +216,7 @@ interface ReposService {
         @Path(value = "owner") owner: String,
         @Path(value = "repo") repo: String,
         @Query("page") page: Int
-    ): LiveData<ArrayList<User>>
+    ): LiveData<List<User>>
 
     /**
      * @param owner [String]
@@ -228,7 +229,7 @@ interface ReposService {
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int
-    ): LiveData<ArrayList<User>>
+    ): LiveData<List<User>>
 
     /**
      * @param owner [String]
@@ -264,7 +265,7 @@ interface ReposService {
         @Path("repo") repo: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<Repository>>
+    ): LiveData<Page<List<Repository>>>
 
     /**
      * @param owner [String]
@@ -280,7 +281,7 @@ interface ReposService {
         @Path("repo") repo: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<Event>>
+    ): LiveData<Page<List<Event>>>
 
     /**
      * @param owner [String]
@@ -296,7 +297,7 @@ interface ReposService {
         @Path("repo") repo: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<Release>>
+    ): LiveData<List<Release>>
 
     /**
      * @param owner [String]
@@ -311,7 +312,7 @@ interface ReposService {
         @Path("repo") repo: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<Release>>
+    ): LiveData<List<Release>>
 
     /**
      * @param owner [String]

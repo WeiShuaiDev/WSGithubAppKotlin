@@ -3,6 +3,7 @@ package com.linwei.github_mvvm.mvvm.model.api.service
 import androidx.lifecycle.LiveData
 import com.linwei.github_mvvm.mvvm.model.api.Api
 import com.linwei.github_mvvm.mvvm.model.bean.CommitsComparison
+import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.bean.RepoCommit
 import com.linwei.github_mvvm.mvvm.model.bean.RepoCommitExt
 import retrofit2.http.GET
@@ -37,7 +38,7 @@ interface CommitService {
         @Query("page") page: Int,
         @Query("sha") branch: String = "master",
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<RepoCommit>>
+    ): LiveData<Page<List<RepoCommit>>>
 
     /**
      * @param owner [String]
