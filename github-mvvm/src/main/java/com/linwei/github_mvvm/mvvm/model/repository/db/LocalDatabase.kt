@@ -5,10 +5,7 @@ import androidx.room.RoomDatabase
 import com.linwei.github_mvvm.mvvm.model.repository.db.dao.IssueDao
 import com.linwei.github_mvvm.mvvm.model.repository.db.dao.ReposDao
 import com.linwei.github_mvvm.mvvm.model.repository.db.dao.UserDao
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.OrgMemberEntity
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.TrendEntity
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.UserEventEntity
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.*
 
 /**
  * ---------------------------------------------------------------------
@@ -20,7 +17,12 @@ import com.linwei.github_mvvm.mvvm.model.repository.db.entity.UserEventEntity
  *-----------------------------------------------------------------------
  */
 @Database(
-    entities = [ReceivedEventEntity::class, TrendEntity::class, OrgMemberEntity::class, UserEventEntity::class],
+    entities = [IssueCommentEntity::class, IssueDetailEntity::class, OrgMemberEntity::class,
+        ReceivedEventEntity::class, RepositoryCommitsEntity::class, RepositoryDetailEntity::class,
+        RepositoryDetailReadmeEntity::class, RepositoryEventEntity::class, RepositoryForkEntity::class,
+        RepositoryIssueEntity::class, TrendEntity::class, UserEventEntity::class,RepositoryStarEntity::class,
+        UserReposEntity::class, UserStaredEntity::class,UserFollowerEntity::class,UserFollowedEntity::class,
+        RepositoryWatcherEntity::class],
     version = 1,
     exportSchema = false
 )

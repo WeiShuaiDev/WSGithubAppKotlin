@@ -2,9 +2,7 @@ package com.linwei.github_mvvm.mvvm.model.repository.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.OrgMemberEntity
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.UserEventEntity
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.*
 
 /**
  * ---------------------------------------------------------------------
@@ -92,6 +90,106 @@ interface UserDao {
      */
     @Delete
     fun deleteUserEvent(vararg entity: UserEventEntity?)
+
+    /**
+     * ==================================================================
+     * 查询用户粉丝数据
+     */
+    @Query("SELECT * FROM user_follower where user_name=:userName")
+    fun queryUserFollower(userName: String): LiveData<UserFollowerEntity>
+
+    /**
+     * 增加用户粉丝数据
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertUserFollower(vararg entity: UserFollowerEntity?)
+
+    /**
+     * 更新用户粉丝数据
+     */
+    @Update
+    fun updateUserFollower(vararg entity: UserFollowerEntity?): Int
+
+    /**
+     * 删除用户粉丝数据
+     */
+    @Delete
+    fun deleteUserFollower(vararg entity: UserFollowerEntity?)
+
+    /**
+     * ==================================================================
+     * 查询用户关注数据
+     */
+    @Query("SELECT * FROM user_followed where user_name=:userName")
+    fun queryUserFollowed(userName: String): LiveData<UserFollowedEntity>
+
+    /**
+     * 增加用户关注数据
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertUserFollowed(vararg entity: UserFollowedEntity?)
+
+    /**
+     * 更新用户关注数据
+     */
+    @Update
+    fun updateUserFollowed(vararg entity: UserFollowedEntity?): Int
+
+    /**
+     * 删除用户关注数据
+     */
+    @Delete
+    fun deleteUserFollowed(vararg entity: UserFollowedEntity?)
+
+    /**
+     * ==================================================================
+     * 查询仓库收藏数据
+     */
+    @Query("SELECT * FROM repository_star where full_name=:fullName")
+    fun queryRepositoryStar(fullName: String): LiveData<RepositoryStarEntity>
+
+    /**
+     * 增加仓库收藏数据
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertRepositoryStar(vararg entity: RepositoryStarEntity?)
+
+    /**
+     * 更新仓库收藏数据
+     */
+    @Update
+    fun updateRepositoryStar(vararg entity: RepositoryStarEntity?): Int
+
+    /**
+     * 删除仓库收藏数据
+     */
+    @Delete
+    fun deleteRepositoryStar(vararg entity: RepositoryStarEntity?)
+
+    /**
+     * ==================================================================
+     * 查询仓库订阅数据
+     */
+    @Query("SELECT * FROM repository_watcher where full_name=:fullName")
+    fun queryRepositoryWatcher(fullName: String): LiveData<RepositoryWatcherEntity>
+
+    /**
+     * 增加仓库订阅数据
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertRepositoryWatcher(vararg entity: RepositoryWatcherEntity?)
+
+    /**
+     * 更新仓库订阅数据
+     */
+    @Update
+    fun updateRepositoryWatcher(vararg entity: RepositoryWatcherEntity?): Int
+
+    /**
+     * 删除仓库订阅数据
+     */
+    @Delete
+    fun deleteRepositoryWatcher(vararg entity: RepositoryWatcherEntity?)
 
 
 }

@@ -23,15 +23,15 @@ import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
 import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.api.service.AuthService
 import com.linwei.github_mvvm.mvvm.model.api.service.NotificationService
+import com.linwei.github_mvvm.mvvm.model.api.service.ReposService
 import com.linwei.github_mvvm.mvvm.model.api.service.UserService
 import com.linwei.github_mvvm.mvvm.model.bean.*
 import com.linwei.github_mvvm.mvvm.model.conversion.UserConversion
 import com.linwei.github_mvvm.mvvm.model.repository.db.LocalDatabase
 import com.linwei.github_mvvm.mvvm.model.repository.db.dao.UserDao
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.OrgMemberEntity
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.UserEventEntity
+import com.linwei.github_mvvm.mvvm.model.repository.db.entity.*
 import com.linwei.github_mvvm.utils.GsonUtils
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 /**
@@ -50,7 +50,7 @@ open class UserRepository @Inject constructor(
 ) : BaseModel(dataRepository) {
 
     /**
-     *  用户权限校验服务接口
+     * 用户权限校验服务接口
      */
     private val authService: AuthService by lazy {
         dataRepository.obtainRetrofitService(AuthService::class.java)
@@ -77,6 +77,20 @@ open class UserRepository @Inject constructor(
         dataRepository.obtainRetrofitService(NotificationService::class.java)
     }
 
+    /**
+     * 仓库服务接口
+     */
+    private val reposService: ReposService by lazy {
+        dataRepository.obtainRetrofitService(ReposService::class.java)
+    }
+
+    /**
+     * 请求网络进行账号密码登录
+     * @param owner [LifecycleOwner]
+     * @param username [String] 用户名
+     * @param password [Int]  密码
+     * @return  [LiveDataCallBack]
+     */
     fun requestAccountLogin(
         owner: LifecycleOwner, username: String,
         password: String, observer: LiveDataCallBack<AuthResponse>
@@ -97,10 +111,15 @@ open class UserRepository @Inject constructor(
         requestCreateAuthorization(owner, observer)
     }
 
+    /**
+     * 请求网络进行OAuth登录
+     * @param owner [LifecycleOwner]
+     * @param code [String]
+     * @return  [LiveDataCallBack]
+     */
     fun requestOAuthLogin(
         owner: LifecycleOwner, code: String, observer: LiveDataCallBack<AccessToken>
     ) {
-
         clearTokenStorage()
 
         requestCreateCodeAuthorization(owner, code, observer)
@@ -142,6 +161,11 @@ open class UserRepository @Inject constructor(
         }
     }
 
+    /**
+     * 请求网络获取账号密码Token令牌
+     * @param owner [LifecycleOwner]
+     * @return  [LiveDataCallBack]
+     */
     private fun requestCreateAuthorization(
         owner: LifecycleOwner,
         observer: LiveDataCallBack<AuthResponse>
@@ -178,6 +202,12 @@ open class UserRepository @Inject constructor(
         }
     }
 
+    /**
+     * 请求网络删除 Token令牌
+     * @param owner [LifecycleOwner]
+     * @param id [Int]
+     * @return  [LiveDataCallBack]
+     */
     private fun requestDeleteAuthorization(owner: LifecycleOwner, id: Int): LiveData<Any> {
         return authService.deleteAuthorization(id = id).apply {
             observe(owner, object : LiveDataCallBack<Any>() {
@@ -190,6 +220,12 @@ open class UserRepository @Inject constructor(
         }
     }
 
+    /**
+     * 请求网络获取第三方用户数据或者当前用户数据
+     * @param owner [LifecycleOwner]
+     * @param name [String]
+     * @return [LiveDataCallBack]
+     */
     fun requestAuthenticatedUserInfo(
         owner: LifecycleOwner,
         name: String?,
@@ -202,6 +238,11 @@ open class UserRepository @Inject constructor(
         }
     }
 
+    /**
+     * 请求网络获取第三方用户数据
+     * @param owner [LifecycleOwner]
+     * @return [LiveDataCallBack]
+     */
     private fun requestPersonInfo(
         owner: LifecycleOwner,
         observer: LiveDataCallBack<User>
@@ -234,6 +275,12 @@ open class UserRepository @Inject constructor(
         }
     }
 
+    /**
+     * 请求网络获取当前用户数据
+     * @param owner [LifecycleOwner]
+     * @param name [String]
+     * @return [LiveDataCallBack]
+     */
     private fun requestUser(
         owner: LifecycleOwner,
         name: String,
@@ -266,62 +313,171 @@ open class UserRepository @Inject constructor(
         }
     }
 
-    fun requestReceivedEvent(
+    /**
+     * 请求网络修改个人信息
+     * @param owner [LifecycleOwner]
+     * @param requestModel [UserInfoRequestModel]
+     * @return [LiveDataCallBack]
+     */
+    private fun requestChangeUserInfo(
         owner: LifecycleOwner,
-        page: Int,
-        observer: LiveDataCallBack<Page<List<Event>>>
-    ): LiveData<Page<List<Event>>> {
-        val name: String? = appGlobalModel.userObservable.login
-        name.isNotNullOrEmpty().no {
+        requestModel: UserInfoRequestModel,
+        observer: LiveDataCallBack<User>
+    ): LiveData<User> {
+        return userService.saveUserInfo(body = requestModel).apply {
+            observe(owner, object : LiveDataCallBack<User>() {
+                override fun onSuccess(code: String?, data: User?) {
+                    super.onSuccess(code, data)
+                    observer.onSuccess(code, data)
+                }
+
+                override fun onFailure(code: String?, message: String?) {
+                    super.onFailure(code, message)
+                    clearTokenStorage()
+                    observer.onFailure(code, message)
+                }
+            })
+        }
+    }
+
+    /**
+     * 请求网络检查是否关注
+     * @param owner [LifecycleOwner]
+     * @return [LiveDataCallBack]
+     */
+    private fun requestCheckFocus(
+        owner: LifecycleOwner,
+        observer: LiveDataCallBack<Boolean>
+    ): LiveData<ResponseBody> {
+
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
             observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
             return@no
         }
 
-        return userService.getNewsEvent(forceNetWork = true, user = name!!, page = page).apply {
-            observe(
-                owner,
-                object : LiveDataCallBack<Page<List<Event>>>() {
-                    override fun onSuccess(code: String?, data: Page<List<Event>>?) {
-                        super.onSuccess(code, data)
-                        data?.let {
-                            if (page == 1) {
-                                val entity = ReceivedEventEntity(
-                                    id = 0,
-                                    data = GsonUtils.toJsonString(it)
-                                )
-                                //userDao.insertReceivedEvent(entity)
-                            }
-                        }
-                        observer.onSuccess(code, data)
+        return userService.checkFollowing(user = userName!!).apply {
+            observe(owner, object : LiveDataCallBack<ResponseBody>() {
+                override fun onSuccess(code: String?, data: ResponseBody?) {
+                    super.onSuccess(code, data)
+                    if (code == "404") {
+                        observer.onSuccess(code, false)
+                    } else {
+                        observer.onSuccess(code, true)
                     }
+                }
 
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                        observer.onFailure(code, message)
-                    }
-                })
+                override fun onFailure(code: String?, message: String?) {
+                    super.onFailure(code, message)
+                    observer.onFailure(code, message)
+                }
+            })
         }
     }
 
-    fun queryReceivedEvent(
+    /**
+     * 请求网络执行关注操作
+     * @param owner [LifecycleOwner]
+     * @param name [String]
+     * @param focus [Boolean]
+     * @return [LiveDataCallBack]
+     */
+    private fun requestDoFocus(
         owner: LifecycleOwner,
-        id: Int,
+        user: String,
+        focus: Boolean,
+        observer: LiveDataCallBack<Boolean>
+    ): LiveData<ResponseBody> {
+
+        val userName: String? = appGlobalModel.userObservable.login
+        (userName == null || userName == user).no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
+
+        return if (focus) {
+            userService.unfollowUser(user = user)
+        } else {
+            userService.followUser(user = user)
+        }.apply {
+            observe(owner, object : LiveDataCallBack<ResponseBody>() {
+                override fun onSuccess(code: String?, data: ResponseBody?) {
+                    super.onSuccess(code, data)
+                    observer.onSuccess(code, true)
+                }
+
+                override fun onFailure(code: String?, message: String?) {
+                    super.onFailure(code, message)
+                    observer.onFailure(code, message)
+                }
+            })
+        }
+    }
+
+    /**
+     * 请求网络获取用户产生的行为事件数据
+     * @param owner [LifecycleOwner]
+     * @param page [Int]
+     * @return [LiveDataCallBack]
+     */
+    fun requestUserEvents(
+        owner: LifecycleOwner,
+        page: Int,
         observer: LiveDataCallBack<Page<List<Event>>>
-    ): LiveData<ReceivedEventEntity> {
-        return userDao.queryReceivedEvent(id = id).apply {
+    ): LiveData<Page<List<Event>>> {
+
+        val userName: String? = appGlobalModel.userObservable.login
+
+        return userService.getUserEvents(forceNetWork = true, user = userName ?: "", page = page)
+            .apply {
+                observe(
+                    owner,
+                    object : LiveDataCallBack<Page<List<Event>>>() {
+                        override fun onSuccess(code: String?, data: Page<List<Event>>?) {
+                            super.onSuccess(code, data)
+                            data?.let {
+                                if (page == 1) {
+                                    val entity = UserEventEntity(
+                                        userName = userName,
+                                        data = GsonUtils.toJsonString(it)
+                                    )
+                                    //userDao.insertUserEvent(entity)
+                                }
+                            }
+                            observer.onSuccess(code, data)
+                        }
+
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            observer.onFailure(code, message)
+                        }
+                    })
+            }
+    }
+
+    /**
+     * 查询数据库获取用户产生的行为事件数据
+     * @param owner [LifecycleOwner]
+     * @param name [Int]
+     * @return [LiveDataCallBack]
+     */
+    fun queryUserEvents(
+        owner: LifecycleOwner,
+        name: String,
+        observer: LiveDataCallBack<Page<List<Event>>>
+    ): LiveData<UserEventEntity> {
+        return userDao.queryUserEvent(userName = name).apply {
             observe(owner,
                 object :
-                    LiveDataCallBack<ReceivedEventEntity>() {
-                    override fun onSuccess(code: String?, data: ReceivedEventEntity?) {
+                    LiveDataCallBack<UserEventEntity>() {
+                    override fun onSuccess(code: String?, data: UserEventEntity?) {
                         super.onSuccess(code, data)
                         data?.let {
                             val page = Page<List<Event>>()
                             page.result =
                                 GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java)
-
                             observer.onSuccess(code, page)
                         }
-
                     }
 
                     override fun onFailure(code: String?, message: String?) {
@@ -332,6 +488,13 @@ open class UserRepository @Inject constructor(
         }
     }
 
+
+    /**
+     * 请求网络获取用户产生的行为事件数据
+     * @param owner [LifecycleOwner]
+     * @param page [Int]
+     * @return [LiveDataCallBack]
+     */
     fun requestOrgMembers(
         owner: LifecycleOwner,
         page: Int,
@@ -365,6 +528,12 @@ open class UserRepository @Inject constructor(
         }
     }
 
+    /**
+     * 查询数据库获取用户产生的行为事件数据
+     * @param owner [LifecycleOwner]
+     * @param org [String]
+     * @return [LiveDataCallBack]
+     */
     fun queryOrgMembers(
         owner: LifecycleOwner,
         org: String,
@@ -393,27 +562,288 @@ open class UserRepository @Inject constructor(
         }
     }
 
-    fun requestUserEvents(
+    /**
+     * 请求网络获取用户接收到的事件
+     * @param owner [LifecycleOwner]
+     * @param page [Int]
+     * @return [LiveDataCallBack]
+     */
+    fun requestReceivedEvent(
         owner: LifecycleOwner,
         page: Int,
         observer: LiveDataCallBack<Page<List<Event>>>
     ): LiveData<Page<List<Event>>> {
-        val user: String? = appGlobalModel.userObservable.login
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
 
-        return userService.getUserEvents(forceNetWork = true, user = user ?: "", page = page)
+        return userService.getNewsEvent(forceNetWork = true, user = userName!!, page = page).apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<Page<List<Event>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<Event>>?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            if (page == 1) {
+                                val entity = ReceivedEventEntity(
+                                    id = 0,
+                                    data = GsonUtils.toJsonString(it)
+                                )
+                                //userDao.insertReceivedEvent(entity)
+                            }
+                        }
+                        observer.onSuccess(code, data)
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+    /**
+     * 查询数据库获取用户接收到的事件
+     * @param owner [LifecycleOwner]
+     * @param page [Int]
+     * @return [LiveDataCallBack]
+     */
+    fun queryReceivedEvent(
+        owner: LifecycleOwner,
+        id: Int,
+        observer: LiveDataCallBack<Page<List<Event>>>
+    ): LiveData<ReceivedEventEntity> {
+        return userDao.queryReceivedEvent(id = id).apply {
+            observe(owner,
+                object :
+                    LiveDataCallBack<ReceivedEventEntity>() {
+                    override fun onSuccess(code: String?, data: ReceivedEventEntity?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            val page = Page<List<Event>>()
+                            page.result =
+                                GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java)
+
+                            observer.onSuccess(code, page)
+                        }
+
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+    /**
+     * 请求网络获取用户粉丝列表数据
+     * @param owner [LifecycleOwner]
+     * @param page [Int]
+     * @return [LiveDataCallBack]
+     */
+    fun requestUserFollower(
+        owner: LifecycleOwner,
+        page: Int,
+        observer: LiveDataCallBack<Page<List<User>>>
+    ): LiveData<Page<List<User>>> {
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
+
+        return userService.getFollowers(forceNetWork = true, user = userName!!, page = page).apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<Page<List<User>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<User>>?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            if (page == 1) {
+                                val entity = UserFollowerEntity(
+                                    userName = userName,
+                                    data = GsonUtils.toJsonString(it)
+                                )
+                                userDao.insertUserFollower(entity)
+                            }
+                        }
+                        observer.onSuccess(code, data)
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+
+    /**
+     * 查询数据库获取用户粉丝列表数据
+     * @param owner [LifecycleOwner]
+     * @return [LiveDataCallBack]
+     */
+    fun queryUserFollower(
+        owner: LifecycleOwner,
+        observer: LiveDataCallBack<Page<List<User>>>
+    ): LiveData<UserFollowerEntity> {
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
+
+        return userDao.queryUserFollower(userName = userName!!).apply {
+            observe(owner,
+                object :
+                    LiveDataCallBack<UserFollowerEntity>() {
+                    override fun onSuccess(code: String?, data: UserFollowerEntity?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            val page = Page<List<User>>()
+                            page.result =
+                                GsonUtils.parserJsonToArrayBeans(it.data, User::class.java)
+
+                            observer.onSuccess(code, page)
+                        }
+
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+    /**
+     * 请求网络获取用户关注列表数据
+     * @param owner [LifecycleOwner]
+     * @param page [Int]
+     * @return [LiveDataCallBack]
+     */
+    fun requestUserFollowed(
+        owner: LifecycleOwner,
+        page: Int,
+        observer: LiveDataCallBack<Page<List<User>>>
+    ): LiveData<Page<List<User>>> {
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
+
+        return userService.getFollowing(forceNetWork = true, user = userName!!, page = page).apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<Page<List<User>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<User>>?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            if (page == 1) {
+                                val entity = UserFollowedEntity(
+                                    userName = userName,
+                                    data = GsonUtils.toJsonString(it)
+                                )
+                                userDao.insertUserFollowed(entity)
+                            }
+                        }
+                        observer.onSuccess(code, data)
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+
+    /**
+     * 查询数据库获取用户关注列表数据
+     * @param owner [LifecycleOwner]
+     * @return [LiveDataCallBack]
+     */
+    fun queryUserFollowed(
+        owner: LifecycleOwner,
+        observer: LiveDataCallBack<Page<List<User>>>
+    ): LiveData<UserFollowedEntity> {
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
+
+        return userDao.queryUserFollowed(userName = userName!!).apply {
+            observe(owner,
+                object :
+                    LiveDataCallBack<UserFollowedEntity>() {
+                    override fun onSuccess(code: String?, data: UserFollowedEntity?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            val page = Page<List<User>>()
+                            page.result =
+                                GsonUtils.parserJsonToArrayBeans(it.data, User::class.java)
+
+                            observer.onSuccess(code, page)
+                        }
+
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+    /**
+     * 请求网络获取仓库的star用户列表
+     * @param owner [LifecycleOwner]
+     * @param reposName [String]
+     * @param page [Int]
+     * @return [LiveDataCallBack]
+     */
+    fun requestStargazers(
+        owner: LifecycleOwner,
+        reposName: String,
+        page: Int,
+        observer: LiveDataCallBack<Page<List<User>>>
+    ): LiveData<Page<List<User>>> {
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
+
+        return reposService.getStargazers(
+            forceNetWork = true,
+            page = page,
+            owner = userName!!,
+            repo = reposName
+        )
             .apply {
                 observe(
                     owner,
-                    object : LiveDataCallBack<Page<List<Event>>>() {
-                        override fun onSuccess(code: String?, data: Page<List<Event>>?) {
+                    object : LiveDataCallBack<Page<List<User>>>() {
+                        override fun onSuccess(code: String?, data: Page<List<User>>?) {
                             super.onSuccess(code, data)
                             data?.let {
                                 if (page == 1) {
-                                    val entity = UserEventEntity(
-                                        userName = user,
+                                    val entity = RepositoryStarEntity(
+                                        fullName = "$userName/$reposName",
                                         data = GsonUtils.toJsonString(it)
                                     )
-                                    //userDao.insertUserEvent(entity)
+                                    userDao.insertRepositoryStar(entity)
                                 }
                             }
                             observer.onSuccess(code, data)
@@ -427,23 +857,37 @@ open class UserRepository @Inject constructor(
             }
     }
 
-    fun queryUserEvents(
+    /**
+     * 查询数据库获取仓库的star用户列表
+     * @param owner [LifecycleOwner]
+     * @param reposName [String]
+     * @return [LiveDataCallBack]
+     */
+    fun queryStargazers(
         owner: LifecycleOwner,
-        name: String,
-        observer: LiveDataCallBack<Page<List<Event>>>
-    ): LiveData<UserEventEntity> {
-        return userDao.queryUserEvent(userName = name).apply {
+        reposName: String,
+        observer: LiveDataCallBack<Page<List<User>>>
+    ): LiveData<RepositoryStarEntity> {
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
+
+        return userDao.queryRepositoryStar(fullName = "$userName/$reposName").apply {
             observe(owner,
                 object :
-                    LiveDataCallBack<UserEventEntity>() {
-                    override fun onSuccess(code: String?, data: UserEventEntity?) {
+                    LiveDataCallBack<RepositoryStarEntity>() {
+                    override fun onSuccess(code: String?, data: RepositoryStarEntity?) {
                         super.onSuccess(code, data)
                         data?.let {
-                            val page = Page<List<Event>>()
+                            val page = Page<List<User>>()
                             page.result =
-                                GsonUtils.parserJsonToArrayBeans(it.data, Event::class.java)
+                                GsonUtils.parserJsonToArrayBeans(it.data, User::class.java)
+
                             observer.onSuccess(code, page)
                         }
+
                     }
 
                     override fun onFailure(code: String?, message: String?) {
@@ -454,6 +898,106 @@ open class UserRepository @Inject constructor(
         }
     }
 
+
+    /**
+     * 请求网络获取仓库的watch用户列表
+     * @param owner [LifecycleOwner]
+     * @param reposName [String]
+     * @param page [Int]
+     * @return [LiveDataCallBack]
+     */
+    fun requestWatchers(
+        owner: LifecycleOwner,
+        reposName: String,
+        page: Int,
+        observer: LiveDataCallBack<Page<List<User>>>
+    ): LiveData<Page<List<User>>> {
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
+
+        return reposService.getWatchers(
+            forceNetWork = true,
+            page = page,
+            owner = userName!!,
+            repo = reposName
+        )
+            .apply {
+                observe(
+                    owner,
+                    object : LiveDataCallBack<Page<List<User>>>() {
+                        override fun onSuccess(code: String?, data: Page<List<User>>?) {
+                            super.onSuccess(code, data)
+                            data?.let {
+                                if (page == 1) {
+                                    val entity = RepositoryWatcherEntity(
+                                        fullName = "$userName/$reposName",
+                                        data = GsonUtils.toJsonString(it)
+                                    )
+                                    userDao.insertRepositoryWatcher(entity)
+                                }
+                            }
+                            observer.onSuccess(code, data)
+                        }
+
+                        override fun onFailure(code: String?, message: String?) {
+                            super.onFailure(code, message)
+                            observer.onFailure(code, message)
+                        }
+                    })
+            }
+    }
+
+    /**
+     * 查询数据库获取仓库的watch用户列表
+     * @param owner [LifecycleOwner]
+     * @param reposName [String]
+     * @return [LiveDataCallBack]
+     */
+    fun queryWatchers(
+        owner: LifecycleOwner,
+        reposName: String,
+        observer: LiveDataCallBack<Page<List<User>>>
+    ): LiveData<RepositoryWatcherEntity> {
+        val userName: String? = appGlobalModel.userObservable.login
+        userName.isNotNullOrEmpty().no {
+            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
+            return@no
+        }
+
+        return userDao.queryRepositoryWatcher(fullName = "$userName/$reposName").apply {
+            observe(owner,
+                object :
+                    LiveDataCallBack<RepositoryWatcherEntity>() {
+                    override fun onSuccess(code: String?, data: RepositoryWatcherEntity?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            val page = Page<List<User>>()
+                            page.result =
+                                GsonUtils.parserJsonToArrayBeans(it.data, User::class.java)
+
+                            observer.onSuccess(code, page)
+                        }
+
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+    /**
+     * @param owner [LifecycleOwner]
+     * @param all [Boolean]
+     * @param participating [Boolean]
+     * @param page [Int]
+     * @return [LiveDataCallBack]
+     */
     fun requestNotify(
         owner: LifecycleOwner,
         all: Boolean?,
@@ -488,12 +1032,17 @@ open class UserRepository @Inject constructor(
         }
     }
 
-
+    /**
+     * 退出登录
+     */
     fun signOut() {
         clearTokenStorage()
         clearCookies()
     }
 
+    /**
+     * 清除所有 `Token` 数据，用户信息数据
+     */
     private fun clearTokenStorage() {
         userInfoPref = ""
         authInfoPref = ""
@@ -503,6 +1052,9 @@ open class UserRepository @Inject constructor(
         authIDPref = ""
     }
 
+    /**
+     * 清除所有 `Cookies` 数据
+     */
     private fun clearCookies() {
         val cookieManager: CookieManager = CookieManager.getInstance()
         cookieManager.setAcceptCookie(true)

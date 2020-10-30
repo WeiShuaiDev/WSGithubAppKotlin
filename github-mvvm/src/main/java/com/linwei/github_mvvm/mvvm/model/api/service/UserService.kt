@@ -90,7 +90,7 @@ interface UserService {
         @Path("user") user: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<User>>
+    ): LiveData<Page<List<User>>>
 
     /**
      * 获取所有关注用户
@@ -104,7 +104,7 @@ interface UserService {
         @Path("user") user: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int = Api.PAGE_SIZE
-    ): LiveData<ArrayList<User>>
+    ): LiveData<Page<List<User>>>
 
     /**
      * 列出用户执行的事件

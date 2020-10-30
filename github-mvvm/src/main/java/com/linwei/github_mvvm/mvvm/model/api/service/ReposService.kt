@@ -216,7 +216,7 @@ interface ReposService {
         @Path(value = "owner") owner: String,
         @Path(value = "repo") repo: String,
         @Query("page") page: Int
-    ): LiveData<List<User>>
+    ): LiveData<Page<List<User>>>
 
     /**
      * @param owner [String]
@@ -229,7 +229,7 @@ interface ReposService {
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int
-    ): LiveData<List<User>>
+    ): LiveData<Page<List<User>>>
 
     /**
      * @param owner [String]

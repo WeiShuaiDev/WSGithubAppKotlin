@@ -142,17 +142,17 @@ class RecommendedFragment : BaseMvvmFragment<RecommendedViewModel, FragmentRecom
         }
 
         mRecommendedSwipe.setOnRefreshListener {
-            mViewModel?.toTrendData()
+            mViewModel?.toTrend()
         }
     }
 
     override fun reloadData() {
         mRecommendedSwipe.isRefreshing = true
-        mViewModel?.toTrendData()
+        mViewModel?.toTrend()
     }
 
     override fun loadData() {
         mRecommendedSwipe.isRefreshing = true
-        mViewModel?.toTrendData()
+        mViewModel?.toTrend()
     }
 }
