@@ -34,6 +34,11 @@ interface MineContract {
         fun loadDataByLoadMore(page: Int)
 
         /**
+         * 用户数据
+         */
+        fun toPersonInfo()
+
+        /**
          * 用户关注数据
          * @param page:Int
          */
@@ -59,9 +64,9 @@ interface MineContract {
          * @param liveData [MutableLiveData]
          */
         fun obtainOrgMembers(
-                owner: LifecycleOwner,
-                page: Int,
-                observer: LiveDataCallBack<Page<List<User>>>
+            owner: LifecycleOwner,
+            page: Int,
+            observer: LiveDataCallBack<Page<List<User>>>
         )
 
         /**
@@ -71,9 +76,9 @@ interface MineContract {
          * @param liveData [MutableLiveData]
          */
         fun obtainUserEvents(
-                owner: LifecycleOwner,
-                page: Int,
-                observer: LiveDataCallBack<Page<List<Event>>>
+            owner: LifecycleOwner,
+            page: Int,
+            observer: LiveDataCallBack<Page<List<Event>>>
         )
 
         /**
@@ -85,11 +90,11 @@ interface MineContract {
          * @param liveData [MutableLiveData]
          */
         fun obtainNotify(
-                owner: LifecycleOwner,
-                all: Boolean?,
-                participating: Boolean?,
-                page: Int,
-                observer: LiveDataCallBack<Page<List<Notification>>>
+            owner: LifecycleOwner,
+            all: Boolean?,
+            participating: Boolean?,
+            page: Int,
+            observer: LiveDataCallBack<Page<List<Notification>>>
         )
     }
 }

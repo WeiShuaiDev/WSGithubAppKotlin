@@ -35,9 +35,9 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class MineViewModel @Inject constructor(
-        private val model: MineModel,
-        private val appGlobalModel: AppGlobalModel,
-        application: Application
+    private val model: MineModel,
+    private val appGlobalModel: AppGlobalModel,
+    application: Application
 ) : BaseViewModel(model, application), MineContract.ViewModel {
 
     /**
@@ -62,99 +62,106 @@ class MineViewModel @Inject constructor(
         get() = _pageByUserEvents
 
     override fun loadDataByRefresh() {
-
-
-
+        //获取用户接收到的事件数据
+        toNotifyData()
+        //获取用户信息数据
+        toPersonInfo()
     }
 
     override fun loadDataByLoadMore(page: Int) {
-        System.out.println("type${appGlobalModel.userObservable.type}")
         (appGlobalModel.userObservable.type == "Organization").yes {
+            //获取用户关注数据
             toOrgMembers(page)
         }.otherwise {
+            //获取用户产生事件数据
             toUserEvents(page)
+        }
+    }
+
+    override fun toPersonInfo() {
+        mLifecycleOwner?.let {
+
         }
     }
 
     override fun toOrgMembers(page: Int) {
         mLifecycleOwner?.let {
             model.obtainOrgMembers(
-                    it, page,
-                    object : LiveDataCallBack<Page<List<User>>>() {
-                        override fun onSuccess(code: String?, data: Page<List<User>>?) {
-                            super.onSuccess(code, data)
+                it, page,
+                object : LiveDataCallBack<Page<List<User>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<User>>?) {
+                        super.onSuccess(code, data)
 
-                            data?.result.isNotNullOrSize().yes {
-                                _pageByOrgMember.value = data
+                        data?.result.isNotNullOrSize().yes {
+                            _pageByOrgMember.value = data
 
-                                postUpdateStatus(StatusCode.SUCCESS)
-                            }.otherwise {
-                                postUpdateStatus(StatusCode.FAILURE)
-                            }
+                            postUpdateStatus(StatusCode.SUCCESS)
+                        }.otherwise {
+                            postUpdateStatus(StatusCode.FAILURE)
                         }
+                    }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            postUpdateStatus(StatusCode.ERROR)
-                        }
-                    })
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        postUpdateStatus(StatusCode.ERROR)
+                    }
+                })
         }
     }
 
     override fun toUserEvents(page: Int) {
         mLifecycleOwner?.let {
             model.obtainUserEvents(
-                    it, page,
-                    object : LiveDataCallBack<Page<List<Event>>>() {
-                        override fun onSuccess(code: String?, data: Page<List<Event>>?) {
-                            super.onSuccess(code, data)
+                it, page,
+                object : LiveDataCallBack<Page<List<Event>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<Event>>?) {
+                        super.onSuccess(code, data)
 
-                            data?.result.isNotNullOrSize().yes {
-                                _pageByUserEvents.value = data
+                        data?.result.isNotNullOrSize().yes {
+                            _pageByUserEvents.value = data
 
-                                postUpdateStatus(StatusCode.SUCCESS)
-                            }.otherwise {
+                            postUpdateStatus(StatusCode.SUCCESS)
+                        }.otherwise {
 
-                                postUpdateStatus(StatusCode.FAILURE)
-                            }
+                            postUpdateStatus(StatusCode.FAILURE)
                         }
+                    }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            postUpdateStatus(StatusCode.ERROR)
-                        }
-                    })
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        postUpdateStatus(StatusCode.ERROR)
+                    }
+                })
         }
     }
-
 
     override fun toNotifyData() {
         mLifecycleOwner?.let {
             model.obtainNotify(
-                    it, null, null,
-                    1,
-                    object : LiveDataCallBack<Page<List<Notification>>>() {
-                        override fun onSuccess(code: String?, data: Page<List<Notification>>?) {
-                            super.onSuccess(code, data)
+                it, null, null,
+                1,
+                object : LiveDataCallBack<Page<List<Notification>>>() {
+                    override fun onSuccess(code: String?, data: Page<List<Notification>>?) {
+                        super.onSuccess(code, data)
 
-                            data?.result.isNotNullOrSize().yes {
-                                _notifyColor.value = R.color.colorNotifyActiveText.color()
+                        data?.result.isNotNullOrSize().yes {
+                            _notifyColor.value = R.color.colorNotifyActiveText.color()
 
-                                postUpdateStatus(StatusCode.SUCCESS)
-                            }.otherwise {
-                                _notifyColor.value = R.color.colorNotifyNormalText.color()
-
-                                postUpdateStatus(StatusCode.FAILURE)
-                            }
-                        }
-
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
+                            postUpdateStatus(StatusCode.SUCCESS)
+                        }.otherwise {
                             _notifyColor.value = R.color.colorNotifyNormalText.color()
 
-                            postUpdateStatus(StatusCode.ERROR)
+                            postUpdateStatus(StatusCode.FAILURE)
                         }
-                    })
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        _notifyColor.value = R.color.colorNotifyNormalText.color()
+
+                        postUpdateStatus(StatusCode.ERROR)
+                    }
+                })
         }
     }
 
@@ -184,36 +191,5 @@ class MineViewModel @Inject constructor(
 
             }
         }
-    }
-
-
-    /**
-     * 进行数据转换 'User' ->'UserUIModel'
-     */
-    fun userConversionByUserUIModel(page: Page<List<User>>?): MutableList<UserUIModel> {
-        val userUIList: MutableList<UserUIModel> = mutableListOf()
-        page?.apply {
-            result?.let {
-                for (user: User in it) {
-                    userUIList.add(UserConversion.userToUserUIModel(user))
-                }
-            }
-        }
-        return userUIList
-    }
-
-    /**
-     * 进行数据转换 'Event' ->'EventUIModel'
-     */
-    fun eventConversionByEventUIModel(page: Page<List<Event>>?): MutableList<EventUIModel> {
-        val eventUIList: MutableList<EventUIModel> = mutableListOf()
-        page?.apply {
-            result?.let {
-                for (event: Event in it) {
-                    eventUIList.add(EventConversion.eventToEventUIModel(event))
-                }
-            }
-        }
-        return eventUIList
     }
 }

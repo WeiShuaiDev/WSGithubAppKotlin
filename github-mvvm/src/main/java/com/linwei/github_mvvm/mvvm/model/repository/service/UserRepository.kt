@@ -1033,6 +1033,60 @@ open class UserRepository @Inject constructor(
     }
 
     /**
+     * @param owner [LifecycleOwner]
+     * @param id [String]
+     * @return [LiveDataCallBack]
+     */
+    fun requestNotificationAsRead(
+        owner: LifecycleOwner,
+        id: String,
+        observer: LiveDataCallBack<ResponseBody>
+    ): LiveData<ResponseBody> {
+
+        return notificationService.setNotificationAsRead(threadId = id).apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<ResponseBody>() {
+                    override fun onSuccess(code: String?, data: ResponseBody?) {
+                        super.onSuccess(code, data)
+                        observer.onSuccess(code, data)
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+    /**
+     * @param owner [LifecycleOwner]
+     * @return [LiveDataCallBack]
+     */
+    fun requestAllNotificationAsRead(
+        owner: LifecycleOwner,
+        observer: LiveDataCallBack<ResponseBody>
+    ): LiveData<ResponseBody> {
+
+        return notificationService.setAllNotificationAsRead().apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<ResponseBody>() {
+                    override fun onSuccess(code: String?, data: ResponseBody?) {
+                        super.onSuccess(code, data)
+                        observer.onSuccess(code, data)
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
+    }
+
+    /**
      * 退出登录
      */
     fun signOut() {

@@ -13,9 +13,9 @@ import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
 import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
-import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
 import com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel
 import com.linwei.github_mvvm.mvvm.model.repository.RecommendedModel
+import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import javax.inject.Inject
 
 /**
@@ -64,7 +64,7 @@ class RecommendedViewModel @Inject constructor(
 
                         data?.let {
                             it.isNotNullOrSize().yes {
-                                _reposUIModel.value = trendConversionByReposUIModel(it)
+                                _reposUIModel.value = ConversionBean.trendConversionByReposUIModel(it)
 
                                 postUpdateStatus(StatusCode.SUCCESS)
                             }.otherwise {
@@ -86,16 +86,5 @@ class RecommendedViewModel @Inject constructor(
         }
     }
 
-    /**
-     * 进行数据转换 'Trend' ->'ReposUIModel'
-     */
-    fun trendConversionByReposUIModel(list: List<TrendingRepoModel>?): MutableList<ReposUIModel> {
-        val reposUIModel: MutableList<ReposUIModel> = mutableListOf()
-        list?.let {
-            for (trend: TrendingRepoModel in it) {
-                reposUIModel.add(ReposConversion.trendToReposUIModel(trend))
-            }
-        }
-        return reposUIModel
-    }
+
 }

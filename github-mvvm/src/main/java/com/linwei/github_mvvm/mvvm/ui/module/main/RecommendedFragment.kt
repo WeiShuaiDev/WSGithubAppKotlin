@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.linwei.cams.ext.isNotNullOrSize
-import com.linwei.cams.ext.otherwise
 import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
@@ -18,7 +17,6 @@ import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
 import com.linwei.github_mvvm.mvvm.ui.adapter.ListDropDownAdapter
 import com.linwei.github_mvvm.mvvm.ui.adapter.ReposAdapter
 import com.linwei.github_mvvm.mvvm.viewmodel.main.RecommendedViewModel
-import kotlinx.android.synthetic.main.fragment_dynamic.*
 import kotlinx.android.synthetic.main.fragment_recommended.*
 import timber.log.Timber
 

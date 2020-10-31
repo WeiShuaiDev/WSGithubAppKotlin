@@ -19,6 +19,7 @@ import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.ui.adapter.EventInfoAdapter
+import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
 import kotlinx.android.synthetic.main.fragment_mine.*
 import kotlinx.android.synthetic.main.layout_user_header.view.*
@@ -72,8 +73,8 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
 
         //RecyclerView add header view
         mLayoutUserHeaderBinding = DataBindingUtil.inflate(
-                layoutInflater, R.layout.layout_user_header,
-                null, false, GithubDataBindingComponent()
+            layoutInflater, R.layout.layout_user_header,
+            null, false, GithubDataBindingComponent()
         )
         mLayoutUserHeaderBinding.userUIModel = mAppGlobalModel.userObservable
         mLayoutUserHeaderBinding.mineViewModel = mViewModel
@@ -102,10 +103,10 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
 
                     if (it.prev == -1) {
                         mEventInfoAdapter.setNewInstance(
-                                mViewModel?.eventConversionByEventUIModel(it)
+                            ConversionBean.eventConversionByEventUIModel(it)
                         )
                     } else {
-                        mEventInfoAdapter.addData(mViewModel?.eventConversionByEventUIModel(it)!!)
+                        mEventInfoAdapter.addData(ConversionBean.eventConversionByEventUIModel(it))
                     }
 
                     (it.next == it.last).yes {
@@ -137,12 +138,20 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
         }
 
         mEventInfoAdapter.loadMoreModule.setOnLoadMoreListener {
-
+            mViewModel?.loadDataByLoadMore(mPageCode)
         }
 
         mine_swipe_refresh.setOnRefreshListener {
             mEventInfoAdapter.loadMoreModule.isEnableLoadMore = false
+            mPageCode = 1
+            mViewModel?.loadDataByLoadMore(mPageCode)
         }
+    }
+
+    override fun loadData() {
+        mine_swipe_refresh.isRefreshing = true
+        mPageCode = 1
+        mViewModel?.loadDataByLoadMore(mPageCode)
     }
 
     override fun reloadData() {
@@ -150,8 +159,5 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
         mViewModel?.loadDataByLoadMore(mPageCode)
     }
 
-    override fun loadData() {
-        mine_swipe_refresh.isRefreshing = true
-        mViewModel?.loadDataByLoadMore(mPageCode)
-    }
+
 }

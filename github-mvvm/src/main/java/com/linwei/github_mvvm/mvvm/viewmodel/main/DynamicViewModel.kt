@@ -65,19 +65,4 @@ class DynamicViewModel @Inject constructor(
                 })
         }
     }
-
-    /**
-     * 进行数据转换 'Event' ->'EventUIModel'
-     */
-    fun eventConversionByEventUIModel(page: Page<List<Event>>?): MutableList<EventUIModel> {
-        val eventUIList: MutableList<EventUIModel> = mutableListOf()
-        page?.apply {
-            result?.let {
-                for (event: Event in it) {
-                    eventUIList.add(EventConversion.eventToEventUIModel(event))
-                }
-            }
-        }
-        return eventUIList
-    }
 }

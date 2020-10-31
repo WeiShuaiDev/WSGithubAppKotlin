@@ -15,6 +15,7 @@ import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.ui.adapter.ReceivedEventAdapter
+import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
 import kotlinx.android.synthetic.main.fragment_dynamic.*
 import timber.log.Timber
@@ -61,10 +62,10 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
 
                     if (it.prev == -1) {
                         mReceivedEventAdapter.setNewInstance(
-                            mViewModel?.eventConversionByEventUIModel(it)
+                            ConversionBean.eventConversionByEventUIModel(it)
                         )
                     } else {
-                        mReceivedEventAdapter.addData(mViewModel?.eventConversionByEventUIModel(it)!!)
+                        mReceivedEventAdapter.addData(ConversionBean.eventConversionByEventUIModel(it))
                     }
 
                     (it.next == it.last).yes {
