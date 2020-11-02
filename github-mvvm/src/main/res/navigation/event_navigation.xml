@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_navigation"
+    app:startDestination="@id/issueDetailFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/issueDetailFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.event.issue.IssueDetailFragment"
+        android:label="fragment_issue_detail"
+        tools:layout="@layout/fragment_issue_detail" />
+
+    <fragment
+        android:id="@+id/personFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.event.person.PersonFragment"
+        android:label="fragment_person"
+        tools:layout="@layout/fragment_person" />
+
+    <fragment
+        android:id="@+id/pushDetailFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.event.push.PushDetailFragment"
+        android:label="fragment_push_detail"
+        tools:layout="@layout/fragment_push_detail" />
+
+    <fragment
+        android:id="@+id/reposDetailFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.event.repos.ReposDetailFragment"
+        android:label="fragment_repos_detail"
+        tools:layout="@layout/fragment_repos_detail" />
+
+</navigation>

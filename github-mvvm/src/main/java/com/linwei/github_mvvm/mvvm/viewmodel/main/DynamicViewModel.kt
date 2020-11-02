@@ -10,9 +10,7 @@ import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
-import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
-import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
-import com.linwei.github_mvvm.mvvm.model.repository.DynamicModel
+import com.linwei.github_mvvm.mvvm.model.repository.main.DynamicModel
 import javax.inject.Inject
 
 /**
@@ -25,8 +23,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class DynamicViewModel @Inject constructor(
-        private val model: DynamicModel,
-        application: Application
+    private val model: DynamicModel,
+    application: Application
 ) : BaseViewModel(model, application), DynamicContract.ViewModel {
 
     /**

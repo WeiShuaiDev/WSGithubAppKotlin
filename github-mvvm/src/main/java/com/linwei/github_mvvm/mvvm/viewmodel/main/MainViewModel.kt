@@ -4,7 +4,7 @@ import android.app.Application
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.ext.jumpUserActivity
 import com.linwei.github_mvvm.mvvm.contract.login.MainContract
-import com.linwei.github_mvvm.mvvm.model.repository.LoginModel
+import com.linwei.github_mvvm.mvvm.model.repository.login.LoginModel
 import com.linwei.github_mvvm.mvvm.model.repository.service.UserRepository
 import javax.inject.Inject
 
@@ -18,9 +18,9 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class MainViewModel @Inject constructor(
-        private val userRepository: UserRepository,
-        private val model: LoginModel,
-        application: Application
+    private val userRepository: UserRepository,
+    private val model: LoginModel,
+    application: Application
 ) : BaseViewModel(model, application), MainContract.ViewModel {
 
     override fun toSignOut() {

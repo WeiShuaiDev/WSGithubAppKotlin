@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.model.repository
+package com.linwei.github_mvvm.mvvm.model.repository.main
 
 import androidx.lifecycle.LifecycleOwner
 import com.linwei.cams.http.callback.LiveDataCallBack

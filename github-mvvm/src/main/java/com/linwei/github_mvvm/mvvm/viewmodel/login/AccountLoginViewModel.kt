@@ -13,7 +13,7 @@ import com.linwei.github_mvvm.mvvm.contract.login.AccountLoginContract
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.passwordPref
 import com.linwei.github_mvvm.mvvm.factory.UserInfoStorage.userNamePref
 import com.linwei.github_mvvm.mvvm.model.bean.User
-import com.linwei.github_mvvm.mvvm.model.repository.LoginModel
+import com.linwei.github_mvvm.mvvm.model.repository.login.LoginModel
 import javax.inject.Inject
 
 /**
@@ -26,8 +26,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class AccountLoginViewModel @Inject constructor(
-        val model: LoginModel,
-        application: Application
+    val model: LoginModel,
+    application: Application
 ) : BaseViewModel(model, application), AccountLoginContract.ViewModel {
 
     /**

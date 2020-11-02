@@ -59,7 +59,6 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
                 mPage = it
                 mPageCode = it.next
                 it.result.isNotNullOrSize().yes {
-
                     if (it.prev == -1) {
                         mReceivedEventAdapter.setNewInstance(
                             ConversionBean.eventConversionByEventUIModel(it)
@@ -102,7 +101,8 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
         }
 
         mReceivedEventAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
-            Timber.i("ReceivedEvent position${position}")
+
+
         }
 
         mReceivedEventAdapter.loadMoreModule.setOnLoadMoreListener {

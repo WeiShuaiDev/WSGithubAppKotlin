@@ -11,7 +11,7 @@ import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.login.OAuthLoginContract
 import com.linwei.github_mvvm.mvvm.model.bean.User
-import com.linwei.github_mvvm.mvvm.model.repository.LoginModel
+import com.linwei.github_mvvm.mvvm.model.repository.login.LoginModel
 import javax.inject.Inject
 
 /**
@@ -24,8 +24,8 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class OAuthLoginViewModel @Inject constructor(
-        val model: LoginModel,
-        application: Application
+    val model: LoginModel,
+    application: Application
 ) : BaseViewModel(model, application), OAuthLoginContract.ViewModel {
 
     /**

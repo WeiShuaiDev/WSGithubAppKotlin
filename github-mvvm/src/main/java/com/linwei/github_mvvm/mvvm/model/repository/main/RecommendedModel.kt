@@ -1,23 +1,19 @@
-package com.linwei.github_mvvm.mvvm.model.repository
+package com.linwei.github_mvvm.mvvm.model.repository.main
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import com.linwei.cams.ext.isNotNullOrEmpty
-import com.linwei.cams.ext.no
-import com.linwei.cams.ext.string
 import com.linwei.cams.http.callback.LiveDataCallBack
-import com.linwei.cams.http.config.ApiStateConstant
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
-import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
+import com.linwei.github_mvvm.mvvm.contract.main.RecommendedContract
 import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
-import com.linwei.github_mvvm.mvvm.model.api.service.UserService
-import com.linwei.github_mvvm.mvvm.model.bean.AuthResponse
+import com.linwei.github_mvvm.mvvm.model.api.Api
+import com.linwei.github_mvvm.mvvm.model.api.service.ReposService
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
+import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
 import com.linwei.github_mvvm.mvvm.model.repository.db.LocalDatabase
-import com.linwei.github_mvvm.mvvm.model.repository.db.dao.UserDao
+import com.linwei.github_mvvm.mvvm.model.repository.db.dao.ReposDao
 import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
 import com.linwei.github_mvvm.mvvm.model.repository.service.ReposRepository
 import com.linwei.github_mvvm.mvvm.model.repository.service.UserRepository
@@ -28,31 +24,35 @@ import javax.inject.Inject
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/8/20
+ * @Time: 2020/8/12
  * @Contact: linwei9605@gmail.com"d
  * @Follow: https://github.com/WeiShuaiDev
  * @Description:
  *-----------------------------------------------------------------------
  */
-class DynamicModel @Inject constructor(
-        private val userRepository: UserRepository,
+class RecommendedModel @Inject constructor(
+        private val reposRepository: ReposRepository,
         dataRepository: DataMvvmRepository
-) : BaseModel(dataRepository), DynamicContract.Model {
+) : BaseModel(dataRepository), RecommendedContract.Model {
 
-    override fun obtainReceivedEvent(owner: LifecycleOwner,
-                                     page: Int,
-                                     observer: LiveDataCallBack<Page<List<Event>>>
+    override fun obtainTrend(
+            owner: LifecycleOwner,
+            languageType: String,
+            since: String,
+            observer: LiveDataCallBack<List<TrendingRepoModel>>
     ) {
-        userRepository.requestReceivedEvent(owner, page, object : LiveDataCallBack<Page<List<Event>>>() {
-            override fun onSuccess(code: String?, data: Page<List<Event>>?) {
+        reposRepository.requestTrend(owner, languageType, since, object : LiveDataCallBack<List<TrendingRepoModel>>() {
+            override fun onSuccess(code: String?, data: List<TrendingRepoModel>?) {
                 super.onSuccess(code, data)
                 observer.onSuccess(code, data)
             }
 
             override fun onFailure(code: String?, message: String?) {
                 super.onFailure(code, message)
-                //userRepository.queryReceivedEvent(owner, 0, observer)
+                observer.onFailure(code, message)
             }
         })
     }
+
+
 }
