@@ -1,12 +1,12 @@
-package com.linwei.github_mvvm.mvvm.ui.module.event
+package com.linwei.github_mvvm.mvvm.ui.module.repos
 
 import android.content.Context
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
-import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
+import com.linwei.github_mvvm.mvvm.contract.repos.ReposDetailContract
+import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposDetailViewModel
 import dagger.android.AndroidInjection
 import org.jetbrains.anko.startActivity
 
@@ -19,12 +19,13 @@ import org.jetbrains.anko.startActivity
  * @Description:
  *-----------------------------------------------------------------------
  */
-class EventActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
+class ReposDetailActivity : BaseMvvmActivity<ReposDetailViewModel, ViewDataBinding>(),
+    ReposDetailContract.View {
 
     companion object {
         @JvmStatic
         fun start(context: Context) {
-            context.startActivity<EventActivity>()
+            context.startActivity<ReposDetailActivity>()
         }
     }
 
@@ -35,7 +36,7 @@ class EventActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
         AndroidInjection.inject(this)
     }
 
-    override fun provideContentViewId(): Int = R.layout.activity_event
+    override fun provideContentViewId(): Int = R.layout.activity_repos_detail
 
     override fun initLayoutView(savedInstanceState: Bundle?) {
         TODO("Not yet implemented")
@@ -52,5 +53,4 @@ class EventActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
     override fun bindViewModel() {
         TODO("Not yet implemented")
     }
-
 }

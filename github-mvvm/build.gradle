@@ -140,7 +140,7 @@ dependencies {
     ///TextFieldBoxes
     implementation 'com.github.HITGIF:TextFieldBoxes:1.4.5'
 
-    ///DropDownMenu
+    ///DropDownMen
     implementation 'com.github.dongjunkun:DropDownMenu:1.0.4'
 
     ///lottie

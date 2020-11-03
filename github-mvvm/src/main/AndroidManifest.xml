@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".mvvm.ui.module.main.MainActivity" />
         <activity android:name=".mvvm.ui.module.login.UserActivity" />
-        <activity android:name=".mvvm.ui.module.event.EventActivity"/>
+        <activity android:name=".mvvm.ui.module.repos.ReposDetailActivity"/>
     </application>
 
 </manifest>
