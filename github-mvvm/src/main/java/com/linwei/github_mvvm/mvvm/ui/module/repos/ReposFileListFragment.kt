@@ -1,11 +1,11 @@
-package com.linwei.github_mvvm.mvvm.ui.module.event.push
+package com.linwei.github_mvvm.mvvm.ui.module.repos
 
 import android.view.View
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.FragmentPushDetailBinding
-import com.linwei.github_mvvm.mvvm.contract.event.push.PushDetailContract
-import com.linwei.github_mvvm.mvvm.viewmodel.event.push.PushDetailViewModel
+import com.linwei.github_mvvm.databinding.FragmentIssueDetailBinding
+import com.linwei.github_mvvm.mvvm.contract.event.issue.IssueDetailContract
+import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
 
 /**
  * ---------------------------------------------------------------------
@@ -16,10 +16,10 @@ import com.linwei.github_mvvm.mvvm.viewmodel.event.push.PushDetailViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class PushDetailFragment : BaseMvvmFragment<PushDetailViewModel, FragmentPushDetailBinding>(),
-    PushDetailContract.View {
+class ReposFileListFragment(val userName:String?,val reposName:String?) : BaseMvvmFragment<IssueDetailViewModel, FragmentIssueDetailBinding>(),
+    IssueDetailContract.View {
 
-    override fun provideContentViewId(): Int = R.layout.fragment_push_detail
+    override fun provideContentViewId(): Int = R.layout.fragment_issue_detail
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
@@ -44,7 +44,4 @@ class PushDetailFragment : BaseMvvmFragment<PushDetailViewModel, FragmentPushDet
 
     override fun loadData() {
     }
-
-
-
 }

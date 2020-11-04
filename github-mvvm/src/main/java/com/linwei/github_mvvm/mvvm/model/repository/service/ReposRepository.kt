@@ -687,26 +687,19 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络检查仓库是否Star
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @return [LiveDataCallBack]
      */
     fun requestCheckRepoStarred(
         owner: LifecycleOwner,
+        userName:String,
         reposName: String,
         observer: LiveDataCallBack<ResponseBody>
     ): LiveData<ResponseBody> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
-
         return reposService.checkRepoStarred(
-            owner = userName!!,
+            owner = userName,
             repo = reposName
         ).apply {
             observe(
@@ -728,26 +721,19 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络检查仓库是否Watched
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @return [LiveDataCallBack]
      */
     fun requestCheckRepoWatched(
         owner: LifecycleOwner,
+        userName:String,
         reposName: String,
         observer: LiveDataCallBack<ResponseBody>
     ): LiveData<ResponseBody> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
-
         return reposService.checkRepoWatched(
-            owner = userName!!,
+            owner = userName,
             repo = reposName
         ).apply {
             observe(
@@ -769,29 +755,27 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络改变当前用户对仓库的Star状态
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @param status [MutableLiveData]
      * @return [LiveDataCallBack]
      */
     fun requestChangeStarStatus(
         owner: LifecycleOwner,
+        userName:String,
         reposName: String,
         status: MutableLiveData<Boolean>
     ): LiveData<ResponseBody> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            return@no
-        }
         val starred:Boolean? = status.value
         return if (starred==true) {
             reposService.unstarRepo(
-                owner = userName!!,
+                owner = userName,
                 repo = reposName
             )
         } else {
             reposService.starRepo(
-                owner = userName!!,
+                owner = userName,
                 repo = reposName
             )
         }.apply {
@@ -809,29 +793,27 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络改变当前用户对仓库的订阅状态
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @param watch [MutableLiveData]
      * @return [LiveDataCallBack]
      */
     fun requestChangeWatchStatus(
         owner: LifecycleOwner,
+        userName:String,
         reposName: String,
         watch: MutableLiveData<Boolean>
     ): LiveData<ResponseBody> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            return@no
-        }
         val watched:Boolean? = watch.value
         return if (watched==true) {
             reposService.unwatchRepo(
-                owner = userName!!,
+                owner = userName,
                 repo = reposName
             )
         } else {
             reposService.watchRepo(
-                owner = userName!!,
+                owner = userName,
                 repo = reposName
             )
         }.apply {
@@ -849,26 +831,18 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络Fork当前仓库
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @return [LiveDataCallBack]
      */
     fun requestForkRepository(
         owner: LifecycleOwner,
+        userName:String,
         reposName: String,
         observer: LiveDataCallBack<Repository>
     ): LiveData<Repository> {
-
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
-
         return reposService.createFork(
-            owner = userName!!,
+            owner = userName,
             repo = reposName
         ).apply {
             observe(

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mTopRoot"
+        style="@style/MatchAndWrap"
+        android:background="@android:color/transparent"
+        tools:ignore="MissingConstraints">
+
+        <View
+            android:id="@+id/mStateViewRoot"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_25" />
+
+        <ProgressBar
+            android:id="@+id/mProgressBar"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_2"
+            android:background="@color/colorGlobalGray"
+            android:max="100"
+            android:progressDrawable="@drawable/progress_horizontal_loading"
+            app:layout_constraintTop_toBottomOf="@id/mStateViewRoot" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/mToolBar"
+            style="@style/MatchAndWrap"
+            android:background="?attr/selectableItemBackground"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            app:layout_constraintTop_toBottomOf="@id/mProgressBar"
+            app:navigationIcon="@mipmap/ic_white_back"
+            app:titleTextColor="@color/colorPrimary" />
+
+        <FrameLayout
+            android:id="@+id/mIncludeContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mToolBar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

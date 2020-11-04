@@ -24,50 +24,50 @@ class ReposDetailViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(model, application), ReposDetailContract.ViewModel {
 
-    private val starredStatus = MutableLiveData<Boolean>()
+    val starredStatus = MutableLiveData<Boolean>()
 
-    private val watchedStatus = MutableLiveData<Boolean>()
+    val watchedStatus = MutableLiveData<Boolean>()
 
-    override fun toReposStatus(reposName: String?) {
-        if (isEmptyParameter(reposName)) {
+    override fun toReposStatus(userName: String?, reposName: String?) {
+        if (isEmptyParameter(userName, reposName)) {
             postMessage(obj = R.string.unknown_error.string())
             return
         }
 
         mLifecycleOwner?.let {
-            model.obtainCheckRepoStarred(it, reposName!!, starredStatus)
-            model.obtainCheckRepoWatched(it, reposName, watchedStatus)
+            model.obtainCheckRepoStarred(it, userName!!, reposName!!, starredStatus)
+            model.obtainCheckRepoWatched(it, userName, reposName, watchedStatus)
         }
     }
 
-    override fun toChangeStarStatus(reposName: String?) {
-        if (isEmptyParameter(reposName)) {
+    override fun toChangeStarStatus(userName: String?, reposName: String?) {
+        if (isEmptyParameter(userName,reposName)) {
             postMessage(obj = R.string.unknown_error.string())
             return
         }
         mLifecycleOwner?.let {
-            model.obtainChangeStarStatus(it, reposName!!, starredStatus)
+            model.obtainChangeStarStatus(it, userName!! ,reposName!!, starredStatus)
         }
     }
 
-    override fun toChangeWatchStatus(reposName: String?) {
-        if (isEmptyParameter(reposName)) {
+    override fun toChangeWatchStatus(userName:String?,reposName: String?) {
+        if (isEmptyParameter(userName,reposName)) {
             postMessage(obj = R.string.unknown_error.string())
             return
         }
         mLifecycleOwner?.let {
-            model.obtainChangeWatchStatus(it, reposName!!, watchedStatus)
+            model.obtainChangeWatchStatus(it,userName!!, reposName!!, watchedStatus)
         }
     }
 
-    override fun toForkRepository(reposName: String?) {
-        if (isEmptyParameter(reposName)) {
+    override fun toForkRepository(userName: String?,reposName: String?) {
+        if (isEmptyParameter(userName,reposName)) {
             postMessage(obj = R.string.unknown_error.string())
             return
         }
         mLifecycleOwner?.let {
-            model.obtainChangeWatchStatus(it, reposName!!, watchedStatus)
-            model.obtainForkRepository(it, reposName, null)
+            model.obtainChangeWatchStatus(it, userName!!,reposName!!, watchedStatus)
+            model.obtainForkRepository(it, userName,reposName, null)
         }
     }
 }

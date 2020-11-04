@@ -52,7 +52,6 @@ class UserActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
     }
 
     override fun bindViewModel() {
-
     }
 
     override fun onBackPressed() {

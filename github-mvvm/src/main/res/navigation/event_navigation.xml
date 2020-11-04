@@ -24,10 +24,4 @@
         android:label="fragment_push_detail"
         tools:layout="@layout/fragment_push_detail" />
 
-    <fragment
-        android:id="@+id/reposDetailFragment"
-        android:name="com.linwei.github_mvvm.mvvm.ui.module.event.repos.ReposDetailFragment"
-        android:label="fragment_repos_detail"
-        tools:layout="@layout/fragment_repos_detail" />
-
 </navigation>

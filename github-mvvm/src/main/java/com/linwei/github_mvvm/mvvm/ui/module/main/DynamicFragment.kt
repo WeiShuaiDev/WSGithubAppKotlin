@@ -14,9 +14,11 @@ import com.linwei.github_mvvm.databinding.FragmentDynamicBinding
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
+import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
 import com.linwei.github_mvvm.mvvm.ui.adapter.ReceivedEventAdapter
 import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
+import com.linwei.github_mvvm.utils.EventUtils
 import kotlinx.android.synthetic.main.fragment_dynamic.*
 import timber.log.Timber
 
@@ -43,6 +45,8 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
     private var mPageCode: Int = 1
 
     override fun bindViewModel() {
+        mViewModel?.mLifecycleOwner = viewLifecycleOwner
+
         mViewDataBinding?.let {
             it.viewModel = mViewModel
             it.lifecycleOwner = viewLifecycleOwner
@@ -64,7 +68,11 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
                             ConversionBean.eventConversionByEventUIModel(it)
                         )
                     } else {
-                        mReceivedEventAdapter.addData(ConversionBean.eventConversionByEventUIModel(it))
+                        mReceivedEventAdapter.addData(
+                            ConversionBean.eventConversionByEventUIModel(
+                                it
+                            )
+                        )
                     }
 
                     (it.next == it.last).yes {
@@ -101,8 +109,8 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
         }
 
         mReceivedEventAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
-
-
+            //根据 `EventUIModel.actionType` 类型, 跳转到仓库详情。
+            EventUtils.evenAction(mActivity, adapter.data[position] as EventUIModel)
         }
 
         mReceivedEventAdapter.loadMoreModule.setOnLoadMoreListener {

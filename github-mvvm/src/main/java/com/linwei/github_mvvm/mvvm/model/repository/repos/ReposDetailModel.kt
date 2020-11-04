@@ -27,11 +27,13 @@ class ReposDetailModel @Inject constructor(
 
     override fun obtainCheckRepoStarred(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         liveData: MutableLiveData<Boolean>
     ) {
         reposRepository.requestCheckRepoStarred(
             owner,
+            userName,
             reposName,
             object : LiveDataCallBack<ResponseBody>() {
                 override fun onSuccess(code: String?, data: ResponseBody?) {
@@ -41,55 +43,61 @@ class ReposDetailModel @Inject constructor(
 
                 override fun onFailure(code: String?, message: String?) {
                     super.onFailure(code, message)
-                    liveData.value=false
+                    liveData.value = false
                 }
             })
     }
 
     override fun obtainCheckRepoWatched(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         liveData: MutableLiveData<Boolean>
     ) {
         reposRepository.requestCheckRepoWatched(
             owner,
+            userName,
             reposName,
             object : LiveDataCallBack<ResponseBody>() {
                 override fun onSuccess(code: String?, data: ResponseBody?) {
                     super.onSuccess(code, data)
-                    liveData.value=true
+                    liveData.value = true
                 }
 
                 override fun onFailure(code: String?, message: String?) {
                     super.onFailure(code, message)
-                    liveData.value=false
+                    liveData.value = false
                 }
             })
     }
 
     override fun obtainChangeStarStatus(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         liveData: MutableLiveData<Boolean>
     ) {
-        reposRepository.requestChangeStarStatus(owner, reposName, liveData)
+        reposRepository.requestChangeStarStatus(owner, userName, reposName, liveData)
     }
 
     override fun obtainChangeWatchStatus(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         liveData: MutableLiveData<Boolean>
     ) {
-        reposRepository.requestChangeWatchStatus(owner, reposName, liveData)
+        reposRepository.requestChangeWatchStatus(owner, userName, reposName, liveData)
     }
 
     override fun obtainForkRepository(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         observer: LiveDataCallBack<Repository>?
     ) {
         reposRepository.requestForkRepository(
             owner,
+            userName,
             reposName,
             object : LiveDataCallBack<Repository>() {
                 override fun onSuccess(code: String?, data: Repository?) {

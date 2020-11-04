@@ -51,6 +51,8 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
     private var mPageCode: Int = 1
 
     override fun bindViewModel() {
+        mViewModel?.mLifecycleOwner = viewLifecycleOwner
+
         mViewDataBinding?.let {
             it.mineViewModel = mViewModel
             it.globalModel = mAppGlobalModel

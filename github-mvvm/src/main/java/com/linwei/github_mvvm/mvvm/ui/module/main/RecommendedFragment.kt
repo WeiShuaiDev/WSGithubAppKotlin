@@ -41,6 +41,8 @@ class RecommendedFragment : BaseMvvmFragment<RecommendedViewModel, FragmentRecom
     override fun provideContentViewId(): Int = R.layout.fragment_recommended
 
     override fun bindViewModel() {
+        mViewModel?.mLifecycleOwner = viewLifecycleOwner
+
         mViewDataBinding?.let {
             it.viewModel = mViewModel
             it.lifecycleOwner = viewLifecycleOwner

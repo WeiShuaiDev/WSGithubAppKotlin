@@ -4,8 +4,10 @@ import com.linwei.cams.di.scope.ActivityScope
 import com.linwei.cams_mvvm.di.component.BaseActivitySubComponent
 import com.linwei.github_mvvm.WelcomActivity
 import com.linwei.github_mvvm.di.module.logic.MainModule
+import com.linwei.github_mvvm.di.module.logic.ReposDetailModule
 import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
 import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
+import com.linwei.github_mvvm.mvvm.ui.module.repos.ReposDetailActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -41,5 +43,12 @@ interface ActivityModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [MainModule::class])
     fun contributeMainActivityInjector(): MainActivity
+
+    /**
+     * [ReposDetailActivity] 注入 `Dagger`
+     */
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [ReposDetailModule::class])
+    fun contributeReposDetailActivityInjector(): ReposDetailActivity
 
 }

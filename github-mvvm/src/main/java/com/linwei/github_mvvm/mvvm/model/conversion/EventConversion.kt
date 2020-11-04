@@ -205,8 +205,8 @@ object EventConversion {
             context.getString(R.string.readed)
         }
         eventUIModel.des =
-            notification.reason + " " + "${context.getString(R.string.notifyType)}：$type，${context.getString(
-                R.string.notifyStatus
+            notification.reason + " " + "${context.getString(R.string.notify_type)}：$type，${context.getString(
+                R.string.notify_status
             )}：$status"
         eventUIModel.action = notification.subject?.title ?: ""
         eventUIModel.actionType = if (notification.subject?.type == "Issue") {

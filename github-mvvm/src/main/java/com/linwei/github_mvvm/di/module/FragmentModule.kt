@@ -7,6 +7,10 @@ import com.linwei.github_mvvm.mvvm.ui.module.login.OAuthLoginFragment
 import com.linwei.github_mvvm.mvvm.ui.module.main.DynamicFragment
 import com.linwei.github_mvvm.mvvm.ui.module.main.MineFragment
 import com.linwei.github_mvvm.mvvm.ui.module.main.RecommendedFragment
+import com.linwei.github_mvvm.mvvm.ui.module.repos.ReposActionListFragment
+import com.linwei.github_mvvm.mvvm.ui.module.repos.ReposFileListFragment
+import com.linwei.github_mvvm.mvvm.ui.module.repos.ReposIssueListFragment
+import com.linwei.github_mvvm.mvvm.ui.module.repos.ReposReadmeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -56,4 +60,33 @@ interface FragmentModule {
     @FragmentScope
     @ContributesAndroidInjector
     fun contributeMineFragmentInjector(): MineFragment
+
+    /**
+     * [ReposActionListFragment] 注入 `Dagger`
+     */
+    @FragmentScope
+    @ContributesAndroidInjector
+    fun contributeReposActionListFragmentInjector(): ReposActionListFragment
+
+    /**
+     * [ReposFileListFragment] 注入 `Dagger`
+     */
+    @FragmentScope
+    @ContributesAndroidInjector
+    fun contributeReposFileListFragmentInjector(): ReposFileListFragment
+
+    /**
+     * [ReposIssueListFragment] 注入 `Dagger`
+     */
+    @FragmentScope
+    @ContributesAndroidInjector
+    fun contributeReposIssueListFragmentInjector(): ReposIssueListFragment
+
+
+    /**
+     * [ReposReadmeFragment] 注入 `Dagger`
+     */
+    @FragmentScope
+    @ContributesAndroidInjector
+    fun contributeReposReadmeFragmentInjector(): ReposReadmeFragment
 }

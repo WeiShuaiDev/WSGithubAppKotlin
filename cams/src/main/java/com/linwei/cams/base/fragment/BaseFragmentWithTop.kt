@@ -69,7 +69,7 @@ abstract class BaseFragmentWithTop : BaseFragment() {
      * 导航栏布局 `ResId`
      * @return [Int] 布局文件Id
      */
-    protected open fun provideTopBarId(): Int = R.layout.include_top_view
+    protected open fun provideTopBarId(): Int = R.layout.include_top_view_white
 
     /**
      * 导航栏标题 `ResId`

@@ -9,12 +9,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.linwei.cams.R
 import com.linwei.cams.base.holder.TopViewHolder
-import com.linwei.cams.ext.dp2px
 import com.linwei.cams.ext.px
 import com.linwei.cams.ext.string
 import com.linwei.cams.listener.OnTopBarLeftClickListener
 import com.linwei.cams.listener.OnTopBarRightClickListener
-import java.lang.Exception
 
 /**
  * ---------------------------------------------------------------------
@@ -133,7 +131,7 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
      * 导航栏布局`ResId`
      * @return [Int] 布局文件Id
      */
-    protected open fun provideTopBarId(): Int = R.layout.include_top_view
+    protected open fun provideTopBarId(): Int = R.layout.include_top_view_white
 
     /**
      * 导航栏标题`ResId`

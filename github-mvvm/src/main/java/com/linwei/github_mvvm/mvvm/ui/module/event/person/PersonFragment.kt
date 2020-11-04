@@ -31,25 +31,18 @@ class PersonFragment : BaseMvvmFragment<PersonViewModel, FragmentPersonBinding>(
     }
 
     override fun initLayoutView(rootView: View?) {
-        TODO("Not yet implemented")
     }
 
     override fun initLayoutData() {
-        TODO("Not yet implemented")
     }
 
     override fun initLayoutListener() {
-        TODO("Not yet implemented")
     }
 
     override fun reloadData() {
-        TODO("Not yet implemented")
     }
 
     override fun loadData() {
-        TODO("Not yet implemented")
     }
-
-
 
 }

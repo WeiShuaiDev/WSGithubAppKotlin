@@ -36,7 +36,7 @@
         app:ntb_swiped="true"
         app:ntb_tinted="true"
         app:ntb_title_mode="all"
-        app:ntb_title_size="13sp"
+        app:ntb_title_size="@dimen/sp_13"
         app:ntb_titled="true" />
 
 </LinearLayout>

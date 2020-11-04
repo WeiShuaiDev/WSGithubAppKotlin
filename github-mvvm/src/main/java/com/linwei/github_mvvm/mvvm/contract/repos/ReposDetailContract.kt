@@ -22,27 +22,31 @@ interface ReposDetailContract {
 
         /**
          * 获取[reposName]仓库当前状态。
+         * @param userName [String] 用户名
          * @param reposName [String] 仓库名
          */
-        fun toReposStatus(reposName: String?)
+        fun toReposStatus(userName:String?,reposName: String?)
 
         /**
          * 修改当前 [reposName] 仓库 `Star` 状态
+         * @param userName [String] 用户名
          * @param reposName [String] 仓库名
          */
-        fun toChangeStarStatus(reposName: String?)
+        fun toChangeStarStatus(userName:String?,reposName: String?)
 
         /**
          * 修改当前 [reposName] 仓库 `Watch` 状态
+         * @param userName [String] 用户名
          * @param reposName [String] 仓库名
          */
-        fun toChangeWatchStatus(reposName: String?)
+        fun toChangeWatchStatus(userName:String?,reposName: String?)
 
         /**
          * 设置当前 [reposName] 仓库 `Fork`
+         * @param userName [String] 用户名
          * @param reposName [String] 仓库名
          */
-        fun toForkRepository(reposName: String?)
+        fun toForkRepository(userName:String?,reposName: String?)
 
     }
 
@@ -55,6 +59,7 @@ interface ReposDetailContract {
          */
         fun obtainCheckRepoStarred(
             owner: LifecycleOwner,
+            userName:String,
             reposName: String,
             liveData: MutableLiveData<Boolean>
         )
@@ -67,6 +72,7 @@ interface ReposDetailContract {
          */
         fun obtainCheckRepoWatched(
             owner: LifecycleOwner,
+            userName:String,
             reposName: String,
             liveData: MutableLiveData<Boolean>
         )
@@ -79,6 +85,7 @@ interface ReposDetailContract {
          */
         fun obtainChangeStarStatus(
             owner: LifecycleOwner,
+            userName:String,
             reposName: String,
             liveData: MutableLiveData<Boolean>
         )
@@ -91,6 +98,7 @@ interface ReposDetailContract {
          */
         fun obtainChangeWatchStatus(
             owner: LifecycleOwner,
+            userName:String,
             reposName: String,
             liveData: MutableLiveData<Boolean>
         )
@@ -103,6 +111,7 @@ interface ReposDetailContract {
          */
         fun obtainForkRepository(
             owner: LifecycleOwner,
+            userName:String,
             reposName: String,
             observer: LiveDataCallBack<Repository>?
         )
