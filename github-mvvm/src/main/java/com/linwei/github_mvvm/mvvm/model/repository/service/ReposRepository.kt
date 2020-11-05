@@ -339,27 +339,20 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络获取仓库详情
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @return [LiveDataCallBack]
      */
     fun requestRepoInfo(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         observer: LiveDataCallBack<Repository>
     ): LiveData<Repository> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
-
         return reposService.getRepoInfo(
             forceNetWork = true,
-            owner = userName!!,
+            owner = userName,
             repo = reposName
         )
             .apply {
@@ -390,22 +383,16 @@ open class ReposRepository @Inject constructor(
     /**
      * 查询数据库获取仓库详情
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @return [LiveDataCallBack]
      */
     fun queryRepoInfo(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         observer: LiveDataCallBack<Repository>
     ): LiveData<RepositoryDetailEntity> {
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
 
         return reposDao.queryRepositoryDetail(
             fullName = "$userName/$reposName", branch = "master"
@@ -436,29 +423,22 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络获取仓库活跃事件
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @param page [Int]
      * @return [LiveDataCallBack]
      */
     fun requestRepoEvent(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         page: Int,
         observer: LiveDataCallBack<Page<List<Event>>>
     ): LiveData<Page<List<Event>>> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
-
         return reposService.getRepoEvent(
             forceNetWork = true,
-            owner = userName!!,
+            owner = userName,
             repo = reposName,
             page = page
         )
@@ -491,23 +471,16 @@ open class ReposRepository @Inject constructor(
     /**
      * 查询数据库获取仓库活跃事件
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @return [LiveDataCallBack]
      */
     fun queryRepoEvent(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         observer: LiveDataCallBack<Page<List<Event>>>
     ): LiveData<RepositoryEventEntity> {
-
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
 
         return reposDao.queryRepositoryEvent(
             fullName = "$userName/$reposName"
@@ -536,29 +509,22 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络保存仓库提交数据
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @param page [Int]
      * @return [LiveDataCallBack]
      */
     fun requestRepoCommits(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         page: Int,
         observer: LiveDataCallBack<Page<List<RepoCommit>>>
     ): LiveData<Page<List<RepoCommit>>> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
-
         return commitService.getRepoCommits(
             forceNetWork = true,
-            owner = userName!!,
+            owner = userName,
             repo = reposName,
             page = page
         )
@@ -596,18 +562,10 @@ open class ReposRepository @Inject constructor(
      */
     fun queryRepoCommits(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         observer: LiveDataCallBack<Page<List<RepoCommit>>>
     ): LiveData<RepositoryCommitsEntity> {
-
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
 
         return reposDao.queryRepositoryCommits(
             fullName = "$userName/$reposName"

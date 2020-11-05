@@ -61,13 +61,6 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
     }
 
     override fun initLayoutView(rootView: View?) {
-        initUserInfoRV()
-    }
-
-    /**
-     * 初始化用户信息列表适配器
-     */
-    private fun initUserInfoRV() {
         mEventInfoAdapter = EventInfoAdapter(mutableListOf())
 
         mEventInfoAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
@@ -160,6 +153,4 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
         mine_swipe_refresh.isRefreshing = true
         mViewModel?.loadDataByLoadMore(mPageCode)
     }
-
-
 }

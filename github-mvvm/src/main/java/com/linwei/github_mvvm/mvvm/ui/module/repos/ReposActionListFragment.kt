@@ -35,6 +35,11 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
     }
 
     override fun initLayoutView(rootView: View?) {
+        initActionListRV()
+    }
+
+    private fun initActionListRV() {
+
     }
 
     override fun initLayoutData() {

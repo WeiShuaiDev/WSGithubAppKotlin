@@ -54,7 +54,13 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
     }
 
     override fun initLayoutView(rootView: View?) {
-        initReceivedEventRV()
+        mReceivedEventAdapter = ReceivedEventAdapter(mutableListOf())
+        mReceivedEventAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+        mReceivedEventAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
+        mDynamicRecycler.apply {
+            layoutManager = LinearLayoutManager(mContext)
+            adapter = mReceivedEventAdapter
+        }
     }
 
     override fun initLayoutData() {
@@ -85,19 +91,6 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
                     mDynamicSwipe.isRefreshing = false
             }
         })
-    }
-
-    /**
-     * 初始化接收事件列表适配器
-     */
-    private fun initReceivedEventRV() {
-        mReceivedEventAdapter = ReceivedEventAdapter(mutableListOf())
-        mReceivedEventAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
-        mReceivedEventAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
-        mDynamicRecycler.apply {
-            layoutManager = LinearLayoutManager(mContext)
-            adapter = mReceivedEventAdapter
-        }
     }
 
     override fun initLayoutListener() {
