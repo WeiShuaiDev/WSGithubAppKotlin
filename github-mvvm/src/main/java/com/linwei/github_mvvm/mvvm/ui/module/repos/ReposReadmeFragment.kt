@@ -1,11 +1,14 @@
 package com.linwei.github_mvvm.mvvm.ui.module.repos
 
 import android.view.View
+import androidx.lifecycle.Observer
+import com.github.nukc.stateview.StateView
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.FragmentIssueDetailBinding
+import com.linwei.github_mvvm.databinding.FragmentReposReadmeBinding
 import com.linwei.github_mvvm.mvvm.contract.event.issue.IssueDetailContract
-import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposReadmeViewModel
+import kotlinx.android.synthetic.main.fragment_repos_readme.*
 
 /**
  * ---------------------------------------------------------------------
@@ -16,10 +19,13 @@ import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class ReposReadmeFragment(val userName:String?,val reposName:String?) : BaseMvvmFragment<IssueDetailViewModel, FragmentIssueDetailBinding>(),
+class ReposReadmeFragment(val userName: String?, val reposName: String?) :
+    BaseMvvmFragment<ReposReadmeViewModel, FragmentReposReadmeBinding>(),
     IssueDetailContract.View {
 
-    override fun provideContentViewId(): Int = R.layout.fragment_issue_detail
+    override fun provideContentViewId(): Int = R.layout.fragment_repos_readme
+
+    override fun obtainStateViewRoot(): View = repos_readme_web
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
@@ -31,17 +37,29 @@ class ReposReadmeFragment(val userName:String?,val reposName:String?) : BaseMvvm
     }
 
     override fun initLayoutView(rootView: View?) {
+        repos_readme_web.webView.requestIntercept = false
+        repos_readme_web.webView.settings.defaultTextEncodingName = "UTF-8"//设置默认为utf-8
     }
 
     override fun initLayoutData() {
+        mViewModel?.readmeUrl?.observe(viewLifecycleOwner, Observer {
+            repos_readme_web.webView.loadData(it, "text/html; charset=UTF-8", null)
+        })
     }
 
     override fun initLayoutListener() {
+        mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
+            override fun onRetryClick() {
+                mViewModel?.toReposReadme(userName, reposName)
+            }
+        }
     }
 
     override fun reloadData() {
+        mViewModel?.toReposReadme(userName, reposName)
     }
 
     override fun loadData() {
+        mViewModel?.toReposReadme(userName, reposName)
     }
 }

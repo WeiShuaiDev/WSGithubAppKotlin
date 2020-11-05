@@ -12,6 +12,7 @@ import com.linwei.github_mvvm.mvvm.viewmodel.main.MainViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.RecommendedViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposDetailViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposReadmeViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -107,6 +108,14 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(PushDetailViewModel::class)
     fun bindPushDetailViewModel(viewModel: PushDetailViewModel): ViewModel
+
+    /**
+     * [ReposReadmeViewModel] 注入 `Dagger`
+     */
+    @Binds
+    @IntoMap
+    @ViewModelKey(ReposReadmeViewModel::class)
+    fun bindReposReadmeViewModel(viewModel: ReposReadmeViewModel): ViewModel
 
 
 }

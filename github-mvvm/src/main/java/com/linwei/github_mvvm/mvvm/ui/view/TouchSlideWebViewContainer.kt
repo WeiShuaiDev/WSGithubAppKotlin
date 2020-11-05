@@ -36,7 +36,7 @@ class TouchSlideWebViewContainer : RelativeLayout {
 
     val webView: TouchSlideWebView = TouchSlideWebView(context)
 
-    private val mAvi: AVLoadingIndicatorView
+    val avi: AVLoadingIndicatorView
 
     init {
         webView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGlobalWhite))
@@ -54,22 +54,22 @@ class TouchSlideWebViewContainer : RelativeLayout {
 
         addView(webView, layoutParams)
 
-        mAvi = AVLoadingIndicatorView(context)
+        avi = AVLoadingIndicatorView(context)
         layoutParams = LayoutParams(90.dp, 90.dp)
-        mAvi.setIndicatorColor(ContextCompat.getColor(context, R.color.colorPrimary))
-        mAvi.setIndicator("BallScaleMultipleIndicator")
+        avi.setIndicatorColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        avi.setIndicator("BallScaleMultipleIndicator")
         layoutParams.addRule(CENTER_IN_PARENT)
 
-        addView(mAvi, layoutParams)
+        addView(avi, layoutParams)
 
         val webViewClient: WebViewClient = object : WebViewClient() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                mAvi.show()
+                avi.show()
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                mAvi.hide()
+                avi.hide()
             }
 
             override fun shouldOverrideUrlLoading(

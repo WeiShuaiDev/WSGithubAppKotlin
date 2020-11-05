@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".mvvm.ui.module.login.UserActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".mvvm.ui.module.repos.ReposDetailActivity">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel" />
+            type="com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposReadmeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/MatchAndMatch"
         android:gravity="center"
         tools:ignore="MissingConstraints">
+
+        <com.linwei.github_mvvm.mvvm.ui.view.TouchSlideWebViewContainer
+            android:id="@+id/repos_readme_web"
+            style="@style/MatchAndMatch" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

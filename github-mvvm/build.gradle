@@ -129,6 +129,14 @@ dependencies {
     kapt rootProject.ext.dependencies["dagger2-compiler"]
     kapt rootProject.ext.dependencies["dagger2-android-processor"]
 
+    ///Retrofit
+    implementation rootProject.ext.dependencies["retrofit-converter-scalars"]
+    implementation (rootProject.ext.dependencies["retrofit-converter-simplexml"]) {
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+    }
+
     ///ARouter
     //implementation rootProject.ext.dependencies["arouter-api"]
     //implementation rootProject.ext.dependencies["arouter-register"]

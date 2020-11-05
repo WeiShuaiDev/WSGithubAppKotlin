@@ -15,7 +15,6 @@ object EventUtils {
 
             }
             EventUIAction.Repos -> {
-                System.out.println("owner${eventUIModel.owner} repositoryName${eventUIModel.repositoryName}")
                 ReposDetailActivity.start(context, eventUIModel.owner, eventUIModel.repositoryName)
             }
             EventUIAction.Issue -> {

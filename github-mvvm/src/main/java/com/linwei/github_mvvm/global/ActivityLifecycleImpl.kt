@@ -19,6 +19,7 @@ class ActivityLifecycleImpl : Application.ActivityLifecycleCallbacks {
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
         Timber.i("ActivityLifecycleImpl to onActivitySaveInstanceState!")
+        System.out.println("onActivitySaveInstanceState")
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {

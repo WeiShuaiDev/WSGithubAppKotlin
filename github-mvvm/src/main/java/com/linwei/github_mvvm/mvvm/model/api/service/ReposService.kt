@@ -5,9 +5,8 @@ import com.linwei.github_mvvm.mvvm.model.api.Api
 import com.linwei.github_mvvm.mvvm.model.bean.*
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import retrofit2.Response
+import retrofit2.Call
 import retrofit2.http.*
-import java.util.ArrayList
 
 /**
  * ---------------------------------------------------------------------
@@ -356,12 +355,16 @@ interface ReposService {
     ): LiveData<List<TrendingRepoModel>>
 
     /**
+     * 请求获取仓库 ` Readme` 地址
      * @param owner [String]
      * @param repo [String]
      * @param branch [String]
      */
     @GET("repos/{owner}/{repo}/readme")
-    @Headers("Content-Type: text/plain;charset=utf-8", "Accept: application/vnd.github.html")
+    @Headers(
+        "Content-Type: text/plain;charset=utf-8",
+        "Accept: application/vnd.github.html"
+    )
     fun getReadmeHtml(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,

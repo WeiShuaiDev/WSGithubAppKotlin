@@ -16,7 +16,7 @@ import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class ReposIssueListFragment(val userName:String?,val reposName: String?) :
+class ReposIssueListFragment(val userName: String?, val reposName: String?) :
     BaseMvvmFragment<IssueDetailViewModel, FragmentIssueDetailBinding>(),
     IssueDetailContract.View {
 
@@ -32,6 +32,7 @@ class ReposIssueListFragment(val userName:String?,val reposName: String?) :
     }
 
     override fun initLayoutView(rootView: View?) {
+
     }
 
     override fun initLayoutData() {

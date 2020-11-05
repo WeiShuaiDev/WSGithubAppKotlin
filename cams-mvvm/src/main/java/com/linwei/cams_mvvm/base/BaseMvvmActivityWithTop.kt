@@ -159,10 +159,10 @@ abstract class BaseMvvmActivityWithTop<VM : BaseViewModel, VDB : ViewDataBinding
                 mStateView?.showContent()
             }
             StatusCode.FAILURE -> {
-                mStateView?.showEmpty()
+                mStateView?.showRetry()
             }
             StatusCode.ERROR -> {
-                mStateView?.showRetry()
+                mStateView?.showEmpty()
             }
             StatusCode.END -> {
                 hideLoading()

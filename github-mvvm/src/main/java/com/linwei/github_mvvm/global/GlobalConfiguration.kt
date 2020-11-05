@@ -26,6 +26,7 @@ import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 
 /**
@@ -45,6 +46,8 @@ class GlobalConfiguration : ConfigModule {
             .interceptors(HttpCacheInterceptor())
             .retrofitConfiguration(object : ClientModule.RetrofitConfiguration {
                 override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
+                    //Scalars 配置
+                    builder.addConverterFactory(ScalarsConverterFactory.create())
                     //LiveData 适配器配置
                     builder.addCallAdapterFactory(LiveDataCallAdapterFactory())
                 }

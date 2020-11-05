@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
+import com.linwei.cams.http.callback.RetrofitCallback
+import com.linwei.cams.http.callback.RxJavaCallback
 import com.linwei.cams.http.config.ApiStateConstant
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
@@ -21,7 +23,11 @@ import com.linwei.github_mvvm.mvvm.model.repository.db.dao.ReposDao
 import com.linwei.github_mvvm.mvvm.model.repository.db.entity.*
 import com.linwei.github_mvvm.utils.GsonUtils
 import com.linwei.github_mvvm.utils.HtmlUtils
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
+import retrofit2.Call
 import javax.inject.Inject
 
 /**
@@ -205,46 +211,37 @@ open class ReposRepository @Inject constructor(
      */
     fun requestReposReadme(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         observer: LiveDataCallBack<String>
     ): LiveData<String> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
-
         return reposService.getReadmeHtml(
             forceNetWork = true,
-            owner = userName!!, repo = reposName
-        )
-            .apply {
-                observe(
-                    owner,
-                    object : LiveDataCallBack<String>() {
-                        override fun onSuccess(code: String?, data: String?) {
-                            super.onSuccess(code, data)
-                            data?.let {
-                                val entity = RepositoryDetailReadmeEntity(
-                                    data = HtmlUtils.generateHtml(application, it),
-                                    fullName = "$userName/$reposName",
-                                    branch = "master"
-                                )
-                                //reposDao.insertRepositoryDetailReadme(entity)
-                            }
-                            observer.onSuccess(code, data)
+            owner = userName, repo = reposName
+        ).apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<String>() {
+                    override fun onSuccess(code: String?, data: String?) {
+                        super.onSuccess(code, data)
+                        data?.let {
+                            val entity = RepositoryDetailReadmeEntity(
+                                data = HtmlUtils.generateHtml(application, it),
+                                fullName = "$userName/$reposName",
+                                branch = "master"
+                            )
+                            //reposDao.insertRepositoryDetailReadme(entity)
                         }
+                        observer.onSuccess(code, data)
+                    }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            observer.onFailure(code, message)
-                        }
-                    })
-            }
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
     }
 
     /**
@@ -693,7 +690,7 @@ open class ReposRepository @Inject constructor(
      */
     fun requestCheckRepoStarred(
         owner: LifecycleOwner,
-        userName:String,
+        userName: String,
         reposName: String,
         observer: LiveDataCallBack<ResponseBody>
     ): LiveData<ResponseBody> {
@@ -727,7 +724,7 @@ open class ReposRepository @Inject constructor(
      */
     fun requestCheckRepoWatched(
         owner: LifecycleOwner,
-        userName:String,
+        userName: String,
         reposName: String,
         observer: LiveDataCallBack<ResponseBody>
     ): LiveData<ResponseBody> {
@@ -762,13 +759,13 @@ open class ReposRepository @Inject constructor(
      */
     fun requestChangeStarStatus(
         owner: LifecycleOwner,
-        userName:String,
+        userName: String,
         reposName: String,
         status: MutableLiveData<Boolean>
     ): LiveData<ResponseBody> {
 
-        val starred:Boolean? = status.value
-        return if (starred==true) {
+        val starred: Boolean? = status.value
+        return if (starred == true) {
             reposService.unstarRepo(
                 owner = userName,
                 repo = reposName
@@ -800,13 +797,13 @@ open class ReposRepository @Inject constructor(
      */
     fun requestChangeWatchStatus(
         owner: LifecycleOwner,
-        userName:String,
+        userName: String,
         reposName: String,
         watch: MutableLiveData<Boolean>
     ): LiveData<ResponseBody> {
 
-        val watched:Boolean? = watch.value
-        return if (watched==true) {
+        val watched: Boolean? = watch.value
+        return if (watched == true) {
             reposService.unwatchRepo(
                 owner = userName,
                 repo = reposName
@@ -837,7 +834,7 @@ open class ReposRepository @Inject constructor(
      */
     fun requestForkRepository(
         owner: LifecycleOwner,
-        userName:String,
+        userName: String,
         reposName: String,
         observer: LiveDataCallBack<Repository>
     ): LiveData<Repository> {
