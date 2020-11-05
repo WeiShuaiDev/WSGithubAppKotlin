@@ -6,6 +6,7 @@ import android.widget.AdapterView
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
 import com.linwei.cams_mvvm.base.BaseMvvmActivityWithTop
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposDetailContract
@@ -51,8 +52,6 @@ class ReposDetailActivity : BaseMvvmActivityWithTop<ReposDetailViewModel, ViewDa
 
     override fun useDataBinding(): Boolean = false
 
-    override fun fetchTopBarTitle(): Int = R.string.login_authorized_title
-
     override fun setUpOnCreateAndSuperStart(savedInstanceState: Bundle?) {
         super.setUpOnCreateAndSuperStart(savedInstanceState)
         AndroidInjection.inject(this)
@@ -68,6 +67,8 @@ class ReposDetailActivity : BaseMvvmActivityWithTop<ReposDetailViewModel, ViewDa
     override fun provideContentViewId(): Int = R.layout.activity_repos_detail
 
     override fun provideTopBarId(): Int = R.layout.include_top_view_primary
+
+    override fun fetchTopBarTitle(): Int = R.string.repos_readme
 
     override fun initLayoutView(savedInstanceState: Bundle?) {
         initControlBar()
@@ -87,7 +88,22 @@ class ReposDetailActivity : BaseMvvmActivityWithTop<ReposDetailViewModel, ViewDa
     }
 
     override fun initLayoutListener() {
+        repos_detail_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
 
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                setTopBarTitle(reposTabModel[position].title)
+            }
+        })
     }
 
     override fun bindViewModel() {

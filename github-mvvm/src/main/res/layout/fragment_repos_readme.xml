@@ -12,6 +12,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/repos_readme_root"
         style="@style/MatchAndMatch"
         android:gravity="center"
         tools:ignore="MissingConstraints">

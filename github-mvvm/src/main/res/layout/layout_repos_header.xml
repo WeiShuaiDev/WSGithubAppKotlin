@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reposUIModel"
+            type="com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel" />
+
+        <variable
+            name="actionViewModel"
+            type="com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposActionViewModel" />
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/MatchAndWrap">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/repos_header_card"
+            style="@style/whiteCardTheme"
+            app:cardCornerRadius="@dimen/dp_5">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                style="@style/MatchAndWrap"
+                android:background="@drawable/shape_bottom_radius"
+                android:elevation="@dimen/dp_3"
+                tools:ignore="ContentDescription,MissingConstraints">
+
+                <ImageView
+                    android:id="@+id/repos_header_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/colorPrimary"
+                    android:scaleType="centerCrop"
+                    app:image_blur="@{reposUIModel.ownerPic}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/repos_header_username"
+                    style="@style/shadowTextTheme"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@{reposUIModel.ownerName}"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/repos_header_username_line"
+                    style="@style/shadowTextTheme"
+                    android:layout_marginStart="@dimen/dp_3"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="/"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintStart_toEndOf="@+id/repos_header_username"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/repos_header_repos_name"
+                    style="@style/shadowTextTheme"
+                    android:layout_marginStart="@dimen/dp_3"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@{reposUIModel.repositoryName}"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintStart_toEndOf="@+id/repos_header_username_line"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/repos_header_language"
+                    style="@style/shadowTextTheme"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@{reposUIModel.repositoryType}"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/repos_header_username" />
+
+                <TextView
+                    android:id="@+id/repos_header_size"
+                    style="@style/shadowTextTheme"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@{reposUIModel.repositorySize}"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintStart_toEndOf="@+id/repos_header_language"
+                    app:layout_constraintTop_toBottomOf="@+id/repos_header_username" />
+
+                <TextView
+                    android:id="@+id/repos_header_license"
+                    style="@style/shadowTextTheme"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@{reposUIModel.repositoryLicense}"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintStart_toEndOf="@+id/repos_header_size"
+                    app:layout_constraintTop_toBottomOf="@+id/repos_header_username" />
+
+                <TextView
+                    android:id="@+id/repos_header_des"
+                    style="@style/shadowTextTheme"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:text="@{reposUIModel.repositoryDes}"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/repos_header_language" />
+
+                <TextView
+                    android:id="@+id/repos_header_action"
+                    style="@style/shadowTextTheme"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:text="@{reposUIModel.repositoryAction}"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/repos_header_des" />
+
+                <View
+                    android:id="@+id/repos_header_action_horizontal_line"
+                    style="@style/HorizontalLine"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    app:layout_constraintTop_toBottomOf="@+id/repos_header_action" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/repos_header_action_horizontal_line"
+                    app:layout_constraintWidth_percent="1">
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/repos_header_star"
+                        style="@style/reposActionItemTextTheme"
+                        android:background="@drawable/select_primary_light_bg"
+                        android:onClick="@{actionViewModel::onTabIconClick}"
+                        android:text="@{`{APP_REPOS_ITEM_STAR}\n`+reposUIModel.repositoryStar}" />
+
+                    <View
+                        style="@style/VerticalLine"
+                        android:layout_width="@dimen/dp_1" />
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/repos_header_fork"
+                        style="@style/reposActionItemTextTheme"
+                        android:background="@drawable/select_primary_light_bg"
+                        android:onClick="@{actionViewModel::onTabIconClick}"
+                        android:text="@{`{APP_REPOS_ITEM_FORK}\n`+reposUIModel.repositoryFork}" />
+
+                    <View
+                        style="@style/VerticalLine"
+                        android:layout_width="1dp" />
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/repos_header_watch"
+                        style="@style/reposActionItemTextTheme"
+                        android:background="@drawable/select_primary_light_bg"
+                        android:onClick="@{actionViewModel::onTabIconClick}"
+                        android:text="@{`{APP_REPOS_ITEM_WATCH}\n`+reposUIModel.repositoryWatch}" />
+
+                    <View
+                        style="@style/VerticalLine"
+                        android:layout_width="1dp" />
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/repos_header_issue"
+                        style="@style/reposActionItemTextTheme"
+                        android:background="@drawable/select_primary_light_bg"
+                        android:onClick="@{actionViewModel::onTabIconClick}"
+                        android:text="@{`{APP_REPOS_ITEM_ISSUE}\n`+reposUIModel.repositoryIssue}" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            style="@style/whiteCardTheme"
+            android:layout_below="@+id/repos_header_card"
+            app:cardCornerRadius="@dimen/dp_5">
+
+            <com.linwei.github_mvvm.mvvm.ui.view.ExpandNavigationTabBar
+                android:id="@+id/repos_action_tab_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                app:ntb_badge_size="0sp"
+                app:ntb_badged="false"
+                app:ntb_bg_color="@color/colorPrimary"
+                app:ntb_icon_size_fraction="0"
+                app:ntb_inactive_color="@color/colorSecondaryText"
+                app:ntb_scaled="true"
+                app:ntb_swiped="true"
+                app:ntb_tinted="true"
+                app:ntb_title_mode="all"
+                app:ntb_title_size="@dimen/sp_14"
+                app:ntb_titled="true" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</layout>

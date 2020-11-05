@@ -14,8 +14,8 @@
     <color name="colorGlobalGray">#E4E4E4</color>
     <color name="colorGlobalTransparent">#00000000</color>
 
-    <color name="textColorPrimary">#212121</color>
-    <color name="textColorSecondary">#7F7F7F</color>
-    <color name="windowBackground">#F9F9F9</color>
-    <color name="textColorLink">#333333</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#7F7F7F</color>
+    <color name="colorWindowBg">#F9F9F9</color>
+    <color name="colorLinkText">#333333</color>
 </resources>

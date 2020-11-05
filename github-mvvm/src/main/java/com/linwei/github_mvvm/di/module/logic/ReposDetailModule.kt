@@ -2,15 +2,7 @@ package com.linwei.github_mvvm.di.module.logic
 
 import android.app.Application
 import android.graphics.Color
-import androidx.fragment.app.Fragment
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.mvvm.factory.IconFontFactory
-import com.linwei.github_mvvm.mvvm.ui.module.main.DynamicFragment
-import com.linwei.github_mvvm.mvvm.ui.module.main.MineFragment
-import com.linwei.github_mvvm.mvvm.ui.module.main.RecommendedFragment
-import com.mikepenz.iconics.IconicsColor
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.utils.sizeDp
 import dagger.Module
 import dagger.Provides
 import devlight.io.library.ntb.NavigationTabBar

@@ -3,9 +3,10 @@ package com.linwei.github_mvvm.mvvm.ui.module.repos
 import android.view.View
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.FragmentIssueDetailBinding
+import com.linwei.github_mvvm.databinding.FragmentReposActionListBinding
 import com.linwei.github_mvvm.mvvm.contract.event.issue.IssueDetailContract
-import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposActionViewModel
+import kotlinx.android.synthetic.main.fragment_repos_action_list.*
 
 /**
  * ---------------------------------------------------------------------
@@ -16,10 +17,13 @@ import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class ReposActionListFragment(val userName:String?,val reposName:String?) : BaseMvvmFragment<IssueDetailViewModel, FragmentIssueDetailBinding>(),
+class ReposActionListFragment(val userName: String?, val reposName: String?) :
+    BaseMvvmFragment<ReposActionViewModel, FragmentReposActionListBinding>(),
     IssueDetailContract.View {
 
-    override fun provideContentViewId(): Int = R.layout.fragment_issue_detail
+    override fun provideContentViewId(): Int = R.layout.fragment_repos_action_list
+
+    override fun obtainStateViewRoot(): View = repos_action_list_root
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner

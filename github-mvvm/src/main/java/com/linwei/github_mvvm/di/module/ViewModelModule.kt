@@ -11,6 +11,7 @@ import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MainViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.RecommendedViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposActionViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposDetailViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposReadmeViewModel
 import dagger.Binds
@@ -117,5 +118,12 @@ interface ViewModelModule {
     @ViewModelKey(ReposReadmeViewModel::class)
     fun bindReposReadmeViewModel(viewModel: ReposReadmeViewModel): ViewModel
 
+    /**
+     * [ReposActionViewModel] 注入 `Dagger`
+     */
+    @Binds
+    @IntoMap
+    @ViewModelKey(ReposActionViewModel::class)
+    fun bindReposActionListViewModel(viewModel: ReposActionViewModel): ViewModel
 
 }

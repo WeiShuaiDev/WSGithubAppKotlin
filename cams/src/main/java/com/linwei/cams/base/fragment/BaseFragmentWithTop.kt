@@ -1,4 +1,4 @@
-package com.mimefin.baselib.common.fragment
+package com.linwei.cams.base.fragment
 
 import android.view.View
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.linwei.cams.R
-import com.linwei.cams.base.fragment.BaseFragment
 import com.linwei.cams.base.holder.TopViewHolder
 import com.linwei.cams.ext.string
 import com.linwei.cams.listener.OnTopBarLeftClickListener

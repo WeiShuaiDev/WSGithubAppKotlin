@@ -153,7 +153,7 @@ object HtmlUtils {
                 "}" +
                 "thead, tr {" +
                 "background:" +
-                R.color.miWhite.colorIdToString() +
+                R.color.colorMiWhite.colorIdToString() +
                 ";}" +
                 "td, th {" +
                 "padding: 5px 10px;" +
@@ -161,19 +161,19 @@ object HtmlUtils {
                 "direction:hor" +
                 "}" +
                 ".highlight {overflow: scroll; background: " +
-                R.color.miWhite.colorIdToString() +
+                R.color.colorMiWhite.colorIdToString() +
                 "}" +
                 "tr:nth-child(even) {" +
                 "background:" +
                 R.color.colorPrimary.colorIdToString() +
                 ";" +
                 "color:" +
-                R.color.miWhite.colorIdToString() +
+                R.color.colorMiWhite.colorIdToString() +
                 ";" +
                 "}" +
                 "tr:nth-child(odd) {" +
                 "background: " +
-                R.color.miWhite.colorIdToString() +
+                R.color.colorMiWhite.colorIdToString() +
                 ";" +
                 "color:" +
                 R.color.colorPrimary.colorIdToString() +
@@ -182,7 +182,7 @@ object HtmlUtils {
                 "th {" +
                 "font-size: 14px;" +
                 "color:" +
-                R.color.miWhite.colorIdToString() +
+                R.color.colorMiWhite.colorIdToString() +
                 ";" +
                 "background:" +
                 R.color.colorPrimary.colorIdToString() +
@@ -295,7 +295,7 @@ object HtmlUtils {
         return if ("markdown" == lang) {
             generateHtml(context, res, R.color.white)
         } else {
-            generateCode2HTml(context, res, R.color.webDraculaBackgroundColor, lang)
+            generateCode2HTml(context, res, R.color.colorWebDraculaBg, lang)
         }
 
     }

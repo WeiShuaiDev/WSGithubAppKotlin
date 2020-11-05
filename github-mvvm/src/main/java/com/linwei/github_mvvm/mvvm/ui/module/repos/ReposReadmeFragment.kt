@@ -25,7 +25,7 @@ class ReposReadmeFragment(val userName: String?, val reposName: String?) :
 
     override fun provideContentViewId(): Int = R.layout.fragment_repos_readme
 
-    override fun obtainStateViewRoot(): View = repos_readme_web
+    override fun obtainStateViewRoot(): View = repos_readme_root
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner

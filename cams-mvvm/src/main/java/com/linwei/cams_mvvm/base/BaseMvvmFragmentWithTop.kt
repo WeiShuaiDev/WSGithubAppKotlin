@@ -19,7 +19,7 @@ import com.linwei.cams_mvvm.mvvm.ILoading
 import com.linwei.cams_mvvm.mvvm.IView
 import com.linwei.cams_mvvm.livedatabus.MessageLiveEvent
 import com.linwei.cams_mvvm.livedatabus.StatusLiveEvent
-import com.mimefin.baselib.common.fragment.BaseFragmentWithTop
+import com.linwei.cams.base.fragment.BaseFragmentWithTop
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector

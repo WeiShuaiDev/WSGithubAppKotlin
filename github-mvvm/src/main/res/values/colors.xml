@@ -5,15 +5,16 @@
     <color name="colorAccent">#42464b</color>
 
     <color name="colorPrimaryLight">#42464b</color>
+    <color name="colorSecondaryLight">#c4c4c4</color>
 
-    <color name="textColorPrimary">#313335</color>
-    <color name="textColorSecondary">#959595</color>
+    <color name="colorPrimaryText">#313335</color>
+    <color name="colorSecondaryText">#959595</color>
 
     <color name="colorSubText">#959595</color>
     <color name="colorSubLightText">#c4c4c4</color>
 
-    <color name="webDraculaBackgroundColor">#282a36</color>
-    <color name="miWhite">#ececec</color>
+    <color name="colorWebDraculaBg">#282a36</color>
+    <color name="colorMiWhite">#ececec</color>
 
     <!--DynamicFragment-->
     <color name="colorNavigationInActiveTab">#959595</color>

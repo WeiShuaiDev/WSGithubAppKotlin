@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="commitUIModel"
+            type="com.linwei.github_mvvm.mvvm.model.ui.CommitUIModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/whiteCardTheme">
+
+        <RelativeLayout
+            style="@style/MatchAndWrap"
+            android:padding="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/event_user_name"
+                style="@style/WrapAndWrap"
+                android:singleLine="true"
+                android:text="@{commitUIModel.userName}"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/event_time"
+                style="@style/WrapAndWrap"
+                android:layout_alignParentEnd="true"
+                android:singleLine="true"
+                android:text="@{commitUIModel.time}"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/commit_file"
+                style="@style/WrapAndWrap"
+                android:layout_below="@+id/event_user_name"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:text="@{commitUIModel.des}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/commit_sha"
+                style="@style/WrapAndWrap"
+                android:layout_below="@+id/commit_file"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:text="@{`sha: ` + commitUIModel.sha}"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/sp_14" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

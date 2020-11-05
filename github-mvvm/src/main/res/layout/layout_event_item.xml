@@ -34,7 +34,7 @@
                 android:layout_toEndOf="@+id/mEventUserImg"
                 android:singleLine="true"
                 android:text="@{eventUIModel.username}"
-                android:textColor="@color/textColorPrimary"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/sp_14" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_alignParentEnd="true"
                 android:singleLine="true"
                 android:text="@{eventUIModel.time}"
-                android:textColor="@color/textColorSecondary"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/sp_14" />
 
             <TextView
@@ -52,9 +52,8 @@
                 android:layout_below="@+id/mEventUserImg"
                 android:layout_margin="@dimen/dp_5"
                 android:text="@{eventUIModel.action}"
-                android:textColor="@color/textColorPrimary"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/sp_14" />
-
 
             <TextView
                 android:id="@+id/mEventDes"
@@ -63,7 +62,7 @@
                 android:layout_margin="@dimen/dp_5"
                 android:maxLines="3"
                 android:text="@{eventUIModel.des}"
-                android:textColor="@color/textColorSecondary"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/sp_14"
                 android:visibility="@{eventUIModel.des.length() > 0 ? View.VISIBLE : View.GONE}" />
 

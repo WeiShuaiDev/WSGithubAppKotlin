@@ -61,30 +61,8 @@ class ReposReadmeViewModel @Inject constructor(
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
                         postUpdateStatus(StatusCode.FAILURE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     }
                 })
-
         }
     }
 }

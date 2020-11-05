@@ -111,7 +111,7 @@ object ReposConversion {
         fileUIModel.icon = "{GSY-REPOS_ITEM_FILE}"
 
         val html:String = HtmlUtils.generateCode2HTml(context, HtmlUtils.parseDiffSource(commit.patch
-                ?: "", false), R.color.webDraculaBackgroundColor, "")
+                ?: "", false), R.color.colorWebDraculaBg, "")
         fileUIModel.patch = html
         return fileUIModel
     }
