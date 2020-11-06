@@ -40,6 +40,7 @@
     <string name="repos_readme">详情信息</string>
     <string name="repos_file">文件</string>
     <string name="repos_issue">Issues</string>
+    <string name="repos_push">提交</string>
 
     <string name="logcat_login_user_name_entry">用户名为空!</string>
     <string name="logcat_login_password_entry">密码为空!</string>

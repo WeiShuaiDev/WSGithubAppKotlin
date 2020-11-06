@@ -18,6 +18,7 @@ interface NotificationService {
      * @param per_page [Int]
      */
     @GET("notifications")
+    @Headers("Page:page")
     fun getNotification(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Query("all") all: Boolean,
@@ -31,6 +32,7 @@ interface NotificationService {
      * @param per_page [Int]
      */
     @GET("notifications")
+    @Headers("Page:page")
     fun getNotificationUnRead(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Query("page") page: Int,
@@ -44,7 +46,6 @@ interface NotificationService {
     fun setNotificationAsRead(
         @Path("threadId") threadId: String
     ): LiveData<ResponseBody>
-
 
     @PUT("notifications")
     fun setAllNotificationAsRead(): LiveData<ResponseBody>

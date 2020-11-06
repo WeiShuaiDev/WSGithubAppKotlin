@@ -31,7 +31,7 @@ interface IssueService {
      * @param per_page [Int]
      */
     @GET("repos/{owner}/{repo}/issues")
-    @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
+    @Headers("Page:page","Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
     fun getRepoIssues(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
@@ -59,7 +59,7 @@ interface IssueService {
         @Query("sort") sort: String,
         @Query("direction") direction: String,
         @Query("page") page: Int
-    ): LiveData<ArrayList<Issue>>
+    ): LiveData<List<Issue>>
 
     /**
      * @param owner [String]
@@ -82,7 +82,7 @@ interface IssueService {
      * @param page [String]
      */
     @GET("repos/{owner}/{repo}/issues/{issueNumber}/timeline")
-    @Headers("Accept: application/vnd.github.mockingbird-preview")
+    @Headers("Page:page","Accept: application/vnd.github.mockingbird-preview")
     fun getIssueTimeline(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
@@ -99,7 +99,7 @@ interface IssueService {
      * @param per_page [Int]
      */
     @GET("repos/{owner}/{repo}/issues/{issueNumber}/comments")
-    @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
+    @Headers("Page:page","Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
     fun getIssueComments(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
@@ -123,7 +123,7 @@ interface IssueService {
         @Path("repo") repo: String,
         @Path("issueNumber") issueNumber: Int,
         @Query("page") page: Int
-    ): LiveData<ArrayList<IssueEvent>>
+    ): LiveData<List<IssueEvent>>
 
     /**
      * @param owner [String]

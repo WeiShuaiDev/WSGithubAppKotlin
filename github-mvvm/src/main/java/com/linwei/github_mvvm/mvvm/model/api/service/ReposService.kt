@@ -27,6 +27,7 @@ interface ReposService {
      * @param per_page [Int]
      */
     @GET("users/{user}/repos")
+    @Headers("Page:page")
     fun getUserRepository100StatusDao(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
@@ -43,6 +44,7 @@ interface ReposService {
      * @param per_page [Int]
      */
     @GET("users/{user}/starred")
+    @Headers("Page:page")
     fun getStarredRepos(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
@@ -76,6 +78,7 @@ interface ReposService {
      * @param per_page [Int]
      */
     @GET("users/{user}/repos")
+    @Headers("Page:page")
     fun getUserPublicRepos(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
@@ -210,6 +213,7 @@ interface ReposService {
      * @param page [Int]
      */
     @GET("repos/{owner}/{repo}/stargazers")
+    @Headers("Page:page")
     fun getStargazers(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path(value = "owner") owner: String,
@@ -223,6 +227,7 @@ interface ReposService {
      * @param page [Int]
      */
     @GET("repos/{owner}/{repo}/subscribers")
+    @Headers("Page:page")
     fun getWatchers(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
@@ -258,6 +263,7 @@ interface ReposService {
      * @param per_page [Int]
      */
     @GET("repos/{owner}/{repo}/forks")
+    @Headers("Page:page")
     fun getForks(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
@@ -274,12 +280,13 @@ interface ReposService {
      * List public events for a network of repositories
      */
     @GET("networks/{owner}/{repo}/events")
+    @Headers("Page:page")
     fun getRepoEvent(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("page") page: Int,
-        @Query("per_page") per_page: Int = Api.PAGE_SIZE
+        @Query("per_page") per_page: Int = 10
     ): LiveData<Page<List<Event>>>
 
     /**

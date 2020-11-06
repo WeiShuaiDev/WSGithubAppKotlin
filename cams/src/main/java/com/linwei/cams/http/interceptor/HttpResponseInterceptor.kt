@@ -44,7 +44,7 @@ class HttpResponseInterceptor @Inject constructor() : Interceptor {
         val httpResult: String = content ?: ""
 
         //提供给开发者扩展网路请求后配置
-        response = mGlobalHttpHandler.onHttpResultResponse(httpResult, chain, response)
+        response = mGlobalHttpHandler.onHttpResultResponse(chain, httpResult, request, response)
 
         return response
 

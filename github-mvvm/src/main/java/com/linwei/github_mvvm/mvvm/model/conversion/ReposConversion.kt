@@ -1,6 +1,7 @@
 package com.linwei.github_mvvm.mvvm.model.conversion
 
 import android.content.Context
+import com.linwei.cams.ext.string
 import com.linwei.cams.utils.TimeUtils
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.model.bean.*
@@ -29,7 +30,7 @@ object ReposConversion {
         return reposUIModel
     }
 
-    fun reposToReposUIModel(context: Context, repository: Repository?): ReposUIModel {
+    fun reposToReposUIModel(repository: Repository?): ReposUIModel {
         val reposUIModel = ReposUIModel()
         reposUIModel.hideWatchIcon = true
         reposUIModel.ownerName = repository?.owner?.login ?: ""
@@ -45,16 +46,15 @@ object ReposConversion {
         reposUIModel.repositoryLicense = repository?.license?.name ?: ""
 
 
-        val createStr:String = if (repository != null && repository.fork)
-            context.getString(R.string.forked_at) + (repository.parent?.name ?: "") + "\n"
+        val createStr: String = if (repository != null && repository.fork)
+            R.string.forked_at.string() + (repository.parent?.name ?: "") + "\n"
         else
-            context.getString(R.string.created_at) + TimeUtils.getDate(repository?.createdAt) + "\n"
+            R.string.created_at.string() + TimeUtils.getDate(repository?.createdAt) + "\n"
 
         reposUIModel.repositoryAction = createStr
         reposUIModel.repositoryIssue = repository?.openIssuesCount?.toString() ?: ""
         return reposUIModel
     }
-
 
     fun fileListToFileUIList(list: ArrayList<FileModel>): ArrayList<Any> {
         val result = ArrayList<Any>()
@@ -66,12 +66,12 @@ object ReposConversion {
             fileUIModel.title = it.name ?: ""
             fileUIModel.type = it.type ?: ""
             if (it.type == "file") {
-                fileUIModel.icon = "{GSY-REPOS_ITEM_FILE}"
+                fileUIModel.icon = "{APP_REPOS_ITEM_FILE}"
                 fileUIModel.next = ""
                 files.add(fileUIModel)
             } else {
                 fileUIModel.icon = "{ion-android_folder_open}"
-                fileUIModel.next = "{GSY-REPOS_ITEM_NEXT}"
+                fileUIModel.next = "{APP_REPOS_ITEM_NEXT}"
                 dirs.add(fileUIModel)
             }
         }
@@ -104,14 +104,19 @@ object ReposConversion {
 
     fun repoCommitToFileUIModel(context: Context, commit: CommitFile): FileUIModel {
         val fileUIModel = FileUIModel()
-        val filename:String = commit.fileName ?: ""
-        val nameSplit:Array<String> = filename.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val filename: String = commit.fileName ?: ""
+        val nameSplit: Array<String> =
+            filename.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         fileUIModel.title = nameSplit[nameSplit.size - 1]
         fileUIModel.dir = filename
-        fileUIModel.icon = "{GSY-REPOS_ITEM_FILE}"
+        fileUIModel.icon = "{APP_REPOS_ITEM_FILE}"
 
-        val html:String = HtmlUtils.generateCode2HTml(context, HtmlUtils.parseDiffSource(commit.patch
-                ?: "", false), R.color.colorWebDraculaBg, "")
+        val html: String = HtmlUtils.generateCode2HTml(
+            context, HtmlUtils.parseDiffSource(
+                commit.patch
+                    ?: "", false
+            ), R.color.colorWebDraculaBg, ""
+        )
         fileUIModel.patch = html
         return fileUIModel
     }

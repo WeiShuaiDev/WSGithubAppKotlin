@@ -1,12 +1,28 @@
 package com.linwei.github_mvvm.mvvm.ui.module.repos
 
 import android.view.View
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.github.nukc.stateview.StateView
+import com.linwei.cams.ext.isNotNullOrSize
+import com.linwei.cams.ext.otherwise
+import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentReposActionListBinding
+import com.linwei.github_mvvm.databinding.LayoutReposHeaderBinding
+import com.linwei.github_mvvm.ext.GithubDataBindingComponent
 import com.linwei.github_mvvm.mvvm.contract.event.issue.IssueDetailContract
+import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
+import com.linwei.github_mvvm.mvvm.ui.adapter.CommitInfoAdapter
+import com.linwei.github_mvvm.mvvm.ui.adapter.EventInfoAdapter
+import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposActionViewModel
+import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.fragment_repos_action_list.*
+import javax.inject.Inject
 
 /**
  * ---------------------------------------------------------------------
@@ -19,7 +35,17 @@ import kotlinx.android.synthetic.main.fragment_repos_action_list.*
  */
 class ReposActionListFragment(val userName: String?, val reposName: String?) :
     BaseMvvmFragment<ReposActionViewModel, FragmentReposActionListBinding>(),
-    IssueDetailContract.View {
+    IssueDetailContract.View, NavigationTabBar.OnTabBarSelectedIndexListener {
+
+    @Inject
+    lateinit var actionTabModel: MutableList<NavigationTabBar.Model>
+
+    private lateinit var mEventInfoAdapter: EventInfoAdapter
+    private lateinit var mCommitInfoAdapter: CommitInfoAdapter
+
+    private lateinit var mLayoutReposHeaderBinding: LayoutReposHeaderBinding
+
+    private var mPageCode: Int = 1
 
     override fun provideContentViewId(): Int = R.layout.fragment_repos_action_list
 
@@ -35,22 +61,148 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
     }
 
     override fun initLayoutView(rootView: View?) {
-        initActionListRV()
+        mEventInfoAdapter = EventInfoAdapter(mutableListOf())
+        mEventInfoAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+        mEventInfoAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
+        mEventInfoAdapter.addHeaderView(reposHeaderBinding())
+
+        mCommitInfoAdapter = CommitInfoAdapter(mutableListOf())
+        mCommitInfoAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+        mCommitInfoAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
+        mCommitInfoAdapter.addHeaderView(reposHeaderBinding())
     }
 
-    private fun initActionListRV() {
+    private fun reposHeaderBinding(): View {
+        //RecyclerView add header view
+        mLayoutReposHeaderBinding = DataBindingUtil.inflate(
+            layoutInflater, R.layout.layout_repos_header,
+            null, false, GithubDataBindingComponent()
+        )
+        mLayoutReposHeaderBinding.actionViewModel = mViewModel
 
+        mLayoutReposHeaderBinding.reposActionTabBar.models = actionTabModel
+
+        mLayoutReposHeaderBinding.reposActionTabBar.onTabBarSelectedIndexListener = this
+        mLayoutReposHeaderBinding.reposActionTabBar.modelIndex = 0
+        return mLayoutReposHeaderBinding.root
     }
 
     override fun initLayoutData() {
+        mViewModel?.reposInfo?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                mLayoutReposHeaderBinding.reposUIModel = ReposConversion.reposToReposUIModel(it)
+            }
+        })
+
+        mViewModel?.repoCommitPage?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                mPageCode = it.next
+                it.result.isNotNullOrSize().yes {
+                    if (it.prev == -1) {
+                        repos_action_recycler.apply {
+                            layoutManager = LinearLayoutManager(mContext)
+                            adapter = mCommitInfoAdapter
+                        }
+                        mCommitInfoAdapter.setNewInstance(
+                            ConversionBean.repoCommitConversionByCommitUIModel(it)
+                        )
+                    } else {
+                        mCommitInfoAdapter.addData(
+                            ConversionBean.repoCommitConversionByCommitUIModel(
+                                it
+                            )
+                        )
+                    }
+
+                    (it.next == it.last).yes {
+                        mCommitInfoAdapter.loadMoreModule.loadMoreEnd()
+                    }.otherwise {
+                        mCommitInfoAdapter.loadMoreModule.loadMoreComplete()
+                    }
+                }
+                if (repos_action_refresh.isRefreshing)
+                    repos_action_refresh.isRefreshing = false
+            }
+        })
+
+        mViewModel?.eventPage?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                mPageCode = it.next
+                it.result.isNotNullOrSize().yes {
+                    if (it.prev == -1) {
+                        repos_action_recycler.apply {
+                            layoutManager = LinearLayoutManager(mContext)
+                            adapter = mEventInfoAdapter
+                        }
+                        mEventInfoAdapter.setNewInstance(
+                            ConversionBean.eventConversionByEventUIModel(it)
+                        )
+                    } else {
+                        mEventInfoAdapter.addData(ConversionBean.eventConversionByEventUIModel(it))
+                    }
+
+                    (it.next == it.last).yes {
+                        mEventInfoAdapter.loadMoreModule.loadMoreEnd()
+                    }.otherwise {
+                        mEventInfoAdapter.loadMoreModule.loadMoreComplete()
+                    }
+                }
+                if (repos_action_refresh.isRefreshing)
+                    repos_action_refresh.isRefreshing = false
+            }
+        })
     }
 
     override fun initLayoutListener() {
+        mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
+            override fun onRetryClick() {
+
+            }
+        }
+
+        mEventInfoAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
+
+        }
+
+        mEventInfoAdapter.loadMoreModule.setOnLoadMoreListener {
+            mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
+        }
+
+        mCommitInfoAdapter.loadMoreModule.setOnLoadMoreListener {
+            mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
+        }
+
+        repos_action_refresh.setOnRefreshListener {
+            mEventInfoAdapter.loadMoreModule.isEnableLoadMore = false
+            mCommitInfoAdapter.loadMoreModule.isEnableLoadMore = false
+
+            mPageCode = 1
+            mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
+        }
     }
 
     override fun reloadData() {
+        repos_action_refresh.isRefreshing = true
+        mPageCode = 1
+        mViewModel?.loadDataByRefresh(userName, reposName)
+        mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
     }
 
     override fun loadData() {
+        repos_action_refresh.isRefreshing = true
+        mPageCode = 1
+        mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
+    }
+
+    override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
+
+    }
+
+    override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
+        mPageCode = 1
+        mViewModel?.apply {
+            showType = index
+            loadDataByLoadMore(userName, reposName, mPageCode)
+        }
     }
 }

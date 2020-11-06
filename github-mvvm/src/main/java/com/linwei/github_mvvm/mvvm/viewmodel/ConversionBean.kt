@@ -1,12 +1,10 @@
 package com.linwei.github_mvvm.mvvm.viewmodel
 
-import com.linwei.github_mvvm.mvvm.model.bean.Event
-import com.linwei.github_mvvm.mvvm.model.bean.Page
-import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
-import com.linwei.github_mvvm.mvvm.model.bean.User
+import com.linwei.github_mvvm.mvvm.model.bean.*
 import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
 import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
 import com.linwei.github_mvvm.mvvm.model.conversion.UserConversion
+import com.linwei.github_mvvm.mvvm.model.ui.CommitUIModel
 import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
 import com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel
 import com.linwei.github_mvvm.mvvm.model.ui.UserUIModel
@@ -70,5 +68,22 @@ object ConversionBean {
             }
         }
         return eventUIList
+    }
+
+    /**
+     * 进行数据转换 'RepoCommit' ->'CommitUIModel'
+     * @param page [RepoCommit]
+     * @return list [CommitUIModel]
+     */
+    fun repoCommitConversionByCommitUIModel(page: Page<List<RepoCommit>>?): MutableList<CommitUIModel> {
+        val commitUiModel: MutableList<CommitUIModel> = mutableListOf()
+        page?.apply {
+            result?.let {
+                for (commit: RepoCommit in it) {
+                    commitUiModel.add(EventConversion.commitToCommitUIModel(commit))
+                }
+            }
+        }
+        return commitUiModel
     }
 }

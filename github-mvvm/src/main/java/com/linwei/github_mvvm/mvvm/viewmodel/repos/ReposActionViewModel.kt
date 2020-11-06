@@ -28,7 +28,9 @@ class ReposActionViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(model, application), ReposActionListContract.ViewModel {
 
-    val pageInfo = MutableLiveData<Repository>()
+    val reposInfo = MutableLiveData<Repository>()
+
+    var showType = 0
 
     private val _repoCommitPage = MutableLiveData<Page<List<RepoCommit>>>()
     val repoCommitPage: LiveData<Page<List<RepoCommit>>>
@@ -38,14 +40,31 @@ class ReposActionViewModel @Inject constructor(
     val eventPage: LiveData<Page<List<Event>>>
         get() = _eventPage
 
+    override fun loadDataByRefresh(userName: String?, reposName: String?) {
+        System.out.println("loadDataByRefresh")
+        toRepoInfo(userName, reposName)
+    }
+
+    override fun loadDataByLoadMore(userName: String?, reposName: String?, page: Int) {
+        when (showType) {
+            0 -> {
+                toRepoEvent(userName, reposName, page)
+            }
+            1 -> {
+                toRepoCommits(userName, reposName, page)
+            }
+        }
+
+    }
+
+
     override fun toRepoInfo(userName: String?, reposName: String?) {
         if (isEmptyParameter(userName, reposName)) {
             postMessage(obj = R.string.unknown_error.string())
             return
         }
-
         mLifecycleOwner?.let {
-            model.obtainRepoInfo(it, userName!!, reposName!!, pageInfo)
+            model.obtainRepoInfo(it, userName!!, reposName!!, reposInfo)
         }
     }
 

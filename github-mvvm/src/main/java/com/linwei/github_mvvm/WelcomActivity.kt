@@ -70,7 +70,7 @@ class WelcomActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
             getUserInfoPref()?.let {
 
                 //`User`本地数据克隆到 `ModelUIModel` 内存数据
-                UserConversion.cloneDataFromUser(this, it, appGlobalModel.userObservable)
+                UserConversion.cloneDataFromUser(it, appGlobalModel.userObservable)
 
                 MainActivity.start(this)
                 return@yes

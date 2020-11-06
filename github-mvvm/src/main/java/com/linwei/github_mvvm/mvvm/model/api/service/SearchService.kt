@@ -27,6 +27,7 @@ interface SearchService {
      * @param per_page [Int]
      */
     @GET("search/users")
+    @Headers("Page:page")
     fun searchUsers(
         @Query(value = "q", encoded = true) query: String,
         @Query("sort") sort: String = "best%20match",
@@ -43,6 +44,7 @@ interface SearchService {
      * @param per_page [Int]
      */
     @GET("search/repositories")
+    @Headers("Page:page")
     fun searchRepos(
         @Query(value = "q", encoded = true) query: String,
         @Query("sort") sort: String = "best%20match",
@@ -57,7 +59,7 @@ interface SearchService {
      * @param per_page [Int]
      */
     @GET("search/issues")
-    @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
+    @Headers("Page:page", "Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
     fun searchIssues(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Query(value = "q", encoded = true) query: String,

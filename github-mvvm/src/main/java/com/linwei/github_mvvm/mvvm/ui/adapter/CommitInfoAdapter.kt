@@ -19,8 +19,9 @@ import com.linwei.github_mvvm.mvvm.model.ui.CommitUIModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class CommitInfoAdapter(data: MutableList<CommitUIModel>) :
-    BaseQuickAdapter<CommitUIModel, BaseViewHolder>(R.layout.layout_commit_item, data),
+class CommitInfoAdapter(
+    data: MutableList<CommitUIModel>
+) : BaseQuickAdapter<CommitUIModel, BaseViewHolder>(R.layout.layout_commit_item, data),
     LoadMoreModule {
 
     companion object {

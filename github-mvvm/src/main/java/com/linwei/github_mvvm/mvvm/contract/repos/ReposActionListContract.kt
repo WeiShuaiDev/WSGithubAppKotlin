@@ -24,6 +24,18 @@ interface ReposActionListContract {
     interface ViewModel {
 
         /**
+         * 分页加载，刷新数据
+         */
+        fun loadDataByRefresh(userName: String?, reposName: String?)
+
+        /**
+         * 分页加载,加载更多
+         * @param page:Int
+         */
+        fun loadDataByLoadMore(userName: String?, reposName: String?, page: Int)
+
+
+        /**
          * 获取仓库 [reposName] 详情信息
          * @param userName [String] 用户名
          * @param reposName [String] 仓库名

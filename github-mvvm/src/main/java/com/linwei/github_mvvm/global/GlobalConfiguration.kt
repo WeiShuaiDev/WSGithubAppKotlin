@@ -89,39 +89,46 @@ class GlobalConfiguration : ConfigModule {
                 }
 
                 override fun onHttpResultResponse(
-                    httpResult: String,
                     chain: Interceptor.Chain,
+                    httpResult: String,
+                    request: Request,
                     response: Response
                 ): Response {
                     val mediaType: MediaType? = response.body?.contentType()
-                    //获取请求分页数据
-                    val linkStr: String? = response.header("Link", "")
 
-                    val page = Page<Any>()
+                    val isPage: String? = request.header("Page")
 
-                    linkStr.isNotNullOrEmpty().yes {
-                        val links: List<String> = linkStr!!.split(",")
-                        links.forEach {
-                            when {
-                                it.contains("prev") -> {
-                                    page.prev = parseNumber(it)
-                                }
-                                it.contains("next") -> {
-                                    page.next = parseNumber(it)
-                                }
-                                it.contains("last") -> {
-                                    page.last = parseNumber(it)
-                                }
-                                it.contains("first") -> {
-                                    page.first = parseNumber(it)
+                    isPage.isNotNullOrEmpty().yes {
+                        val page = Page<Any>()
+
+                        //获取请求分页数据
+                        val linkStr: String? = response.header("Link", "")
+                        linkStr.isNotNullOrEmpty().yes {
+                            val links: List<String> = linkStr!!.split(",")
+                            links.forEach {
+                                when {
+                                    it.contains("prev") -> {
+                                        page.prev = parseNumber(it)
+                                    }
+                                    it.contains("next") -> {
+                                        page.next = parseNumber(it)
+                                    }
+                                    it.contains("last") -> {
+                                        page.last = parseNumber(it)
+                                    }
+                                    it.contains("first") -> {
+                                        page.first = parseNumber(it)
+                                    }
                                 }
                             }
                         }
+
                         if (GsonUtils.isJsonArrayData(httpResult)) {
                             page.result =
                                 GsonUtils.parserJsonToArrayBeans(httpResult, Any::class.java)
                         } else {
-                            page.result = GsonUtils.parserJsonToBean(httpResult, Any::class.java)
+                            page.result =
+                                GsonUtils.parserJsonToBean(httpResult, Any::class.java)
                         }
 
                         return response.newBuilder()

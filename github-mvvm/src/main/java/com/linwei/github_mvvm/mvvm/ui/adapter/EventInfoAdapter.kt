@@ -29,7 +29,7 @@ class EventInfoAdapter(data: MutableList<EventUIModel>) :
     }
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
-        DataBindingUtil.bind<LayoutUserItemBinding>(
+        DataBindingUtil.bind<LayoutEventItemBinding>(
             viewHolder.itemView,
             GithubDataBindingComponent()
         )

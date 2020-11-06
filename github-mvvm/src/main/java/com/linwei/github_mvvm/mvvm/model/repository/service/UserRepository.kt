@@ -253,9 +253,7 @@ open class UserRepository @Inject constructor(
                     super.onSuccess(code, data)
                     data?.let {
                         //`User`本地数据克隆到 `ModelUIModel` 内存数据
-                        UserConversion.cloneDataFromUser(
-                            application,
-                            it,
+                        UserConversion.cloneDataFromUser(it,
                             appGlobalModel.userObservable
                         )
 
@@ -292,11 +290,7 @@ open class UserRepository @Inject constructor(
                     super.onSuccess(code, data)
                     data?.let {
                         //`User`本地数据克隆到 `ModelUIModel` 内存数据
-                        UserConversion.cloneDataFromUser(
-                            application,
-                            it,
-                            appGlobalModel.userObservable
-                        )
+                        UserConversion.cloneDataFromUser(it, appGlobalModel.userObservable)
 
                         //保存 `UserInfoBean` 用户数据
                         putUserInfoPref(data)

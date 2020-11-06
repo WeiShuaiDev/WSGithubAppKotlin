@@ -85,6 +85,7 @@ interface UserService {
      * @param per_page [Int]
      */
     @GET("users/{user}/followers")
+    @Headers("Page:page")
     fun getFollowers(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
@@ -99,6 +100,7 @@ interface UserService {
      * @param per_page [Int]
      */
     @GET("users/{user}/following")
+    @Headers("Page:page")
     fun getFollowing(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
@@ -113,6 +115,7 @@ interface UserService {
      * @param per_page [Int]
      */
     @GET("users/{user}/events")
+    @Headers("Page:page")
     fun getUserEvents(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
@@ -127,6 +130,7 @@ interface UserService {
      * @param per_page [Int]
      */
     @GET("users/{user}/received_events")
+    @Headers("Page:page")
     fun getNewsEvent(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String,
@@ -141,6 +145,7 @@ interface UserService {
      * @param per_page [Int]
      */
     @GET("orgs/{org}/members")
+    @Headers("Page:page")
     fun getOrgMembers(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("org") org: String,
@@ -156,6 +161,5 @@ interface UserService {
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("user") user: String
     ): LiveData<List<User>>
-
 
 }

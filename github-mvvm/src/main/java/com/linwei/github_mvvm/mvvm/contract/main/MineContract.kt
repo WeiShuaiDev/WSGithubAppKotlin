@@ -1,12 +1,9 @@
 package com.linwei.github_mvvm.mvvm.contract.main
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.github_mvvm.mvvm.model.bean.*
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.OrgMemberEntity
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.UserEventEntity
 
 /**
  * ---------------------------------------------------------------------

@@ -30,8 +30,9 @@ interface GlobalHttpHandler {
                 }
 
                 override fun onHttpResultResponse(
-                    httpResult: String,
                     chain: Interceptor.Chain,
+                    httpResult: String,
+                    request:Request,
                     response: Response
                 ): Response {
                     return response
@@ -56,8 +57,9 @@ interface GlobalHttpHandler {
      * @return [Response]
      */
     fun onHttpResultResponse(
-        httpResult: String,
         chain: Interceptor.Chain,
+        httpResult: String,
+        request: Request,
         response: Response
     ): Response
 }

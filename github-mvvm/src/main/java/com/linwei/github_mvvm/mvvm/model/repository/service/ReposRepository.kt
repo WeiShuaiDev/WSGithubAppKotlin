@@ -369,6 +369,7 @@ open class ReposRepository @Inject constructor(
                                 )
                                 //reposDao.insertRepositoryDetail(entity)
                             }
+                            observer.onSuccess(code, data)
                         }
 
                         override fun onFailure(code: String?, message: String?) {
@@ -540,7 +541,7 @@ open class ReposRepository @Inject constructor(
                                         fullName = "$userName/$reposName",
                                         data = GsonUtils.toJsonString(it)
                                     )
-                                    reposDao.insertRepositoryCommits(entity)
+                                    //reposDao.insertRepositoryCommits(entity)
                                 }
                             }
                             observer.onSuccess(code, data)

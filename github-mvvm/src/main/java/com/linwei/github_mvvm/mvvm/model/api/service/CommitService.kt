@@ -6,10 +6,7 @@ import com.linwei.github_mvvm.mvvm.model.bean.CommitsComparison
 import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.bean.RepoCommit
 import com.linwei.github_mvvm.mvvm.model.bean.RepoCommitExt
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import java.util.ArrayList
 
 /**
@@ -30,6 +27,7 @@ interface CommitService {
      *  @param per_page [Int]
      */
     @GET("repos/{owner}/{repo}/commits")
+    @Headers("Page:page")
     fun getRepoCommits(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,

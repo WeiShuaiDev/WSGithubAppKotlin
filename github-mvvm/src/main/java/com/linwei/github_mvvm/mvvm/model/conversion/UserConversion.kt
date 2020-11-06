@@ -3,6 +3,7 @@ package com.linwei.github_mvvm.mvvm.model.conversion
 import android.content.Context
 import android.graphics.Color
 import androidx.core.content.ContextCompat
+import com.linwei.cams.ext.color
 import com.linwei.cams.ext.string
 import com.linwei.cams.utils.TimeUtils
 import com.linwei.github_mvvm.R
@@ -36,16 +37,14 @@ object UserConversion {
         }
         userUIModel.avatarUrl = user.avatarUrl
         return userUIModel
-
     }
 
     /**
      * 克隆[User] 数据类型为 [UserUIModel]
-     * @param context [Context]
      * @param user [User]
      * @param userUIModel [UserUIModel]
      */
-    fun cloneDataFromUser(context: Context?, user: User, userUIModel: UserUIModel) {
+    fun cloneDataFromUser(user: User, userUIModel: UserUIModel) {
         userUIModel.login = user.login
         userUIModel.id = user.id
         userUIModel.name = user.name
@@ -59,7 +58,7 @@ object UserConversion {
 
         userUIModel.bio = user.bio
         userUIModel.bioDes = if (user.bio != null) {
-            user.bio + "\n" + context?.getString(R.string.user_created_at_text) + TimeUtils.getDate(
+            user.bio + "\n" + R.string.user_created_at_text.string() + TimeUtils.getDate(
                 user.createdAt
             )
         } else {
@@ -75,7 +74,7 @@ object UserConversion {
             R.string.user_followers_text.string() + "\n" + getBlankText(user.followers)
         userUIModel.following =
             R.string.user_followed_text.string() + "\n" + getBlankText(user.following)
-        userUIModel.actionUrl = getUserChartAddress(context, user.login ?: "")
+        userUIModel.actionUrl = getUserChartAddress(user.login ?: "")
 
         userUIModel.publicGists = user.publicGists
         userUIModel.createdAt = user.createdAt
@@ -85,13 +84,12 @@ object UserConversion {
 
     /**
      * 根据 `App` 主题色，获取状态图表地址
-     * @param context [Context]
      * @param name [String]
      * @return [String]
      */
-    private fun getUserChartAddress(context: Context?, name: String): String {
+    private fun getUserChartAddress(name: String): String {
         val stringBuffer = StringBuffer()
-        val color: Int = ContextCompat.getColor(context!!, R.color.colorPrimary)
+        val color: Int = R.color.colorPrimary.color()
         stringBuffer.append(Integer.toHexString(Color.red(color)))
         stringBuffer.append(Integer.toHexString(Color.green(color)))
         stringBuffer.append(Integer.toHexString(Color.blue(color)))

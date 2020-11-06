@@ -1,6 +1,7 @@
 package com.linwei.github_mvvm.mvvm.model.conversion
 
 import android.content.Context
+import com.linwei.cams.ext.string
 import com.linwei.cams.utils.TimeUtils
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.model.bean.Event
@@ -36,8 +37,8 @@ object EventConversion {
                     "Delete " + event.payload?.refType + " " + event.payload?.ref + " at " + event.repo?.name
             }
             "ForkEvent" -> {
-                val oriRepo:String? = event.repo?.name
-                val newRepo:String = event.actor?.login + "/" + event.repo?.name
+                val oriRepo: String? = event.repo?.name
+                val newRepo: String = event.actor?.login + "/" + event.repo?.name
                 actionStr = "Forked $oriRepo to $newRepo"
 
             }
@@ -101,14 +102,14 @@ object EventConversion {
                 actionStr = "Push to " + ref + " at " + event.repo?.name
                 des = ""
                 var descSpan: String? = ""
-                val count:Int = event.payload?.commits?.size!!
+                val count: Int = event.payload?.commits?.size!!
                 val maxLines = 4
-                val max:Int = if (count > maxLines) {
+                val max: Int = if (count > maxLines) {
                     maxLines - 1
                 } else {
                     count
                 }
-                for (i:Int in 0 until max) {
+                for (i: Int in 0 until max) {
                     val commit = event.payload?.commits!![i]
                     if (i != 0) {
                         descSpan += ("\n")
@@ -179,7 +180,7 @@ object EventConversion {
                 }
             }
             "ReleaseEvent" -> {
-                val url:String? = event.payload?.release?.tarballUrl
+                val url: String? = event.payload?.release?.tarballUrl
                 eventUIModel.actionType = EventUIAction.Release
                 eventUIModel.releaseUrl = url ?: ""
                 /*CommonUtils.launchWebView(context, repositoryName, url);*/
@@ -194,20 +195,19 @@ object EventConversion {
         }
     }
 
-    fun notificationToEventUIModel(context: Context, notification: Notification): EventUIModel {
+    fun notificationToEventUIModel(notification: Notification): EventUIModel {
         val eventUIModel = EventUIModel()
         eventUIModel.time = TimeUtils.getNewsTime(notification.updateAt)
         eventUIModel.username = notification.repository?.fullName ?: ""
-        val type:String = notification.subject?.type ?: ""
-        val status:String = if (notification.unread) {
-            context.getString(R.string.unread)
+        val type: String = notification.subject?.type ?: ""
+        val status: String = if (notification.unread) {
+            R.string.unread.string()
         } else {
-            context.getString(R.string.readed)
+            R.string.readed.string()
         }
         eventUIModel.des =
-            notification.reason + " " + "${context.getString(R.string.notify_type)}：$type，${context.getString(
-                R.string.notify_status
-            )}：$status"
+            notification.reason + " " + "${R.string.notify_type.string()}：$type，${
+            R.string.notify_status.string()}：$status"
         eventUIModel.action = notification.subject?.title ?: ""
         eventUIModel.actionType = if (notification.subject?.type == "Issue") {
             EventUIAction.Issue
@@ -218,10 +218,11 @@ object EventConversion {
         eventUIModel.owner = notification.repository?.owner?.login ?: ""
         eventUIModel.repositoryName = notification.repository?.name ?: ""
 
-        val url:String? = notification.subject?.url
+        val url: String? = notification.subject?.url
         url?.apply {
-            val tmp:Array<String> = url.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val number:String = tmp[tmp.size - 1]
+            val tmp: Array<String> =
+                url.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val number: String = tmp[tmp.size - 1]
             eventUIModel.IssueNum = number.toInt()
         }
         eventUIModel.threadId = notification.id ?: ""

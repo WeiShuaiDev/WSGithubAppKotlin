@@ -1,28 +1,13 @@
 package com.linwei.github_mvvm.mvvm.model.repository.main
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import com.linwei.cams.ext.isNotNullOrEmpty
-import com.linwei.cams.ext.no
-import com.linwei.cams.ext.string
 import com.linwei.cams.http.callback.LiveDataCallBack
-import com.linwei.cams.http.config.ApiStateConstant
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
-import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.main.DynamicContract
-import com.linwei.github_mvvm.mvvm.model.AppGlobalModel
-import com.linwei.github_mvvm.mvvm.model.api.service.UserService
-import com.linwei.github_mvvm.mvvm.model.bean.AuthResponse
 import com.linwei.github_mvvm.mvvm.model.bean.Event
 import com.linwei.github_mvvm.mvvm.model.bean.Page
-import com.linwei.github_mvvm.mvvm.model.repository.db.LocalDatabase
-import com.linwei.github_mvvm.mvvm.model.repository.db.dao.UserDao
-import com.linwei.github_mvvm.mvvm.model.repository.db.entity.ReceivedEventEntity
-import com.linwei.github_mvvm.mvvm.model.repository.service.ReposRepository
 import com.linwei.github_mvvm.mvvm.model.repository.service.UserRepository
-import com.linwei.github_mvvm.utils.GsonUtils
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
