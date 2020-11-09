@@ -41,6 +41,5 @@ interface ReposReadmeContract {
             reposName: String,
             observer: LiveDataCallBack<String>
         )
-
     }
 }

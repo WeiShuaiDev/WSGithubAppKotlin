@@ -598,28 +598,21 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络仓库文件数据
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @param path [String]
      * @return [LiveDataCallBack]
      */
     fun requestFiles(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         path: String,
         observer: LiveDataCallBack<List<FileModel>>
     ): LiveData<List<FileModel>> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
-
         return reposService.getRepoFiles(
-            owner = userName!!,
+            owner = userName,
             repo = reposName,
             path = path
         )

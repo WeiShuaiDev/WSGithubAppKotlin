@@ -3,9 +3,9 @@ package com.linwei.github_mvvm.mvvm.ui.module.repos
 import android.view.View
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.FragmentIssueDetailBinding
-import com.linwei.github_mvvm.mvvm.contract.event.issue.IssueDetailContract
-import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
+import com.linwei.github_mvvm.databinding.FragmentReposIssueListBinding
+import com.linwei.github_mvvm.mvvm.contract.repos.ReposIssueListContract
+import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposIssueListViewModel
 
 /**
  * ---------------------------------------------------------------------
@@ -17,10 +17,10 @@ import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
  *-----------------------------------------------------------------------
  */
 class ReposIssueListFragment(val userName: String?, val reposName: String?) :
-    BaseMvvmFragment<IssueDetailViewModel, FragmentIssueDetailBinding>(),
-    IssueDetailContract.View {
+    BaseMvvmFragment<ReposIssueListViewModel, FragmentReposIssueListBinding>(),
+    ReposIssueListContract.View {
 
-    override fun provideContentViewId(): Int = R.layout.fragment_issue_detail
+    override fun provideContentViewId(): Int = R.layout.fragment_repos_issue_list
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
@@ -32,7 +32,6 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
     }
 
     override fun initLayoutView(rootView: View?) {
-
     }
 
     override fun initLayoutData() {

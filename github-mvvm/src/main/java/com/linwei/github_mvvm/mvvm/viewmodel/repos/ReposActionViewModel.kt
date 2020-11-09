@@ -84,10 +84,6 @@ class ReposActionViewModel @Inject constructor(
                         super.onSuccess(code, data)
                         _repoCommitPage.value = data
                     }
-
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
-                    }
                 })
         }
     }
@@ -108,10 +104,6 @@ class ReposActionViewModel @Inject constructor(
                     override fun onSuccess(code: String?, data: Page<List<Event>>?) {
                         super.onSuccess(code, data)
                         _eventPage.value = data
-                    }
-
-                    override fun onFailure(code: String?, message: String?) {
-                        super.onFailure(code, message)
                     }
                 })
         }

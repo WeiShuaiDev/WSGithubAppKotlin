@@ -2,6 +2,7 @@ package com.linwei.github_mvvm.mvvm.ui.module.login
 
 import android.content.Context
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
@@ -9,7 +10,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
+import com.linwei.github_mvvm.mvvm.contract.login.MainContract
 import com.linwei.github_mvvm.mvvm.ui.module.main.MainActivity
+import com.linwei.github_mvvm.mvvm.viewmodel.main.MainViewModel
 import dagger.android.AndroidInjection
 import org.jetbrains.anko.startActivity
 
@@ -23,6 +26,7 @@ import org.jetbrains.anko.startActivity
  *              OAuth登录 `OAuthLoginFragment`
  *-----------------------------------------------------------------------
  */
+
 class UserActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
 
     companion object {
@@ -33,11 +37,6 @@ class UserActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>() {
     }
 
     override fun useDataBinding(): Boolean = false
-
-    override fun setUpOnCreateAndSuperStart(savedInstanceState: Bundle?) {
-        super.setUpOnCreateAndSuperStart(savedInstanceState)
-        AndroidInjection.inject(this)
-    }
 
     override fun provideContentViewId(): Int = R.layout.activity_user
 

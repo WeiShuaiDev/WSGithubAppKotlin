@@ -4,10 +4,7 @@ import com.linwei.github_mvvm.mvvm.model.bean.*
 import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
 import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
 import com.linwei.github_mvvm.mvvm.model.conversion.UserConversion
-import com.linwei.github_mvvm.mvvm.model.ui.CommitUIModel
-import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
-import com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel
-import com.linwei.github_mvvm.mvvm.model.ui.UserUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.*
 
 /**
  * ---------------------------------------------------------------------

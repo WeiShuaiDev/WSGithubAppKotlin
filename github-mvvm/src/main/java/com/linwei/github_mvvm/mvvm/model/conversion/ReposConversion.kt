@@ -56,12 +56,12 @@ object ReposConversion {
         return reposUIModel
     }
 
-    fun fileListToFileUIList(list: ArrayList<FileModel>): ArrayList<Any> {
-        val result = ArrayList<Any>()
-        val dirs = ArrayList<Any>()
-        val files = ArrayList<Any>()
+    fun fileListToFileUIList(list: List<FileModel>?): List<FileUIModel> {
+        val result = ArrayList<FileUIModel>()
+        val dirs = ArrayList<FileUIModel>()
+        val files = ArrayList<FileUIModel>()
 
-        list.forEach {
+        list?.forEach {
             val fileUIModel = FileUIModel()
             fileUIModel.title = it.name ?: ""
             fileUIModel.type = it.type ?: ""

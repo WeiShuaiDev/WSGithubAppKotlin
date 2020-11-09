@@ -2,12 +2,13 @@ package com.linwei.github_mvvm.mvvm.ui.module.repos
 
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import com.github.nukc.stateview.StateView
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.FragmentIssueDetailBinding
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposFileListContract
-import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposFileListViewModel
+import kotlinx.android.synthetic.main.fragment_repos_file_list.*
 
 /**
  * ---------------------------------------------------------------------
@@ -24,6 +25,10 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
 
     override fun provideContentViewId(): Int = R.layout.fragment_repos_file_list
 
+    override fun obtainStateViewRoot(): View? = repos_file_list_root
+
+    override fun useDataBinding(): Boolean = false
+
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
     }
@@ -32,14 +37,26 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
     }
 
     override fun initLayoutData() {
+        mViewModel?.fileUIModel?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+
+            }
+        })
     }
 
     override fun initLayoutListener() {
+        mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
+            override fun onRetryClick() {
+                mViewModel?.toFiles(userName, reposName, "")
+            }
+        }
     }
 
     override fun reloadData() {
+        mViewModel?.toFiles(userName, reposName, "")
     }
 
     override fun loadData() {
+        mViewModel?.toFiles(userName, reposName, "")
     }
 }
