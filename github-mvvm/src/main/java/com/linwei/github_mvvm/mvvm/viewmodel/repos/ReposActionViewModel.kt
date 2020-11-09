@@ -41,7 +41,6 @@ class ReposActionViewModel @Inject constructor(
         get() = _eventPage
 
     override fun loadDataByRefresh(userName: String?, reposName: String?) {
-        System.out.println("loadDataByRefresh")
         toRepoInfo(userName, reposName)
     }
 

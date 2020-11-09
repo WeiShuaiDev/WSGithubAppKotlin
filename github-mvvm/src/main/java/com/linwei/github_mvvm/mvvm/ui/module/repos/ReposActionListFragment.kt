@@ -96,6 +96,7 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
 
         mViewModel?.repoCommitPage?.observe(viewLifecycleOwner, Observer {
             it?.let {
+                mLayoutReposHeaderBinding.reposActionTabBar.isTouchEnable = true
                 mPageCode = it.next
                 it.result.isNotNullOrSize().yes {
                     if (it.prev == -1) {
@@ -127,6 +128,7 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
 
         mViewModel?.eventPage?.observe(viewLifecycleOwner, Observer {
             it?.let {
+                mLayoutReposHeaderBinding.reposActionTabBar.isTouchEnable = true
                 mPageCode = it.next
                 it.result.isNotNullOrSize().yes {
                     if (it.prev == -1) {
@@ -200,6 +202,7 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
 
     override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
         mPageCode = 1
+        mLayoutReposHeaderBinding.reposActionTabBar.isTouchEnable = false
         mViewModel?.apply {
             showType = index
             loadDataByLoadMore(userName, reposName, mPageCode)

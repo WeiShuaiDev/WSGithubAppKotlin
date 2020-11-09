@@ -1,11 +1,13 @@
 package com.linwei.github_mvvm.mvvm.ui.module.repos
 
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentIssueDetailBinding
-import com.linwei.github_mvvm.mvvm.contract.event.issue.IssueDetailContract
+import com.linwei.github_mvvm.mvvm.contract.repos.ReposFileListContract
 import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposFileListViewModel
 
 /**
  * ---------------------------------------------------------------------
@@ -16,18 +18,14 @@ import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class ReposFileListFragment(val userName:String?,val reposName:String?) : BaseMvvmFragment<IssueDetailViewModel, FragmentIssueDetailBinding>(),
-    IssueDetailContract.View {
+class ReposFileListFragment(val userName: String?, val reposName: String?) :
+    BaseMvvmFragment<ReposFileListViewModel, ViewDataBinding>(),
+    ReposFileListContract.View {
 
-    override fun provideContentViewId(): Int = R.layout.fragment_issue_detail
+    override fun provideContentViewId(): Int = R.layout.fragment_repos_file_list
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
-
-        mViewDataBinding?.let {
-            it.viewModel = mViewModel
-            it.lifecycleOwner = viewLifecycleOwner
-        }
     }
 
     override fun initLayoutView(rootView: View?) {

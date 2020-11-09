@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchAndMatch"
+    android:orientation="vertical"
+    tools:context=".mvvm.ui.module.login.UserActivity">
+
+    <com.linwei.github_mvvm.mvvm.ui.view.HorizontalTextList
+        android:id="@+id/repos_file_select_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/repos_file_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

@@ -10,9 +10,11 @@
             type="com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         style="@style/MatchAndMatch"
-        android:gravity="center"
+        android:orientation="vertical"
         tools:ignore="MissingConstraints">
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
 </layout>
