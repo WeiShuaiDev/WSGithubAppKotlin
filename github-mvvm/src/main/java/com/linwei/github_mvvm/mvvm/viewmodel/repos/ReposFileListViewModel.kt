@@ -12,8 +12,6 @@ import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposFileListContract
 import com.linwei.github_mvvm.mvvm.model.bean.FileModel
-import com.linwei.github_mvvm.mvvm.model.bean.Page
-import com.linwei.github_mvvm.mvvm.model.bean.RepoCommit
 import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
 import com.linwei.github_mvvm.mvvm.model.repository.repos.ReposFileListModel
 import com.linwei.github_mvvm.mvvm.model.ui.FileUIModel
@@ -37,8 +35,14 @@ class ReposFileListViewModel @Inject constructor(
     val fileUIModel: LiveData<List<FileUIModel>>
         get() = _fileUIModel
 
-    override fun toFiles(userName: String?, reposName: String?, path: String?) {
-        if (isEmptyParameter(userName, reposName, path)) {
+    var path: String? = ""
+
+    var userName: String? = ""
+
+    var reposName: String? = ""
+
+    override fun toFiles() {
+        if (isEmptyParameter(userName, reposName)) {
             postMessage(obj = R.string.unknown_error.string())
             postUpdateStatus(StatusCode.FAILURE)
             return

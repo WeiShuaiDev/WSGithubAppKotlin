@@ -22,11 +22,8 @@ interface ReposFileListContract {
 
         /**
          * 获取当前 [reposName] 仓库的 `Files`地址
-         * @param userName [String]
-         * @param reposName [String]
-         * @param path [String]
          */
-        fun toFiles(userName: String?, reposName: String?, path: String?)
+        fun toFiles()
     }
 
     interface Model {

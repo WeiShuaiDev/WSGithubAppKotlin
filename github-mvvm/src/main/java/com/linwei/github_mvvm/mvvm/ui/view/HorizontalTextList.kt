@@ -31,9 +31,9 @@ class HorizontalTextList : FrameLayout {
         defStyleAttr
     )
 
-    private val mRecycler = RecyclerView(context)
-    private val mDataList: ArrayList<String> = arrayListOf()
-    private var mItemClick: AdapterView.OnItemClickListener? = null
+    val mRecycler = RecyclerView(context)
+    val mDataList: ArrayList<String> = arrayListOf()
+    var mItemClick: AdapterView.OnItemClickListener? = null
 
     init {
         val params = LayoutParams(

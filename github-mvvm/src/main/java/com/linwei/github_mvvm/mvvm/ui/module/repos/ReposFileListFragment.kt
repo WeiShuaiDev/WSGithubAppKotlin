@@ -1,12 +1,24 @@
 package com.linwei.github_mvvm.mvvm.ui.module.repos
 
 import android.view.View
+import android.widget.AdapterView
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.github.nukc.stateview.StateView
+import com.linwei.cams.ext.isEmptyParameter
+import com.linwei.cams.ext.otherwise
+import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
+import com.linwei.github_mvvm.ext.isImageEnd
+import com.linwei.github_mvvm.ext.launchUrl
+import com.linwei.github_mvvm.ext.toSplitString
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposFileListContract
+import com.linwei.github_mvvm.mvvm.model.api.Api
+import com.linwei.github_mvvm.mvvm.model.ui.FileUIModel
+import com.linwei.github_mvvm.mvvm.ui.adapter.FileAdapter
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposFileListViewModel
 import kotlinx.android.synthetic.main.fragment_repos_file_list.*
 
@@ -23,6 +35,8 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
     BaseMvvmFragment<ReposFileListViewModel, ViewDataBinding>(),
     ReposFileListContract.View {
 
+    private lateinit var mFileAdapter: FileAdapter
+
     override fun provideContentViewId(): Int = R.layout.fragment_repos_file_list
 
     override fun obtainStateViewRoot(): View? = repos_file_list_root
@@ -31,15 +45,25 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
+        mViewModel?.userName = userName
+        mViewModel?.reposName = reposName
     }
 
     override fun initLayoutView(rootView: View?) {
+        mFileAdapter = FileAdapter(mutableListOf())
+        mFileAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+        mFileAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
+        repos_file_recycler.apply {
+            layoutManager = LinearLayoutManager(mContext)
+            adapter = mFileAdapter
+        }
     }
 
     override fun initLayoutData() {
         mViewModel?.fileUIModel?.observe(viewLifecycleOwner, Observer {
             it?.let {
-
+                clearSelectList()
+                mFileAdapter.setNewInstance(it.toMutableList())
             }
         })
     }
@@ -47,16 +71,86 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
     override fun initLayoutListener() {
         mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
             override fun onRetryClick() {
-                mViewModel?.toFiles(userName, reposName, "")
+                mViewModel?.toFiles()
             }
         }
+
+        mFileAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
+            adapter.data[position]?.let {
+                val itemData: FileUIModel = it as FileUIModel
+                (itemData.type == "file").yes {
+                    val isImageEnd: Boolean = itemData.title.isImageEnd()
+                    isImageEnd.yes {
+                        if (!isEmptyParameter(userName, reposName)) {
+                            val path: String =
+                                repos_file_select_header.mDataList.toSplitString() + "/" + itemData.title
+                            val url: String =
+                                Api.getFileHtmlUrl(userName!!, reposName!!, path) + "?raw=true"
+                            launchUrl(mActivity, url)
+                        }
+                    }.otherwise {
+
+                    }
+                }.otherwise {
+                    addSelectList(itemData.title)
+                    System.out.println("mViewModel?.path${mViewModel?.path}")
+                    mViewModel?.path = repos_file_select_header.mDataList.toSplitString()
+                    System.out.println("repos_file_select_header.mDataList.toSplitString()${repos_file_select_header.mDataList.toSplitString()}")
+                    mViewModel?.toFiles()
+                }
+            }
+        }
+
+        repos_file_select_header.mItemClick =
+            AdapterView.OnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id: Long ->
+                if (position == 0) {
+                    clearSelectList()
+                    mViewModel?.path = ""
+                } else {
+                    notifySelectList(position)
+                    mViewModel?.path = repos_file_select_header.mDataList.toSplitString()
+                }
+                mViewModel?.toFiles()
+            }
+    }
+
+    /**
+     * 清空 `HorizontalTextList` 数据。
+     */
+    private fun clearSelectList() {
+        repos_file_select_header.mDataList.clear()
+        repos_file_select_header.mDataList.add(".")
+        repos_file_select_header.mRecycler.adapter?.notifyDataSetChanged()
+    }
+
+    /**
+     * @param item [String]
+     * 增加 `HorizontalTextList` [item] 标签数据。
+     */
+    private fun addSelectList(item: String) {
+        repos_file_select_header.mDataList.add(item)
+        repos_file_select_header.mRecycler.adapter?.notifyDataSetChanged()
+    }
+
+    /**
+     * @param position [Int]
+     * 选择 `HorizontalTextList` [item] 标签数据，并刷新列表数据。
+     */
+    private fun notifySelectList(position: Int) {
+        val nextList: ArrayList<String> = arrayListOf()
+        val result: MutableList<String> =
+            repos_file_select_header.mDataList.subList(0, position + 1)
+        nextList.addAll(result)
+        repos_file_select_header.mDataList.clear()
+        repos_file_select_header.mDataList.addAll(nextList)
+        repos_file_select_header.mRecycler.adapter?.notifyDataSetChanged()
     }
 
     override fun reloadData() {
-        mViewModel?.toFiles(userName, reposName, "")
+        mViewModel?.toFiles()
     }
 
     override fun loadData() {
-        mViewModel?.toFiles(userName, reposName, "")
+        mViewModel?.toFiles()
     }
 }

@@ -68,7 +68,7 @@ class AppLifecycleImpl : AppLifecycles {
             }
 
             override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable, tag: String?) {
-                loadUserHeaderImage(imageView, uri.toString())
+                imageView.loadUserHeaderImage(uri.toString())
             }
         })
     }

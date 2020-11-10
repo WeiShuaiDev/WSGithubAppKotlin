@@ -62,7 +62,7 @@ class GlobalConfiguration : ConfigModule {
                     }
                     //`Http` 网络请求路径
                     val cacheFile: File = FileUtils.getCacheFile(context, "GITHUB_CACHE")
-                    builder.cache(Cache(cacheFile, Api.OKHTTP_CACHE_SIZE))
+                    builder.cache(Cache(cacheFile, Api.OK_HTTP_CACHE_SIZE))
                 }
             })
             .globalHttpHandler(object : GlobalHttpHandler {
