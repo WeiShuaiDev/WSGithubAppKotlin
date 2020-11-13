@@ -7,7 +7,6 @@ import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposFileListContract
 import com.linwei.github_mvvm.mvvm.model.bean.FileModel
 import com.linwei.github_mvvm.mvvm.model.repository.service.ReposRepository
-import okhttp3.ResponseBody
 import javax.inject.Inject
 
 /**

@@ -42,6 +42,7 @@ class ReposFileListViewModel @Inject constructor(
     var reposName: String? = ""
 
     override fun toFiles() {
+        postUpdateStatus(StatusCode.LOADING)
         if (isEmptyParameter(userName, reposName)) {
             postMessage(obj = R.string.unknown_error.string())
             postUpdateStatus(StatusCode.FAILURE)

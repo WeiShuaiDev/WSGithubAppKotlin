@@ -1,13 +1,12 @@
 package com.linwei.github_mvvm.mvvm.ui.view
 
 import android.content.Context
-import android.content.res.Resources
 import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.setPadding
@@ -33,7 +32,7 @@ class HorizontalTextList : FrameLayout {
 
     val mRecycler = RecyclerView(context)
     val mDataList: ArrayList<String> = arrayListOf()
-    var mItemClick: AdapterView.OnItemClickListener? = null
+    var mItemClick: OnItemClickListener? = null
 
     init {
         val params = LayoutParams(
@@ -59,7 +58,7 @@ class HorizontalTextList : FrameLayout {
             holder.v.text = dataList[position] + "   > "
 
             holder.itemView.setOnClickListener {
-                mItemClick?.onItemClick(null, it, position, 0)
+                mItemClick?.onItemClick(it, position)
             }
         }
 
@@ -77,6 +76,10 @@ class HorizontalTextList : FrameLayout {
             textView.layoutParams = layoutParams
             return VH(textView)
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(v: View, position: Int)
     }
 }
 

@@ -1,7 +1,6 @@
 package com.linwei.github_mvvm.mvvm.ui.module.repos
 
 import android.view.View
-import android.widget.AdapterView
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +18,7 @@ import com.linwei.github_mvvm.mvvm.contract.repos.ReposFileListContract
 import com.linwei.github_mvvm.mvvm.model.api.Api
 import com.linwei.github_mvvm.mvvm.model.ui.FileUIModel
 import com.linwei.github_mvvm.mvvm.ui.adapter.FileAdapter
+import com.linwei.github_mvvm.mvvm.ui.view.HorizontalTextList
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposFileListViewModel
 import kotlinx.android.synthetic.main.fragment_repos_file_list.*
 
@@ -62,7 +62,6 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
     override fun initLayoutData() {
         mViewModel?.fileUIModel?.observe(viewLifecycleOwner, Observer {
             it?.let {
-                clearSelectList()
                 mFileAdapter.setNewInstance(it.toMutableList())
             }
         })
@@ -93,16 +92,15 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
                     }
                 }.otherwise {
                     addSelectList(itemData.title)
-                    System.out.println("mViewModel?.path${mViewModel?.path}")
                     mViewModel?.path = repos_file_select_header.mDataList.toSplitString()
-                    System.out.println("repos_file_select_header.mDataList.toSplitString()${repos_file_select_header.mDataList.toSplitString()}")
                     mViewModel?.toFiles()
                 }
             }
         }
 
-        repos_file_select_header.mItemClick =
-            AdapterView.OnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id: Long ->
+        repos_file_select_header.mItemClick = object :
+            HorizontalTextList.OnItemClickListener {
+            override fun onItemClick(v: View, position: Int) {
                 if (position == 0) {
                     clearSelectList()
                     mViewModel?.path = ""
@@ -112,6 +110,7 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
                 }
                 mViewModel?.toFiles()
             }
+        }
     }
 
     /**
