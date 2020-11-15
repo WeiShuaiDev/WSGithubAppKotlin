@@ -3,9 +3,7 @@ package com.linwei.github_mvvm.mvvm.viewmodel.repos
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.linwei.cams.ext.isEmptyParameter
-import com.linwei.cams.ext.isNotNullOrSize
-import com.linwei.cams.ext.string
+import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
@@ -43,7 +41,7 @@ class ReposFileListViewModel @Inject constructor(
 
     override fun toFiles() {
         postUpdateStatus(StatusCode.LOADING)
-        if (isEmptyParameter(userName, reposName)) {
+        (isEmptyParameter(userName, reposName)).yes{
             postMessage(obj = R.string.unknown_error.string())
             postUpdateStatus(StatusCode.FAILURE)
             return
@@ -58,10 +56,10 @@ class ReposFileListViewModel @Inject constructor(
                 object : LiveDataCallBack<List<FileModel>>() {
                     override fun onSuccess(code: String?, data: List<FileModel>?) {
                         super.onSuccess(code, data)
-                        if (data.isNotNullOrSize()) {
+                        (data.isNotNullOrSize()).yes{
                             _fileUIModel.value = ReposConversion.fileListToFileUIList(data)
                             postUpdateStatus(StatusCode.SUCCESS)
-                        } else {
+                        }.otherwise{
                             postUpdateStatus(StatusCode.ERROR)
                         }
                     }

@@ -20,10 +20,8 @@ interface ReposReadmeContract {
     interface ViewModel {
         /**
          * 获取当前 [reposName] 仓库的 `Readme`地址
-         * @param userName [String]
-         * @param reposName [String]
          */
-        fun toReposReadme(userName: String?, reposName: String?)
+        fun toReposReadme()
     }
 
     interface Model {

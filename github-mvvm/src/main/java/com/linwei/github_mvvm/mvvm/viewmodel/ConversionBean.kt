@@ -2,6 +2,7 @@ package com.linwei.github_mvvm.mvvm.viewmodel
 
 import com.linwei.github_mvvm.mvvm.model.bean.*
 import com.linwei.github_mvvm.mvvm.model.conversion.EventConversion
+import com.linwei.github_mvvm.mvvm.model.conversion.IssueConversion
 import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
 import com.linwei.github_mvvm.mvvm.model.conversion.UserConversion
 import com.linwei.github_mvvm.mvvm.model.ui.*
@@ -82,5 +83,39 @@ object ConversionBean {
             }
         }
         return commitUiModel
+    }
+
+    /**
+     * 进行数据转换 'Issue' ->'IssueUIModel'
+     * @param result [Issue]
+     * @return list [IssueUIModel]
+     */
+    fun searchResultIssueConversionByIssueUIModel(result: SearchResult<Issue>?): MutableList<IssueUIModel> {
+        val issueUiModel: MutableList<IssueUIModel> = mutableListOf()
+        result?.apply {
+            items?.let {
+                for (issue: Issue in it) {
+                    issueUiModel.add(IssueConversion.issueToIssueUIModel(issue))
+                }
+            }
+        }
+        return issueUiModel
+    }
+
+    /**
+     * 进行数据转换 'Issue' ->'IssueUIModel'
+     * @param page [Issue]
+     * @return list [IssueUIModel]
+     */
+    fun issueConversionByIssueUIModel(page: Page<List<Issue>>?): MutableList<IssueUIModel> {
+        val issueUiModel: MutableList<IssueUIModel> = mutableListOf()
+        page?.apply {
+            result?.let {
+                for (issue: Issue in it) {
+                    issueUiModel.add(IssueConversion.issueToIssueUIModel(issue))
+                }
+            }
+        }
+        return issueUiModel
     }
 }

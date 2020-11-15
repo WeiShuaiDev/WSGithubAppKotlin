@@ -53,6 +53,8 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
+        mViewModel?.userName = userName
+        mViewModel?.reposName = reposName
 
         mViewDataBinding?.let {
             it.viewModel = mViewModel
@@ -167,11 +169,11 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
         }
 
         mEventInfoAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
+            mViewModel?.loadDataByLoadMore(mPageCode)
         }
 
         mCommitInfoAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
+            mViewModel?.loadDataByLoadMore(mPageCode)
         }
 
         repos_action_refresh.setOnRefreshListener {
@@ -179,21 +181,22 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
             mCommitInfoAdapter.loadMoreModule.isEnableLoadMore = false
 
             mPageCode = 1
-            mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
+            mViewModel?.loadDataByLoadMore(mPageCode)
         }
     }
 
     override fun reloadData() {
         repos_action_refresh.isRefreshing = true
+
         mPageCode = 1
-        mViewModel?.loadDataByRefresh(userName, reposName)
-        mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
+        mViewModel?.loadDataByRefresh()
+        mViewModel?.loadDataByLoadMore(mPageCode)
     }
 
     override fun loadData() {
         repos_action_refresh.isRefreshing = true
         mPageCode = 1
-        mViewModel?.loadDataByLoadMore(userName, reposName, mPageCode)
+        mViewModel?.loadDataByLoadMore(mPageCode)
     }
 
     override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
@@ -205,7 +208,7 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
         mLayoutReposHeaderBinding.reposActionTabBar.isTouchEnable = false
         mViewModel?.apply {
             showType = index
-            loadDataByLoadMore(userName, reposName, mPageCode)
+            loadDataByLoadMore(mPageCode)
         }
     }
 }

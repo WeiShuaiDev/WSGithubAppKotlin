@@ -813,6 +813,7 @@ open class ReposRepository @Inject constructor(
     /**
      * 请求网络保存仓库Issue列表数据
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @param status [String]
      * @param page [Int]
@@ -820,24 +821,16 @@ open class ReposRepository @Inject constructor(
      */
     fun requestReposIssueList(
         owner: LifecycleOwner,
+        userName:String,
         reposName: String,
         status: String,
         page: Int,
         observer: LiveDataCallBack<Page<List<Issue>>>
     ): LiveData<Page<List<Issue>>> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(
-                ApiStateConstant.REQUEST_FAILURE,
-                R.string.unknown_error.string()
-            )
-            return@no
-        }
-
         return issueService.getRepoIssues(
             forceNetWork = true,
-            owner = userName!!,
+            owner = userName,
             repo = reposName,
             page = page,
             state = status

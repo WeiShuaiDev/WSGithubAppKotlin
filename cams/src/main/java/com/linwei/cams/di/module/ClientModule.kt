@@ -157,7 +157,6 @@ object ClientModule {
     fun provideRxCacheDirectory(cacheDir: File): File =
         FileUtils.makeDirs(File(cacheDir, "RxCache"))
 
-
     /**
      * 创建 `Retrofit.Builder` 对象
      * @return [Retrofit.Builder]
@@ -202,11 +201,6 @@ object ClientModule {
     @Provides
     fun provideGSonConverterFactory(gson: Gson): GsonConverterFactory =
         GsonConverterFactory.create(gson)
-
-    /**
-     * 创建 `GlideHelper` 对象
-     * @return [GlideHelper]
-     */
 
     /**
      * [Retrofit] 配置,开发者通过实现 [RetrofitConfiguration] 接口中方法，在调用 [Retrofit.Builder] 对象进行配置，

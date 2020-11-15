@@ -5,7 +5,6 @@
     <string name="tab_dynamic">动态</string>
     <string name="tab_mine">我的</string>
 
-
     <!--登录模块-->
     <string name="login_user_name_text">用户名</string>
     <string name="login_password_text">密码</string>
@@ -41,6 +40,12 @@
     <string name="repos_file">文件</string>
     <string name="repos_issue">Issues</string>
     <string name="repos_push">提交</string>
+
+    <!--问题-->
+    <string name="issue_all_text">全部</string>
+    <string name="issue_open_text">打开</string>
+    <string name="issue_close_text">关闭</string>
+    <string name="issue_input_tip_title">请输入标题</string>
 
     <string name="logcat_login_user_name_entry">用户名为空!</string>
     <string name="logcat_login_password_entry">密码为空!</string>

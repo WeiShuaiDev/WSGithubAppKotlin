@@ -13,7 +13,7 @@
             type="com.linwei.github_mvvm.mvvm.model.AppGlobalModel" />
 
         <variable
-            name="mineViewModel"
+            name="viewModel"
             type="com.linwei.github_mvvm.mvvm.viewmodel.main.MineViewModel" />
 
     </data>

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.ext.isEmptyParameter
 import com.linwei.cams.ext.string
+import com.linwei.cams.ext.yes
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
@@ -32,6 +33,10 @@ class ReposActionViewModel @Inject constructor(
 
     var showType = 0
 
+    var userName: String? = ""
+
+    var reposName: String? = ""
+
     private val _repoCommitPage = MutableLiveData<Page<List<RepoCommit>>>()
     val repoCommitPage: LiveData<Page<List<RepoCommit>>>
         get() = _repoCommitPage
@@ -40,11 +45,11 @@ class ReposActionViewModel @Inject constructor(
     val eventPage: LiveData<Page<List<Event>>>
         get() = _eventPage
 
-    override fun loadDataByRefresh(userName: String?, reposName: String?) {
+    override fun loadDataByRefresh() {
         toRepoInfo(userName, reposName)
     }
 
-    override fun loadDataByLoadMore(userName: String?, reposName: String?, page: Int) {
+    override fun loadDataByLoadMore(page: Int) {
         when (showType) {
             0 -> {
                 toRepoEvent(userName, reposName, page)
@@ -56,9 +61,8 @@ class ReposActionViewModel @Inject constructor(
 
     }
 
-
     override fun toRepoInfo(userName: String?, reposName: String?) {
-        if (isEmptyParameter(userName, reposName)) {
+        (isEmptyParameter(userName, reposName)).yes {
             postMessage(obj = R.string.unknown_error.string())
             return
         }
@@ -68,7 +72,7 @@ class ReposActionViewModel @Inject constructor(
     }
 
     override fun toRepoCommits(userName: String?, reposName: String?, page: Int) {
-        if (isEmptyParameter(userName, reposName)) {
+        (isEmptyParameter(userName, reposName)).yes {
             postMessage(obj = R.string.unknown_error.string())
             return
         }
@@ -89,7 +93,7 @@ class ReposActionViewModel @Inject constructor(
     }
 
     override fun toRepoEvent(userName: String?, reposName: String?, page: Int) {
-        if (isEmptyParameter(userName, reposName)) {
+        (isEmptyParameter(userName, reposName)).yes {
             postMessage(obj = R.string.unknown_error.string())
             return
         }

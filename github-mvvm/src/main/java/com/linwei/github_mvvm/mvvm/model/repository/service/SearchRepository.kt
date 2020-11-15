@@ -112,6 +112,7 @@ open class SearchRepository @Inject constructor(
     /**
      * 搜索仓库相关的issue
      * @param owner [LifecycleOwner]
+     * @param userName [String]
      * @param reposName [String]
      * @param status [String]
      * @param query [String] 关键字
@@ -120,16 +121,12 @@ open class SearchRepository @Inject constructor(
      */
     fun requestSearchIssues(
         owner: LifecycleOwner,
+        userName:String,
         reposName: String,
         status: String,
         query: String,
         page: Int, observer: LiveDataCallBack<Page<SearchResult<Issue>>>
     ): LiveData<Page<SearchResult<Issue>>> {
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
-            return@no
-        }
 
         val q: String = if (status == "all") {
             "$query+repo:$userName/$reposName"

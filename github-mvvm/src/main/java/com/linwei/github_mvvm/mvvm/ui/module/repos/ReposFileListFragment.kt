@@ -101,10 +101,10 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
         repos_file_select_header.mItemClick = object :
             HorizontalTextList.OnItemClickListener {
             override fun onItemClick(v: View, position: Int) {
-                if (position == 0) {
+                (position == 0).yes {
                     clearSelectList()
                     mViewModel?.path = ""
-                } else {
+                }.otherwise {
                     notifySelectList(position)
                     mViewModel?.path = repos_file_select_header.mDataList.toSplitString()
                 }

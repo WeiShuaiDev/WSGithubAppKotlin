@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.ui.module.login.UserActivity">
+    tools:context=".mvvm.ui.module.repos.ReposDetailActivity">
 
     <data>
 
@@ -10,11 +10,104 @@
             type="com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposIssueListViewModel" />
     </data>
 
-    <LinearLayout
+    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/repos_issue_list_root"
         style="@style/MatchAndMatch"
-        android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
+        <LinearLayout
+            style="@style/MatchAndMatch"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <LinearLayout
+                style="@style/MatchAndWrap"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/repos_issue_search_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_edit_border"
+                    android:hint="@string/issue_input_tip_title"
+                    android:imeOptions="actionSearch"
+                    android:padding="@dimen/dp_10"
+                    android:singleLine="true"
+                    android:text="@={viewModel.query}"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/sp_14"
+                    app:keyListener="@{viewModel::onSearchKeyListener}" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/repos_issue_search_icon_btn"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/select_primary_light_bg"
+                    android:onClick="@{viewModel::onSearchClick}"
+                    android:padding="@dimen/dp_5"
+                    app:iiv_color="@color/colorPrimary"
+                    app:iiv_icon="APP_SEARCH" />
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                style="@style/whiteCardTheme"
+                android:layout_marginStart="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_10">
+
+                <com.linwei.github_mvvm.mvvm.ui.view.ExpandNavigationTabBar
+                    android:id="@+id/repos_issue_navigation_tab_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    app:ntb_badge_gravity="top"
+                    app:ntb_badge_position="right"
+                    app:ntb_badged="false"
+                    app:ntb_bg_color="@color/colorPrimary"
+                    app:ntb_icon_size_fraction="0.3"
+                    app:ntb_inactive_color="@color/colorSubText"
+                    app:ntb_scaled="true"
+                    app:ntb_swiped="true"
+                    app:ntb_tinted="true"
+                    app:ntb_title_mode="all"
+                    app:ntb_title_size="@dimen/sp_13"
+                    app:ntb_titled="true" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/repos_issue_refresh"
+                style="@style/MatchAndMatch"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/repos_issue_recycler"
+                    style="@style/MatchAndMatch"
+                    android:layout_weight="1" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/repos_issue_create_btn"
+            style="@style/WrapAndWrap"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@color/colorPrimary"
+            android:shadowColor="@color/colorPrimary"
+            android:src="@mipmap/icon_add"
+            android:textSize="@dimen/sp_23"
+            app:backgroundTint="@color/colorPrimary"
+            app:elevation="@dimen/dp_5"
+            app:rippleColor="@color/primary_light"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
 </layout>

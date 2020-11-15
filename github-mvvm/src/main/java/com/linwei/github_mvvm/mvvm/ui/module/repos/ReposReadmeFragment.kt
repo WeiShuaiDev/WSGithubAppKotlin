@@ -50,16 +50,16 @@ class ReposReadmeFragment(val userName: String?, val reposName: String?) :
     override fun initLayoutListener() {
         mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
             override fun onRetryClick() {
-                mViewModel?.toReposReadme(userName, reposName)
+                mViewModel?.toReposReadme()
             }
         }
     }
 
     override fun reloadData() {
-        mViewModel?.toReposReadme(userName, reposName)
+        mViewModel?.toReposReadme()
     }
 
     override fun loadData() {
-        mViewModel?.toReposReadme(userName, reposName)
+        mViewModel?.toReposReadme()
     }
 }

@@ -26,13 +26,13 @@ interface ReposActionListContract {
         /**
          * 分页加载，刷新数据
          */
-        fun loadDataByRefresh(userName: String?, reposName: String?)
+        fun loadDataByRefresh()
 
         /**
          * 分页加载,加载更多
          * @param page:Int
          */
-        fun loadDataByLoadMore(userName: String?, reposName: String?, page: Int)
+        fun loadDataByLoadMore(page: Int)
 
 
         /**
