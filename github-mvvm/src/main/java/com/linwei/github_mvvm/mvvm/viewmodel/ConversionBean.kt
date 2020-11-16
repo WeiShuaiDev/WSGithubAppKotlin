@@ -104,18 +104,17 @@ object ConversionBean {
 
     /**
      * 进行数据转换 'Issue' ->'IssueUIModel'
-     * @param page [Issue]
+     * @param list [Issue]
      * @return list [IssueUIModel]
      */
-    fun issueConversionByIssueUIModel(page: Page<List<Issue>>?): MutableList<IssueUIModel> {
+    fun issueConversionByIssueUIModel(list: List<Issue>?): MutableList<IssueUIModel> {
         val issueUiModel: MutableList<IssueUIModel> = mutableListOf()
-        page?.apply {
-            result?.let {
-                for (issue: Issue in it) {
-                    issueUiModel.add(IssueConversion.issueToIssueUIModel(issue))
-                }
+        list?.let {
+            for (issue: Issue in it) {
+                issueUiModel.add(IssueConversion.issueToIssueUIModel(issue))
             }
         }
         return issueUiModel
     }
+
 }

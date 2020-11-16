@@ -1,4 +1,5 @@
 package com.linwei.github_mvvm.mvvm.contract.repos
+
 import androidx.lifecycle.LifecycleOwner
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.github_mvvm.mvvm.model.bean.Issue
@@ -21,15 +22,10 @@ interface ReposIssueListContract {
     interface ViewModel {
 
         /**
-         * 分页加载，刷新数据。
-         */
-        fun loadDataByRefresh()
-
-        /**
          * 分页加载,加载更多。
          * @param page:Int
          */
-        fun loadDataByLoadMore(page: Int)
+        fun loadData(page: Int)
 
         /**
          * 获取当前 [reposName] 仓库的 `Issue` 列表信息。

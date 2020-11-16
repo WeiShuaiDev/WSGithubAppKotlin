@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="issueUIModel"
+            type="com.linwei.github_mvvm.mvvm.model.ui.IssueUIModel" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/whiteCardTheme">
+
+        <RelativeLayout
+            style="@style/MatchAndWrap"
+            android:padding="@dimen/dp_5">
+
+            <ImageView
+                android:id="@+id/issue_user_img"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                app:userHeaderUrl="@{issueUIModel.image}" />
+
+            <TextView
+                android:id="@+id/issue_user_name"
+                style="@style/WrapAndWrap"
+                android:layout_alignBaseline="@+id/issue_user_img"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toEndOf="@+id/issue_user_img"
+                android:singleLine="true"
+                android:text="@{issueUIModel.username}"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/issue_time"
+                style="@style/WrapAndWrap"
+                android:layout_alignParentEnd="true"
+                android:singleLine="true"
+                android:text="@{issueUIModel.time}"
+                android:textColor="@color/colorSubText"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/issue_title"
+                style="@style/WrapAndWrap"
+                android:layout_below="@+id/issue_user_img"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toEndOf="@+id/issue_user_img"
+                android:maxLines="3"
+                android:text="@{issueUIModel.action}"
+                android:textColor="@color/colorSubText"
+                android:textSize="@dimen/sp_14" />
+
+            <LinearLayout
+                style="@style/MatchAndWrap"
+                android:layout_below="@+id/issue_title"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toEndOf="@+id/issue_user_img"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/issue_status"
+                    style="@style/WrapAndWrap"
+                    android:layout_gravity="bottom"
+                    android:text="@{`{APP_ISSUE_ITEM_ISSUE}`+issueUIModel.status}"
+                    android:textColor="@{(`open`.equals(issueUIModel.status )) ? @color/colorGreen : @color/colorRed}"
+                    android:textSize="@dimen/sp_14" />
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/issue_number"
+                    style="@style/WrapAndWrap"
+                    android:layout_gravity="bottom"
+                    android:text="@{`#`+ issueUIModel.issueNum}"
+                    android:textColor="@color/colorSubText"
+                    android:textSize="@dimen/sp_14" />
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/issue_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:singleLine="true"
+                    android:text="@{`{APP_ISSUE_ITEM_COMMENT}`+issueUIModel.comment}"
+                    android:textColor="@color/colorSubText"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.github.nukc.stateview.StateView
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentReposIssueListBinding
 import com.linwei.github_mvvm.ext.GithubDataBindingComponent
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposIssueListContract
-import com.linwei.github_mvvm.mvvm.ui.view.ExpandNavigationTabBar
+import com.linwei.github_mvvm.mvvm.ui.adapter.IssueAdapter
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposIssueListViewModel
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.fragment_repos_issue_list.*
@@ -35,6 +39,10 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
     @Inject
     lateinit var statusList: MutableList<String>
 
+    private lateinit var mIssueAdapter: IssueAdapter
+
+    private var mPageCode: Int = 1
+
     override fun obtainStateViewRoot(): View? = repos_issue_list_root
 
     override fun provideContentViewId(): Int = R.layout.fragment_repos_issue_list
@@ -43,6 +51,7 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
         mViewModel?.userName = userName
         mViewModel?.reposName = reposName
+        mViewModel?.status = statusList[0]
 
         mViewDataBinding?.let {
             it.viewModel = mViewModel
@@ -66,31 +75,63 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
         repos_issue_navigation_tab_bar.models = issueTabModel
         repos_issue_navigation_tab_bar.onTabBarSelectedIndexListener = this
         repos_issue_navigation_tab_bar.modelIndex = 0
+
+        mIssueAdapter = IssueAdapter(mutableListOf())
+        mIssueAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
+        mIssueAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
+        repos_issue_recycler.apply {
+            layoutManager = LinearLayoutManager(mContext)
+            adapter = mIssueAdapter
+        }
+
     }
 
     override fun initLayoutData() {
-
+        mViewModel?.issueUiModel?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                mIssueAdapter.setNewInstance(it.toMutableList())
+            }
+        })
     }
 
     override fun initLayoutListener() {
-        repos_issue_navigation_tab_bar.doubleTouchListener =
-            object : ExpandNavigationTabBar.TabDoubleClickListener {
-                override fun onDoubleClick(position: Int) {
-                }
+        mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
+            override fun onRetryClick() {
+                mPageCode = 1
+                mViewModel?.loadData(mPageCode)
             }
+        }
+
+        mIssueAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
+        }
+
+        repos_issue_create_btn.setOnClickListener {
+            //显示编辑Issue信息，并提交数据。
+        }
+
+        repos_issue_refresh.setOnRefreshListener {
+            mPageCode = 1
+            mViewModel?.loadData(mPageCode)
+        }
     }
 
     override fun reloadData() {
-
+        mPageCode = 1
+        mViewModel?.loadData(mPageCode)
     }
 
     override fun loadData() {
-
+        mPageCode = 1
+        mViewModel?.loadData(mPageCode)
     }
 
     override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
     }
 
     override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
+        repos_issue_navigation_tab_bar.isTouchEnable = false
+        mViewModel?.status = statusList[0]
+        mPageCode = 1
+        mViewModel?.loadData(mPageCode)
     }
 }

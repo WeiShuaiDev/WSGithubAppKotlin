@@ -5,9 +5,7 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.linwei.cams.ext.isEmptyParameter
-import com.linwei.cams.ext.string
-import com.linwei.cams.ext.yes
+import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
@@ -18,6 +16,8 @@ import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.bean.SearchResult
 import com.linwei.github_mvvm.mvvm.model.repository.repos.ReposIssueListModel
 import com.linwei.github_mvvm.mvvm.model.ui.FileUIModel
+import com.linwei.github_mvvm.mvvm.model.ui.IssueUIModel
+import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import javax.inject.Inject
 
 /**
@@ -34,28 +34,24 @@ class ReposIssueListViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(model, application), ReposIssueListContract.ViewModel {
 
-    private val _issueData = MutableLiveData<Page<List<Issue>>>()
-    val issueData: LiveData<Page<List<Issue>>>
-        get() = _issueData
-
-    private val _searchIssueData = MutableLiveData<Page<SearchResult<Issue>>>()
-    val searchIssueData: LiveData<Page<SearchResult<Issue>>>
-        get() = _searchIssueData
+    private val _issueUiModel = MutableLiveData<List<IssueUIModel>>()
+    val issueUiModel: LiveData<List<IssueUIModel>>
+        get() = _issueUiModel
 
     var userName: String? = ""
 
     var reposName: String? = ""
 
-    var status: String? = ""
+    var status: String = ""
 
     var query = MutableLiveData<String>()
 
-    override fun loadDataByRefresh() {
-
-    }
-
-    override fun loadDataByLoadMore(page: Int) {
-
+    override fun loadData(page: Int) {
+        query.value.isNotNullOrEmpty().yes {
+            toSearchReposIssueList(status, query.value ?: "", page)
+        }.otherwise {
+            toReposIssueList(status, page)
+        }
     }
 
     override fun toReposIssueList(status: String, page: Int) {
@@ -75,9 +71,11 @@ class ReposIssueListViewModel @Inject constructor(
                 object : LiveDataCallBack<Page<List<Issue>>>() {
                     override fun onSuccess(code: String?, data: Page<List<Issue>>?) {
                         super.onSuccess(code, data)
-                        if (data != null) {
+                        (data != null && data.result.isNotNullOrSize()).yes {
+                            _issueUiModel.value =
+                                ConversionBean.issueConversionByIssueUIModel(data?.result)
                             postUpdateStatus(StatusCode.SUCCESS)
-                        } else {
+                        }.otherwise {
                             postUpdateStatus(StatusCode.ERROR)
                         }
                     }
@@ -109,9 +107,11 @@ class ReposIssueListViewModel @Inject constructor(
                 object : LiveDataCallBack<Page<SearchResult<Issue>>>() {
                     override fun onSuccess(code: String?, data: Page<SearchResult<Issue>>?) {
                         super.onSuccess(code, data)
-                        if (data != null) {
+                        (data != null && data.result?.items.isNotNullOrSize()).yes {
+                            _issueUiModel.value =
+                                ConversionBean.issueConversionByIssueUIModel(data?.result?.items)
                             postUpdateStatus(StatusCode.SUCCESS)
-                        } else {
+                        }.otherwise {
                             postUpdateStatus(StatusCode.ERROR)
                         }
                     }
@@ -123,6 +123,7 @@ class ReposIssueListViewModel @Inject constructor(
                 })
         }
     }
+
     fun onSearchKeyListener(v: View, keyCode: Int, event: KeyEvent): Boolean {
 
         return false

@@ -848,7 +848,7 @@ open class ReposRepository @Inject constructor(
                                         state = status,
                                         data = GsonUtils.toJsonString(it)
                                     )
-                                    reposDao.insertRepositoryIssue(entity)
+                                    //reposDao.insertRepositoryIssue(entity)
                                 }
                             }
                             observer.onSuccess(code, data)

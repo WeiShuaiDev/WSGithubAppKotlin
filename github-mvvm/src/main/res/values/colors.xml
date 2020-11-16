@@ -16,6 +16,8 @@
     <color name="colorWebDraculaBg">#282a36</color>
     <color name="colorMiWhite">#ececec</color>
 
+    <color name="colorGreen">#00ff00</color>
+    <color name="colorRed">#ff0000</color>
     <!--DynamicFragment-->
     <color name="colorNavigationInActiveTab">#959595</color>
     <color name="colorNavigationActiveTab">#2c2c2c</color>
