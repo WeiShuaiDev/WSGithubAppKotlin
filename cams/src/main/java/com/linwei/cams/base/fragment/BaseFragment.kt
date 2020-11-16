@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.github.nukc.stateview.StateView
 import com.linwei.cams.R
 import com.linwei.cams.ext.px
@@ -66,7 +67,8 @@ abstract class BaseFragment : LazeLoadFragment(),
 
                 if (mRootView != null)
                     mRootView =
-                        bindingContentView(inflater, mRootView!!, savedInstanceState) ?: mRootView
+                        bindingContentView(inflater, mRootView!!, container, savedInstanceState)
+                            ?: mRootView
             }
         } else {
             val parent: ViewGroup? = mRootView?.parent as? ViewGroup
@@ -121,6 +123,7 @@ abstract class BaseFragment : LazeLoadFragment(),
     protected open fun bindingContentView(
         inflater: LayoutInflater,
         contentView: View,
+        parentView: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = null
 

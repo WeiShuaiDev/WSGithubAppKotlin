@@ -54,7 +54,7 @@ class MineFragment : BaseMvvmFragment<MineViewModel, FragmentMineBinding>(), Min
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
 
         mViewDataBinding?.let {
-            it.mineViewModel = mViewModel
+            it.viewModel = mViewModel
             it.globalModel = mAppGlobalModel
             it.lifecycleOwner = viewLifecycleOwner
         }

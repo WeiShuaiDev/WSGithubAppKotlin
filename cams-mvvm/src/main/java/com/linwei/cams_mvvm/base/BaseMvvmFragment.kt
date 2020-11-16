@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
@@ -69,6 +70,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
     override fun bindingContentView(
         inflater: LayoutInflater,
         contentView: View,
+        parentView:ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return if (useDataBinding()) {
@@ -77,24 +79,17 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
         } else null
     }
 
-
     /**
      * 是否使用 `Databinding` 布局
      * @return [Boolean] true:使用；false:不使用
      */
     open fun useDataBinding(): Boolean = true
 
-
     /**
      * 是否使用状态页面
      * @return [Boolean] `false`:不使用; `true`:使用
      */
     override fun useStateView(): Boolean = true
-
-    /**
-     * `DataBinding` 绑定 [DataBindingComponent]
-     */
-    //open fun bindingComponent(): DataBindingComponent? = null
 
     override fun setupFragmentComponent(appComponent: AppComponent?) {
     }

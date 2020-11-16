@@ -19,13 +19,12 @@ class ExpandNavigationTabBar : NavigationTabBar {
 
     var isTouchEnable = true
 
-
     var doubleTouchListener: TabDoubleClickListener? = null
 
     /**
      * 双击
      */
-    var gestureDetector = GestureDetector(
+    private var gestureDetector = GestureDetector(
         context.applicationContext,
         object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {

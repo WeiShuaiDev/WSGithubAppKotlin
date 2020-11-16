@@ -79,6 +79,7 @@
                     app:ntb_title_mode="all"
                     app:ntb_title_size="@dimen/sp_13"
                     app:ntb_titled="true" />
+
             </androidx.cardview.widget.CardView>
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -92,7 +93,6 @@
                     android:layout_weight="1" />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

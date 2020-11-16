@@ -4,15 +4,14 @@ import android.graphics.Point
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingComponent
 import com.linwei.cams.ext.dp
 import com.linwei.github_mvvm.mvvm.ui.view.TouchSlideWebViewContainer
+import com.mikepenz.iconics.IconicsColor
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.view.IconicsImageView
 
-//import com.mikepenz.iconics.IconicsDrawable
-//import com.mikepenz.iconics.view.IconicsImageView
-//import com.mikepenz.iconics.IconicsColor
 
 /**
  * DataBinding 的拓展适配器
@@ -62,32 +61,32 @@ class DataBindingExpand {
 //            }
 //        }
 //
-//        /**
-//         * EditText 按键监听
-//         */
-//        @BindingAdapter("keyListener")
-//        fun editTextKeyListener(view: EditText?, listener: View.OnKeyListener) {
-//            view?.apply {
-//                this.setOnKeyListener(listener)
-//            }
-//        }
-//
-//        /**
-//         * Iconics ImageView 图标加载
-//         */
-//        @BindingAdapter("iiv_icon", "iiv_color", requireAll = false)
-//        fun editTextKeyListener(view: IconicsImageView?, value: String?, colorId: Int?) {
-//            if (view == null || value == null) {
-//                return
-//            }
-//            val drawable = IconicsDrawable(view.context)
-//                .icon(value)
-//            colorId?.apply {
-//                drawable.color(IconicsColor.colorInt(colorId))
-//
-//            }
-//            view.icon = drawable
-//        }
+        /**
+         * EditText 按键监听
+         */
+        @BindingAdapter("keyListener")
+        fun editTextKeyListener(view: EditText?, listener: View.OnKeyListener) {
+            view?.apply {
+                this.setOnKeyListener(listener)
+            }
+        }
+
+        /**
+         * Iconics ImageView 图标加载
+         */
+        @BindingAdapter("iiv_icon", "iiv_color", requireAll = false)
+        fun editTextKeyListener(view: IconicsImageView?, value: String?, colorId: Int?) {
+            if (view == null || value == null) {
+                return
+            }
+            val drawable = IconicsDrawable(view.context)
+                .icon(value)
+            colorId?.apply {
+                drawable.color(IconicsColor.colorInt(colorId))
+
+            }
+            view.icon = drawable
+        }
     }
 }
 

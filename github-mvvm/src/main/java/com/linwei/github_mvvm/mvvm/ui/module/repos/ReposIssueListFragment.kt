@@ -1,10 +1,16 @@
 package com.linwei.github_mvvm.mvvm.ui.module.repos
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentReposIssueListBinding
+import com.linwei.github_mvvm.ext.GithubDataBindingComponent
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposIssueListContract
+import com.linwei.github_mvvm.mvvm.ui.view.ExpandNavigationTabBar
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposIssueListViewModel
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.fragment_repos_issue_list.*
@@ -21,7 +27,7 @@ import javax.inject.Inject
  */
 class ReposIssueListFragment(val userName: String?, val reposName: String?) :
     BaseMvvmFragment<ReposIssueListViewModel, FragmentReposIssueListBinding>(),
-    ReposIssueListContract.View {
+    ReposIssueListContract.View, NavigationTabBar.OnTabBarSelectedIndexListener {
 
     @Inject
     lateinit var issueTabModel: MutableList<NavigationTabBar.Model>
@@ -44,8 +50,22 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
         }
     }
 
-    override fun initLayoutView(rootView: View?) {
+    override fun bindingContentView(
+        inflater: LayoutInflater,
+        contentView: View,
+        parentView: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return if (useDataBinding()) {
+            mViewDataBinding = DataBindingUtil.bind(contentView, GithubDataBindingComponent())
+            mViewDataBinding?.root
+        } else null
+    }
 
+    override fun initLayoutView(rootView: View?) {
+        repos_issue_navigation_tab_bar.models = issueTabModel
+        repos_issue_navigation_tab_bar.onTabBarSelectedIndexListener = this
+        repos_issue_navigation_tab_bar.modelIndex = 0
     }
 
     override fun initLayoutData() {
@@ -53,7 +73,11 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
     }
 
     override fun initLayoutListener() {
-
+        repos_issue_navigation_tab_bar.doubleTouchListener =
+            object : ExpandNavigationTabBar.TabDoubleClickListener {
+                override fun onDoubleClick(position: Int) {
+                }
+            }
     }
 
     override fun reloadData() {
@@ -62,5 +86,11 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
 
     override fun loadData() {
 
+    }
+
+    override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
+    }
+
+    override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
     }
 }

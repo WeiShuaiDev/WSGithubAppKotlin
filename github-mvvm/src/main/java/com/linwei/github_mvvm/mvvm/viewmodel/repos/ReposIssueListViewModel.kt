@@ -123,7 +123,6 @@ class ReposIssueListViewModel @Inject constructor(
                 })
         }
     }
-
     fun onSearchKeyListener(v: View, keyCode: Int, event: KeyEvent): Boolean {
 
         return false
