@@ -40,7 +40,6 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
     @Inject
     lateinit var actionTabModel: MutableList<NavigationTabBar.Model>
 
-    private lateinit var mEventInfoAdapter: EventInfoAdapter
     private lateinit var mCommitInfoAdapter: CommitInfoAdapter
 
     private lateinit var mLayoutReposHeaderBinding: LayoutReposHeaderBinding
@@ -63,19 +62,15 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
     }
 
     override fun initLayoutView(rootView: View?) {
-        mEventInfoAdapter = EventInfoAdapter(mutableListOf())
-        mEventInfoAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
-        mEventInfoAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
-        mEventInfoAdapter.addHeaderView(reposHeaderBinding())
+        val headerView:View= reposHeaderBinding()
 
         mCommitInfoAdapter = CommitInfoAdapter(mutableListOf())
         mCommitInfoAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
         mCommitInfoAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
-        mCommitInfoAdapter.addHeaderView(reposHeaderBinding())
+        mCommitInfoAdapter.addHeaderView(headerView)
     }
 
     private fun reposHeaderBinding(): View {
-        //RecyclerView add header view
         mLayoutReposHeaderBinding = DataBindingUtil.inflate(
             layoutInflater, R.layout.layout_repos_header,
             null, false, GithubDataBindingComponent()
@@ -97,23 +92,17 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
         })
 
         mViewModel?.repoCommitPage?.observe(viewLifecycleOwner, Observer {
+            mLayoutReposHeaderBinding.reposActionTabBar.isTouchEnable = true
             it?.let {
-                mLayoutReposHeaderBinding.reposActionTabBar.isTouchEnable = true
                 mPageCode = it.next
                 it.result.isNotNullOrSize().yes {
                     if (it.prev == -1) {
-                        repos_action_recycler.apply {
-                            layoutManager = LinearLayoutManager(mContext)
-                            adapter = mCommitInfoAdapter
-                        }
                         mCommitInfoAdapter.setNewInstance(
                             ConversionBean.repoCommitConversionByCommitUIModel(it)
                         )
                     } else {
                         mCommitInfoAdapter.addData(
-                            ConversionBean.repoCommitConversionByCommitUIModel(
-                                it
-                            )
+                            ConversionBean.repoCommitConversionByCommitUIModel(it)
                         )
                     }
 
@@ -129,27 +118,23 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
         })
 
         mViewModel?.eventPage?.observe(viewLifecycleOwner, Observer {
+            mLayoutReposHeaderBinding.reposActionTabBar.isTouchEnable = true
             it?.let {
-                mLayoutReposHeaderBinding.reposActionTabBar.isTouchEnable = true
                 mPageCode = it.next
                 it.result.isNotNullOrSize().yes {
-                    if (it.prev == -1) {
-                        repos_action_recycler.apply {
-                            layoutManager = LinearLayoutManager(mContext)
-                            adapter = mEventInfoAdapter
-                        }
-                        mEventInfoAdapter.setNewInstance(
-                            ConversionBean.eventConversionByEventUIModel(it)
-                        )
-                    } else {
-                        mEventInfoAdapter.addData(ConversionBean.eventConversionByEventUIModel(it))
-                    }
-
-                    (it.next == it.last).yes {
-                        mEventInfoAdapter.loadMoreModule.loadMoreEnd()
-                    }.otherwise {
-                        mEventInfoAdapter.loadMoreModule.loadMoreComplete()
-                    }
+//                    if (it.prev == -1) {
+//                        mEventInfoAdapter.setNewInstance(
+//                            ConversionBean.eventConversionByEventUIModel(it)
+//                        )
+//                    } else {
+//                        mEventInfoAdapter.addData(ConversionBean.eventConversionByEventUIModel(it))
+//                    }
+//
+//                    (it.next == it.last).yes {
+//                        mEventInfoAdapter.loadMoreModule.loadMoreEnd()
+//                    }.otherwise {
+//                        mEventInfoAdapter.loadMoreModule.loadMoreComplete()
+//                    }
                 }
                 if (repos_action_refresh.isRefreshing)
                     repos_action_refresh.isRefreshing = false
@@ -160,16 +145,8 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
     override fun initLayoutListener() {
         mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
             override fun onRetryClick() {
-
+                loadData()
             }
-        }
-
-        mEventInfoAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
-
-        }
-
-        mEventInfoAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel?.loadDataByLoadMore(mPageCode)
         }
 
         mCommitInfoAdapter.loadMoreModule.setOnLoadMoreListener {
@@ -177,11 +154,7 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
         }
 
         repos_action_refresh.setOnRefreshListener {
-            mEventInfoAdapter.loadMoreModule.isEnableLoadMore = false
-            mCommitInfoAdapter.loadMoreModule.isEnableLoadMore = false
-
-            mPageCode = 1
-            mViewModel?.loadDataByLoadMore(mPageCode)
+            loadData()
         }
     }
 
@@ -204,11 +177,8 @@ class ReposActionListFragment(val userName: String?, val reposName: String?) :
     }
 
     override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
-        mPageCode = 1
         mLayoutReposHeaderBinding.reposActionTabBar.isTouchEnable = false
-        mViewModel?.apply {
-            showType = index
-            loadDataByLoadMore(mPageCode)
-        }
+        mViewModel?.showType=index
+        loadData()
     }
 }
