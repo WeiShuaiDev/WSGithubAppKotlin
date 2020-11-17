@@ -289,23 +289,20 @@ open class IssueRepository @Inject constructor(
     /**
      * 请求网络创建Issue信息
      * @param owner [LifecycleOwner]
+     * @param userName [String] 用户名
      * @param reposName [String] 仓库名
      * @param issue [Issue]
      * @return  [LiveDataCallBack]
      */
     fun requestCreateIssue(
         owner: LifecycleOwner,
+        userName: String,
         reposName: String,
         issue: Issue,
         observer: LiveDataCallBack<Issue>
     ): LiveData<Issue> {
 
-        val userName: String? = appGlobalModel.userObservable.login
-        userName.isNotNullOrEmpty().no {
-            observer.onFailure(ApiStateConstant.REQUEST_FAILURE, R.string.unknown_error.string())
-            return@no
-        }
-        return issueService.createIssue(owner = userName!!, repo = reposName, body = issue)
+        return issueService.createIssue(owner = userName, repo = reposName, body = issue)
             .apply {
                 observe(
                     owner,
@@ -349,22 +346,21 @@ open class IssueRepository @Inject constructor(
             repo = reposName,
             issueNumber = number,
             body = commentRequestModel
-        )
-            .apply {
-                observe(
-                    owner,
-                    object : LiveDataCallBack<IssueEvent>() {
-                        override fun onSuccess(code: String?, data: IssueEvent?) {
-                            super.onSuccess(code, data)
-                            observer.onSuccess(code, data)
-                        }
+        ).apply {
+            observe(
+                owner,
+                object : LiveDataCallBack<IssueEvent>() {
+                    override fun onSuccess(code: String?, data: IssueEvent?) {
+                        super.onSuccess(code, data)
+                        observer.onSuccess(code, data)
+                    }
 
-                        override fun onFailure(code: String?, message: String?) {
-                            super.onFailure(code, message)
-                            observer.onFailure(code, message)
-                        }
-                    })
-            }
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        observer.onFailure(code, message)
+                    }
+                })
+        }
     }
 
 

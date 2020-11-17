@@ -25,7 +25,7 @@ interface ReposIssueListContract {
          * 分页加载,加载更多。
          * @param page:Int
          */
-        fun loadData(page: Int)
+        fun loadData(isLoad: Boolean, page: Int)
 
         /**
          * 获取当前 [reposName] 仓库的 `Issue` 列表信息。
@@ -48,6 +48,12 @@ interface ReposIssueListContract {
             query: String,
             page: Int
         )
+
+        /**
+         * 当前 [reposName] 仓库提交 `Issue` 信息。
+         * @param issue [Issue]
+         */
+        fun toCreateIssue(issue: Issue)
     }
 
     interface Model {
@@ -88,6 +94,22 @@ interface ReposIssueListContract {
             query: String,
             page: Int,
             observer: LiveDataCallBack<Page<SearchResult<Issue>>>
+        )
+
+        /**
+         * 当前 [reposName] 仓库提交 `Issue` 信息。
+         * @param owner [LifecycleOwner]
+         * @param userName [String]
+         * @param reposName [String]
+         * @param issue [Issue]
+         * @param observer [LiveDataCallBack]
+         */
+        fun obtainCreateIssue(
+            owner: LifecycleOwner,
+            userName: String,
+            reposName: String,
+            issue: Issue,
+            observer: LiveDataCallBack<Issue>
         )
     }
 }

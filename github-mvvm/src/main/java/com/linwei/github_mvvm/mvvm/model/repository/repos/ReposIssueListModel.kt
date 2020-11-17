@@ -1,4 +1,5 @@
 package com.linwei.github_mvvm.mvvm.model.repository.repos
+
 import androidx.lifecycle.LifecycleOwner
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.http.DataMvvmRepository
@@ -7,6 +8,7 @@ import com.linwei.github_mvvm.mvvm.contract.repos.ReposIssueListContract
 import com.linwei.github_mvvm.mvvm.model.bean.Issue
 import com.linwei.github_mvvm.mvvm.model.bean.Page
 import com.linwei.github_mvvm.mvvm.model.bean.SearchResult
+import com.linwei.github_mvvm.mvvm.model.repository.service.IssueRepository
 import com.linwei.github_mvvm.mvvm.model.repository.service.ReposRepository
 import com.linwei.github_mvvm.mvvm.model.repository.service.SearchRepository
 import javax.inject.Inject
@@ -23,7 +25,8 @@ import javax.inject.Inject
 class ReposIssueListModel @Inject constructor(
     dataRepository: DataMvvmRepository,
     private val reposRepository: ReposRepository,
-    private val searchRepository: SearchRepository
+    private val searchRepository: SearchRepository,
+    private val issueRepository: IssueRepository
 ) : BaseModel(dataRepository), ReposIssueListContract.Model {
 
     override fun obtainReposIssueList(
@@ -68,6 +71,31 @@ class ReposIssueListModel @Inject constructor(
             status, query, page,
             object : LiveDataCallBack<Page<SearchResult<Issue>>>() {
                 override fun onSuccess(code: String?, data: Page<SearchResult<Issue>>?) {
+                    super.onSuccess(code, data)
+                    observer.onSuccess(code, data)
+                }
+
+                override fun onFailure(code: String?, message: String?) {
+                    super.onFailure(code, message)
+                    observer.onFailure(code, message)
+                }
+            })
+    }
+
+    override fun obtainCreateIssue(
+        owner: LifecycleOwner,
+        userName: String,
+        reposName: String,
+        issue: Issue,
+        observer: LiveDataCallBack<Issue>
+    ) {
+        issueRepository.requestCreateIssue(
+            owner,
+            userName,
+            reposName,
+            issue,
+            object : LiveDataCallBack<Issue>() {
+                override fun onSuccess(code: String?, data: Issue?) {
                     super.onSuccess(code, data)
                     observer.onSuccess(code, data)
                 }

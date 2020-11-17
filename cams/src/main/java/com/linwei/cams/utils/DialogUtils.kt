@@ -8,8 +8,8 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import androidx.annotation.LayoutRes
-import androidx.annotation.NonNull
 import androidx.annotation.StyleRes
 import com.linwei.cams.R
 import com.linwei.cams.base.holder.ItemViewHolder
@@ -66,7 +66,7 @@ object DialogUtils {
      */
     fun dismissDialog(dialog: Dialog?) {
         if (dialog != null) {
-            val context = (dialog.context as ContextWrapper).baseContext
+            val context:Context = (dialog.context as ContextWrapper).baseContext
             if (context is Activity) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     if (!context.isFinishing && !context.isDestroyed)
@@ -84,9 +84,10 @@ object DialogUtils {
      * @param widthRatio [Float] 长度缩放比
      */
     private fun setDialogWindow(window: Window?, widthRatio: Float = DEFAULT_WIDTH_RATIO) {
-        val attr = window?.attributes
+        val attr: WindowManager.LayoutParams? = window?.attributes
         attr?.width = (getScreenWidthPixels() * widthRatio).toInt()
         window?.attributes = attr
+
     }
 
     class CustomDialog(context: Context, var view: View, @StyleRes theme: Int) :

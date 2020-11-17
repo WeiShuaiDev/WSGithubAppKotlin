@@ -1,25 +1,29 @@
 package com.linwei.github_mvvm.ext
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
+import android.content.res.Resources
 import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
-import com.linwei.cams.ext.ctx
-import com.linwei.cams.ext.dp
-import com.linwei.cams.ext.isNotNullOrEmpty
+import com.linwei.cams.base.holder.ItemViewHolder
+import com.linwei.cams.ext.*
 import com.linwei.cams.http.glide.GlideLoadOption
 import com.linwei.cams.manager.ImageLoaderManager
+import com.linwei.cams.utils.DialogUtils
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.ui.module.login.UserActivity
 import com.linwei.github_mvvm.mvvm.ui.module.repos.ReposDetailActivity
+import com.linwei.github_mvvm.mvvm.ui.view.MarkdownInputIconList
 import jp.wasabeef.glide.transformations.BlurTransformation
 import org.jetbrains.anko.browse
 import java.util.regex.Pattern
@@ -194,6 +198,74 @@ fun String.compareVersion(v2: String?): String? {
 
     return if (s1Int > s2Int) this
     else v2
+}
+
+fun Context.showIssueEditDialog(
+    title: String,
+    needEditTitle: Boolean,
+    editTitle: String?,
+    editContent: String?,
+    listener: IssueDialogClickListener
+) {
+    DialogUtils.createCustomDialog(this, R.layout.layout_issue_edit_dialog,
+        R.style.dialog_style, object : DialogUtils.OnViewCreatedListener {
+            override fun onCreatedView(dialog: Dialog, viewHolder: ItemViewHolder) {
+                val titleView: EditText = viewHolder.getEditText(R.id.issue_dialog_edit_title)
+                val contentView: EditText = viewHolder.getEditText(R.id.issue_dialog_edit_content)
+                //设置`Dialog` 显示框高度
+                viewHolder.getView(R.id.issue_dialog_content_layout).layoutParams.height =
+                    (Resources.getSystem().displayMetrics.heightPixels * 0.6).toInt()
+
+                (viewHolder.getView(R.id.issue_dialog_markdown_list) as MarkdownInputIconList).editText =
+                    contentView
+
+                viewHolder.getTextView(R.id.issue_dialog_title).text = title
+
+                needEditTitle.yes {
+                    titleView.visibility = View.VISIBLE
+                }.otherwise {
+                    titleView.visibility = View.GONE
+                }
+
+                editTitle?.let {
+                    titleView.setText(it)
+                }
+
+                editContent?.let {
+                    contentView.setText(it)
+                }
+
+                viewHolder.getTextView(R.id.issue_dialog_edit_cancel).setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                viewHolder.getTextView(R.id.issue_dialog_edit_ok).setOnClickListener {
+                    needEditTitle.yes {
+                        isEmptyParameter(titleView.text.string()).yes {
+                            R.string.issue_title_empty.showShort()
+                            return@setOnClickListener
+                        }
+                    }
+
+                    isEmptyParameter(contentView.text.string()).yes {
+                        R.string.issue_content_empty.showShort()
+                        return@setOnClickListener
+                    }
+
+                    listener.onConfirm(
+                        dialog,
+                        title,
+                        titleView.text.string(),
+                        contentView.text.string()
+                    )
+                }
+
+            }
+        }).show()
+}
+
+interface IssueDialogClickListener {
+    fun onConfirm(dialog: Dialog, title: String, editTitle: String?, editContent: String?)
 }
 
 

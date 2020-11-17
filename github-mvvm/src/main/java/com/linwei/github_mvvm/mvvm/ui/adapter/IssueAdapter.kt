@@ -22,7 +22,7 @@ import com.linwei.github_mvvm.mvvm.model.ui.IssueUIModel
  *-----------------------------------------------------------------------
  */
 class IssueAdapter(
-    data: MutableList<IssueUIModel>
+     data: MutableList<IssueUIModel>
 ) : BaseQuickAdapter<IssueUIModel, BaseViewHolder>(R.layout.layout_issue_item, data),
     LoadMoreModule {
 
@@ -43,6 +43,15 @@ class IssueAdapter(
             binding.issueUIModel = item
             binding.executePendingBindings()
         }
+    }
+
+    /**
+     * 增加`Item`数据
+     * @param issueUIModel [IssueUIModel]
+     */
+    fun addItemData(issueUIModel: IssueUIModel){
+        data.add(0, issueUIModel)
+        notifyDataSetChanged()
     }
 
     override fun startAnim(anim: Animator, index: Int) {

@@ -1,6 +1,4 @@
 package com.linwei.github_mvvm.mvvm.ui.view
-
-
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
@@ -12,7 +10,13 @@ import androidx.appcompat.widget.AppCompatButton
 import com.linwei.github_mvvm.R
 
 /**
- * 自带Shape按键
+ * ---------------------------------------------------------------------
+ * @Author: WeiShuai
+ * @Time: 2020/9/25
+ * @Contact: linwei9605@gmail.com"
+ * @Follow: https://github.com/WeiShuaiDev
+ * @Description: 自带Shape按键
+ *-----------------------------------------------------------------------
  */
 class StateButton @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.buttonStyle) : AppCompatButton(context, attrs, defStyleAttr) {
 

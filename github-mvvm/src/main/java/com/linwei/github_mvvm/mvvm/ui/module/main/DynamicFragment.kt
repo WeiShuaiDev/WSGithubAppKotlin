@@ -20,7 +20,6 @@ import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
 import com.linwei.github_mvvm.utils.EventUtils
 import kotlinx.android.synthetic.main.fragment_dynamic.*
-import timber.log.Timber
 
 /**
  * ---------------------------------------------------------------------
@@ -36,7 +35,7 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
 
     private lateinit var mReceivedEventAdapter: ReceivedEventAdapter
 
-    override fun obtainStateViewRoot(): View? = mContentRoot
+    override fun obtainStateViewRoot(): View? = dynamic_list_root
 
     override fun provideContentViewId(): Int = R.layout.fragment_dynamic
 
@@ -57,7 +56,7 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
         mReceivedEventAdapter = ReceivedEventAdapter(mutableListOf())
         mReceivedEventAdapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
         mReceivedEventAdapter.loadMoreModule.isAutoLoadMore = true   //自动加载
-        mDynamicRecycler.apply {
+        dynamic_recycler.apply {
             layoutManager = LinearLayoutManager(mContext)
             adapter = mReceivedEventAdapter
         }
@@ -87,8 +86,8 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
                         mReceivedEventAdapter.loadMoreModule.loadMoreComplete()
                     }
                 }
-                if (mDynamicSwipe.isRefreshing)
-                    mDynamicSwipe.isRefreshing = false
+                if (dynamic_refresh.isRefreshing)
+                    dynamic_refresh.isRefreshing = false
             }
         })
     }
@@ -96,7 +95,6 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
     override fun initLayoutListener() {
         mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
             override fun onRetryClick() {
-                mPageCode = 1
                 reloadData()
             }
         }
@@ -110,7 +108,7 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
             mViewModel?.toReceivedEvent(mPageCode)
         }
 
-        mDynamicSwipe.setOnRefreshListener {
+        dynamic_refresh.setOnRefreshListener {
             mReceivedEventAdapter.loadMoreModule.isEnableLoadMore = false
             mPageCode = 1
             mViewModel?.toReceivedEvent(mPageCode)
@@ -118,12 +116,12 @@ class DynamicFragment : BaseMvvmFragment<DynamicViewModel, FragmentDynamicBindin
     }
 
     override fun reloadData() {
-        mDynamicSwipe.isRefreshing = true
-        mViewModel?.toReceivedEvent(mPageCode)
+        loadData()
     }
 
     override fun loadData() {
-        mDynamicSwipe.isRefreshing = true
+        dynamic_refresh.isRefreshing = true
+        mPageCode = 1
         mViewModel?.toReceivedEvent(mPageCode)
     }
 }

@@ -10,18 +10,18 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mContentRoot"
+        android:id="@+id/dynamic_list_root"
         style="@style/MatchAndMatch"
         android:background="@android:color/transparent"
         tools:ignore="MissingConstraints">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/mDynamicSwipe"
+            android:id="@+id/dynamic_refresh"
             style="@style/MatchAndMatch"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mDynamicRecycler"
+                android:id="@+id/dynamic_recycler"
                 style="@style/MatchAndMatch" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

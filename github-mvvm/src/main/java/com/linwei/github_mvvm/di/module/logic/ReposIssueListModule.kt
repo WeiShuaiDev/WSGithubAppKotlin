@@ -31,7 +31,7 @@ class ReposIssueListModule {
                     .color(IconicsColor.colorInt(R.color.colorSubText))
                     .sizeDp(14),
                 ContextCompat.getColor(application, R.color.colorPrimaryText))
-                .title(application.getString(R.string.issue_all_text))
+                .title(application.getString(R.string.issue_all_tab))
                 .build(),
             NavigationTabBar.Model.Builder(
                 IconicsDrawable(application)
@@ -39,7 +39,7 @@ class ReposIssueListModule {
                     .color(IconicsColor.colorInt(R.color.colorSubText))
                     .sizeDp(14),
                 ContextCompat.getColor(application, R.color.colorPrimaryText))
-                .title(application.getString(R.string.issue_open_text))
+                .title(application.getString(R.string.issue_open_tab))
                 .build(),
             NavigationTabBar.Model.Builder(
                 IconicsDrawable(application)
@@ -47,7 +47,7 @@ class ReposIssueListModule {
                     .color(IconicsColor.colorInt(R.color.colorSubText))
                     .sizeDp(14),
                 ContextCompat.getColor(application, R.color.colorPrimaryText))
-                .title(application.getString(R.string.issue_close_text))
+                .title(application.getString(R.string.issue_close_tab))
                 .build()
         )
 

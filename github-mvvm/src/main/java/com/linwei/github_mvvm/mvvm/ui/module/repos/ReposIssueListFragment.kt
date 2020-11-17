@@ -1,5 +1,7 @@
 package com.linwei.github_mvvm.mvvm.ui.module.repos
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +11,24 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.github.nukc.stateview.StateView
+import com.linwei.cams.base.holder.ItemViewHolder
+import com.linwei.cams.ext.isNotNullOrSize
+import com.linwei.cams.ext.otherwise
+import com.linwei.cams.ext.string
+import com.linwei.cams.ext.yes
+import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentReposIssueListBinding
 import com.linwei.github_mvvm.ext.GithubDataBindingComponent
+import com.linwei.github_mvvm.ext.IssueDialogClickListener
+import com.linwei.github_mvvm.ext.showIssueEditDialog
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposIssueListContract
+import com.linwei.github_mvvm.mvvm.model.bean.Issue
+import com.linwei.github_mvvm.mvvm.model.bean.SearchResult
+import com.linwei.github_mvvm.mvvm.model.ui.IssueUIModel
 import com.linwei.github_mvvm.mvvm.ui.adapter.IssueAdapter
+import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposIssueListViewModel
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.fragment_repos_issue_list.*
@@ -31,7 +45,8 @@ import javax.inject.Inject
  */
 class ReposIssueListFragment(val userName: String?, val reposName: String?) :
     BaseMvvmFragment<ReposIssueListViewModel, FragmentReposIssueListBinding>(),
-    ReposIssueListContract.View, NavigationTabBar.OnTabBarSelectedIndexListener {
+    ReposIssueListContract.View, NavigationTabBar.OnTabBarSelectedIndexListener,
+    IssueDialogClickListener {
 
     @Inject
     lateinit var issueTabModel: MutableList<NavigationTabBar.Model>
@@ -86,13 +101,43 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
 
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun initLayoutData() {
-        mViewModel?.issueUiModel?.observe(viewLifecycleOwner, Observer {
-            repos_issue_refresh.isRefreshing = false
+        mViewModel?.page?.observe(viewLifecycleOwner, Observer {
             repos_issue_navigation_tab_bar.isTouchEnable = true
             it?.let {
-                mIssueAdapter.setNewInstance(it.toMutableList())
+                mPageCode = it.next
+
+                val list: MutableList<IssueUIModel> = if (it.result is SearchResult<*>) {
+                    val searchResult: SearchResult<Issue> = it.result as SearchResult<Issue>
+                    ConversionBean.issueConversionByIssueUIModel(searchResult.items)
+                } else if (it.result is List<*>) {
+                    ConversionBean.issueConversionByIssueUIModel(it.result as List<Issue>)
+                } else {
+                    mutableListOf()
+                }
+
+                list.isNotNullOrSize().yes {
+                    if (it.prev == -1) {
+                        mIssueAdapter.setNewInstance(list)
+                    } else {
+                        mIssueAdapter.addData(list)
+                    }
+
+                    (it.next == it.last).yes {
+                        mIssueAdapter.loadMoreModule.loadMoreEnd()
+                    }.otherwise {
+                        mIssueAdapter.loadMoreModule.loadMoreComplete()
+                    }
+                }
+                if (repos_issue_refresh.isRefreshing)
+                    repos_issue_refresh.isRefreshing = false
             }
+        })
+
+        mViewModel?.issueUiModel?.observe(viewLifecycleOwner, Observer {
+            mIssueAdapter.addItemData(it)
+            repos_issue_recycler.layoutManager?.scrollToPosition(0)
         })
     }
 
@@ -107,8 +152,15 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
 
         }
 
+        mIssueAdapter.loadMoreModule.setOnLoadMoreListener {
+            mViewModel?.loadData(isLoad = false, page = mPageCode)
+        }
+
         repos_issue_create_btn.setOnClickListener {
-            //显示编辑Issue信息，并提交数据。
+            mActivity.showIssueEditDialog(
+                R.string.issue.string(), true,
+                "", "", this
+            )
         }
 
         repos_issue_refresh.setOnRefreshListener {
@@ -121,8 +173,9 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
     }
 
     override fun loadData() {
+        repos_issue_refresh.isRefreshing = true
         mPageCode = 1
-        mViewModel?.loadData(mPageCode)
+        mViewModel?.loadData(isLoad = true, page = mPageCode)
     }
 
     override fun onEndTabSelected(model: NavigationTabBar.Model?, index: Int) {
@@ -132,5 +185,19 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
         repos_issue_navigation_tab_bar.isTouchEnable = false
         mViewModel?.status = statusList[index]
         reloadData()
+    }
+
+    override fun onConfirm(
+        dialog: Dialog,
+        title: String,
+        editTitle: String?,
+        editContent: String?
+    ) {
+        val issue: Issue = Issue().apply {
+            this.title = editTitle
+            this.body = editContent
+        }
+        mViewModel?.toCreateIssue(issue)
+        dialog.dismiss()
     }
 }

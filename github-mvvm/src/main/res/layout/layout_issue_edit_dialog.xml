@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/MatchAndMatch"
+    app:cardBackgroundColor="@color/colorGlobalWhite"
+    app:cardCornerRadius="@dimen/dp_5"
+    app:cardElevation="@dimen/dp_4"
+    app:contentPadding="@dimen/dp_10">
+
+    <LinearLayout
+        android:id="@+id/issue_dialog_content_layout"
+        style="@style/MatchAndMatch"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/issue_dialog_title"
+            style="@style/MatchAndWrap"
+            android:layout_margin="@dimen/dp_10"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/sp_16" />
+
+        <EditText
+            android:id="@+id/issue_dialog_edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:background="@drawable/shape_edit_border"
+            android:hint="@string/issue_input_tip_title"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/sp_14" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/issue_dialog_edit_content"
+                style="@style/MatchAndMatch"
+                android:background="@drawable/shape_edit_border"
+                android:gravity="top|start"
+                android:hint="@string/issue_input_tip_text"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/sp_14" />
+
+            <com.linwei.github_mvvm.mvvm.ui.view.MarkdownInputIconList
+                android:id="@+id/issue_dialog_markdown_list"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_5" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/issue_dialog_edit_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/select_primary_light_bg"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/colorSubText"
+                android:textSize="@dimen/sp_16" />
+
+            <View style="@style/VerticalLine" />
+
+            <TextView
+                android:id="@+id/issue_dialog_edit_ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/select_primary_light_bg"
+                android:gravity="center"
+                android:text="@string/ok"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
