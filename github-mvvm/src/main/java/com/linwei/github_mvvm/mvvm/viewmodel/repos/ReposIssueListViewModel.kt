@@ -47,6 +47,7 @@ class ReposIssueListViewModel @Inject constructor(
     var query = MutableLiveData<String>()
 
     override fun loadData(page: Int) {
+        postUpdateStatus(StatusCode.LOADING)
         query.value.isNotNullOrEmpty().yes {
             toSearchReposIssueList(status, query.value ?: "", page)
         }.otherwise {
@@ -55,6 +56,7 @@ class ReposIssueListViewModel @Inject constructor(
     }
 
     override fun toReposIssueList(status: String, page: Int) {
+        System.out.println("toReposIssueList status${status} page${page}")
         (isEmptyParameter(userName, reposName)).yes {
             postMessage(obj = R.string.unknown_error.string())
             postUpdateStatus(StatusCode.FAILURE)
@@ -76,12 +78,14 @@ class ReposIssueListViewModel @Inject constructor(
                                 ConversionBean.issueConversionByIssueUIModel(data?.result)
                             postUpdateStatus(StatusCode.SUCCESS)
                         }.otherwise {
+                            _issueUiModel.value = null
                             postUpdateStatus(StatusCode.ERROR)
                         }
                     }
 
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
+                        _issueUiModel.value = null
                         postUpdateStatus(StatusCode.FAILURE)
                     }
                 })
@@ -90,6 +94,7 @@ class ReposIssueListViewModel @Inject constructor(
     }
 
     override fun toSearchReposIssueList(status: String, query: String, page: Int) {
+        System.out.println("toSearchReposIssueList status${status} query${query} page${page}")
         (isEmptyParameter(userName, reposName)).yes {
             postMessage(obj = R.string.unknown_error.string())
             postUpdateStatus(StatusCode.FAILURE)
@@ -111,13 +116,17 @@ class ReposIssueListViewModel @Inject constructor(
                             _issueUiModel.value =
                                 ConversionBean.issueConversionByIssueUIModel(data?.result?.items)
                             postUpdateStatus(StatusCode.SUCCESS)
+                            System.out.println("请求错误!!")
                         }.otherwise {
+                            _issueUiModel.value = null
                             postUpdateStatus(StatusCode.ERROR)
                         }
                     }
 
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
+                        System.out.println("出现错误!!")
+                        _issueUiModel.value = null
                         postUpdateStatus(StatusCode.FAILURE)
                     }
                 })
@@ -125,11 +134,18 @@ class ReposIssueListViewModel @Inject constructor(
     }
 
     fun onSearchKeyListener(v: View, keyCode: Int, event: KeyEvent): Boolean {
-
+        (keyCode == KeyEvent.KEYCODE_ENTER).yes {
+            val value: String? = query.value
+            (value.isNotNullOrEmpty()).yes {
+                loadData(1)
+                return true
+            }
+            return false
+        }
         return false
     }
 
     fun onSearchClick(v: View) {
-
+        loadData(1)
     }
 }

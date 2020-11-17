@@ -123,12 +123,14 @@ class GlobalConfiguration : ConfigModule {
                             }
                         }
 
-                        if (GsonUtils.isJsonArrayData(httpResult)) {
-                            page.result =
-                                GsonUtils.parserJsonToArrayBeans(httpResult, Any::class.java)
-                        } else {
-                            page.result =
-                                GsonUtils.parserJsonToBean(httpResult, Any::class.java)
+                        if (httpResult.isNotNullOrEmpty()) {
+                            if (GsonUtils.isJsonArrayData(httpResult)) {
+                                page.result =
+                                    GsonUtils.parserJsonToArrayBeans(httpResult, Any::class.java)
+                            } else {
+                                page.result =
+                                    GsonUtils.parserJsonToBean(httpResult, Any::class.java)
+                            }
                         }
 
                         return response.newBuilder()

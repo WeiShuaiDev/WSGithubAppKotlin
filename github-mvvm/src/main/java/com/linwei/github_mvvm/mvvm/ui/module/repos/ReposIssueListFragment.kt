@@ -88,6 +88,8 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
 
     override fun initLayoutData() {
         mViewModel?.issueUiModel?.observe(viewLifecycleOwner, Observer {
+            repos_issue_refresh.isRefreshing = false
+            repos_issue_navigation_tab_bar.isTouchEnable = true
             it?.let {
                 mIssueAdapter.setNewInstance(it.toMutableList())
             }
@@ -97,12 +99,12 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
     override fun initLayoutListener() {
         mStateView?.onRetryClickListener = object : StateView.OnRetryClickListener {
             override fun onRetryClick() {
-                mPageCode = 1
-                mViewModel?.loadData(mPageCode)
+                reloadData()
             }
         }
 
         mIssueAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
+
         }
 
         repos_issue_create_btn.setOnClickListener {
@@ -110,14 +112,12 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
         }
 
         repos_issue_refresh.setOnRefreshListener {
-            mPageCode = 1
-            mViewModel?.loadData(mPageCode)
+            reloadData()
         }
     }
 
     override fun reloadData() {
-        mPageCode = 1
-        mViewModel?.loadData(mPageCode)
+        loadData()
     }
 
     override fun loadData() {
@@ -130,8 +130,7 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
 
     override fun onStartTabSelected(model: NavigationTabBar.Model?, index: Int) {
         repos_issue_navigation_tab_bar.isTouchEnable = false
-        mViewModel?.status = statusList[0]
-        mPageCode = 1
-        mViewModel?.loadData(mPageCode)
+        mViewModel?.status = statusList[index]
+        reloadData()
     }
 }

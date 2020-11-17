@@ -11,7 +11,6 @@
     </data>
 
     <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/repos_issue_list_root"
         style="@style/MatchAndMatch"
         tools:ignore="MissingConstraints">
 
@@ -71,7 +70,7 @@
                     app:ntb_badge_position="right"
                     app:ntb_badged="false"
                     app:ntb_bg_color="@color/colorPrimary"
-                    app:ntb_icon_size_fraction="0.3"
+                    app:ntb_icon_size_fraction="0.2"
                     app:ntb_inactive_color="@color/colorSubText"
                     app:ntb_scaled="true"
                     app:ntb_swiped="true"
@@ -82,17 +81,24 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/repos_issue_refresh"
+            <LinearLayout
+                android:id="@+id/repos_issue_list_root"
                 style="@style/MatchAndMatch"
                 android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/repos_issue_recycler"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/repos_issue_refresh"
                     style="@style/MatchAndMatch"
-                    android:layout_weight="1" />
+                    android:orientation="vertical">
 
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/repos_issue_recycler"
+                        style="@style/MatchAndMatch"
+                        android:layout_weight="1" />
+
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -25,9 +25,10 @@ class HttpCacheInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request: Request = chain.request()
         request = NetworkUtils.isNetworkAvailable().no {
-            request.newBuilder()
-                .cacheControl(CacheControl.FORCE_CACHE)
-                .build()
+//            request.newBuilder()
+//                .cacheControl(CacheControl.FORCE_CACHE)
+//                .build()
+            request
         }.otherwise {
             request.url.queryParameter(Api.FORCE_NETWORK)?.toBoolean()?.let {
                 it.yes {

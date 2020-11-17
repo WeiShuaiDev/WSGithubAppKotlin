@@ -59,7 +59,7 @@ interface SearchService {
      * @param per_page [Int]
      */
     @GET("search/issues")
-    @Headers("Page:page", "Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
+    @Headers("Page:page", "Accept:application/vnd.github.html,application/vnd.github.VERSION.raw")
     fun searchIssues(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Query(value = "q", encoded = true) query: String,
