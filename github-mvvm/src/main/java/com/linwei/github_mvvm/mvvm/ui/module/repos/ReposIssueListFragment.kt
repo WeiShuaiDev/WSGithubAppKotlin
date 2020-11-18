@@ -1,7 +1,6 @@
 package com.linwei.github_mvvm.mvvm.ui.module.repos
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.github.nukc.stateview.StateView
-import com.linwei.cams.base.holder.ItemViewHolder
 import com.linwei.cams.ext.isNotNullOrSize
 import com.linwei.cams.ext.otherwise
 import com.linwei.cams.ext.string
 import com.linwei.cams.ext.yes
-import com.linwei.cams.utils.DialogUtils
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentReposIssueListBinding
@@ -63,10 +60,12 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
     override fun provideContentViewId(): Int = R.layout.fragment_repos_issue_list
 
     override fun bindViewModel() {
-        mViewModel?.mLifecycleOwner = viewLifecycleOwner
-        mViewModel?.userName = userName
-        mViewModel?.reposName = reposName
-        mViewModel?.status = statusList[0]
+        mViewModel?.let {
+            it.mLifecycleOwner = viewLifecycleOwner
+            it.userName = userName
+            it.reposName = reposName
+            it.status = statusList[0]
+        }
 
         mViewDataBinding?.let {
             it.viewModel = mViewModel

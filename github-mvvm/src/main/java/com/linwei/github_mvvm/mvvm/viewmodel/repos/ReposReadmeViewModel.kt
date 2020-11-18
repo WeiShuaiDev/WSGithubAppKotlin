@@ -38,7 +38,9 @@ class ReposReadmeViewModel @Inject constructor(
     var reposName: String? = ""
 
     override fun toReposReadme() {
-        (isEmptyParameter(userName, reposName)).yes{
+        postUpdateStatus(StatusCode.LOADING)
+
+        (isEmptyParameter(userName, reposName)).yes {
             postMessage(obj = R.string.unknown_error.string())
             postUpdateStatus(StatusCode.FAILURE)
             return
@@ -52,7 +54,7 @@ class ReposReadmeViewModel @Inject constructor(
                 object : LiveDataCallBack<String>() {
                     override fun onSuccess(code: String?, data: String?) {
                         super.onSuccess(code, data)
-                        (data.isNotNullOrEmpty()).yes{
+                        (data.isNotNullOrEmpty()).yes {
                             _readmeUrl.value = data
                             postUpdateStatus(StatusCode.SUCCESS)
                         }.otherwise {

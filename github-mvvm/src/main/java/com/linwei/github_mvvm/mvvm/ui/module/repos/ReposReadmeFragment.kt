@@ -28,7 +28,11 @@ class ReposReadmeFragment(val userName: String?, val reposName: String?) :
     override fun obtainStateViewRoot(): View = repos_readme_root
 
     override fun bindViewModel() {
-        mViewModel?.mLifecycleOwner = viewLifecycleOwner
+        mViewModel?.let {
+            it.mLifecycleOwner = viewLifecycleOwner
+            it.userName = userName
+            it.reposName = reposName
+        }
 
         mViewDataBinding?.let {
             it.viewModel = mViewModel

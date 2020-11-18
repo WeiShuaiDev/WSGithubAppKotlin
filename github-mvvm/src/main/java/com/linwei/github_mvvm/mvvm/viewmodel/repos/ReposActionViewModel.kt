@@ -4,10 +4,9 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.linwei.cams.ext.isEmptyParameter
-import com.linwei.cams.ext.string
-import com.linwei.cams.ext.yes
+import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
+import com.linwei.cams.http.model.StatusCode
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposActionListContract
@@ -86,7 +85,19 @@ class ReposActionViewModel @Inject constructor(
                 object : LiveDataCallBack<Page<List<RepoCommit>>>() {
                     override fun onSuccess(code: String?, data: Page<List<RepoCommit>>?) {
                         super.onSuccess(code, data)
-                        _repoCommitPage.value = data
+                        (data != null && data.result.isNotNullOrSize()).yes {
+                            _repoCommitPage.value = data
+                            postUpdateStatus(StatusCode.SUCCESS)
+                        }.otherwise {
+                            _repoCommitPage.value = null
+                            postUpdateStatus(StatusCode.ERROR)
+                        }
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        _repoCommitPage.value = null
+                        postUpdateStatus(StatusCode.FAILURE)
                     }
                 })
         }
@@ -107,7 +118,19 @@ class ReposActionViewModel @Inject constructor(
                 object : LiveDataCallBack<Page<List<Event>>>() {
                     override fun onSuccess(code: String?, data: Page<List<Event>>?) {
                         super.onSuccess(code, data)
-                        _eventPage.value = data
+                        (data != null && data.result.isNotNullOrSize()).yes {
+                            _eventPage.value = data
+                            postUpdateStatus(StatusCode.SUCCESS)
+                        }.otherwise {
+                            _eventPage.value = null
+                            postUpdateStatus(StatusCode.ERROR)
+                        }
+                    }
+
+                    override fun onFailure(code: String?, message: String?) {
+                        super.onFailure(code, message)
+                        _eventPage.value = null
+                        postUpdateStatus(StatusCode.FAILURE)
                     }
                 })
         }

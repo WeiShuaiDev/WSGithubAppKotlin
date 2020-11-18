@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.ui.module.repos.ReposDetailActivity">
 
     <data>
+
+        <variable
+            name="reposUIModel"
+            type="com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel" />
 
         <variable
             name="viewModel"
@@ -21,9 +26,21 @@
             style="@style/MatchAndMatch"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/repos_action_recycler"
-                style="@style/MatchAndMatch" />
+            <LinearLayout style="@style/MatchAndWrap"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/repos_action_header"
+                    style="@style/MatchAndWrap"
+                    layout="@layout/layout_repos_header"
+                    app:reposUIModel="@{reposUIModel}"
+                    app:viewModel="@{viewModel}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/repos_action_recycler"
+                    style="@style/MatchAndMatch" />
+
+            </LinearLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

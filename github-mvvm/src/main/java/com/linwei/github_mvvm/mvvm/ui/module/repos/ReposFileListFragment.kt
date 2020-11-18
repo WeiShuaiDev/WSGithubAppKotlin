@@ -44,9 +44,11 @@ class ReposFileListFragment(val userName: String?, val reposName: String?) :
     override fun useDataBinding(): Boolean = false
 
     override fun bindViewModel() {
-        mViewModel?.mLifecycleOwner = viewLifecycleOwner
-        mViewModel?.userName = userName
-        mViewModel?.reposName = reposName
+        mViewModel?.let {
+            it.mLifecycleOwner = viewLifecycleOwner
+            it.userName = userName
+            it.reposName = reposName
+        }
     }
 
     override fun initLayoutView(rootView: View?) {

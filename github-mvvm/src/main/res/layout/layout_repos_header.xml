@@ -8,13 +8,14 @@
             type="com.linwei.github_mvvm.mvvm.model.ui.ReposUIModel" />
 
         <variable
-            name="actionViewModel"
+            name="viewModel"
             type="com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposActionViewModel" />
 
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/repos_action_header"
         style="@style/MatchAndWrap">
 
         <androidx.cardview.widget.CardView
@@ -154,7 +155,7 @@
                         android:id="@+id/repos_header_star"
                         style="@style/reposActionItemTextTheme"
                         android:background="@drawable/select_primary_light_bg"
-                        android:onClick="@{actionViewModel::onTabIconClick}"
+                        android:onClick="@{viewModel::onTabIconClick}"
                         android:text="@{`{APP_REPOS_ITEM_STAR}\n`+reposUIModel.repositoryStar}" />
 
                     <View
@@ -165,7 +166,7 @@
                         android:id="@+id/repos_header_fork"
                         style="@style/reposActionItemTextTheme"
                         android:background="@drawable/select_primary_light_bg"
-                        android:onClick="@{actionViewModel::onTabIconClick}"
+                        android:onClick="@{viewModel::onTabIconClick}"
                         android:text="@{`{APP_REPOS_ITEM_FORK}\n`+reposUIModel.repositoryFork}" />
 
                     <View
@@ -176,7 +177,7 @@
                         android:id="@+id/repos_header_watch"
                         style="@style/reposActionItemTextTheme"
                         android:background="@drawable/select_primary_light_bg"
-                        android:onClick="@{actionViewModel::onTabIconClick}"
+                        android:onClick="@{viewModel::onTabIconClick}"
                         android:text="@{`{APP_REPOS_ITEM_WATCH}\n`+reposUIModel.repositoryWatch}" />
 
                     <View
@@ -187,7 +188,7 @@
                         android:id="@+id/repos_header_issue"
                         style="@style/reposActionItemTextTheme"
                         android:background="@drawable/select_primary_light_bg"
-                        android:onClick="@{actionViewModel::onTabIconClick}"
+                        android:onClick="@{viewModel::onTabIconClick}"
                         android:text="@{`{APP_REPOS_ITEM_ISSUE}\n`+reposUIModel.repositoryIssue}" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

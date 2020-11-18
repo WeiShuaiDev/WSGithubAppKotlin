@@ -62,9 +62,8 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, VDB : ViewDataBinding> : Bas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initViewModel()      //初始化 ViewModel
-        super.onViewCreated(view, savedInstanceState)
-
         bindViewModel()      //绑定 ViewModel
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun bindingContentView(
