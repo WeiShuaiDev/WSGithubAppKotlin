@@ -1,12 +1,10 @@
 package com.linwei.github_mvvm.mvvm.model.repository.repos
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
 import com.linwei.cams.http.callback.LiveDataCallBack
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
 import com.linwei.github_mvvm.mvvm.contract.repos.ReposReadmeContract
-import com.linwei.github_mvvm.mvvm.model.bean.TrendingRepoModel
 import com.linwei.github_mvvm.mvvm.model.repository.service.ReposRepository
 import javax.inject.Inject
 

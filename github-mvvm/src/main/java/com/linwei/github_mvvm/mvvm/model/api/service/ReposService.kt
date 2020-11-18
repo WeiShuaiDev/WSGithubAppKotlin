@@ -3,9 +3,7 @@ package com.linwei.github_mvvm.mvvm.model.api.service
 import androidx.lifecycle.LiveData
 import com.linwei.github_mvvm.mvvm.model.api.Api
 import com.linwei.github_mvvm.mvvm.model.bean.*
-import io.reactivex.Observable
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.http.*
 
 /**
@@ -368,16 +366,13 @@ interface ReposService {
      * @param branch [String]
      */
     @GET("repos/{owner}/{repo}/readme")
-    @Headers(
-        "Content-Type: text/plain;charset=utf-8",
-        "Accept: application/vnd.github.html"
-    )
+    @Headers("Content-Type: text/plain;charset=utf-8","Accept: application/vnd.github.html")
     fun getReadmeHtml(
         @Header("forceNetWork") forceNetWork: Boolean,
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Query("ref") branch: String = "master"
-    ): LiveData<String>
+    ): LiveData<ResponseBody>
 
     /**
      * @param owner [String]

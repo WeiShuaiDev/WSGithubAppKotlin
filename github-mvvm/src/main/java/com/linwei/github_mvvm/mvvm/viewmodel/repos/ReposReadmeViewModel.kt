@@ -64,7 +64,11 @@ class ReposReadmeViewModel @Inject constructor(
 
                     override fun onFailure(code: String?, message: String?) {
                         super.onFailure(code, message)
-                        postUpdateStatus(StatusCode.FAILURE)
+                        (code == "404").yes {
+                            postUpdateStatus(StatusCode.ERROR)
+                        }.otherwise {
+                            postUpdateStatus(StatusCode.FAILURE)
+                        }
                     }
                 })
         }

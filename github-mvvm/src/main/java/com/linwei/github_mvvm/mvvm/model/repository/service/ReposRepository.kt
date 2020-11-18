@@ -4,8 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.linwei.cams.ext.*
 import com.linwei.cams.http.callback.LiveDataCallBack
-import com.linwei.cams.http.callback.RetrofitCallback
-import com.linwei.cams.http.callback.RxJavaCallback
 import com.linwei.cams.http.config.ApiStateConstant
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
@@ -23,11 +21,7 @@ import com.linwei.github_mvvm.mvvm.model.repository.db.dao.ReposDao
 import com.linwei.github_mvvm.mvvm.model.repository.db.entity.*
 import com.linwei.github_mvvm.utils.GsonUtils
 import com.linwei.github_mvvm.utils.HtmlUtils
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
-import retrofit2.Call
 import javax.inject.Inject
 
 /**
@@ -214,7 +208,7 @@ open class ReposRepository @Inject constructor(
         userName: String,
         reposName: String,
         observer: LiveDataCallBack<String>
-    ): LiveData<String> {
+    ): LiveData<ResponseBody> {
 
         return reposService.getReadmeHtml(
             forceNetWork = true,
@@ -222,18 +216,20 @@ open class ReposRepository @Inject constructor(
         ).apply {
             observe(
                 owner,
-                object : LiveDataCallBack<String>() {
-                    override fun onSuccess(code: String?, data: String?) {
+                object : LiveDataCallBack<ResponseBody>() {
+                    override fun onSuccess(code: String?, data: ResponseBody?) {
                         super.onSuccess(code, data)
                         data?.let {
+                            val readme: String = it.string()
+
                             val entity = RepositoryDetailReadmeEntity(
-                                data = HtmlUtils.generateHtml(application, it),
+                                data = HtmlUtils.generateHtml(application, readme),
                                 fullName = "$userName/$reposName",
                                 branch = "master"
                             )
                             //reposDao.insertRepositoryDetailReadme(entity)
+                            observer.onSuccess(code, readme)
                         }
-                        observer.onSuccess(code, data)
                     }
 
                     override fun onFailure(code: String?, message: String?) {
@@ -821,7 +817,7 @@ open class ReposRepository @Inject constructor(
      */
     fun requestReposIssueList(
         owner: LifecycleOwner,
-        userName:String,
+        userName: String,
         reposName: String,
         status: String,
         page: Int,
