@@ -1,11 +1,11 @@
-package com.linwei.github_mvvm.mvvm.ui.module.event.person
+package com.linwei.github_mvvm.mvvm.ui.module.push
 
 import android.view.View
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
-import com.linwei.github_mvvm.databinding.FragmentPersonBinding
-import com.linwei.github_mvvm.mvvm.contract.event.person.PersonContract
-import com.linwei.github_mvvm.mvvm.viewmodel.event.person.PersonViewModel
+import com.linwei.github_mvvm.databinding.FragmentPushDetailBinding
+import com.linwei.github_mvvm.mvvm.contract.push.PushDetailContract
+import com.linwei.github_mvvm.mvvm.viewmodel.push.PushDetailViewModel
 
 /**
  * ---------------------------------------------------------------------
@@ -16,10 +16,10 @@ import com.linwei.github_mvvm.mvvm.viewmodel.event.person.PersonViewModel
  * @Description:
  *-----------------------------------------------------------------------
  */
-class PersonFragment : BaseMvvmFragment<PersonViewModel, FragmentPersonBinding>(),
-    PersonContract.View {
+class PushDetailFragment : BaseMvvmFragment<PushDetailViewModel, FragmentPushDetailBinding>(),
+    PushDetailContract.View {
 
-    override fun provideContentViewId(): Int = R.layout.fragment_person
+    override fun provideContentViewId(): Int = R.layout.fragment_push_detail
 
     override fun bindViewModel() {
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
@@ -44,5 +44,7 @@ class PersonFragment : BaseMvvmFragment<PersonViewModel, FragmentPersonBinding>(
 
     override fun loadData() {
     }
+
+
 
 }

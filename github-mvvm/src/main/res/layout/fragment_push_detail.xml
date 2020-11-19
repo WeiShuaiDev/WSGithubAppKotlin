@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.linwei.github_mvvm.mvvm.viewmodel.event.push.PushDetailViewModel" />
+            type="com.linwei.github_mvvm.mvvm.viewmodel.push.PushDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

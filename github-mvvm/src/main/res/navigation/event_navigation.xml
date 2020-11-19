@@ -7,20 +7,14 @@
     tools:ignore="UnusedNavigation">
 
     <fragment
-        android:id="@+id/issueDetailFragment"
-        android:name="com.linwei.github_mvvm.mvvm.ui.module.event.issue.IssueDetailFragment"
-        android:label="fragment_issue_detail"
-        tools:layout="@layout/fragment_issue_detail" />
-
-    <fragment
         android:id="@+id/personFragment"
-        android:name="com.linwei.github_mvvm.mvvm.ui.module.event.person.PersonFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.person.PersonFragment"
         android:label="fragment_person"
         tools:layout="@layout/fragment_person" />
 
     <fragment
         android:id="@+id/pushDetailFragment"
-        android:name="com.linwei.github_mvvm.mvvm.ui.module.event.push.PushDetailFragment"
+        android:name="com.linwei.github_mvvm.mvvm.ui.module.push.PushDetailFragment"
         android:label="fragment_push_detail"
         tools:layout="@layout/fragment_push_detail" />
 

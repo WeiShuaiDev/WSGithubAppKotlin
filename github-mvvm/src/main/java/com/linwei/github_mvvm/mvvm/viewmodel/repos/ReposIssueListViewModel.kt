@@ -17,7 +17,6 @@ import com.linwei.github_mvvm.mvvm.model.bean.SearchResult
 import com.linwei.github_mvvm.mvvm.model.conversion.IssueConversion
 import com.linwei.github_mvvm.mvvm.model.repository.repos.ReposIssueListModel
 import com.linwei.github_mvvm.mvvm.model.ui.IssueUIModel
-import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import javax.inject.Inject
 
 /**

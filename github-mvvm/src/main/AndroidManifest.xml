@@ -25,9 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".mvvm.ui.module.main.MainActivity" />
         <activity android:name=".mvvm.ui.module.login.UserActivity" />
-        <activity android:name=".mvvm.ui.module.repos.ReposDetailActivity"/>
+        <activity android:name=".mvvm.ui.module.repos.ReposDetailActivity" />
+        <activity android:name=".mvvm.ui.module.issue.IssueDetailActivity" />
     </application>
 
 </manifest>

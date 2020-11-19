@@ -14,9 +14,8 @@ import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentReposActionListBinding
-import com.linwei.github_mvvm.databinding.LayoutReposHeaderBinding
 import com.linwei.github_mvvm.ext.GithubDataBindingComponent
-import com.linwei.github_mvvm.mvvm.contract.event.issue.IssueDetailContract
+import com.linwei.github_mvvm.mvvm.contract.repos.ReposActionListContract
 import com.linwei.github_mvvm.mvvm.model.conversion.ReposConversion
 import com.linwei.github_mvvm.mvvm.ui.adapter.CommitInfoAdapter
 import com.linwei.github_mvvm.mvvm.ui.adapter.EventInfoAdapter
@@ -38,7 +37,7 @@ import javax.inject.Inject
  */
 class ReposActionListFragment(val userName: String?, val reposName: String?) :
     BaseMvvmFragment<ReposActionViewModel, FragmentReposActionListBinding>(),
-    IssueDetailContract.View, NavigationTabBar.OnTabBarSelectedIndexListener {
+    ReposActionListContract.View, NavigationTabBar.OnTabBarSelectedIndexListener {
 
     @Inject
     lateinit var actionTabModel: MutableList<NavigationTabBar.Model>

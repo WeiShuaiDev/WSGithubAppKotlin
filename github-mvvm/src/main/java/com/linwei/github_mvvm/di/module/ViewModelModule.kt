@@ -2,9 +2,9 @@ package com.linwei.github_mvvm.di.module
 
 import androidx.lifecycle.ViewModel
 import com.linwei.cams_mvvm.di.scope.ViewModelKey
-import com.linwei.github_mvvm.mvvm.viewmodel.event.issue.IssueDetailViewModel
-import com.linwei.github_mvvm.mvvm.viewmodel.event.person.PersonViewModel
-import com.linwei.github_mvvm.mvvm.viewmodel.event.push.PushDetailViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.issue.IssueDetailViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.person.PersonViewModel
+import com.linwei.github_mvvm.mvvm.viewmodel.push.PushDetailViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.login.AccountLoginViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.login.OAuthLoginViewModel
 import com.linwei.github_mvvm.mvvm.viewmodel.main.DynamicViewModel
@@ -84,14 +84,6 @@ interface ViewModelModule {
     fun bindReposDetailViewModel(viewModel: ReposDetailViewModel): ViewModel
 
     /**
-     * [IssueDetailViewModel] 注入 `Dagger`
-     */
-    @Binds
-    @IntoMap
-    @ViewModelKey(IssueDetailViewModel::class)
-    fun bindIssueDetailViewModel(viewModel: IssueDetailViewModel): ViewModel
-
-    /**
      * [PersonViewModel] 注入 `Dagger`
      */
     @Binds
@@ -138,4 +130,13 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(ReposIssueListViewModel::class)
     fun bindReposIssueListViewModel(viewModel: ReposIssueListViewModel): ViewModel
+
+    /**
+     * [IssueDetailViewModel] 注入 `Dagger`
+     */
+    @Binds
+    @IntoMap
+    @ViewModelKey(IssueDetailViewModel::class)
+    fun bindIssueDetailViewModel(viewModel: IssueDetailViewModel): ViewModel
+
 }

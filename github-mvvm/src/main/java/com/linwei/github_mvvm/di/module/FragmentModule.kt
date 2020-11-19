@@ -4,6 +4,7 @@ import com.linwei.cams.di.scope.FragmentScope
 import com.linwei.cams_mvvm.di.component.BaseFragmentSubComponent
 import com.linwei.github_mvvm.di.module.logic.ReposActionListModule
 import com.linwei.github_mvvm.di.module.logic.ReposIssueListModule
+import com.linwei.github_mvvm.mvvm.ui.module.issue.IssueDetailFragment
 import com.linwei.github_mvvm.mvvm.ui.module.login.AccountLoginFragment
 import com.linwei.github_mvvm.mvvm.ui.module.login.OAuthLoginFragment
 import com.linwei.github_mvvm.mvvm.ui.module.main.DynamicFragment
@@ -90,4 +91,12 @@ interface FragmentModule {
     @FragmentScope
     @ContributesAndroidInjector
     fun contributeReposReadmeFragmentInjector(): ReposReadmeFragment
+
+    /**
+     * [IssueDetailFragment] 注入 `Dagger`
+     */
+    @FragmentScope
+    @ContributesAndroidInjector
+    fun contributeIssueDetailFragmentInjector(): IssueDetailFragment
+
 }

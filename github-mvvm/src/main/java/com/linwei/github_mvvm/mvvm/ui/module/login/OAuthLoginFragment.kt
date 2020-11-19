@@ -41,7 +41,7 @@ class OAuthLoginFragment :
         mViewModel?.mLifecycleOwner = viewLifecycleOwner
     }
 
-    override fun fetchTopBarTitle(): Int = R.string.login_authorized_title
+    override fun fetchTopBarTitleId(): Int = R.string.login_authorized_title
 
     override fun useDataBinding(): Boolean = false
 

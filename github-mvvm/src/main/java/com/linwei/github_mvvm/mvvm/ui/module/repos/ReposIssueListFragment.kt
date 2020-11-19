@@ -10,10 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.github.nukc.stateview.StateView
-import com.linwei.cams.ext.isNotNullOrSize
-import com.linwei.cams.ext.otherwise
-import com.linwei.cams.ext.string
-import com.linwei.cams.ext.yes
+import com.linwei.cams.ext.*
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentReposIssueListBinding
@@ -25,6 +22,7 @@ import com.linwei.github_mvvm.mvvm.model.bean.Issue
 import com.linwei.github_mvvm.mvvm.model.bean.SearchResult
 import com.linwei.github_mvvm.mvvm.model.ui.IssueUIModel
 import com.linwei.github_mvvm.mvvm.ui.adapter.IssueAdapter
+import com.linwei.github_mvvm.mvvm.ui.module.issue.IssueDetailActivity
 import com.linwei.github_mvvm.mvvm.viewmodel.ConversionBean
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposIssueListViewModel
 import devlight.io.library.ntb.NavigationTabBar
@@ -148,7 +146,11 @@ class ReposIssueListFragment(val userName: String?, val reposName: String?) :
         }
 
         mIssueAdapter.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>, view: View, position: Int ->
-
+            val issueUIModel: IssueUIModel = adapter.getItem(position) as IssueUIModel
+            (isEmptyParameter(userName, reposName)).no {
+                //跳转到 `Issue` 详情页面。
+                IssueDetailActivity.start(mActivity, userName!!, reposName!!, issueUIModel.issueNum)
+            }
         }
 
         mIssueAdapter.loadMoreModule.setOnLoadMoreListener {

@@ -1,8 +1,8 @@
-package com.linwei.github_mvvm.mvvm.model.repository.event
+package com.linwei.github_mvvm.mvvm.model.repository.push
 
 import com.linwei.cams_mvvm.http.DataMvvmRepository
 import com.linwei.cams_mvvm.mvvm.BaseModel
-import com.linwei.github_mvvm.mvvm.contract.event.person.PersonContract
+import com.linwei.github_mvvm.mvvm.contract.push.PushDetailContract
 import com.linwei.github_mvvm.mvvm.model.repository.service.UserRepository
 import javax.inject.Inject
 
@@ -15,10 +15,10 @@ import javax.inject.Inject
  * @Description:
  *-----------------------------------------------------------------------
  */
-class PersonModel @Inject constructor(
+class PushDetailModel @Inject constructor(
     dataRepository: DataMvvmRepository,
     private val userRepository: UserRepository
-) : BaseModel(dataRepository), PersonContract.Model {
+) : BaseModel(dataRepository), PushDetailContract.Model {
     
 
 }

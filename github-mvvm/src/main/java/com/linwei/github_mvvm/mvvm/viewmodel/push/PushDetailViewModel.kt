@@ -1,9 +1,8 @@
-package com.linwei.github_mvvm.mvvm.viewmodel.event.push
+package com.linwei.github_mvvm.mvvm.viewmodel.push
 
 import android.app.Application
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
-import com.linwei.github_mvvm.mvvm.model.repository.event.PushDetailModel
-import com.linwei.github_mvvm.mvvm.model.repository.login.LoginModel
+import com.linwei.github_mvvm.mvvm.model.repository.push.PushDetailModel
 import javax.inject.Inject
 
 /**
@@ -16,7 +15,7 @@ import javax.inject.Inject
  *-----------------------------------------------------------------------
  */
 class PushDetailViewModel @Inject constructor(
-    val model:PushDetailModel,
+    val model: PushDetailModel,
     application: Application
 ) : BaseViewModel(model, application) {
 

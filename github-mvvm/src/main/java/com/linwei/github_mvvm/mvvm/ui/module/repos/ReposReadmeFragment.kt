@@ -6,7 +6,7 @@ import com.github.nukc.stateview.StateView
 import com.linwei.cams_mvvm.base.BaseMvvmFragment
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.FragmentReposReadmeBinding
-import com.linwei.github_mvvm.mvvm.contract.event.issue.IssueDetailContract
+import com.linwei.github_mvvm.mvvm.contract.repos.ReposReadmeContract
 import com.linwei.github_mvvm.mvvm.viewmodel.repos.ReposReadmeViewModel
 import kotlinx.android.synthetic.main.fragment_repos_readme.*
 
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_repos_readme.*
  */
 class ReposReadmeFragment(val userName: String?, val reposName: String?) :
     BaseMvvmFragment<ReposReadmeViewModel, FragmentReposReadmeBinding>(),
-    IssueDetailContract.View {
+    ReposReadmeContract.View {
 
     override fun provideContentViewId(): Int = R.layout.fragment_repos_readme
 

@@ -9,8 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.linwei.cams.R
 import com.linwei.cams.base.holder.TopViewHolder
-import com.linwei.cams.ext.px
-import com.linwei.cams.ext.string
+import com.linwei.cams.ext.*
 import com.linwei.cams.listener.OnTopBarLeftClickListener
 import com.linwei.cams.listener.OnTopBarRightClickListener
 
@@ -49,8 +48,15 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
      * 接口回调
      */
     private fun initTopBar() {
-        val topBarTitle: Int = fetchTopBarTitle()
-        if (topBarTitle > 0) setTopBarTitle(topBarTitle)
+        (fetchTopBarTitleId() > 0).yes {
+            setTopBarTitle(fetchTopBarTitleId())
+        }.otherwise {
+            fetchTopBarTitleStr().apply {
+                isNotNullOrEmpty().yes {
+                    setTopBarTitle(this)
+                }
+            }
+        }
 
         mTopBarLeftClickListener = obtainTopBarLeftListener()
         mTopViewHolder.mTvLeftTitle.setOnClickListener {
@@ -137,8 +143,13 @@ abstract class BaseFragmentWithTopAndStatus : BaseFragment() {
      * 导航栏标题`ResId`
      * @return [Int] 字符串Id
      */
-    protected abstract fun fetchTopBarTitle(): Int
+    protected open fun fetchTopBarTitleId(): Int=-1
 
+    /**
+     * 导航栏标题`String`
+     * @return [String] 字符串String
+     */
+    protected open fun fetchTopBarTitleStr(): String=""
     /**
      * 导航栏左侧点击事件
      * @return [OnTopBarLeftClickListener]

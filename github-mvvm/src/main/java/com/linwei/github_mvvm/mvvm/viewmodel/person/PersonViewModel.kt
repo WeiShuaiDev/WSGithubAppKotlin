@@ -1,9 +1,8 @@
-package com.linwei.github_mvvm.mvvm.viewmodel.event.person
+package com.linwei.github_mvvm.mvvm.viewmodel.person
 
 import android.app.Application
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
-import com.linwei.github_mvvm.mvvm.model.repository.event.PersonModel
-import com.linwei.github_mvvm.mvvm.model.repository.login.LoginModel
+import com.linwei.github_mvvm.mvvm.model.repository.person.PersonModel
 import javax.inject.Inject
 
 /**

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchAndMatch"
+    android:orientation="vertical"
+    tools:ignore="MissingConstraints,FragmentTagUsage">
+
+    <fragment
+        android:id="@+id/mNavHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        style="@style/MatchAndMatch"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/issue_navigation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

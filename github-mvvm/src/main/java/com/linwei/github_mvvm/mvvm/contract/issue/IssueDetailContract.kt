@@ -1,20 +1,25 @@
-package com.linwei.github_mvvm.mvvm.contract.event.push
+package com.linwei.github_mvvm.mvvm.contract.issue
+
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
- * @Time: 2020/11/2
+ * @Time: 2020/11/18
  * @Contact: linwei9605@gmail.com"d
  * @Follow: https://github.com/WeiShuaiDev
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface PushDetailContract {
+interface IssueDetailContract {
 
-    interface View
+    interface View {
+
+    }
 
     interface ViewModel {
+
     }
 
     interface Model {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.linwei.github_mvvm.mvvm.contract.event.person
+package com.linwei.github_mvvm.mvvm.contract.push
 /**
  * ---------------------------------------------------------------------
  * @Author: WeiShuai
@@ -8,7 +8,7 @@ package com.linwei.github_mvvm.mvvm.contract.event.person
  * @Description:
  *-----------------------------------------------------------------------
  */
-interface PersonContract {
+interface PushDetailContract {
 
     interface View
 
