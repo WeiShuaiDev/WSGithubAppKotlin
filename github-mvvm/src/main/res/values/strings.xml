@@ -57,6 +57,10 @@
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
 
+    <string name="browser_open">浏览器打开</string>
+    <string name="copy">复制链接</string>
+    <string name="share">分享</string>
+
     <string name="logcat_login_user_name_entry">用户名为空!</string>
     <string name="logcat_login_password_entry">密码为空!</string>
     <string name="logcat_login_oauth_code">授权失败!</string>

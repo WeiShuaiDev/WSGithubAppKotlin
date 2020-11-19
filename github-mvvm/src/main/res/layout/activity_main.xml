@@ -8,7 +8,7 @@
     tools:ignore="MissingConstraints">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/mToolBar"
+        android:id="@+id/activity_main_toolbar"
         style="@style/MatchAndWrap"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
@@ -17,13 +17,13 @@
         app:titleTextColor="@color/colorGlobalWhite" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/mViewPager"
+        android:id="@+id/activity_main_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
     <com.linwei.github_mvvm.mvvm.ui.view.ExpandNavigationTabBar
-        android:id="@+id/mNavigationTabBar"
+        android:id="@+id/activity_main_tab_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
         app:ntb_badge_gravity="top"

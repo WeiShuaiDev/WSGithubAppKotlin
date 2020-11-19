@@ -62,8 +62,9 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:lines="1"
+                    android:textStyle="bold"
                     android:textColor="@color/colorGlobalTextWhite"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_20" />
 
                 <RelativeLayout
                     android:layout_width="?attr/actionBarSize"

@@ -97,26 +97,26 @@ class MainActivity : BaseMvvmActivity<MainViewModel, ViewDataBinding>(),
      * 初始化 `Toolbar`
      */
     private fun initToolbar() {
-        setSupportActionBar(mToolBar)
+        setSupportActionBar(activity_main_toolbar)
         val actionBar: ActionBar? = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setDisplayShowTitleEnabled(false)
         }
-        mToolBar.setTitle(R.string.app_name)
-        mToolBar.setOnMenuItemClickListener(this)
+        activity_main_toolbar.setTitle(R.string.app_name)
+        activity_main_toolbar.setOnMenuItemClickListener(this)
     }
 
     /**
      * 初始化 `ViewPager`
      */
     private fun initViewPager() {
-        mViewPager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
-        mNavigationTabBar.models = mainTabModel
-        mNavigationTabBar.setViewPager(mViewPager, 0)
-        mViewPager.offscreenPageLimit = mainFragmentList.size
+        activity_main_viewpager.adapter = FragmentPagerViewAdapter(mainFragmentList, supportFragmentManager)
+        activity_main_tab_bar.models = mainTabModel
+        activity_main_tab_bar.setViewPager(activity_main_viewpager, 0)
+        activity_main_viewpager.offscreenPageLimit = mainFragmentList.size
 
-        mNavigationTabBar.doubleTouchListener =
+        activity_main_tab_bar.doubleTouchListener =
             object : ExpandNavigationTabBar.TabDoubleClickListener {
                 override fun onDoubleClick(position: Int) {
                 }
@@ -130,7 +130,7 @@ class MainActivity : BaseMvvmActivity<MainViewModel, ViewDataBinding>(),
     private fun initMaterialDrawer(savedInstanceState: Bundle?) {
         mDrawer = DrawerBuilder()
             .withActivity(this)
-            .withToolbar(mToolBar)
+            .withToolbar(activity_main_toolbar)
             .withSelectedItem(-1)
             .addDrawerItems(
                 PrimaryDrawerItem().withName(R.string.main_feedback)

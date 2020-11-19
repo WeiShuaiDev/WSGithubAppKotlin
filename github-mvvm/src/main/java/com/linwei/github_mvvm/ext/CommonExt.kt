@@ -1,6 +1,8 @@
 package com.linwei.github_mvvm.ext
 
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -27,7 +29,6 @@ import com.linwei.github_mvvm.mvvm.ui.view.MarkdownInputIconList
 import jp.wasabeef.glide.transformations.BlurTransformation
 import org.jetbrains.anko.browse
 import java.util.regex.Pattern
-
 
 /**
  * Navigation 的页面跳转
@@ -155,6 +156,17 @@ fun Context.getVersionName(): String {
     val manager: PackageInfo = packageManager.getPackageInfo(packageName, 0)
     return manager.versionName
 }
+
+/**
+ * 拓展复制到粘粘版
+ */
+fun Context.copy(string: String) {
+    val clipboardManager: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)
+            as ClipboardManager
+    val clip: ClipData = ClipData.newPlainText("", string)
+    clipboardManager.setPrimaryClip(clip)
+}
+
 
 /**
  * 拓展列表到文本转化
