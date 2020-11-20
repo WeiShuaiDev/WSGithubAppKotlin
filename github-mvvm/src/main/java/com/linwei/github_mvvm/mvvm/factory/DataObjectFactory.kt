@@ -52,8 +52,6 @@ object UserInfoStorage {
      */
     var authInfoPref: String by pref("")
 
-
-
     /**
      * 保存用户信息
      * @param userInfoBean [UserInfoBean] 用户实体类
@@ -92,7 +90,6 @@ object UserInfoStorage {
         }
         return null
     }
-
 
     /**
      * 获取认证信息

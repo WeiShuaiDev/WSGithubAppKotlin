@@ -18,16 +18,16 @@ import io.noties.markwon.syntax.SyntaxHighlightPlugin
 @PrismBundle(includeAll = true, grammarLocatorClassName = ".MyGrammarLocator")
 object MarkDownConfig {
 
-//    fun getConfig(context: Context): ArrayList<AbstractMarkwonPlugin> {
-//        val prism4j = Prism4j(MyGrammarLocator())
-//        return arrayListOf(GlideImagesPlugin.create(context.applicationContext),
-//                GlideImagesPlugin.create(context),
-//                LinkifyPlugin.create(),
-//                HtmlPlugin.create(),
-//                TablePlugin.create(context),
-//                TableEntryPlugin.create(context.applicationContext),
-//                SyntaxHighlightPlugin.create(prism4j, Prism4jThemeDarkula.create(), "java"))
-//    }
+    fun getConfig(context: Context): ArrayList<AbstractMarkwonPlugin> {
+        val prism4j = Prism4j(MyGrammarLocator())
+        return arrayListOf(GlideImagesPlugin.create(context.applicationContext),
+                GlideImagesPlugin.create(context),
+                LinkifyPlugin.create(),
+                HtmlPlugin.create(),
+                TablePlugin.create(context),
+                TableEntryPlugin.create(context.applicationContext),
+                SyntaxHighlightPlugin.create(prism4j, Prism4jThemeDarkula.create(), "java"))
+    }
 }
 
 

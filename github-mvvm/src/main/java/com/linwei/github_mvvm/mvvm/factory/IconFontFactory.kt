@@ -101,5 +101,4 @@ object IconFontFactory : ITypeface {
 
         override val typeface: ITypeface by lazy { IconFontFactory }
     }
-
 }

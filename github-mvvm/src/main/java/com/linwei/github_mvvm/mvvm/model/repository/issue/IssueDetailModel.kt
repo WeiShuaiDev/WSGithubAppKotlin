@@ -21,4 +21,7 @@ class IssueDetailModel @Inject constructor(
 ) : BaseModel(dataRepository), IssueDetailContract.Model {
 
 
+
+
+
 }

@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingComponent
 import com.linwei.cams.ext.dp
+import com.linwei.github_mvvm.mvvm.factory.MarkDownConfig
 import com.linwei.github_mvvm.mvvm.ui.view.TouchSlideWebViewContainer
 import com.mikepenz.iconics.IconicsColor
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.view.IconicsImageView
+import io.noties.markwon.Markwon
 
 
 /**
@@ -55,10 +57,10 @@ class DataBindingExpand {
         @BindingAdapter("markdownText", "style", requireAll = false)
         fun markdownText(view: TextView?, text: String?, style: String? = "default") {
             view?.apply {
-//                Markwon.builder(context)
-//                    .usePlugins(MarkDownConfig.getConfig(view.context))
-//                    .build()
-//                    .setMarkdown(view, text ?: "")
+                Markwon.builder(context)
+                    .usePlugins(MarkDownConfig.getConfig(view.context))
+                    .build()
+                    .setMarkdown(view, text ?: "")
             }
         }
 
