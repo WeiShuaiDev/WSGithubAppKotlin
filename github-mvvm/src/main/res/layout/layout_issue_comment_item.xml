@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="issueUIModel"
+            type="com.linwei.github_mvvm.mvvm.model.ui.IssueUIModel" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/whiteCardTheme">
+
+        <RelativeLayout
+            style="@style/MatchAndWrap"
+            android:padding="@dimen/dp_5">
+
+            <ImageView
+                android:id="@+id/issue_user_img"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                app:userHeaderUrl="@{issueUIModel.image}" />
+
+            <TextView
+                android:id="@+id/issue_user_name"
+                style="@style/WrapAndWrap"
+                android:layout_alignBaseline="@+id/issue_user_img"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toEndOf="@+id/issue_user_img"
+                android:singleLine="true"
+                android:text="@{issueUIModel.username}"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/issue_time"
+                style="@style/WrapAndWrap"
+                android:layout_alignParentEnd="true"
+                android:singleLine="true"
+                android:text="@{issueUIModel.time}"
+                android:textColor="@color/colorSubText"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/issue_content"
+                style="@style/MatchAndWrap"
+                android:layout_below="@+id/issue_user_img"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_toEndOf="@+id/issue_user_img"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/sp_14"
+                app:markdownText="@{issueUIModel.action}" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

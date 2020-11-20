@@ -66,6 +66,8 @@
     <string name="logcat_login_oauth_code">授权失败!</string>
     <string name="logcat_login_success">登录成功!</string>
     <string name="logcat_login_failed">登录失败!</string>
+    <string name="logcat_hadCopy">已经复制到粘贴板</string>
+
 
     <string name="exit_app_tip">再次点击，退出应用程序</string>
 </resources>

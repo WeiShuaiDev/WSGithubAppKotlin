@@ -109,6 +109,12 @@ android {
         preDexLibraries = false
     }
 
+    //针对编辑错误
+    configurations {
+        cleanedAnnotations
+        compile.exclude group: 'org.jetbrains', module: 'annotations'
+    }
+
     packagingOptions {
         exclude 'META-INF/library-core_release.kotlin_module'
     }
@@ -131,7 +137,7 @@ dependencies {
 
     ///Retrofit
     implementation rootProject.ext.dependencies["retrofit-converter-scalars"]
-    implementation (rootProject.ext.dependencies["retrofit-converter-simplexml"]) {
+    implementation(rootProject.ext.dependencies["retrofit-converter-simplexml"]) {
         exclude group: 'xpp3', module: 'xpp3'
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
@@ -169,16 +175,16 @@ dependencies {
     ///本地存储数据调试工具
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
-    ///Mikepenz
-    implementation 'com.mikepenz:iconics-core:4.0.1-b01'
-    implementation 'com.mikepenz:iconics-views:4.0.1-b01'
-    implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.6-kotlin@aar'
-    implementation 'com.mikepenz:fontawesome-typeface:5.9.0.0-kotlin@aar'
-    implementation 'com.mikepenz:community-material-typeface:3.5.95.1-kotlin@aar'
-    implementation 'com.mikepenz:octicons-typeface:3.2.0.6-kotlin@aar'
-    implementation 'com.mikepenz:weather-icons-typeface:2.0.10.5-kotlin@aar'
-    implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.5-kotlin@aar'
-    implementation 'com.mikepenz:ionicons-typeface:2.0.1.5-kotlin@aar'
+    ///markdown
+    implementation "com.github.tiagohm.MarkdownView:library:0.19.0"
+    implementation "io.noties.markwon:core:4.0.2"
+    implementation "io.noties.markwon:html:4.0.2"
+    implementation "io.noties.markwon:recycler:4.0.2"
+    implementation "io.noties.markwon:recycler-table:4.0.2"
+    implementation "io.noties.markwon:linkify:4.0.2"
+    implementation "io.noties.markwon:image:4.0.2"
+    implementation "io.noties.markwon:image-glide:4.0.2"
+    implementation "io.noties.markwon:syntax-highlight:4.0.2"
 
     ///iconics
     implementation 'com.mikepenz:iconics-core:4.0.1-b01'

@@ -48,7 +48,7 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="@{reposUIModel.ownerName}"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorGlobalWhite"
                     android:textSize="@dimen/sp_18"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

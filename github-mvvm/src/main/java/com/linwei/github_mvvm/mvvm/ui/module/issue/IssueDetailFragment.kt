@@ -36,6 +36,7 @@ class IssueDetailFragment : BaseMvvmFragment<IssueDetailViewModel, FragmentIssue
     }
 
     override fun initLayoutView(rootView: View?) {
+
     }
 
     override fun initLayoutData() {

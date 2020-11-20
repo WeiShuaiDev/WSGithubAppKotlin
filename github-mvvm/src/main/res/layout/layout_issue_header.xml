@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="issueUIModel"
+            type="com.linwei.github_mvvm.mvvm.model.ui.IssueUIModel" />
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/MatchAndWrap">
+
+        <androidx.cardview.widget.CardView
+            style="@style/whiteCardTheme"
+            app:cardBackgroundColor="@color/colorPrimary">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/issue_header_card"
+                style="@style/MatchAndWrap"
+                android:padding="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/issue_header_image"
+                    android:layout_width="@dimen/dp_90"
+                    android:layout_height="@dimen/dp_90"
+                    android:src="@mipmap/ic_launcher"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:userHeaderSize="@{100}"
+                    app:userHeaderUrl="@{issueUIModel.image}" />
+
+                <TextView
+                    android:id="@+id/issue_header_name"
+                    style="@style/WrapAndWrap"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:text="@{issueUIModel.username}"
+                    android:textColor="@color/colorGlobalWhite"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/issue_header_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/issue_status_layout"
+                    style="@style/WrapAndWrap"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toEndOf="@+id/issue_header_image"
+                    app:layout_constraintTop_toBottomOf="@+id/issue_header_name">
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/issue_status"
+                        style="@style/WrapAndWrap"
+                        android:layout_gravity="bottom"
+                        android:text="@{`{APP_ISSUE_ITEM_ISSUE}`+issueUIModel.status}"
+                        android:textColor="@{(`open`.equals(issueUIModel.status )) ? @color/colorGreen : @color/colorRed}"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/issue_number"
+                        style="@style/WrapAndWrap"
+                        android:layout_gravity="bottom"
+                        android:text="@{`#`+ issueUIModel.issueNum}"
+                        android:textColor="@color/colorSubText"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.mikepenz.iconics.view.IconicsTextView
+                        android:id="@+id/issue_comment"
+                        style="@style/MatchAndWrap"
+                        android:layout_gravity="bottom"
+                        android:gravity="center_vertical|end"
+                        android:singleLine="true"
+                        android:text="@{`{APP_ISSUE_ITEM_COMMENT}`+issueUIModel.comment}"
+                        android:textColor="@color/colorSubText"
+                        android:textSize="@dimen/sp_14" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/issue_action"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@{issueUIModel.action}"
+                    android:textColor="@color/colorGlobalWhite"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/issue_header_name"
+                    app:layout_constraintTop_toBottomOf="@+id/issue_status_layout" />
+
+                <TextView
+                    android:id="@+id/issue_content"
+                    style="@style/MatchAndWrap"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:textColor="@color/colorGlobalWhite"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/issue_action"
+                    app:markdownText="@{issueUIModel.content}" />
+
+                <TextView
+                    android:id="@+id/issue_time"
+                    style="@style/WrapAndWrap"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:singleLine="true"
+                    android:text="@{issueUIModel.time}"
+                    android:textColor="@color/colorSubText"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</layout>

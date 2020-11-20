@@ -10,6 +10,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.ViewDataBinding
 import com.linwei.cams.ext.isEmptyParameter
+import com.linwei.cams.ext.showShort
 import com.linwei.cams.ext.yes
 import com.linwei.cams_mvvm.base.BaseMvvmActivity
 import com.linwei.cams_mvvm.mvvm.BaseViewModel
@@ -135,6 +136,7 @@ class IssueDetailActivity : BaseMvvmActivity<BaseViewModel, ViewDataBinding>(),
                             mIssueNumber.toString()
                         )
                     )
+                    R.string.logcat_hadCopy.showShort()
                 }
             }
 

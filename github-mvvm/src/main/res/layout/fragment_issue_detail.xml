@@ -10,16 +10,26 @@
             type="com.linwei.github_mvvm.mvvm.viewmodel.issue.IssueDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/MatchAndMatch"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/MatchAndMatch">
 
         <LinearLayout
             android:id="@+id/issue_detail_root"
             style="@style/MatchAndMatch"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/issue_detail_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <View style="@style/HorizontalLine" />
+
+            <com.linwei.github_mvvm.mvvm.ui.view.ControlBar
+                android:id="@+id/issue_detail_control_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

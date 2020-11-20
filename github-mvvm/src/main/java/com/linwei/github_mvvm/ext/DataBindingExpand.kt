@@ -4,6 +4,7 @@ import android.graphics.Point
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingComponent
 import com.linwei.cams.ext.dp
@@ -51,16 +52,16 @@ class DataBindingExpand {
         /**
          * markdown数据处理显示
          */
-//        @BindingAdapter("markdownText", "style", requireAll = false)
-//        fun markdownText(view: TextView?, text: String?, style: String? = "default") {
-//            view?.apply {
+        @BindingAdapter("markdownText", "style", requireAll = false)
+        fun markdownText(view: TextView?, text: String?, style: String? = "default") {
+            view?.apply {
 //                Markwon.builder(context)
 //                    .usePlugins(MarkDownConfig.getConfig(view.context))
 //                    .build()
 //                    .setMarkdown(view, text ?: "")
-//            }
-//        }
-//
+            }
+        }
+
         /**
          * EditText 按键监听
          */
