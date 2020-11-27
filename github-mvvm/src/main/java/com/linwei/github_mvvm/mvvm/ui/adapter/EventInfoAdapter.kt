@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.linwei.github_mvvm.R
 import com.linwei.github_mvvm.databinding.LayoutEventItemBinding
-import com.linwei.github_mvvm.databinding.LayoutUserItemBinding
 import com.linwei.github_mvvm.ext.GithubDataBindingComponent
 import com.linwei.github_mvvm.mvvm.model.ui.EventUIModel
 
