@@ -8,7 +8,6 @@ import com.linwei.cams_mvvm.mvvm.BaseViewModel
 import dagger.Subcomponent
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-import javax.inject.Singleton
 
 /**
  * ---------------------------------------------------------------------
