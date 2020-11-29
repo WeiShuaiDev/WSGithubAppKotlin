@@ -11,7 +11,7 @@ import java.util.*
  * @Time: 2020/5/26
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 内存缓存模块，{@link MapCache<K,V>} 实现了 {@link Cache<K,V>} 接口, 缓存数据使用使用 {@code SoftReference}软引用包裹数据源，
+ * @Description: 内存缓存模块，{@link MapCache<K,V>} 实现了 {@link Cache<K,V>} 接口, 缓存数据使用 {@code SoftReference}软引用包裹数据源，
  *               在内存不足出现报警，GC会进行数据回收，同时解决存储数据多线程问题。
  *              K:表示存储Key,内存存储中必须唯一
  *              V:代表存储Value,存储内容数据
