@@ -6,7 +6,6 @@ import com.linwei.github_mvvm.mvvm.model.bean.Notification
 import com.linwei.github_mvvm.mvvm.model.bean.Page
 import okhttp3.ResponseBody
 import retrofit2.http.*
-import java.util.*
 
 
 interface NotificationService {
