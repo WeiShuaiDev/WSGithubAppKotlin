@@ -5,7 +5,6 @@ import com.linwei.github_mvvm.mvvm.model.api.Api
 import com.linwei.github_mvvm.mvvm.model.bean.*
 import okhttp3.ResponseBody
 import retrofit2.http.*
-import java.util.ArrayList
 
 /**
  * ---------------------------------------------------------------------
