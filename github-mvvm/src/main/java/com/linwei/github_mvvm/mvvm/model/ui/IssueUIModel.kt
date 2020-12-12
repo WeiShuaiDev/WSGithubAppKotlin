@@ -1,4 +1,5 @@
 package com.linwei.github_mvvm.mvvm.model.ui
+
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.linwei.github_mvvm.BR
