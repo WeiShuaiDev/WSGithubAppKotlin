@@ -35,7 +35,7 @@ import javax.inject.Inject
  * @Time: 2020/8/12
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description: 首页
+ * @Description: 首页视图界面
  *-----------------------------------------------------------------------
  */
 class MainActivity : BaseMvvmActivity<MainViewModel, ViewDataBinding>(),
