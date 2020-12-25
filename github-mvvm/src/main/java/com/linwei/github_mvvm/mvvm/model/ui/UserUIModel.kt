@@ -11,7 +11,7 @@ import java.util.*
  * @Time: 2020/9/18
  * @Contact: linwei9605@gmail.com"
  * @Follow: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description:用户实体类
  *-----------------------------------------------------------------------
  */
 class UserUIModel : BaseObservable() {
