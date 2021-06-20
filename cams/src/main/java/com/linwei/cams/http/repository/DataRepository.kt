@@ -75,7 +75,7 @@ open class DataRepository @Inject constructor() : IDataRepository {
             //保存 `Retrofit Service` 对象到 `Cache` 中
             mRetrofitServiceCache.put(
                 serviceClass.canonicalName ?: serviceClass.simpleName,
-                retrofitService
+                retrofitService!!
             )
         }
         return retrofitService as T

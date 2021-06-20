@@ -30,15 +30,15 @@ object NetworkUtils {
         val networkInfo: NetworkInfo? = mConnectManager.activeNetworkInfo
         if (networkInfo != null) {
             if (ConnectivityManager.TYPE_MOBILE == networkInfo.type) {
-                val stateMobile: State =
-                    mConnectManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).state
+                val stateMobile: State? =
+                    mConnectManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)?.state
                 if (stateMobile == State.CONNECTED) {
                     return networkInfo.isAvailable
                 }
             }
             if (ConnectivityManager.TYPE_WIFI == networkInfo.type) {
-                val stateMobile: State =
-                    mConnectManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).state
+                val stateMobile: State? =
+                    mConnectManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)?.state
                 if (stateMobile == State.CONNECTED) {
                     return networkInfo.isAvailable
                 }

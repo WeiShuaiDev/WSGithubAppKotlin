@@ -73,7 +73,10 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
         mWebView.webViewClient = fetchWebViewClient()
 
         if (useJsInterface())
-            mWebView.addJavascriptInterface(fetchJsInterfaceObject(), fetchJsInterfaceName())
+            if(fetchJsInterfaceObject()!=null&&!TextUtils.isEmpty(fetchJsInterfaceName())) {
+                mWebView.addJavascriptInterface(fetchJsInterfaceObject()!!, fetchJsInterfaceName()!!)
+            }
+
 
         mWebView.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (useDefaultGoBack() && event.action == KeyEvent.ACTION_DOWN) {
@@ -244,7 +247,7 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
                     loadWebViewError()
                 } else {
                     if (!TextUtils.isEmpty(mJsFunction)) {
-                        view.loadUrl(mJsFunction)
+                        view.loadUrl(mJsFunction!!)
                     }
                     loadWebViewFinished()
                 }
@@ -304,17 +307,19 @@ abstract class BaseWebActivity : BaseActivityWithTop(), DownloadListener {
     override fun initLayoutData() {
         mStateView?.showLoading()
         mIsFirstLoad = true
-        if (isPostMethod()) {
-            if (!TextUtils.isEmpty(mPostData)) {
-                try {
-                    mWebView.postUrl(mUrl, mPostData!!.toByteArray(charset("UTF-8")))
-                } catch (e: UnsupportedEncodingException) {
-                    e.printStackTrace()
-                }
+        if(!TextUtils.isEmpty(mUrl)) {
+            if (isPostMethod()) {
+                if (!TextUtils.isEmpty(mPostData)) {
+                    try {
+                        mWebView.postUrl(mUrl!!, mPostData!!.toByteArray(charset("UTF-8")))
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }
 
+                }
+            } else {
+                mWebView.loadUrl(mUrl!!)
             }
-        } else {
-            mWebView.loadUrl(mUrl)
         }
     }
 
