@@ -24,7 +24,7 @@ import retrofit2.Retrofit
  * @Time: 2020/7/14
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description: `MVVM` 架构 `Application` 依赖注入Component,内部提供 [MvvmViewModelModule]、[MvvmModelModule] 模块。
+ * @Description: `MVVM`架构依赖注入Component,内部提供 [MvvmViewModelModule]、[MvvmModelModule] 模块。
  *-----------------------------------------------------------------------
  */
 @MvvmScope

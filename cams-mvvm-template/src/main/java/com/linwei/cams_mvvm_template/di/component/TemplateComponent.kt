@@ -1,6 +1,8 @@
 package com.linwei.cams_mvvm_template.di.component
 
 import com.linwei.cams_mvvm.di.component.MvvmComponent
+import com.linwei.cams_mvvm.di.module.MvvmModelModule
+import com.linwei.cams_mvvm.di.module.MvvmViewModelModule
 import com.linwei.cams_mvvm.di.module.ViewModelFactoryModule
 import com.linwei.cams_mvvm_template.TemplateApplication
 import com.linwei.cams_mvvm_template.di.module.ActivityModule
@@ -16,7 +18,7 @@ import dagger.android.AndroidInjectionModule
  * @Time: 2020/8/3
  * @Contact: linwei9605@gmail.com
  * @Github: https://github.com/WeiShuaiDev
- * @Description:
+ * @Description: `MVVM` 架构依赖注入Component,内部提供 [ViewModelModule]、[ActivityModule]、[FragmentModule] 模块。
  *-----------------------------------------------------------------------
  */
 @TemplateScope
