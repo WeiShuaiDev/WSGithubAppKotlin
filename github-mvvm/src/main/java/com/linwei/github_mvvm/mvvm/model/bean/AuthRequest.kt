@@ -15,9 +15,11 @@ class AuthRequest : Serializable {
 
     var note: String? = null
         private set
+
     @SerializedName("note_url")
     var noteUrl: String? = null
         private set
+
     @SerializedName("client_secret")
     var clientSecret: String? = null
         private set
@@ -25,10 +27,11 @@ class AuthRequest : Serializable {
     companion object {
         private val scopes: List<String>? =
             listOf("user", "repo", "notifications", "gist", "admin:org")
-        private const val note: String = BuildConfig.NOTE
-        private const val noteUrl: String = BuildConfig.NOTE_URL
-        const val clientId: String = BuildConfig.CLIENT_ID
-        const val clientSecret: String = BuildConfig.CLIENT_SECRET
+
+        private val note: String = BuildConfig.NOTE
+        private val noteUrl: String = BuildConfig.NOTE_URL
+        val clientId: String = BuildConfig.CLIENT_ID
+        val clientSecret: String = BuildConfig.CLIENT_SECRET
 
 
         fun generate(): AuthRequest {
