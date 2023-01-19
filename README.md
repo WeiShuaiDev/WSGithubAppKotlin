@@ -3,7 +3,7 @@
 
 🔥 🔥 🔥 WSGithubAppKotlin项目，使用自主开发  [Cams](https://github.com/WeiShuaiDev/Cams)包，内部提供组件化工具，支持每个业务模块切换到指定`MVP`、`MVVM`、架构(`framework`)，同时提供每个架构模板，在创建项目可以选择对应模板，自动生成对应架构模板代码，提高开发效率。开发该项目主要目的尝试在实际开发中使用[Cams](https://github.com/WeiShuaiDev/Cams)库，是否会出现不兼容问题，通过这次项目，也发现一些问题，不过已经进行优化处理。
 
-![project_structure](https://github.com/WeiShuaiDev/WSGithubAppKotlin/blob/main/screenshots/project_structure.png?raw=true)
+![project_structure](https://github.com/WeiShuaiDev/WSGithubAppKotlin/blob/master/screenshots/project_structure.png?raw=true)
 
 ## 一、项目简介
 
